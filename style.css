@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  padding: 2rem;
+  padding: 0;
   background: #fdfdfc;
   color: #111;
   font-family: 'EB Garamond', serif;
@@ -8,43 +8,49 @@ body {
   font-size: 16px;
 }
 
-.container {
-  max-width: 720px;
-  margin: auto;
+header {
+  text-align: center;
+  padding: 2rem 1rem 1rem;
+  border-bottom: 1px solid #ddd;
 }
 
 h1 {
-  font-size: 3rem;
-  margin-bottom: 0.2rem;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.sub {
-  font-size: 1.2rem;
-  color: #555;
-  margin-bottom: 1.5rem;
-}
-
-.contact a {
-  color: #111;
+nav a {
+  margin: 0 1.2rem;
   text-decoration: none;
+  color: #111;
   border-bottom: 1px solid transparent;
+  transition: border-bottom 0.3s ease;
 }
 
-.contact a:hover {
+nav a:hover {
   border-bottom: 1px solid #111;
 }
 
+main {
+  max-width: 720px;
+  margin: auto;
+  padding: 2rem 1.5rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
 h2 {
-  font-size: 1.5rem;
-  margin-top: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
 }
 
 ul {
   list-style: none;
-  padding: 0;
+  padding-left: 0;
 }
 
 ul li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
 }
