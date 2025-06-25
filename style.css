@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  margin: 0.25rem 0;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.links {
+  margin-top: 2rem;
+}
+
+.links a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #fff;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.3s ease;
+}
+
+.links a:hover {
+  border-bottom: 1px solid #fff;
+}
