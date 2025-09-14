@@ -2,9 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Projects</title>
+  <title>Mark Sui - Personal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <style>
+    details {
+      margin: 1rem 0;
+    }
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .photo-grid {
+      margin-top: 0.8rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .photo-grid img {
+      width: 250px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+    }
+    .photo-grid img:hover {
+      transform: scale(1.05);
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -12,7 +37,8 @@
     <nav>
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
-      <a href="experience.html">Experience</a> 
+      <a href="experience.html">Experience</a>
+      <a href="portfolio.html">Portfolio</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
@@ -20,12 +46,45 @@
 
   <main>
     <section>
-      <h2>Projects</h2>
+      <h2>Travel & Photography</h2>
+      <p>I enjoy exploring new places and capturing memories through photography. Here is a timeline of my travels, organized by year.</p>
       <ul>
-        <li><strong>Fruit Sweetness Prediction (ESP32 + ML):</strong> R² = 90.1% using ResNet + LSTM.</li>
-        <li><strong>Climate Model Emulator (Kaggle):</strong> Top 9/83 using ViT and MLP.</li>
-        <li><strong>Blackjack AI:</strong> 41% win rate with Monte Carlo and Q-learning.</li>
-        <li><strong>Indoor Monitor:</strong> CO₂, PM2.5, VOCs with custom PCB.</li>
+        <li>
+          <details>
+            <summary><strong>2024 – Sydney, Australia</strong></summary>
+            <div class="photo-grid">
+              <img src="images/australia1.jpg" alt="Sydney Opera House">
+              <img src="images/australia2.jpg" alt="Harbour Bridge">
+            </div>
+          </details>
+        </li>
+        <li>
+          <details> 
+            <summary><strong>2024 – Singapore</strong></summary>
+            <div class="photo-grid">
+              <img src="images/singapore1.jpg" alt="Marina Bay Sands">
+              <img src="images/singapore2.jpg" alt="Gardens by the Bay">
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary><strong>2024 – Koyto, Japan</strong></summary>
+            <div class="photo-grid">
+              <img src="images/paris1.jpg" alt="Eiffel Tower">
+              <img src="images/paris2.jpg" alt="Louvre Museum">
+            </div>
+          </details>
+        </li>
+        <li>
+          <details>
+            <summary><strong>2024 – Osaka, Japan</strong></summary>
+            <div class="photo-grid">
+              <img src="images/tokyo1.jpg" alt="Shibuya Crossing">
+              <img src="images/tokyo2.jpg" alt="Tokyo Tower">
+            </div>
+          </details>
+        </li>
       </ul>
     </section>
   </main>
