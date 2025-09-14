@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
+    body.locked {
+      display: none;
+    }
     details {
       margin: 1rem 0;
     }
@@ -30,6 +33,14 @@
       transform: scale(1.05);
     }
   </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var password = prompt("Please enter the password to access this page:");
+      if (password !== "2002") {
+        document.body.innerHTML = "<h1 style='text-align:center; margin-top: 3rem;'>Access Denied</h1>";
+      }
+    });
+  </script>
 </head>
 <body>
   <header>
@@ -59,7 +70,7 @@
           </details>
         </li>
         <li>
-          <details> 
+          <details>
             <summary><strong>2024 – Singapore</strong></summary>
             <div class="photo-grid">
               <img src="images/singapore1.jpg" alt="Marina Bay Sands">
@@ -69,10 +80,10 @@
         </li>
         <li>
           <details>
-            <summary><strong>2024 – Koyto, Japan</strong></summary>
+            <summary><strong>2024 – Kyoto, Japan</strong></summary>
             <div class="photo-grid">
-              <img src="images/paris1.jpg" alt="Eiffel Tower">
-              <img src="images/paris2.jpg" alt="Louvre Museum">
+              <img src="images/kyoto1.jpg" alt="Kiyomizu Temple">
+              <img src="images/kyoto2.jpg" alt="Arashiyama Bamboo Forest">
             </div>
           </details>
         </li>
@@ -80,8 +91,8 @@
           <details>
             <summary><strong>2024 – Osaka, Japan</strong></summary>
             <div class="photo-grid">
-              <img src="images/tokyo1.jpg" alt="Shibuya Crossing">
-              <img src="images/tokyo2.jpg" alt="Tokyo Tower">
+              <img src="images/osaka1.jpg" alt="Osaka Castle">
+              <img src="images/osaka2.jpg" alt="Dotonbori">
             </div>
           </details>
         </li>
