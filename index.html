@@ -1,11 +1,68 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Mark Sui - About</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ===== Skills Section ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .skill-card {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1.2rem;
+      background: #fafafa;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .skill-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    }
+    .skill-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+      color: #333;
+    }
+    .skill-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #555;
+    }
 
+    /* ===== Photo Section ===== */
+    .about-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .photo-card {
+      text-align: center;
+      border: 2px solid #000000;
+      border-radius: 12px;
+      padding: 1rem;
+      background: #ffffff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      max-width: 220px;
+    }
+    .photo-caption {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .about-text {
+      flex: 1;
+      min-width: 250px;
+    }
+  </style>
 </head>
 <body> 
   <header>
@@ -20,16 +77,54 @@
   </header>
 
   <main>
+    <!-- ===== About Section with Photo ===== --> 
     <section>
       <h2>About</h2>
-      <p>
-        I’m <strong>Mark Sui</strong>, a graduate student in <strong>Electrical Engineering – Medical Devices & Systems</strong> at the University of California, San Diego. I hold dual bachelor’s degrees in <strong>Computer Engineering</strong> and <strong>Mathematics/Applied Science</strong>, and I also studied abroad at the National University of Singapore. <br> 
-        My background bridges hardware, software, and applied mathematics, with interests in <strong>embedded systems</strong>, <strong>machine learning</strong>, and <strong>AI for healthcare and the environment</strong>.  
-        I maintain a GPA of 3.6 and have been recognized with Provost Honors and the President’s Volunteer Service Award. 
-      </p>
+      <div class="about-section">
+        <div class="photo-card">
+          <img src="marksui.jpg" alt="Portrait of Mark Sui">
+          <div class="photo-caption">Photo in 2024</div>
+        </div>
+        <div class="about-text">
+          <p>
+            I’m <strong>Mark Sui</strong>, a graduate student in <strong>Electrical Engineering – Medical Devices & Systems</strong> at the University of California, San Diego. I hold dual bachelor’s degrees in <strong>Computer Engineering</strong> and <strong>Mathematics/Applied Science</strong>, and I also studied abroad at the National University of Singapore. <br> 
+            My background bridges hardware, software, and applied mathematics, with interests in <strong>embedded systems</strong>, <strong>machine learning</strong>, and <strong>AI for healthcare and the environment</strong>.  
+            I maintain a GPA of 3.6 and have been recognized with Provost Honors and the President’s Volunteer Service Award. 
+          </p>
+        </div>
+      </div>
     </section>
 
-
+    <!-- ===== Skills Section ===== -->
+    <section>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Programming</h3>
+          <p>Python, C/C++, Java, MATLAB, Verilog/SystemVerilog, HTML/CSS</p>
+        </div>
+        <div class="skill-card">
+          <h3>AI & Data</h3>
+          <p>Machine Learning, Deep Learning, PyTorch, TensorFlow, Data Analysis, Computer Vision</p>
+        </div>
+        <div class="skill-card">
+          <h3>Embedded Systems</h3>
+          <p>ESP32, ARM, Arduino, PCB Design, IoT Sensor Integration</p>
+        </div>
+        <div class="skill-card">
+          <h3>Digital Design</h3>
+          <p>CMOS Logic, FPGA, VHDL/Verilog, Cadence Virtuoso</p>
+        </div>
+        <div class="skill-card">
+          <h3>Math & Algorithms</h3>
+          <p>Cryptography, Numerical Analysis, Real Analysis, Algorithms & Data Structures</p>
+        </div>
+        <div class="skill-card">
+          <h3>Tools</h3>
+          <p>Git, Linux, LaTeX, Jupyter, MATLAB/Simulink</p>
+        </div>
+      </div>
+    </section>
   </main>
 </body>
 </html>
