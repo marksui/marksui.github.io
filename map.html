@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Travel Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: white;
+    }
+    #map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌍 My Travel Map</h1>
+    <p>Countries I have visited</p>
+  </header>
+
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- GeoJSON World Data -->
+  <script src="https://unpkg.com/leaflet-providers"></script>
+  <script src="https://unpkg.com/geojson-world"></script>
+
+  <script>
+    // 初始化地图
+    var map = L.map('map').setView([20, 20], 2);
+
+    // OpenStreetMap 作为底图
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 想要高亮的国家 (用国家英文名)
+    var visited = ["Singapore", "China", "Australia", "United States", "Taiwan"];
+
+    // 遍历世界 GeoJSON 数据
+    L.geoJSON(window.countries, {
+      style: function(feature) {
+        if (visited.includes(feature.properties.name)) {
+          return { color: "#333", weight: 1, fillColor: "#4CAF50", fillOpacity: 0.6 };
+        } else {
+          return { color: "#999", weight: 0.5, fillColor: "#f0f0f0", fillOpacity: 0.3 };
+        }
+      },
+      onEachFeature: function(feature, layer) {
+        if (visited.includes(feature.properties.name)) {
+          layer.bindPopup("<b>" + feature.properties.name + "</b><br>Visited ✔️");
+        } else {
+          layer.bindPopup(feature.properties.name);
+        }
+      }
+    }).addTo(map);
+  </script>
+</body>
+</html>
