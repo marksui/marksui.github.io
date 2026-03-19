@@ -6,66 +6,216 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
-    /* ===== Skills Section ===== */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .skill-card {
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 1.2rem;
-      background: #fafafa;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .skill-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
-    }
-    .skill-card h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.6rem;
-      color: #333;
-    }
-    .skill-card p {
-      margin: 0;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: #555;
+    :root {
+      --bg: #f6f8fb;
+      --card: rgba(255, 255, 255, 0.9);
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-hover: 0 14px 32px rgba(15, 23, 42, 0.14);
+      --radius: 16px;
     }
 
-    /* ===== Photo Section ===== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      padding: 1.2rem 2rem;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    header h1 {
+      margin: 0 0 0.6rem 0;
+      font-size: 2rem;
+    }
+
+    nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 3rem;
+    }
+
+    section {
+      margin-bottom: 3rem;
+    }
+
+    section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    section h2::after {
+      content: "";
+      display: block;
+      width: 55%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      border-radius: 999px;
+      margin-top: 0.35rem;
+    }
+
+    /* ===== About Section ===== */
     .about-section {
       display: flex;
       align-items: flex-start;
       gap: 2rem;
       flex-wrap: wrap;
-      margin-bottom: 2rem;
     }
-    .photo-card img {
-      width: 180px;   /* 从180改成150，头像更小 */
-      height: 230px;  /* 保持正方形，圆形效果不变 */
-      }
 
     .photo-card {
       text-align: center;
-      border: 2px solid #000000;
-      border-radius: 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
       padding: 1rem;
-      background: #ffffff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      background: var(--card);
+      box-shadow: var(--shadow);
       max-width: 220px;
+      backdrop-filter: blur(8px);
     }
+
+    .photo-card img {
+      width: 170px;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      display: block;
+      margin: 0 auto 0.8rem;
+    }
+
     .photo-caption {
       font-size: 0.9rem;
-      color: #666;
+      color: var(--muted);
     }
+
     .about-text {
       flex: 1;
-      min-width: 250px;
+      min-width: 280px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.4rem 1.5rem;
+      box-shadow: var(--shadow);
+      line-height: 1.7;
+    }
+
+    .about-text p {
+      margin: 0;
+      color: #374151;
+      font-size: 1rem;
+    }
+
+    /* ===== Skills Section ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.4rem;
+      margin-top: 1rem;
+    }
+
+    .skill-card {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.2rem 1rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .skill-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--accent), #f4f4f4);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+      border-color: #ffffff;
+    }
+
+    .skill-card h3 {
+      margin: 0 0 0.8rem;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .skill-tags span {
+      display: inline-block;
+      padding: 0.4rem 0.7rem;
+      font-size: 0.88rem;
+      color: #000000;
+      background: var(--accent-light);
+      border: 1px solid #000000;
+      border-radius: 999px;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 700px) {
+      header {
+        padding: 1rem 1.2rem;
+      }
+
+      header h1 {
+        font-size: 1.7rem;
+      }
+
+      .about-section {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .about-text {
+        width: 100%;
+      }
+
+      .photo-card {
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -82,7 +232,7 @@
   </header>
 
   <main>
-    <!-- ===== About Section with Photo ===== --> 
+    <!-- ===== About Section ===== --> 
     <section>
       <h2>About</h2>
       <div class="about-section">
@@ -92,8 +242,8 @@
         </div>
         <div class="about-text">
           <p>
-            I'm <strong>Mark Sui</strong>, a graduate student in <strong>Electrical and Computer Engineering</strong> at the University of California, San Diego. I hold dual Bachelor of Science degrees in <strong>Computer Engineering</strong> and <strong>Mathematics</strong>. <br> 
-            My background bridges hardware, software, and applied mathematics, with interests in <strong>embedded systems</strong>, <strong>machine learning</strong>, and <strong>FPGA/ASIC</strong>.  
+            I'm <strong>Mark Sui</strong>, a graduate student in <strong>Electrical and Computer Engineering</strong> at the University of California, San Diego. I hold dual Bachelor of Science degrees in <strong>Computer Engineering</strong> and <strong>Mathematics</strong>.
+            My background bridges hardware, software, and applied mathematics, with interests in <strong>embedded systems</strong>, <strong>machine learning</strong>, and <strong>FPGA/ASIC</strong>.
           </p>
         </div>
       </div>
@@ -103,40 +253,96 @@
     <section>
       <h2>Skills</h2>
       <div class="skills-grid">
+
         <div class="skill-card">
           <h3>Programming</h3>
-          <p>Python, C/C++, Java, MATLAB, Verilog/SystemVerilog</p>
+          <div class="skill-tags">
+            <span>Python</span>
+            <span>C</span>
+            <span>C++</span>
+            <span>Java</span>
+            <span>MATLAB</span>
+            <span>Verilog</span>
+            <span>SystemVerilog</span>
+          </div>
         </div>
+
         <div class="skill-card">
           <h3>AI & Data Science</h3>
-          <p>Machine Learning, Deep Learning, PyTorch, TensorFlow, Data Analysis, Computer Graphics</p>
+          <div class="skill-tags">
+            <span>Machine Learning</span>
+            <span>Deep Learning</span>
+            <span>PyTorch</span>
+            <span>TensorFlow</span>
+            <span>Data Analysis</span>
+            <span>Computer Graphics</span>
+          </div>
         </div>
+
         <div class="skill-card">
           <h3>Embedded Systems</h3>
-          <p>ESP32, Arduino, PCB Design</p>
+          <div class="skill-tags">
+            <span>ESP32</span>
+            <span>Arduino</span>
+            <span>PCB Design</span>
+          </div>
         </div>
+
         <div class="skill-card">
           <h3>Digital Design</h3>
-          <p>CMOS Logic, FPGA, VHDL/Verilog, Cadence Virtuoso</p>
+          <div class="skill-tags">
+            <span>CMOS Logic</span>
+            <span>FPGA</span>
+            <span>VHDL</span>
+            <span>Verilog</span>
+            <span>Cadence Virtuoso</span>
+          </div>
         </div>
+
         <div class="skill-card">
           <h3>Math & Algorithms</h3>
-          <p>Cryptography, Numerical Analysis, Real Analysis, Algorithms & Data Structures</p>
+          <div class="skill-tags">
+            <span>Cryptography</span>
+            <span>Numerical Analysis</span>
+            <span>Real Analysis</span>
+            <span>Algorithms</span>
+            <span>Data Structures</span>
+          </div>
         </div>
+
         <div class="skill-card">
           <h3>Tools</h3>
-          <p>Git, Linux, LaTeX, Jupyter, MATLAB, Quartus, ModelSim</p>
+          <div class="skill-tags">
+            <span>Git</span>
+            <span>Linux</span>
+            <span>LaTeX</span>
+            <span>Jupyter</span>
+            <span>Quartus</span>
+            <span>ModelSim</span>
+          </div>
         </div>
-        <div class="skill-card">
-        <h3>Productivity Tools</h3>
-        <p>Microsoft Office Suite (Word, Excel, PowerPoint, Access)</p>
-        <p>Adobe Suite (Photoshop, Illustrator)</p>
 
-      </div>
+        <div class="skill-card">
+          <h3>Productivity & Design</h3>
+          <div class="skill-tags">
+            <span>Word</span>
+            <span>Excel</span>
+            <span>PowerPoint</span>
+            <span>Access</span>
+            <span>Photoshop</span>
+            <span>Illustrator</span>
+          </div>
+        </div>
+
         <div class="skill-card">
           <h3>Languages</h3>
-          <p>Fluent in Mandarin Chinese and English<br> Basic conversational Japanese.</p>
+          <div class="skill-tags">
+            <span>Mandarin Chinese</span>
+            <span>English</span>
+            <span>Japanese (Basic)</span>
+          </div>
         </div>
+
       </div>
     </section>
   </main>
