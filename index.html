@@ -5,6 +5,45 @@
   <title>Mark Sui - About</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <style>
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .skill-card {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+
+    .skill-card h3 {
+      margin: 0 0 0.7rem;
+      font-size: 1.08rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .skill-tags span {
+      display: inline-block;
+      padding: 0.25rem 0.55rem;
+      border: 1px solid #bbb;
+      border-radius: 999px;
+      background: #f7f7f4;
+      color: #111;
+      font-size: 0.92rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+  </style>
 
 </head>
 <body> 
@@ -23,12 +62,171 @@
     <section>
       <h2>About</h2>
       <p>
-        I’m <strong>Mark Sui</strong>, a graduate student in <strong>Electrical Engineering – Medical Devices & Systems</strong> at the University of California, San Diego. I hold dual bachelor’s degrees in <strong>Computer Engineering</strong> and <strong>Mathematics/Applied Science</strong>, and I also studied abroad at the National University of Singapore. <br> 
-        My background bridges hardware, software, and applied mathematics, with interests in <strong>embedded systems</strong>, <strong>machine learning</strong>, and <strong>AI for healthcare and the environment</strong>.  
-        I maintain a GPA of 3.6 and have been recognized with Provost Honors and the President’s Volunteer Service Award. 
+        I’m <strong>Mark Sui</strong>, a student at the University of California, San Diego studying
+        <strong>Electrical and Computer Engineering</strong>, <strong>Computer Engineering</strong>, and
+        <strong>Mathematics</strong>. My background bridges hardware, software, and applied mathematics,
+        with interests in <strong>embedded systems</strong>, <strong>computer architecture</strong>,
+        <strong>digital IC / VLSI design</strong>, and <strong>AI systems</strong>.<br>
+        This site is both a personal homepage and a portfolio: I use it to keep my education, projects,
+        experience, travel, photography, and other notes in one place.
       </p>
     </section>
 
+    <section>
+      <h2>Resume Updates</h2>
+      <ul>
+        <li>
+          <strong>Current Education Focus</strong><br>
+          <em>UC San Diego · Electrical and Computer Engineering</em><br>
+          Recent coursework and project focus include Digital IC Design (VLSI), Computer Architecture,
+          FPGA / RTL Design, timing analysis, and hardware verification.
+        </li>
+
+        <li>
+          <strong>Research Fellow – Handshake AI Fellowship</strong><br>
+          <em>Jun 2025 – Dec 2025 · Remote</em><br>
+          Built Python-based evaluation pipelines for agentic LLM systems, designed robustness stress tests,
+          and analyzed 10,000+ execution traces to identify regressions and failure modes.
+        </li>
+
+        <li>
+          <strong>Recent Hardware Projects</strong><br>
+          <em>RTL, FPGA, physical design, and embedded PCB work</em><br>
+          Added a dual-core vector accelerator, custom 8-bit RISC processor, convolutional Viterbi decoder,
+          and ESP32-S3 indoor environmental monitor to my project work.
+        </li>
+
+        <li>
+          <strong>Technical Skills</strong><br>
+          <em>Architecture, hardware design, performance, and tools</em><br>
+          Verilog/SystemVerilog, RTL design and verification, FPGA, Quartus, ModelSim, Cadence Virtuoso,
+          Innovus, SRAM-based memory systems, C/C++, Python, JavaScript, Git, Linux, TCL, and MATLAB.
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>Programming</h3>
+          <div class="skill-tags">
+            <span>Python</span>
+            <span>C</span>
+            <span>C++</span>
+            <span>Java</span>
+            <span>JavaScript</span>
+            <span>MATLAB</span>
+            <span>TCL</span>
+            <span>Verilog</span>
+            <span>SystemVerilog</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Hardware & Architecture</h3>
+          <div class="skill-tags">
+            <span>Computer Architecture</span>
+            <span>RTL Design</span>
+            <span>RTL Verification</span>
+            <span>FPGA</span>
+            <span>ASIC / VLSI</span>
+            <span>CMOS Logic</span>
+            <span>VHDL</span>
+            <span>SRAM Memory Systems</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Performance & Verification</h3>
+          <div class="skill-tags">
+            <span>Timing Closure</span>
+            <span>Pipeline Balancing</span>
+            <span>CDC Optimization</span>
+            <span>Throughput / Latency</span>
+            <span>VCD Waveforms</span>
+            <span>Regression Testing</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>AI & Data Science</h3>
+          <div class="skill-tags">
+            <span>Machine Learning</span>
+            <span>Deep Learning</span>
+            <span>PyTorch</span>
+            <span>TensorFlow</span>
+            <span>NumPy</span>
+            <span>Pandas</span>
+            <span>Data Analysis</span>
+            <span>Computer Graphics</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Embedded Systems</h3>
+          <div class="skill-tags">
+            <span>ESP32</span>
+            <span>Arduino</span>
+            <span>PCB Design</span>
+            <span>I2C</span>
+            <span>SPI</span>
+            <span>UART</span>
+            <span>Sensor Integration</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Math & Algorithms</h3>
+          <div class="skill-tags">
+            <span>Cryptography</span>
+            <span>Numerical Analysis</span>
+            <span>Real Analysis</span>
+            <span>Applied Mathematics</span>
+            <span>Linear Algebra</span>
+            <span>Probability</span>
+            <span>Algorithms</span>
+            <span>Data Structures</span>
+            <span>Graph Algorithms</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Tools</h3>
+          <div class="skill-tags">
+            <span>Git</span>
+            <span>Linux</span>
+            <span>LaTeX</span>
+            <span>Jupyter</span>
+            <span>Quartus</span>
+            <span>ModelSim</span>
+            <span>Cadence Virtuoso</span>
+            <span>Innovus</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Productivity & Design</h3>
+          <div class="skill-tags">
+            <span>Word</span>
+            <span>Excel</span>
+            <span>PowerPoint</span>
+            <span>Access</span>
+            <span>Photoshop</span>
+            <span>Illustrator</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <h3>Languages</h3>
+          <div class="skill-tags">
+            <span>Mandarin Chinese</span>
+            <span>English</span>
+            <span>Japanese (Basic)</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 </body>

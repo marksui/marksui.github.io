@@ -6,9 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <style>
-    body.locked {
-      display: none;
-    }
     details {
       margin: 1rem 0;
     }
@@ -33,14 +30,6 @@
       transform: scale(1.05);
     } 
   </style>
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var password = prompt("Please enter the password to access this page:");
-      if (password !== "2002") {
-        document.body.innerHTML = "<h1 style='text-align:center; margin-top: 3rem;'>Access Denied</h1>";
-      }
-    });
-  </script>
 </head>
 <body>
   <header>
@@ -49,7 +38,6 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
-      <a href="portfolio.html">Portfolio</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
