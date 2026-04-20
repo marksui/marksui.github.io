@@ -5,6 +5,7 @@
   <title>Mark Sui - About</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
   <style>
     .skills-grid {
       display: grid;
@@ -14,11 +15,11 @@
     }
 
     .skill-card {
-      border: 1px solid #ddd;
+      border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1rem;
-      background: #fff;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      background: var(--surface);
+      box-shadow: var(--shadow);
     }
 
     .skill-card h3 {
@@ -35,10 +36,10 @@
     .skill-tags span {
       display: inline-block;
       padding: 0.25rem 0.55rem;
-      border: 1px solid #bbb;
+      border: 1px solid var(--tag-border);
       border-radius: 999px;
-      background: #f7f7f4;
-      color: #111;
+      background: var(--tag-bg);
+      color: var(--text);
       font-size: 0.92rem;
       line-height: 1.25;
       white-space: nowrap;
