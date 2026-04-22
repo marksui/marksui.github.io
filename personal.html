@@ -9,11 +9,13 @@
   <script src="theme.js"></script>
   <style>
     .personal-main {
-      max-width: 1120px;
+      max-width: 1180px;
       --personal-accent: #55645e;
       --personal-secondary: #7b7467;
       --personal-rule: #d9d5cc;
       --personal-wash: rgba(85, 100, 94, 0.065);
+      --personal-panel: rgba(255, 255, 255, 0.78);
+      --personal-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
       --personal-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -22,39 +24,96 @@
       --personal-secondary: #b8b0a3;
       --personal-rule: #3f423f;
       --personal-wash: rgba(168, 182, 174, 0.08);
+      --personal-panel: rgba(24, 24, 24, 0.76);
+      --personal-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .travel-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+      gap: 1.8rem;
+      align-items: end;
+      min-width: 0;
+      padding-bottom: 1.55rem;
+      border-bottom: 1px solid var(--personal-rule);
+      animation: personalFadeUp 0.65s var(--personal-ease) both;
     }
 
     .travel-intro {
-      max-width: 720px;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--personal-rule);
-      animation: personalFadeUp 0.65s var(--personal-ease) both;
+      min-width: 0;
+      max-width: 760px;
+    }
+
+    .travel-kicker {
+      margin: 0 0 0.45rem;
+      color: var(--personal-accent);
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0;
     }
 
     .travel-intro h2 {
       margin-top: 0;
       margin-bottom: 0.55rem;
+      font-size: 2.45rem;
+      line-height: 1.04;
     }
 
     .travel-intro p {
       margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+    }
+
+    .travel-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .travel-stats div {
+      min-width: 0;
+      padding: 0.8rem 0.85rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent 78%),
+        var(--personal-panel);
+    }
+
+    .travel-stats dt {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .travel-stats dd {
+      margin: 0.25rem 0 0;
+      color: var(--personal-secondary);
+      font-size: 0.84rem;
+      line-height: 1.2;
     }
 
     .travel-dashboard {
       display: grid;
-      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.9fr);
-      gap: 1.25rem;
-      align-items: stretch;
-      margin-top: 1.35rem;
+      grid-template-columns: minmax(0, 1.48fr) minmax(300px, 0.78fr);
+      gap: 1.45rem;
+      align-items: start;
+      margin-top: 1.55rem;
       animation: personalFadeUp 0.7s var(--personal-ease) both;
     }
 
     .map-panel,
     .selected-panel {
+      min-width: 0;
       border: 1px solid var(--personal-rule);
       border-radius: 8px;
-      background: var(--surface);
-      box-shadow: none;
+      background: var(--personal-panel);
+      box-shadow: var(--personal-shadow);
       overflow: hidden;
     }
 
@@ -70,14 +129,22 @@
       align-items: baseline;
       border-bottom: 1px solid var(--personal-rule);
       background:
-        linear-gradient(180deg, var(--personal-wash), transparent),
-        var(--surface);
+        linear-gradient(180deg, var(--personal-wash), transparent 72%),
+        var(--personal-panel);
+    }
+
+    .map-title {
+      min-width: 0;
+    }
+
+    .map-title .eyebrow {
+      margin: 0 0 0.12rem;
     }
 
     .map-header h3,
     .selected-panel h3 {
       margin: 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
 
     .map-count,
@@ -85,21 +152,38 @@
       color: var(--personal-accent);
       font-size: 0.9rem;
       font-weight: bold;
-      letter-spacing: 0.02em;
+      letter-spacing: 0;
     }
 
     #travel-map {
       width: 100%;
-      height: 460px;
+      height: 430px;
       background: var(--tag-bg);
-      filter: saturate(0.76) contrast(0.98);
+      filter: saturate(0.68) contrast(0.98);
+    }
+
+    .leaflet-control-attribution,
+    .leaflet-control-zoom a {
+      font-family: inherit;
+    }
+
+    .leaflet-control-zoom {
+      border: 1px solid var(--personal-rule) !important;
+      box-shadow: none !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--surface) !important;
+      color: var(--text) !important;
     }
 
     .region-filters {
       display: flex;
       flex-wrap: wrap;
       gap: 0.45rem;
-      padding: 1rem;
+      max-height: 108px;
+      overflow: auto;
+      padding: 0.95rem 1rem 1rem;
       border-top: 1px solid var(--personal-rule);
     }
 
@@ -115,8 +199,10 @@
 
     .region-filter {
       border-radius: 999px;
-      padding: 0.28rem 0.65rem;
-      font-size: 0.92rem;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      white-space: nowrap;
     }
 
     .region-filter:hover,
@@ -128,12 +214,16 @@
     }
 
     .selected-panel {
+      position: sticky;
+      top: 1rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.85rem;
+      max-height: 620px;
+      overflow: auto;
       background:
-        linear-gradient(180deg, var(--personal-wash), transparent 36%),
-        var(--surface);
+        linear-gradient(180deg, var(--personal-wash), transparent 42%),
+        var(--personal-panel);
     }
 
     .selected-panel p {
@@ -145,25 +235,29 @@
       font-style: italic;
     }
 
-    .selected-spots {
-      line-height: 1.5;
+    .selected-photo-meta {
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--personal-rule);
+      color: var(--personal-secondary);
+      font-size: 0.86rem;
     }
 
     .photo-slots {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
-      gap: 0.85rem;
+      gap: 0.95rem;
       align-items: start;
-      margin-top: 0.35rem;
+      margin-top: 0.5rem;
     }
 
     .selected-panel .photo-slots {
       grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.72rem;
     }
 
     .photo-slot {
       grid-column: span 4;
-      min-height: 118px;
+      min-height: 126px;
       border: 1px dashed var(--personal-rule);
       border-radius: 8px;
       background:
@@ -183,15 +277,17 @@
       min-height: 0;
       overflow: hidden;
       border-style: solid;
-      background: var(--surface);
+      background: var(--personal-panel);
       opacity: 1;
-      transition: border-color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease;
+      box-shadow: 0 10px 28px rgba(53, 55, 49, 0.045);
+      transition: border-color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease, box-shadow 0.24s ease;
     }
 
     .photo-slot.filled:hover {
       border-color: var(--personal-accent);
       background: var(--personal-wash);
       transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(53, 55, 49, 0.075);
     }
 
     .photo-slot.landscape {
@@ -199,11 +295,20 @@
     }
 
     .photo-slot.portrait {
-      grid-column: span 3;
+      grid-column: span 6;
     }
 
-    .selected-panel .photo-slot {
+    .selected-panel .photo-slot.landscape {
       grid-column: span 6;
+    }
+
+    .selected-panel .photo-slot.portrait {
+      grid-column: span 6;
+    }
+
+    .selected-panel .photo-slot:not(.filled) {
+      grid-column: span 2;
+      min-height: 84px;
     }
 
     .photo-break {
@@ -240,6 +345,10 @@
       font-size: 0.82rem;
       line-height: 1.25;
       color: var(--personal-secondary);
+    }
+
+    .selected-panel .photo-slot figcaption {
+      font-size: 0.78rem;
     }
 
     body.viewer-open {
@@ -316,33 +425,72 @@
       background: rgba(255, 255, 255, 0.24);
     }
 
+    .places-section {
+      margin-top: 3.35rem;
+    }
+
+    .region-list {
+      margin: 0;
+    }
+
     .region-list details {
-      border-bottom: 1px solid var(--personal-rule);
-      padding: 0.7rem 0;
+      border-top: 1px solid var(--personal-rule);
+      padding: 0;
       animation: personalFadeUp 0.58s var(--personal-ease) both;
     }
 
     .region-list summary {
+      list-style: none;
       cursor: pointer;
       font-weight: bold;
-      font-size: 1.08rem;
+      padding: 1rem 0;
+      font-size: 1.16rem;
       transition: color 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .region-list summary::-webkit-details-marker {
+      display: none;
     }
 
     .region-list summary:hover {
       color: var(--personal-accent);
-      transform: translateX(2px);
     }
 
     .region-summary {
-      display: inline-flex;
+      display: flex;
       align-items: baseline;
+      justify-content: space-between;
       gap: 0.8rem;
       max-width: 100%;
     }
 
     .region-title {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.6rem;
       min-width: 0;
+    }
+
+    .region-title::before {
+      content: "+";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.35rem;
+      height: 1.35rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--personal-accent);
+      font-size: 0.92rem;
+      line-height: 1;
+      transition: border-color 0.24s ease, background 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .region-list details[open] .region-title::before {
+      content: "-";
+      border-color: var(--personal-accent);
+      background: var(--personal-wash);
+      transform: rotate(180deg);
     }
 
     .region-count {
@@ -361,33 +509,71 @@
     }
 
     .place-list {
-      margin-top: 0.75rem;
+      margin: 0;
       padding-left: 0;
     }
 
     .place-item {
-      margin-bottom: 1rem;
-      padding: 0.8rem 0;
+      display: grid;
+      grid-template-columns: minmax(220px, 0.46fr) minmax(0, 1fr);
+      gap: 1.15rem;
+      align-items: start;
+      margin: 0;
+      padding: 1.1rem 0 1.35rem;
+      border-top: 1px solid rgba(85, 100, 94, 0.16);
+    }
+
+    html[data-theme="dark"] .place-item {
+      border-top-color: rgba(168, 182, 174, 0.16);
     }
 
     .place-button {
+      position: sticky;
+      top: 1rem;
       width: 100%;
-      border-radius: 8px;
-      padding: 0.75rem 0.8rem;
+      border: 0;
+      border-left: 2px solid var(--personal-rule);
+      border-radius: 0;
+      padding: 0.1rem 0 0.1rem 0.85rem;
       text-align: left;
     }
 
     .place-button:hover,
     .place-button.active {
       border-color: var(--personal-accent);
-      background: var(--personal-wash);
-      transform: translateY(-1px);
+      background: transparent;
+      color: var(--personal-accent);
+      transform: translateX(2px);
+    }
+
+    .place-topline {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .place-name {
       display: block;
       font-weight: bold;
       margin-bottom: 0.2rem;
+    }
+
+    .place-photo-count {
+      flex: 0 0 auto;
+      padding: 0.12rem 0.45rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--personal-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .place-button.active .place-photo-count,
+    .place-button:hover .place-photo-count {
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
     }
 
     .local-name {
@@ -439,22 +625,60 @@
     }
 
     @media (max-width: 820px) {
+      .travel-hero {
+        grid-template-columns: 1fr;
+      }
+
       .travel-dashboard {
         grid-template-columns: 1fr;
       }
 
       #travel-map {
-        height: 360px;
+        height: 320px;
       }
 
       .selected-panel {
+        position: static;
         background: var(--surface);
+      }
+
+      .place-item {
+        grid-template-columns: 1fr;
+      }
+
+      .place-button {
+        position: static;
       }
     }
 
     @media (max-width: 540px) {
       .map-header {
         display: block;
+      }
+
+      .map-count {
+        display: block;
+        margin-top: 0.45rem;
+      }
+
+      .travel-intro h2 {
+        font-size: 2.1rem;
+      }
+
+      .travel-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .region-filters {
+        flex-wrap: nowrap;
+        max-height: none;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: thin;
+      }
+
+      .region-filter {
+        flex: 0 0 auto;
       }
 
       .photo-slots {
@@ -511,17 +735,34 @@
 
   <main class="personal-main">
     <section>
-      <div class="travel-intro">
-        <h2>Travel & Photography</h2>
-        <p>
-          I enjoy exploring new places and capturing memories through photography. The map highlights places I have visited; click a marker or a place below to bring up its major sights and photo spaces.
-        </p>
+      <div class="travel-hero">
+        <div class="travel-intro">
+          <p class="travel-kicker">Personal Archive</p>
+          <h2>Travel & Photography</h2>
+          <p>
+            A quiet archive of cities, museums, landscapes, and small details collected while moving through different places.
+          </p>
+        </div>
+
+        <dl class="travel-stats" aria-label="Travel archive totals">
+          <div>
+            <dt id="stat-places">0</dt>
+            <dd>Places</dd>
+          </div>
+          <div>
+            <dt id="stat-photos">0</dt>
+            <dd>Photos</dd>
+          </div>
+        </dl>
       </div>
 
       <div class="travel-dashboard">
         <div class="map-panel">
           <div class="map-header">
-            <h3>Visited Map</h3>
+            <div class="map-title">
+              <p class="eyebrow">Atlas</p>
+              <h3>Visited Map</h3>
+            </div>
             <span class="map-count" id="map-count"></span>
           </div>
           <div id="travel-map"></div>
@@ -532,14 +773,14 @@
           <p class="eyebrow">Selected Place</p>
           <h3 id="selected-place"></h3>
           <p class="selected-meta" id="selected-region"></p>
-          <p class="selected-spots" id="selected-spots"></p>
+          <p class="selected-photo-meta" id="selected-photo-meta"></p>
           <div class="photo-slots" id="selected-photos"></div>
         </aside>
       </div>
     </section>
 
-    <section>
-      <h2>Places</h2>
+    <section class="places-section">
+      <h2>Places / Photos</h2>
       <ul class="region-list" id="region-list"></ul>
     </section>
   </main>
@@ -569,7 +810,7 @@
         region: "Nevada",
         name: "Las Vegas",
         coords: [36.1699, -115.1398],
-        spots: ["The Strip", "Bellagio Fountains", "Fremont Street", "Arte Museum Las Vegas"],
+        spots: ["Arte Museum Las Vegas"],
         photos: [
           { src: "img/nevada/las-vegas-arte-museum-flower-lights.jpg", caption: "Arte Museum Las Vegas - Flower Lights" },
           { src: "img/nevada/las-vegas-arte-museum-floral-room.jpg", caption: "Arte Museum Las Vegas - Floral Room" },
@@ -668,8 +909,8 @@
         name: "Taipei",
         localName: "臺北",
         coords: [25.0330, 121.5654],
-        spots: ["Taipei 101", "The Grand Hotel", "Chiang Kai-shek Memorial Hall", "Ximending"],
-        spotsLocal: ["台北101", "圓山大飯店", "中正紀念堂", "西門町"],
+        spots: ["The Grand Hotel"],
+        spotsLocal: ["圓山大飯店"],
         photos: [
           { src: "img/taiwan/grand-hotel-taipei-christmas-tree.jpg", caption: "Taipei - The Grand Hotel Christmas Tree" },
           { src: "img/taiwan/grand-hotel-taipei-ceiling.jpg", caption: "Taipei - The Grand Hotel Ceiling" },
@@ -683,8 +924,8 @@
         name: "Nantou",
         localName: "南投",
         coords: [23.8656, 120.9159],
-        spots: ["Sun Moon Lake", "Shuishe Pier", "Ita Thao"],
-        spotsLocal: ["日月潭", "水社碼頭", "伊達邵"],
+        spots: ["Sun Moon Lake"],
+        spotsLocal: ["日月潭"],
         photos: [
           { src: "img/taiwan/sun-moon-lake-lake-view.jpg", caption: "Sun Moon Lake / 日月潭 - Lake View" },
           { src: "img/taiwan/sun-moon-lake-trail.jpg", caption: "Sun Moon Lake / 日月潭 - Trail" },
@@ -707,20 +948,195 @@
         ]
       },
       { region: "Taiwan", name: "Kaohsiung", localName: "高雄", coords: [22.6273, 120.3014], spots: ["Lotus Pond", "Pier-2 Art Center"], spotsLocal: ["蓮池潭", "駁二藝術特區"] },
-      { region: "Yunnan", name: "Kunming", localName: "昆明", coords: [25.0389, 102.7183], spots: ["Dianchi Lake", "Stone Forest", "Green Lake Park"] },
-      { region: "Yunnan", name: "Dali", localName: "大理", coords: [25.6065, 100.2676], spots: ["Erhai Lake", "Dali Ancient City", "Cangshan"] },
-      { region: "Yunnan", name: "Lijiang", localName: "丽江", coords: [26.8721, 100.2296], spots: ["Lijiang Old Town", "Jade Dragon Snow Mountain", "Black Dragon Pool"] },
-      { region: "Guizhou", name: "Guiyang", localName: "贵阳", coords: [26.6470, 106.6302], spots: ["Jiaxiu Pavilion", "Qingyan Ancient Town"] },
-      { region: "Guizhou", name: "Zunyi", localName: "遵义", coords: [27.7257, 106.9274], spots: ["Zunyi Conference Site", "Hongjun Mountain"] },
-      { region: "Guizhou", name: "Renhuai", localName: "仁怀", coords: [27.7926, 106.4012], spots: ["Maotai Distillery", "Chishui River"] },
-      { region: "Guizhou", name: "Anshun", localName: "安顺", coords: [26.2456, 105.9322], spots: ["Huangguoshu Waterfall", "Tianxingqiao Scenic Area"] },
-      { region: "Shandong", name: "Qingdao", localName: "青岛", coords: [36.0671, 120.3826], spots: ["Zhanqiao Pier", "Badaguan", "May Fourth Square"] },
-      { region: "Shandong", name: "Gaomi", localName: "高密", coords: [36.3833, 119.7520], spots: ["Mo Yan Former Residence", "Gaomi City Museum"] },
-      { region: "Fujian", name: "Fuzhou", localName: "福州", coords: [26.0745, 119.2965], spots: ["Three Lanes and Seven Alleys", "West Lake Park"] },
-      { region: "Hubei", name: "Wuhan", localName: "武汉", coords: [30.5928, 114.3055], spots: ["Yellow Crane Tower", "East Lake", "Wuhan Yangtze River Bridge"] },
-      { region: "Jilin", name: "Changchun", localName: "长春", coords: [43.8171, 125.3235], spots: ["Puppet Emperor's Palace Museum", "Jingyuetan National Forest Park"] },
-      { region: "Jilin", name: "Songyuan", localName: "松原", coords: [45.1411, 124.8251], spots: ["Chagan Lake", "Songyuan Museum"] },
-      { region: "Liaoning", name: "Shenyang", localName: "沈阳", coords: [41.8057, 123.4315], spots: ["Shenyang Imperial Palace", "Marshal Zhang's Mansion"] }
+      {
+        region: "Yunnan",
+        name: "Kunming",
+        localName: "昆明",
+        coords: [25.0389, 102.7183],
+        spots: ["Dianchi Lake", "Stone Forest", "Green Lake Park"],
+        spotsLocal: ["滇池", "石林", "翠湖公园"],
+        photos: [
+          { src: "img/云南/DSC09902.jpg", caption: "Kunming / 昆明 - Garden Lake View" },
+          { src: "img/云南/DSC09918.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Rock Window" },
+          { src: "img/云南/DSC09942.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Karst Passage" },
+          { src: "img/云南/DSC09945.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Mossy Path" }
+        ]
+      },
+      {
+        region: "Yunnan",
+        name: "Dali",
+        localName: "大理",
+        coords: [25.6065, 100.2676],
+        spots: ["Erhai Lake"],
+        spotsLocal: ["洱海"],
+        photos: [
+          { src: "img/云南/DSC09888.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Mountain Horizon" },
+          { src: "img/云南/DSC09894.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Lakeside View" },
+          { src: "img/云南/DSC09974.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Water and Mountains" }
+        ]
+      },
+      {
+        region: "Yunnan",
+        name: "Lijiang",
+        localName: "丽江",
+        coords: [26.8721, 100.2296],
+        spots: ["Lijiang Old Town", "Jade Dragon Snow Mountain", "Blue Moon Valley", "Black Dragon Pool"],
+        spotsLocal: ["丽江古城", "玉龙雪山", "蓝月谷", "黑龙潭"],
+        photos: [
+          { src: "img/云南/DSC00015.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Highland Meadow" },
+          { src: "img/云南/DSC00036.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Yak Trail" },
+          { src: "img/云南/DSC00045.JPG", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Cloudy Meadow" },
+          { src: "img/云南/DSC00054.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Walk" },
+          { src: "img/云南/DSC00077.JPG", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Valley View" },
+          { src: "img/云南/DSC00108.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Turquoise Water" },
+          { src: "img/云南/DSC00114.JPG", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Waterfall Steps" },
+          { src: "img/云南/DSC00117.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Canopy" },
+          { src: "img/云南/DSC00118.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Clear Pool" },
+          { src: "img/云南/DSC00125.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Mountain Stream" },
+          { src: "img/云南/DSC00127.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier" },
+          { src: "img/云南/DSC00132.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier View" },
+          { src: "img/云南/DSC00141.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Misty Peak" },
+          { src: "img/云南/DSC00157.jpg", caption: "Lijiang / 丽江 - Evening City View" },
+          { src: "img/云南/DSC00160.jpg", caption: "Lijiang / 丽江 - Mountain City View" }
+        ]
+      },
+      {
+        region: "Guizhou",
+        name: "Guiyang",
+        localName: "贵阳",
+        coords: [26.6470, 106.6302],
+        spots: ["Xifeng Concentration Camp"],
+        spotsLocal: ["息烽集中营"],
+        photos: [
+          { src: "img/贵州/DSC00024.jpg", caption: "Guiyang / 贵阳 - Memorial Grounds" },
+          { src: "img/贵州/DSC00096.jpg", caption: "Guiyang / 贵阳 - Temple Courtyard" },
+          { src: "img/贵州/息烽集中营.jpg", caption: "Guiyang / 贵阳 - Xifeng Concentration Camp / 息烽集中营" }
+        ]
+      },
+      {
+        region: "Guizhou",
+        name: "Zunyi",
+        localName: "遵义",
+        coords: [27.7257, 106.9274],
+        spots: ["Zunyi Conference Site", "Hongjun Mountain", "Historical Exhibition"],
+        spotsLocal: ["遵义会议会址", "红军山", "历史展陈"],
+        photos: [
+          { src: "img/贵州/DSC00144.jpg", caption: "Zunyi / 遵义 - Historical Exhibition" },
+          { src: "img/贵州/DSC09776.jpg", caption: "Zunyi / 遵义 - City View" },
+          { src: "img/贵州/DSC09826.JPG", caption: "Zunyi / 遵义 - Historical Document" },
+          { src: "img/贵州/DSC09828.JPG", caption: "Zunyi / 遵义 - Exhibition Detail" },
+          { src: "img/贵州/DSC09830.JPG", caption: "Zunyi / 遵义 - Museum Artifact" },
+          { src: "img/贵州/毛泽东住居.jpg", caption: "Zunyi / 遵义 - Mao Zedong Residence / 毛泽东住居" },
+          { src: "img/贵州/遵义会议.jpg", caption: "Zunyi / 遵义 - Zunyi Conference Site / 遵义会议会址" }
+        ]
+      },
+      {
+        region: "Guizhou",
+        name: "Renhuai",
+        localName: "仁怀",
+        coords: [27.7926, 106.4012],
+        spots: ["Maotai Town", "Chishui River", "Maotai Distillery"],
+        spotsLocal: ["茅台镇", "赤水河", "茅台酒厂"],
+        photos: [
+          { src: "img/贵州/DSC00114 2.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - River Valley" },
+          { src: "img/贵州/DSC00120.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Hillside View" },
+          { src: "img/贵州/DSC00125 2.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Mountain Town" },
+          { src: "img/贵州/DSC00126.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Red Bridge" },
+          { src: "img/贵州/DSC00131.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Riverside Buildings" },
+          { src: "img/贵州/DSC00137.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Green Hills" }
+        ]
+      },
+      {
+        region: "Guizhou",
+        name: "Anshun",
+        localName: "安顺",
+        coords: [26.2456, 105.9322],
+        spots: ["Huangguoshu Waterfall", "Tianxingqiao Scenic Area"],
+        spotsLocal: ["黄果树瀑布", "天星桥景区"],
+        photos: [
+          { src: "img/贵州/DSC09853.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Water Trail" },
+          { src: "img/贵州/DSC09855.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Bridge View" },
+          { src: "img/贵州/DSC09879.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Mist View" },
+          { src: "img/贵州/DSC09896.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Wide View" }
+        ]
+      },
+      {
+        region: "Shandong",
+        name: "Qingdao",
+        localName: "青岛",
+        coords: [36.0671, 120.3826],
+        spots: ["Laoshan"],
+        spotsLocal: ["崂山"],
+        photos: [
+          { src: "img/山东/DSC09655.jpg", caption: "Qingdao / 青岛 - Park Lake Tower" },
+          { src: "img/山东/DSC09675.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain View" },
+          { src: "img/山东/DSC09682.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Cloudy Hills" },
+          { src: "img/山东/DSC09691.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Forest Walk" },
+          { src: "img/山东/DSC09746.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Monkey" },
+          { src: "img/山东/DSC09753.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain Stream" },
+          { src: "img/山东/DSC09755.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Gorge View" }
+        ]
+      },
+      { region: "Shandong", name: "Gaomi", localName: "高密", coords: [36.3833, 119.7520], spots: ["Mo Yan Former Residence", "Gaomi City Museum"], spotsLocal: ["莫言旧居", "高密市博物馆"] },
+      { region: "Fujian", name: "Fuzhou", localName: "福州", coords: [26.0745, 119.2965], spots: ["Three Lanes and Seven Alleys", "West Lake Park"], spotsLocal: ["三坊七巷", "西湖公园"] },
+      { region: "Hubei", name: "Wuhan", localName: "武汉", coords: [30.5928, 114.3055], spots: ["Yellow Crane Tower", "East Lake", "Wuhan Yangtze River Bridge"], spotsLocal: ["黄鹤楼", "东湖", "武汉长江大桥"] },
+      {
+        region: "Jilin",
+        name: "Changchun",
+        localName: "长春",
+        coords: [43.8171, 125.3235],
+        spots: ["Puppet Emperor's Palace Museum", "Jingyuetan National Forest Park", "City Streets"],
+        spotsLocal: ["伪满皇宫博物院", "净月潭国家森林公园", "城市街景"],
+        photos: [
+          { src: "img/吉林/DSC00172.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Gate" },
+          { src: "img/吉林/DSC00190.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Chandelier" },
+          { src: "img/吉林/DSC00192.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Interior Room" },
+          { src: "img/吉林/DSC00196.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Corridor View" },
+          { src: "img/吉林/DSC00202.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Historical Document" },
+          { src: "img/吉林/DSC00215.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Exhibition Flag" },
+          { src: "img/吉林/DSC00231.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Throne Room" },
+          { src: "img/吉林/DSC00250.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Palace Roof" },
+          { src: "img/吉林/DSC00264.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Roof Detail" },
+          { src: "img/吉林/DSC00275.JPG", caption: "Changchun / 长春 - City Road" },
+          { src: "img/吉林/DSC00282.JPG", caption: "Changchun / 长春 - Monument Sculpture" },
+          { src: "img/吉林/DSC00292.jpg", caption: "Changchun / 长春 - Monument Building" },
+          { src: "img/吉林/DSC00308.jpg", caption: "Changchun / 长春 - Red Brick Building" },
+          { src: "img/吉林/DSC00358.jpg", caption: "Changchun / 长春 - Museum Vehicle" },
+          { src: "img/吉林/DSC00371.JPG", caption: "Changchun / 长春 - Night Street" }
+        ]
+      },
+      { region: "Jilin", name: "Songyuan", localName: "松原", coords: [45.1411, 124.8251], spots: ["Chagan Lake", "Songyuan Museum"], spotsLocal: ["查干湖", "松原市博物馆"] },
+      {
+        region: "Liaoning",
+        name: "Shenyang",
+        localName: "沈阳",
+        coords: [41.8057, 123.4315],
+        spots: ["Shenyang Imperial Palace", "Marshal Zhang's Mansion", "Liaoning Provincial Museum"],
+        spotsLocal: ["沈阳故宫", "张氏帅府", "辽宁省博物馆"],
+        photos: [
+          { src: "img/辽宁/DSC00376.JPG", caption: "Shenyang / 沈阳 - Museum Facade" },
+          { src: "img/辽宁/DSC00420.JPG", caption: "Shenyang / 沈阳 - Historical Painting" },
+          { src: "img/辽宁/DSC00472.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Courtyard" },
+          { src: "img/辽宁/DSC00525.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Gate" },
+          { src: "img/辽宁/DSC00529.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Interior Detail" },
+          { src: "img/辽宁/DSC00533.JPG", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Hall" },
+          { src: "img/辽宁/DSC00571.JPG", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Painted Column" },
+          { src: "img/辽宁/DSC00590.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Roofline" },
+          { src: "img/辽宁/DSC00606.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Door Plaque" },
+          { src: "img/辽宁/DSC00624.jpg", caption: "Shenyang / 沈阳 - Museum Artifact" },
+          { src: "img/辽宁/DSC00647.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Exterior" },
+          { src: "img/辽宁/DSC00697.JPG", caption: "Shenyang / 沈阳 - Interior Pattern" },
+          { src: "img/辽宁/DSC00722.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Interior Room" },
+          { src: "img/辽宁/DSC00726.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Meeting Room" },
+          { src: "img/辽宁/DSC00728.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Study Room" },
+          { src: "img/辽宁/DSC00736.JPG", caption: "Shenyang / 沈阳 - Museum Sculpture" },
+          { src: "img/辽宁/DSC00741.JPG", caption: "Shenyang / 沈阳 - Museum Artifact" },
+          { src: "img/辽宁/DSC00743.JPG", caption: "Shenyang / 沈阳 - Museum Artifacts" },
+          { src: "img/辽宁/DSC00745.JPG", caption: "Shenyang / 沈阳 - Museum Figure" },
+          { src: "img/辽宁/DSC00805.jpg", caption: "Shenyang / 沈阳 - Ceramic Vase" },
+          { src: "img/辽宁/Snapseed.jpg", caption: "Shenyang / 沈阳 - Palace Plaque Detail" }
+        ]
+      }
     ];
 
     var regionLocalNames = {
@@ -743,7 +1159,12 @@
       Liaoning: "辽宁"
     };
 
-    var selectedIndex = 0;
+    var selectedIndex = places.findIndex(function(place) {
+      return place.photos && place.photos.length;
+    });
+    if (selectedIndex < 0) {
+      selectedIndex = 0;
+    }
     var currentRegion = "All";
     var markers = [];
     var map;
@@ -758,6 +1179,35 @@
       return regions;
     }
 
+    function countPhotosForPlace(place) {
+      return place.photos ? place.photos.length : 0;
+    }
+
+    function totalPhotoCount() {
+      return places.reduce(function(total, place) {
+        return total + countPhotosForPlace(place);
+      }, 0);
+    }
+
+    function photoLabel(count) {
+      return count + " photo" + (count === 1 ? "" : "s");
+    }
+
+    function firstIndexForRegion(region) {
+      if (region === "All") {
+        return selectedIndex;
+      }
+
+      return places.findIndex(function(place) {
+        return place.region === region;
+      });
+    }
+
+    function setTravelStats() {
+      document.getElementById("stat-places").textContent = places.length;
+      document.getElementById("stat-photos").textContent = totalPhotoCount();
+    }
+
     function markerStyle(active) {
       return {
         radius: active ? 9 : 6,
@@ -768,9 +1218,10 @@
       };
     }
 
-    function makePhotoSlots(place) {
+    function makePhotoSlots(place, limit) {
       if (place && place.photos && place.photos.length) {
-        return place.photos.map(function(photo) {
+        var photos = limit ? place.photos.slice(0, limit) : place.photos;
+        return photos.map(function(photo) {
           var caption = photo.caption || "";
           return '' +
             '<figure class="photo-slot filled">' +
@@ -906,6 +1357,14 @@
       }).join(" · ");
     }
 
+    function placeDetailsHtml(place) {
+      if (!place.photos || !place.photos.length || !place.spots || !place.spots.length) {
+        return "";
+      }
+
+      return '<span class="place-spots">' + spotsHtml(place) + '</span>';
+    }
+
     function regionHtml(region) {
       return htmlLabel(region, regionLocalNames[region]);
     }
@@ -919,8 +1378,8 @@
       var place = places[index];
       document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
       document.getElementById("selected-region").innerHTML = regionHtml(place.region);
-      document.getElementById("selected-spots").innerHTML = spotsHtml(place);
-      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place);
+      document.getElementById("selected-photo-meta").textContent = photoLabel(countPhotosForPlace(place));
+      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place, 2);
       organizePhotoGrids(document.getElementById("selected-photos"));
 
       markers.forEach(function(marker, markerIndex) {
@@ -928,7 +1387,9 @@
       });
 
       document.querySelectorAll(".place-button").forEach(function(button) {
-        button.classList.toggle("active", Number(button.dataset.index) === index);
+        var active = Number(button.dataset.index) === index;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
       });
 
       if (map && moveMap) {
@@ -967,12 +1428,16 @@
       filterWrap.innerHTML = regions.map(function(region) {
         var activeClass = region === currentRegion ? " active" : "";
         var label = region === "All" ? "All" : regionHtml(region);
-        return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '">' + label + '</button>';
+        return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '" aria-pressed="' + String(region === currentRegion) + '">' + label + '</button>';
       }).join("");
 
       filterWrap.querySelectorAll(".region-filter").forEach(function(button) {
         button.addEventListener("click", function() {
           currentRegion = button.dataset.region;
+          var nextIndex = firstIndexForRegion(currentRegion);
+          if (nextIndex >= 0) {
+            selectedIndex = nextIndex;
+          }
           renderFilters();
           renderRegionList();
           fitMapToRegion(currentRegion);
@@ -996,17 +1461,22 @@
           });
 
         var placeHtml = regionPlaces.map(function(item) {
+          var placePhotoCount = countPhotosForPlace(item.place);
+          var active = item.index === selectedIndex;
           return '' +
             '<li class="place-item">' +
-              '<button class="place-button" type="button" data-index="' + item.index + '">' +
-                '<span class="place-name">' + htmlLabel(item.place.name, item.place.localName) + '</span>' +
-                '<span class="place-spots">' + spotsHtml(item.place) + '</span>' +
+              '<button class="place-button' + (active ? ' active' : '') + '" type="button" data-index="' + item.index + '" aria-pressed="' + String(active) + '">' +
+                '<span class="place-topline">' +
+                  '<span class="place-name">' + htmlLabel(item.place.name, item.place.localName) + '</span>' +
+                  '<span class="place-photo-count">' + photoLabel(placePhotoCount) + '</span>' +
+                '</span>' +
+                placeDetailsHtml(item.place) +
               '</button>' +
               '<div class="photo-slots">' + makePhotoSlots(item.place) + '</div>' +
             '</li>';
         }).join("");
 
-        var open = currentRegion === region ? " open" : "";
+        var open = currentRegion === region || (currentRegion === "All" && places[selectedIndex].region === region) ? " open" : "";
         return '' +
           '<li>' +
             '<details' + open + '>' +
@@ -1039,7 +1509,7 @@
     }
 
     function initMap() {
-      document.getElementById("map-count").textContent = places.length + " places";
+      document.getElementById("map-count").textContent = places.length + " places · " + totalPhotoCount() + " photos";
       if (!window.L) {
         document.getElementById("travel-map").textContent = "Map is unavailable.";
         return;
@@ -1059,6 +1529,10 @@
           .bindTooltip(textLabel(place.name, place.localName), { direction: "top", opacity: 0.9 });
 
         marker.on("click", function() {
+          currentRegion = place.region;
+          selectedIndex = index;
+          renderFilters();
+          renderRegionList();
           updateSelected(index, true);
         });
 
@@ -1087,10 +1561,11 @@
       }
     });
 
+    setTravelStats();
     renderFilters();
     renderRegionList();
     initMap();
-    updateSelected(0, false);
+    updateSelected(selectedIndex, false);
   </script>
 </body>
 </html>
