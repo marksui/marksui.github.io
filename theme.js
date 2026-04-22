@@ -60,6 +60,7 @@
       updateButton(button, nextTheme);
     });
 
-    document.body.appendChild(button);
+    var nav = document.querySelector("header nav");
+    (nav || document.body).appendChild(button);
   });
 })();

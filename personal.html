@@ -179,12 +179,13 @@
 
     .region-filters {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 0.45rem;
-      max-height: 108px;
-      overflow: auto;
+      overflow-x: auto;
+      overflow-y: hidden;
       padding: 0.95rem 1rem 1rem;
       border-top: 1px solid var(--personal-rule);
+      scrollbar-width: thin;
     }
 
     .region-filter,
@@ -198,6 +199,7 @@
     }
 
     .region-filter {
+      flex: 0 0 auto;
       border-radius: 999px;
       padding: 0.3rem 0.7rem;
       font-size: 0.9rem;
@@ -256,7 +258,7 @@
     }
 
     .photo-slot {
-      grid-column: span 4;
+      grid-column: span 3;
       min-height: 126px;
       border: 1px dashed var(--personal-rule);
       border-radius: 8px;
@@ -291,11 +293,11 @@
     }
 
     .photo-slot.landscape {
-      grid-column: span 6;
+      grid-column: span 4;
     }
 
     .photo-slot.portrait {
-      grid-column: span 6;
+      grid-column: span 3;
     }
 
     .selected-panel .photo-slot.landscape {
@@ -429,6 +431,48 @@
       margin-top: 3.35rem;
     }
 
+    .places-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .places-header h2 {
+      margin: 0;
+    }
+
+    .places-view-toggle {
+      display: inline-flex;
+      gap: 0.35rem;
+      padding: 0.18rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      background: var(--personal-panel);
+    }
+
+    .places-view-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.3rem 0.72rem;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88rem;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: background 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .places-view-button:hover,
+    .places-view-button.active {
+      background: var(--personal-wash);
+      color: var(--personal-accent);
+      transform: translateY(-1px);
+    }
+
     .region-list {
       margin: 0;
     }
@@ -515,11 +559,11 @@
 
     .place-item {
       display: grid;
-      grid-template-columns: minmax(220px, 0.46fr) minmax(0, 1fr);
-      gap: 1.15rem;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
       align-items: start;
       margin: 0;
-      padding: 1.1rem 0 1.35rem;
+      padding: 1rem 0 1.25rem;
       border-top: 1px solid rgba(85, 100, 94, 0.16);
     }
 
@@ -528,13 +572,12 @@
     }
 
     .place-button {
-      position: sticky;
-      top: 1rem;
       width: 100%;
       border: 0;
-      border-left: 2px solid var(--personal-rule);
+      border-left: 0;
+      border-bottom: 1px solid var(--personal-rule);
       border-radius: 0;
-      padding: 0.1rem 0 0.1rem 0.85rem;
+      padding: 0 0 0.55rem;
       text-align: left;
     }
 
@@ -543,14 +586,15 @@
       border-color: var(--personal-accent);
       background: transparent;
       color: var(--personal-accent);
-      transform: translateX(2px);
+      transform: translateY(-1px);
     }
 
     .place-topline {
       display: flex;
       align-items: baseline;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 0.75rem;
+      flex-wrap: wrap;
     }
 
     .place-name {
@@ -583,7 +627,8 @@
     }
 
     .place-spots {
-      display: block;
+      display: inline-block;
+      margin-top: 0.2rem;
       font-style: italic;
       opacity: 0.85;
       line-height: 1.4;
@@ -652,6 +697,10 @@
     }
 
     @media (max-width: 540px) {
+      .personal-main {
+        padding-bottom: 2rem;
+      }
+
       .map-header {
         display: block;
       }
@@ -669,16 +718,12 @@
         grid-template-columns: 1fr;
       }
 
-      .region-filters {
-        flex-wrap: nowrap;
-        max-height: none;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scrollbar-width: thin;
+      .places-header {
+        display: block;
       }
 
-      .region-filter {
-        flex: 0 0 auto;
+      .places-view-toggle {
+        margin-top: 0.65rem;
       }
 
       .photo-slots {
@@ -721,7 +766,7 @@
     }
   </style>
 </head>
-<body>
+<body class="personal-page">
   <header>
     <h1>Mark Sui</h1>
     <nav>
@@ -780,7 +825,13 @@
     </section>
 
     <section class="places-section">
-      <h2>Places / Photos</h2>
+      <div class="places-header">
+        <h2>Places / Photos</h2>
+        <div class="places-view-toggle" aria-label="Places view">
+          <button class="places-view-button active" type="button" data-places-view="photos">Photos</button>
+          <button class="places-view-button" type="button" data-places-view="all">All Places</button>
+        </div>
+      </div>
       <ul class="region-list" id="region-list"></ul>
     </section>
   </main>
@@ -1166,6 +1217,7 @@
       selectedIndex = 0;
     }
     var currentRegion = "All";
+    var placesView = "photos";
     var markers = [];
     var map;
 
@@ -1186,6 +1238,12 @@
     function totalPhotoCount() {
       return places.reduce(function(total, place) {
         return total + countPhotosForPlace(place);
+      }, 0);
+    }
+
+    function regionPhotoCount(region) {
+      return places.reduce(function(total, place) {
+        return total + (place.region === region ? countPhotosForPlace(place) : 0);
       }, 0);
     }
 
@@ -1218,7 +1276,7 @@
       };
     }
 
-    function makePhotoSlots(place, limit) {
+    function makePhotoSlots(place, limit, includePlaceholders) {
       if (place && place.photos && place.photos.length) {
         var photos = limit ? place.photos.slice(0, limit) : place.photos;
         return photos.map(function(photo) {
@@ -1231,6 +1289,10 @@
               '<figcaption>' + escapeHtml(caption) + '</figcaption>' +
             '</figure>';
         }).join("");
+      }
+
+      if (includePlaceholders === false) {
+        return "";
       }
 
       return '<div class="photo-slot">Photo</div><div class="photo-slot">Photo</div><div class="photo-slot">Photo</div>';
@@ -1267,12 +1329,9 @@
         grid.appendChild(figure);
       });
 
-      if (landscapes.length && portraits.length) {
-        var divider = document.createElement("div");
-        divider.className = "photo-break";
-        divider.setAttribute("aria-hidden", "true");
-        grid.insertBefore(divider, portraits[0]);
-      }
+      landscapes.concat(portraits).forEach(function(figure) {
+        grid.appendChild(figure);
+      });
     }
 
     function setPhotoOrientation(figure, image, grid) {
@@ -1445,24 +1504,51 @@
       });
     }
 
+    function renderPlacesViewToggle() {
+      document.querySelectorAll(".places-view-button").forEach(function(button) {
+        var active = button.dataset.placesView === placesView;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+    }
+
+    function regionsForPlacesList() {
+      var regions = uniqueRegions();
+      if (currentRegion !== "All") {
+        return regions.filter(function(region) {
+          return region === currentRegion;
+        });
+      }
+
+      if (placesView === "photos") {
+        return regions.filter(function(region) {
+          return regionPhotoCount(region) > 0;
+        });
+      }
+
+      return regions;
+    }
+
     function renderRegionList() {
       var list = document.getElementById("region-list");
-      var regions = uniqueRegions().filter(function(region) {
-        return currentRegion === "All" || currentRegion === region;
-      });
+      var regions = regionsForPlacesList();
 
       list.innerHTML = regions.map(function(region) {
+        var photoOnly = placesView === "photos" && currentRegion === "All";
         var regionPlaces = places
           .map(function(place, index) {
             return { place: place, index: index };
           })
           .filter(function(item) {
-            return item.place.region === region;
+            return item.place.region === region && (!photoOnly || countPhotosForPlace(item.place) > 0);
           });
 
         var placeHtml = regionPlaces.map(function(item) {
           var placePhotoCount = countPhotosForPlace(item.place);
           var active = item.index === selectedIndex;
+          var photoGrid = placePhotoCount
+            ? '<div class="photo-slots">' + makePhotoSlots(item.place, null, false) + '</div>'
+            : '';
           return '' +
             '<li class="place-item">' +
               '<button class="place-button' + (active ? ' active' : '') + '" type="button" data-index="' + item.index + '" aria-pressed="' + String(active) + '">' +
@@ -1472,15 +1558,16 @@
                 '</span>' +
                 placeDetailsHtml(item.place) +
               '</button>' +
-              '<div class="photo-slots">' + makePhotoSlots(item.place) + '</div>' +
+              photoGrid +
             '</li>';
         }).join("");
 
         var open = currentRegion === region || (currentRegion === "All" && places[selectedIndex].region === region) ? " open" : "";
+        var regionCount = photoOnly ? regionPhotoCount(region) : regionPlaces.length;
         return '' +
           '<li>' +
             '<details' + open + '>' +
-              '<summary><span class="region-summary"><span class="region-title"><strong>' + regionHtml(region) + '</strong></span><span class="region-count">' + regionPlaces.length + '</span></span></summary>' +
+              '<summary><span class="region-summary"><span class="region-title"><strong>' + regionHtml(region) + '</strong></span><span class="region-count">' + regionCount + '</span></span></summary>' +
               '<ul class="place-list">' + placeHtml + '</ul>' +
             '</details>' +
           '</li>';
@@ -1519,8 +1606,8 @@
         scrollWheelZoom: false
       });
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors"
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
       }).addTo(map);
 
       markers = places.map(function(place, index) {
@@ -1561,8 +1648,17 @@
       }
     });
 
+    document.querySelectorAll(".places-view-button").forEach(function(button) {
+      button.addEventListener("click", function() {
+        placesView = button.dataset.placesView;
+        renderPlacesViewToggle();
+        renderRegionList();
+      });
+    });
+
     setTravelStats();
     renderFilters();
+    renderPlacesViewToggle();
     renderRegionList();
     initMap();
     updateSelected(selectedIndex, false);
