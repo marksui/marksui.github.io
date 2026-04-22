@@ -5,47 +5,237 @@
   <title>Mark Sui - Personal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="theme.js"></script>
   <style>
-    details {
-      margin: 1rem 0;
+    .personal-main {
+      max-width: 1060px;
     }
 
-    summary {
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 1.1rem;
+    .travel-intro {
+      max-width: 720px;
     }
 
-    .place-list {
-      margin-top: 0.8rem;
-      padding-left: 0.9rem;
+    .travel-dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.9fr);
+      gap: 1rem;
+      align-items: stretch;
+      margin-top: 1.2rem;
     }
 
-    .place-item {
-      margin-bottom: 1.25rem;
-      padding-bottom: 1rem;
+    .map-panel,
+    .selected-panel {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .map-header,
+    .selected-panel {
+      padding: 1rem;
+    }
+
+    .map-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
       border-bottom: 1px solid var(--border);
     }
 
-    .place-item em {
-      display: block;
-      margin: 0.2rem 0 0.65rem;
-      opacity: 0.85;
+    .map-header h3,
+    .selected-panel h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .map-count,
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0.02em;
+    }
+
+    #travel-map {
+      width: 100%;
+      height: 460px;
+      background: var(--tag-bg);
+    }
+
+    .region-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      padding: 1rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .region-filter,
+    .place-button {
+      border: 1px solid var(--tag-border);
+      background: var(--tag-bg);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    .region-filter {
+      border-radius: 999px;
+      padding: 0.28rem 0.65rem;
+      font-size: 0.92rem;
+    }
+
+    .region-filter:hover,
+    .region-filter.active {
+      border-color: var(--accent);
+      background: var(--surface);
+      transform: translateY(-1px);
+    }
+
+    .selected-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .selected-panel p {
+      margin: 0;
+    }
+
+    .selected-meta {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .selected-spots {
+      line-height: 1.5;
     }
 
     .photo-slots {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.6rem;
-      margin-top: 0.45rem;
+      margin-top: 0.35rem;
     }
 
     .photo-slot {
-      min-height: 86px;
+      min-height: 92px;
       border: 1px dashed var(--tag-border);
-      border-radius: 10px;
-      background: var(--surface);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, transparent 0 48%, var(--border) 49%, transparent 51%),
+        var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: 0.78;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .region-list details {
+      border-bottom: 1px solid var(--border);
+      padding: 0.65rem 0;
+    }
+
+    .region-list summary {
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.08rem;
+    }
+
+    .region-summary {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      max-width: 100%;
+    }
+
+    .region-title {
+      min-width: 0;
+    }
+
+    .region-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.6rem;
+      padding: 0.1rem 0.45rem;
+      border: 1px solid var(--tag-border);
+      border-radius: 999px;
+      color: var(--accent);
+      background: var(--tag-bg);
+      font-size: 0.9rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .place-list {
+      margin-top: 0.75rem;
+      padding-left: 0;
+    }
+
+    .place-item {
+      margin-bottom: 1rem;
+      padding: 0.8rem 0;
+    }
+
+    .place-button {
+      width: 100%;
+      border-radius: 8px;
+      padding: 0.75rem;
+      text-align: left;
+    }
+
+    .place-button:hover,
+    .place-button.active {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .place-name {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+
+    .local-name {
+      opacity: 0.75;
+      font-weight: normal;
+      unicode-bidi: isolate;
+    }
+
+    .place-spots {
+      display: block;
+      font-style: italic;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 820px) {
+      .travel-dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      #travel-map {
+        height: 360px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .map-header {
+        display: block;
+      }
+
+      .photo-slots {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -61,408 +251,320 @@
     </nav>
   </header>
 
-  <main>
+  <main class="personal-main">
     <section>
-      <h2>Travel & Photography</h2>
-      <p>I enjoy exploring new places and capturing memories through photography. Here are some places I have visited.</p>
-      <ul class="travel-list">
-        <li>
-          <details>
-            <summary><strong>California</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>San Diego</strong>
-                <em>UC San Diego · La Jolla Cove · Balboa Park</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Los Angeles</strong>
-                <em>Griffith Observatory · Santa Monica Pier · The Getty Center</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>San Francisco</strong>
-                <em>Golden Gate Bridge · Fisherman's Wharf · Pier 39</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Sacramento</strong>
-                <em>California State Capitol · Old Sacramento Waterfront</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Davis</strong>
-                <em>UC Davis Arboretum · Downtown Davis</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Santa Barbara</strong>
-                <em>Stearns Wharf · Santa Barbara County Courthouse</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Ventura</strong>
-                <em>Ventura Pier · Mission San Buenaventura</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
+      <div class="travel-intro">
+        <h2>Travel & Photography</h2>
+        <p>
+          I enjoy exploring new places and capturing memories through photography. The map highlights places I have visited; click a marker or a place below to bring up its major sights and photo spaces.
+        </p>
+      </div>
 
-        <li>
-          <details>
-            <summary><strong>Texas</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Dallas</strong>
-                <em>Dealey Plaza · Reunion Tower · Dallas Arts District</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Austin</strong>
-                <em>Texas State Capitol · Lady Bird Lake · South Congress</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
+      <div class="travel-dashboard">
+        <div class="map-panel">
+          <div class="map-header">
+            <h3>Visited Map</h3>
+            <span class="map-count" id="map-count"></span>
+          </div>
+          <div id="travel-map"></div>
+          <div class="region-filters" id="region-filters"></div>
+        </div>
 
-        <li>
-          <details>
-            <summary><strong>Nevada</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Las Vegas</strong>
-                <em>The Strip · Bellagio Fountains · Fremont Street</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
+        <aside class="selected-panel">
+          <p class="eyebrow">Selected Place</p>
+          <h3 id="selected-place"></h3>
+          <p class="selected-meta" id="selected-region"></p>
+          <p class="selected-spots" id="selected-spots"></p>
+          <div class="photo-slots" id="selected-photos"></div>
+        </aside>
+      </div>
+    </section>
 
-        <li>
-          <details>
-            <summary><strong>Washington</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Seattle</strong>
-                <em>Space Needle · Pike Place Market · Seattle Waterfront</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Australia</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Sydney</strong>
-                <em>Sydney Opera House · Harbour Bridge · Darling Harbour</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Singapore</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Singapore</strong>
-                <em>Marina Bay Sands · Gardens by the Bay · Merlion Park</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Japan</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Kyoto</strong>
-                <em>Kiyomizu-dera · Fushimi Inari Taisha · Arashiyama</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Osaka</strong>
-                <em>Osaka Castle · Dotonbori · Shinsekai</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Otaru, Hokkaido</strong>
-                <em>Otaru Canal · Sakaimachi Street · Otaru Music Box Museum</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Yoichi, Hokkaido</strong>
-                <em>Nikka Whisky Yoichi Distillery · Yoichi Port</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Brunei</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Bandar Seri Begawan</strong>
-                <em>Sultan Omar Ali Saifuddien Mosque · Kampong Ayer · Royal Regalia Museum</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Malaysia</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Kuala Lumpur</strong>
-                <em>Petronas Twin Towers · Batu Caves · Merdeka Square</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Johor Bahru</strong>
-                <em>Sultan Abu Bakar Mosque · Johor Bahru City Square · Danga Bay</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Laos</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Vientiane</strong>
-                <em>Pha That Luang · Patuxai · Wat Sisaket</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Cambodia</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Phnom Penh</strong>
-                <em>Royal Palace · Wat Phnom · Central Market</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Indonesia</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Batam</strong>
-                <em>Barelang Bridge · Maha Vihara Duta Maitreya · Nagoya Hill</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Vietnam</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Ho Chi Minh City</strong>
-                <em>Ben Thanh Market · War Remnants Museum · Notre-Dame Cathedral Basilica</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Hanoi</strong>
-                <em>Hoan Kiem Lake · Old Quarter · Temple of Literature</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Thailand</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Bangkok</strong>
-                <em>Grand Palace · Wat Arun · Wat Pho</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Taiwan</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Taipei</strong>
-                <em>Taipei 101 · Chiang Kai-shek Memorial Hall · Ximending</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Hualien</strong>
-                <em>Taroko Gorge · Qixingtan Beach</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Hsinchu</strong>
-                <em>Hsinchu City God Temple · East Gate</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Tainan</strong>
-                <em>Chihkan Tower · Anping Old Fort</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Kaohsiung</strong>
-                <em>Lotus Pond · Pier-2 Art Center</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Yunnan</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Kunming</strong>
-                <em>Dianchi Lake · Stone Forest · Green Lake Park</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Dali</strong>
-                <em>Erhai Lake · Dali Ancient City · Cangshan</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Lijiang</strong>
-                <em>Lijiang Old Town · Jade Dragon Snow Mountain · Black Dragon Pool</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Guizhou</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Guiyang</strong>
-                <em>Jiaxiu Pavilion · Qingyan Ancient Town</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Zunyi</strong>
-                <em>Zunyi Conference Site · Hongjun Mountain</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Maotai Town, Renhuai</strong>
-                <em>Maotai Distillery · Chishui River</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Anshun / Huangguoshu Waterfall</strong>
-                <em>Huangguoshu Waterfall · Tianxingqiao Scenic Area</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Shandong</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Qingdao</strong>
-                <em>Zhanqiao Pier · Badaguan · May Fourth Square</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-              <li class="place-item">
-                <strong>Gaomi</strong>
-                <em>Mo Yan Former Residence · Gaomi City Museum</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Fujian</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Fuzhou</strong>
-                <em>Three Lanes and Seven Alleys · West Lake Park</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Hubei</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Wuhan</strong>
-                <em>Yellow Crane Tower · East Lake · Wuhan Yangtze River Bridge</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Jilin</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Changchun</strong>
-                <em>Puppet Emperor's Palace Museum · Jingyuetan National Forest Park</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-
-        <li>
-          <details>
-            <summary><strong>Liaoning</strong></summary>
-            <ul class="place-list">
-              <li class="place-item">
-                <strong>Shenyang</strong>
-                <em>Shenyang Imperial Palace · Marshal Zhang's Mansion</em>
-                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
-              </li>
-            </ul>
-          </details>
-        </li>
-      </ul>
+    <section>
+      <h2>Places</h2>
+      <ul class="region-list" id="region-list"></ul>
     </section>
   </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var places = [
+      { region: "California", name: "San Diego", coords: [32.7157, -117.1611], spots: ["UC San Diego", "La Jolla Cove", "Balboa Park"] },
+      { region: "California", name: "Los Angeles", coords: [34.0522, -118.2437], spots: ["Griffith Observatory", "Santa Monica Pier", "The Getty Center"] },
+      { region: "California", name: "San Francisco", coords: [37.7749, -122.4194], spots: ["Golden Gate Bridge", "Fisherman's Wharf", "Pier 39"] },
+      { region: "California", name: "Sacramento", coords: [38.5816, -121.4944], spots: ["California State Capitol", "Old Sacramento Waterfront"] },
+      { region: "California", name: "Davis", coords: [38.5449, -121.7405], spots: ["UC Davis Arboretum", "Downtown Davis"] },
+      { region: "California", name: "Santa Barbara", coords: [34.4208, -119.6982], spots: ["Stearns Wharf", "Santa Barbara County Courthouse"] },
+      { region: "California", name: "Ventura", coords: [34.2746, -119.2290], spots: ["Ventura Pier", "Mission San Buenaventura"] },
+      { region: "Texas", name: "Dallas", coords: [32.7767, -96.7970], spots: ["Dealey Plaza", "Reunion Tower", "Dallas Arts District"] },
+      { region: "Texas", name: "Austin", coords: [30.2672, -97.7431], spots: ["Texas State Capitol", "Lady Bird Lake", "South Congress"] },
+      { region: "Nevada", name: "Las Vegas", coords: [36.1699, -115.1398], spots: ["The Strip", "Bellagio Fountains", "Fremont Street"] },
+      { region: "Washington", name: "Seattle", coords: [47.6062, -122.3321], spots: ["Space Needle", "Pike Place Market", "Seattle Waterfront"] },
+      { region: "New York", name: "New York City", coords: [40.7128, -74.0060], spots: ["Times Square", "Central Park", "Brooklyn Bridge"] },
+      { region: "New York", name: "Ithaca", coords: [42.4430, -76.5019], spots: ["Cornell University", "Ithaca Commons", "Ithaca Falls"] },
+      { region: "District of Columbia", name: "Washington, D.C.", coords: [38.9072, -77.0369], spots: ["National Mall", "Lincoln Memorial", "U.S. Capitol"] },
+      { region: "Australia", name: "Sydney", coords: [-33.8688, 151.2093], spots: ["Sydney Opera House", "Harbour Bridge", "Darling Harbour"] },
+      { region: "Singapore", name: "Singapore", localName: "新加坡", coords: [1.3521, 103.8198], spots: ["Marina Bay Sands", "Gardens by the Bay", "Merlion Park"] },
+      { region: "Japan", name: "Kyoto", localName: "京都", coords: [35.0116, 135.7681], spots: ["Kiyomizu-dera", "Fushimi Inari Taisha", "Arashiyama"], spotsLocal: ["清水寺", "伏見稲荷大社", "嵐山"] },
+      { region: "Japan", name: "Osaka", localName: "大阪", coords: [34.6937, 135.5023], spots: ["Osaka Castle", "Dotonbori", "Shinsekai"], spotsLocal: ["大阪城", "道頓堀", "新世界"] },
+      { region: "Japan", name: "Otaru, Hokkaido", localName: "小樽, 北海道", coords: [43.1907, 140.9947], spots: ["Otaru Canal", "Sakaimachi Street", "Otaru Music Box Museum"], spotsLocal: ["小樽運河", "堺町通り", "小樽オルゴール堂"] },
+      { region: "Japan", name: "Yoichi, Hokkaido", localName: "余市, 北海道", coords: [43.1951, 140.7835], spots: ["Nikka Whisky Yoichi Distillery", "Yoichi Port"], spotsLocal: ["ニッカウヰスキー余市蒸溜所", "余市港"] },
+      { region: "Brunei", name: "Bandar Seri Begawan", localName: "بندر سري بڬاوان", coords: [4.9031, 114.9398], spots: ["Sultan Omar Ali Saifuddien Mosque", "Kampong Ayer", "Royal Regalia Museum"], spotsLocal: ["Masjid Omar Ali Saifuddien", "كامڤوڠ اير", "Muzium Alat Kebesaran Diraja"] },
+      { region: "Malaysia", name: "Kuala Lumpur", localName: "كوالا لومڤور", coords: [3.1390, 101.6869], spots: ["Petronas Twin Towers", "Batu Caves", "Merdeka Square"], spotsLocal: ["Menara Berkembar Petronas", "Gua Batu", "Dataran Merdeka"] },
+      { region: "Malaysia", name: "Johor Bahru", localName: "جوهر بهرو", coords: [1.4927, 103.7414], spots: ["Sultan Abu Bakar Mosque", "Johor Bahru City Square", "Danga Bay"], spotsLocal: ["Masjid Sultan Abu Bakar", "Johor Bahru City Square", "Teluk Danga"] },
+      { region: "Laos", name: "Vientiane", localName: "ວຽງຈັນ", coords: [17.9757, 102.6331], spots: ["Pha That Luang", "Patuxai", "Wat Sisaket"], spotsLocal: ["ພຣະທາດຫຼວງ", "ປະຕູໄຊ", "ວັດສີສະເກດ"] },
+      { region: "Cambodia", name: "Phnom Penh", localName: "ភ្នំពេញ", coords: [11.5564, 104.9282], spots: ["Royal Palace", "Wat Phnom", "Central Market"], spotsLocal: ["ព្រះបរមរាជវាំង", "វត្តភ្នំ", "ផ្សារធំថ្មី"] },
+      { region: "Indonesia", name: "Batam", localName: "Kota Batam", coords: [1.0456, 104.0305], spots: ["Barelang Bridge", "Maha Vihara Duta Maitreya", "Nagoya Hill"], spotsLocal: ["Jembatan Barelang", "Maha Vihara Duta Maitreya", "Nagoya Hill"] },
+      { region: "Vietnam", name: "Ho Chi Minh City", localName: "Thành phố Hồ Chí Minh", coords: [10.8231, 106.6297], spots: ["Ben Thanh Market", "War Remnants Museum", "Notre-Dame Cathedral Basilica"], spotsLocal: ["Chợ Bến Thành", "Bảo tàng Chứng tích Chiến tranh", "Nhà thờ Đức Bà Sài Gòn"] },
+      { region: "Vietnam", name: "Hanoi", localName: "Hà Nội", coords: [21.0278, 105.8342], spots: ["Hoan Kiem Lake", "Old Quarter", "Temple of Literature"], spotsLocal: ["Hồ Hoàn Kiếm", "Phố cổ Hà Nội", "Văn Miếu"] },
+      { region: "Thailand", name: "Bangkok", localName: "กรุงเทพฯ", coords: [13.7563, 100.5018], spots: ["Grand Palace", "Wat Arun", "Wat Pho"], spotsLocal: ["พระบรมมหาราชวัง", "วัดอรุณ", "วัดโพธิ์"] },
+      { region: "Taiwan", name: "Taipei", localName: "臺北", coords: [25.0330, 121.5654], spots: ["Taipei 101", "Chiang Kai-shek Memorial Hall", "Ximending"], spotsLocal: ["台北101", "中正紀念堂", "西門町"] },
+      { region: "Taiwan", name: "Hualien", localName: "花蓮", coords: [23.9872, 121.6015], spots: ["Taroko Gorge", "Qixingtan Beach"], spotsLocal: ["太魯閣", "七星潭"] },
+      { region: "Taiwan", name: "Hsinchu", localName: "新竹", coords: [24.8138, 120.9675], spots: ["Hsinchu City God Temple", "East Gate"], spotsLocal: ["新竹都城隍廟", "迎曦門"] },
+      { region: "Taiwan", name: "Tainan", localName: "臺南", coords: [22.9999, 120.2270], spots: ["Chihkan Tower", "Anping Old Fort"], spotsLocal: ["赤崁樓", "安平古堡"] },
+      { region: "Taiwan", name: "Kaohsiung", localName: "高雄", coords: [22.6273, 120.3014], spots: ["Lotus Pond", "Pier-2 Art Center"], spotsLocal: ["蓮池潭", "駁二藝術特區"] },
+      { region: "Yunnan", name: "Kunming", localName: "昆明", coords: [25.0389, 102.7183], spots: ["Dianchi Lake", "Stone Forest", "Green Lake Park"] },
+      { region: "Yunnan", name: "Dali", localName: "大理", coords: [25.6065, 100.2676], spots: ["Erhai Lake", "Dali Ancient City", "Cangshan"] },
+      { region: "Yunnan", name: "Lijiang", localName: "丽江", coords: [26.8721, 100.2296], spots: ["Lijiang Old Town", "Jade Dragon Snow Mountain", "Black Dragon Pool"] },
+      { region: "Guizhou", name: "Guiyang", localName: "贵阳", coords: [26.6470, 106.6302], spots: ["Jiaxiu Pavilion", "Qingyan Ancient Town"] },
+      { region: "Guizhou", name: "Zunyi", localName: "遵义", coords: [27.7257, 106.9274], spots: ["Zunyi Conference Site", "Hongjun Mountain"] },
+      { region: "Guizhou", name: "Renhuai", localName: "仁怀", coords: [27.7926, 106.4012], spots: ["Maotai Distillery", "Chishui River"] },
+      { region: "Guizhou", name: "Anshun", localName: "安顺", coords: [26.2456, 105.9322], spots: ["Huangguoshu Waterfall", "Tianxingqiao Scenic Area"] },
+      { region: "Shandong", name: "Qingdao", localName: "青岛", coords: [36.0671, 120.3826], spots: ["Zhanqiao Pier", "Badaguan", "May Fourth Square"] },
+      { region: "Shandong", name: "Gaomi", localName: "高密", coords: [36.3833, 119.7520], spots: ["Mo Yan Former Residence", "Gaomi City Museum"] },
+      { region: "Fujian", name: "Fuzhou", localName: "福州", coords: [26.0745, 119.2965], spots: ["Three Lanes and Seven Alleys", "West Lake Park"] },
+      { region: "Hubei", name: "Wuhan", localName: "武汉", coords: [30.5928, 114.3055], spots: ["Yellow Crane Tower", "East Lake", "Wuhan Yangtze River Bridge"] },
+      { region: "Jilin", name: "Changchun", localName: "长春", coords: [43.8171, 125.3235], spots: ["Puppet Emperor's Palace Museum", "Jingyuetan National Forest Park"] },
+      { region: "Jilin", name: "Songyuan", localName: "松原", coords: [45.1411, 124.8251], spots: ["Chagan Lake", "Songyuan Museum"] },
+      { region: "Liaoning", name: "Shenyang", localName: "沈阳", coords: [41.8057, 123.4315], spots: ["Shenyang Imperial Palace", "Marshal Zhang's Mansion"] }
+    ];
+
+    var regionLocalNames = {
+      Singapore: "新加坡",
+      Japan: "日本",
+      Brunei: "نڬارا بروني دارالسلام",
+      Malaysia: "مليسيا",
+      Laos: "ລາວ",
+      Cambodia: "កម្ពុជា",
+      Indonesia: "Republik Indonesia",
+      Vietnam: "Việt Nam",
+      Thailand: "ประเทศไทย",
+      Taiwan: "臺灣",
+      Yunnan: "云南",
+      Guizhou: "贵州",
+      Shandong: "山东",
+      Fujian: "福建",
+      Hubei: "湖北",
+      Jilin: "吉林",
+      Liaoning: "辽宁"
+    };
+
+    var selectedIndex = 0;
+    var currentRegion = "All";
+    var markers = [];
+    var map;
+
+    function uniqueRegions() {
+      var regions = [];
+      places.forEach(function(place) {
+        if (regions.indexOf(place.region) === -1) {
+          regions.push(place.region);
+        }
+      });
+      return regions;
+    }
+
+    function markerStyle(active) {
+      return {
+        radius: active ? 9 : 6,
+        color: active ? "#111" : "#ffffff",
+        weight: active ? 2 : 1,
+        fillColor: active ? "#f6b73c" : "#005890",
+        fillOpacity: active ? 1 : 0.86
+      };
+    }
+
+    function makePhotoSlots() {
+      return '<div class="photo-slot">Photo</div><div class="photo-slot">Photo</div><div class="photo-slot">Photo</div>';
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function(character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[character];
+      });
+    }
+
+    function textLabel(primary, local) {
+      return local && local !== primary ? primary + " / " + local : primary;
+    }
+
+    function htmlLabel(primary, local) {
+      if (!local || local === primary) {
+        return escapeHtml(primary);
+      }
+
+      return escapeHtml(primary) + ' <span class="local-name">/ <bdi dir="auto">' + escapeHtml(local) + '</bdi></span>';
+    }
+
+    function spotsHtml(place) {
+      return place.spots.map(function(spot, index) {
+        var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+        return htmlLabel(spot, localSpot);
+      }).join(" · ");
+    }
+
+    function spotsText(place) {
+      return place.spots.map(function(spot, index) {
+        var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+        return textLabel(spot, localSpot);
+      }).join(" · ");
+    }
+
+    function regionHtml(region) {
+      return htmlLabel(region, regionLocalNames[region]);
+    }
+
+    function regionText(region) {
+      return textLabel(region, regionLocalNames[region]);
+    }
+
+    function updateSelected(index, moveMap) {
+      selectedIndex = index;
+      var place = places[index];
+      document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
+      document.getElementById("selected-region").innerHTML = regionHtml(place.region);
+      document.getElementById("selected-spots").innerHTML = spotsHtml(place);
+      document.getElementById("selected-photos").innerHTML = makePhotoSlots();
+
+      markers.forEach(function(marker, markerIndex) {
+        marker.setStyle(markerStyle(markerIndex === index));
+      });
+
+      document.querySelectorAll(".place-button").forEach(function(button) {
+        button.classList.toggle("active", Number(button.dataset.index) === index);
+      });
+
+      if (map && moveMap) {
+        map.setView(place.coords, 7, { animate: true });
+      }
+    }
+
+    function renderFilters() {
+      var filterWrap = document.getElementById("region-filters");
+      var regions = ["All"].concat(uniqueRegions());
+      filterWrap.innerHTML = regions.map(function(region) {
+        var activeClass = region === currentRegion ? " active" : "";
+        var label = region === "All" ? "All" : regionHtml(region);
+        return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '">' + label + '</button>';
+      }).join("");
+
+      filterWrap.querySelectorAll(".region-filter").forEach(function(button) {
+        button.addEventListener("click", function() {
+          currentRegion = button.dataset.region;
+          renderFilters();
+          renderRegionList();
+          fitMapToRegion(currentRegion);
+        });
+      });
+    }
+
+    function renderRegionList() {
+      var list = document.getElementById("region-list");
+      var regions = uniqueRegions().filter(function(region) {
+        return currentRegion === "All" || currentRegion === region;
+      });
+
+      list.innerHTML = regions.map(function(region) {
+        var regionPlaces = places
+          .map(function(place, index) {
+            return { place: place, index: index };
+          })
+          .filter(function(item) {
+            return item.place.region === region;
+          });
+
+        var placeHtml = regionPlaces.map(function(item) {
+          return '' +
+            '<li class="place-item">' +
+              '<button class="place-button" type="button" data-index="' + item.index + '">' +
+                '<span class="place-name">' + htmlLabel(item.place.name, item.place.localName) + '</span>' +
+                '<span class="place-spots">' + spotsHtml(item.place) + '</span>' +
+              '</button>' +
+              '<div class="photo-slots">' + makePhotoSlots() + '</div>' +
+            '</li>';
+        }).join("");
+
+        var open = currentRegion === region ? " open" : "";
+        return '' +
+          '<li>' +
+            '<details' + open + '>' +
+              '<summary><span class="region-summary"><span class="region-title"><strong>' + regionHtml(region) + '</strong></span><span class="region-count">' + regionPlaces.length + '</span></span></summary>' +
+              '<ul class="place-list">' + placeHtml + '</ul>' +
+            '</details>' +
+          '</li>';
+      }).join("");
+
+      list.querySelectorAll(".place-button").forEach(function(button) {
+        button.addEventListener("click", function() {
+          updateSelected(Number(button.dataset.index), true);
+        });
+      });
+
+      updateSelected(selectedIndex, false);
+    }
+
+    function fitMapToRegion(region) {
+      if (!map) {
+        return;
+      }
+
+      var filteredPlaces = region === "All"
+        ? places
+        : places.filter(function(place) { return place.region === region; });
+      var bounds = L.latLngBounds(filteredPlaces.map(function(place) { return place.coords; }));
+      map.fitBounds(bounds.pad(0.18));
+    }
+
+    function initMap() {
+      document.getElementById("map-count").textContent = places.length + " places";
+      if (!window.L) {
+        document.getElementById("travel-map").textContent = "Map is unavailable.";
+        return;
+      }
+
+      map = L.map("travel-map", {
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors"
+      }).addTo(map);
+
+      markers = places.map(function(place, index) {
+        var marker = L.circleMarker(place.coords, markerStyle(index === selectedIndex))
+          .addTo(map)
+          .bindTooltip(textLabel(place.name, place.localName), { direction: "top", opacity: 0.9 });
+
+        marker.on("click", function() {
+          updateSelected(index, true);
+        });
+
+        return marker;
+      });
+
+      fitMapToRegion("All");
+    }
+
+    renderFilters();
+    renderRegionList();
+    initMap();
+    updateSelected(0, false);
+  </script>
 </body>
 </html>
