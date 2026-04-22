@@ -1,4 +1,5 @@
 html {
+  color-scheme: light;
   --bg: #fdfdfc;
   --text: #111;
   --border: #ddd;
@@ -6,10 +7,14 @@ html {
   --tag-bg: #f7f7f4;
   --tag-border: #bbb;
   --accent: #005890;
+  --nav-accent: #55645e;
+  --nav-rule: #d9d5cc;
   --shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 html[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #101010;
   --text: #f2f2f0;
   --border: #3a3a3a;
@@ -17,6 +22,8 @@ html[data-theme="dark"] {
   --tag-bg: #242424;
   --tag-border: #555;
   --accent: #8ab4f8;
+  --nav-accent: #a8b6ae;
+  --nav-rule: #3f423f;
   --shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 }
 
@@ -26,36 +33,121 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'EB Garamond', serif;
-  line-height: 1.6;
-  font-size: 16px;
+  line-height: 1.62;
+  font-size: 17px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
+::selection {
+  background: rgba(85, 100, 94, 0.18);
+}
+
+html[data-theme="dark"] ::selection {
+  background: rgba(168, 182, 174, 0.24);
+}
+
 header {
+  position: relative;
   text-align: center;
-  padding: 2rem 1rem 1rem;
-  border-bottom: 1px solid var(--border);
+  padding: 1.8rem 1rem 1.05rem;
+  border-bottom: 1px solid var(--nav-rule);
+  background:
+    linear-gradient(180deg, rgba(85, 100, 94, 0.035), transparent 70%),
+    var(--bg);
+  animation: headerIn 0.58s var(--ease) both;
 }
 
 h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
+  font-size: 2.62rem;
+  margin: 0 0 0.68rem;
+  line-height: 1.05;
 }
 
-nav a {
-  margin: 0 1.2rem;
+header h1 {
+  position: relative;
+  display: inline-block;
+  color: var(--text);
+  transition: color 0.25s ease, transform 0.3s var(--ease);
+}
+
+header h1::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -0.34rem;
+  width: 2.4rem;
+  height: 1px;
+  background: var(--nav-rule);
+  transform: translateX(-50%) scaleX(0.72);
+  transform-origin: center;
+  transition: background 0.25s ease, transform 0.32s var(--ease);
+}
+
+header:hover h1 {
+  color: var(--nav-accent);
+  transform: translateY(-1px);
+}
+
+header:hover h1::after {
+  background: var(--nav-accent);
+  transform: translateX(-50%) scaleX(1);
+}
+
+header nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.42rem 1.15rem;
+}
+
+header nav a {
+  position: relative;
+  padding: 0.08rem 0;
   text-decoration: none;
   color: var(--text);
-  border-bottom: 1px solid transparent;
-  transition: border-bottom 0.3s ease, color 0.2s ease;
+  opacity: 0.82;
+  transition: color 0.24s ease, opacity 0.24s ease, transform 0.28s var(--ease);
 }
 
-nav a:hover {
-  border-bottom: 1px solid var(--text);
+header nav a:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--nav-accent);
+  outline-offset: 4px;
+}
+
+header nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.18rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.32s var(--ease);
+}
+
+header nav a:hover,
+header nav a:focus-visible,
+header nav a[aria-current="page"] {
+  color: var(--nav-accent);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+header nav a:hover::after,
+header nav a:focus-visible::after,
+header nav a[aria-current="page"]::after {
+  transform: scaleX(1);
 }
 
 a {
   color: var(--accent);
+  text-underline-offset: 0.16em;
 }
 
 .theme-toggle {
@@ -101,7 +193,7 @@ section {
 }
 
 h2 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   margin-bottom: 1rem;
 }
 
@@ -112,4 +204,39 @@ ul {
 
 ul li {
   margin-bottom: 0.8rem;
+}
+
+@keyframes headerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  header {
+    padding: 1.45rem 1rem 0.95rem;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  header {
+    animation: none;
+  }
+
+  header h1,
+  header h1::after,
+  header nav a,
+  header nav a::after,
+  .theme-toggle {
+    transition: none;
+  }
 }

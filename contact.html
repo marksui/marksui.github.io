@@ -9,28 +9,213 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
+    .contact-main {
+      max-width: 900px;
+      --contact-accent: #55645e;
+      --contact-secondary: #7b7467;
+      --contact-rule: #d9d5cc;
+      --contact-wash: rgba(85, 100, 94, 0.065);
+      --contact-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .contact-main {
+      --contact-accent: #a8b6ae;
+      --contact-secondary: #b8b0a3;
+      --contact-rule: #3f423f;
+      --contact-wash: rgba(168, 182, 174, 0.08);
+    }
+
+    .contact-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(220px, 0.75fr);
+      gap: 1.5rem;
+      align-items: end;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--contact-rule);
+      animation: contactFadeUp 0.62s var(--contact-ease) both;
+    }
+
+    .contact-hero h2,
+    .contact-hero p {
+      margin-top: 0;
+    }
+
+    .contact-hero p {
+      margin-bottom: 0;
+      max-width: 640px;
+    }
+
+    .contact-note {
+      border-left: 1px solid var(--contact-rule);
+      padding: 0.1rem 0 0.1rem 0.85rem;
+    }
+
+    .contact-note strong {
+      display: block;
+      color: var(--contact-accent);
+      line-height: 1.2;
+    }
+
+    .contact-note span {
+      display: block;
+      margin-top: 0.25rem;
+      opacity: 0.78;
+      font-size: 0.92rem;
+    }
+
+    .contact-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2.15rem 0 0.75rem;
+      color: var(--contact-accent);
+      font-size: 1.14rem;
+      font-style: italic;
+    }
+
+    .contact-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--contact-rule), transparent);
+      transform: scaleX(0.84);
+      transform-origin: left;
+      transition: transform 0.38s var(--contact-ease), background 0.25s ease;
+    }
+
+    section:hover .contact-heading::after {
+      transform: scaleX(1);
+      background: linear-gradient(90deg, var(--contact-accent), transparent);
+    }
+
+    .contact-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      column-gap: 1.35rem;
+      row-gap: 0;
+      margin: 0;
+      border-top: 1px solid var(--contact-rule);
+    }
+
     .contact-list li {
-      margin-bottom: 0.75rem;
+      position: relative;
+      margin: 0;
+      padding: 0.95rem 0;
+      border-bottom: 1px solid var(--contact-rule);
+      animation: contactFadeUp 0.55s var(--contact-ease) both;
+      transition: background 0.25s ease, transform 0.28s var(--contact-ease), border-color 0.25s ease;
     }
 
-    .contact-list span {
-      display: inline-block;
-      min-width: 95px;
+    .contact-list li:nth-child(2n) {
+      animation-delay: 0.04s;
+    }
+
+    .contact-list li:nth-child(3n) {
+      animation-delay: 0.08s;
+    }
+
+    .contact-list li:hover {
+      background: var(--contact-wash);
+      border-color: var(--contact-accent);
+      transform: translateY(-1px);
+    }
+
+    .contact-label {
+      display: block;
+      color: var(--contact-secondary);
+      font-size: 0.86rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.45rem;
+      margin-top: 0.2rem;
       font-weight: bold;
+      text-decoration: none;
+      color: var(--text);
+      overflow-wrap: anywhere;
+      transition: color 0.24s ease, transform 0.28s var(--contact-ease);
     }
 
-    .contact-list i {
+    .contact-link:hover,
+    .contact-link:focus-visible {
+      color: var(--contact-accent);
+      transform: translateX(2px);
+    }
+
+    .contact-link i {
       width: 1.2rem;
-      margin-right: 0.4rem;
       text-align: center;
+      color: var(--contact-accent);
+      font-size: 0.92rem;
     }
 
     #map {
       width: 100%;
-      height: 320px;
+      height: 340px;
       margin-top: 1rem;
-      border: 1px solid var(--border);
+      border: 1px solid var(--contact-rule);
       border-radius: 8px;
+      filter: saturate(0.72) contrast(0.98);
+      animation: contactFadeUp 0.65s var(--contact-ease) both;
+      transition: filter 0.3s ease, border-color 0.25s ease;
+    }
+
+    #map:hover {
+      border-color: var(--contact-accent);
+      filter: saturate(0.86) contrast(1);
+    }
+
+    @keyframes contactFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .contact-hero {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .contact-note {
+        border-left: 0;
+        border-top: 1px solid var(--contact-rule);
+        padding: 0.75rem 0 0;
+      }
+
+      .contact-heading {
+        display: block;
+      }
+
+      .contact-heading::after {
+        display: block;
+        margin-top: 0.45rem;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .contact-hero,
+      .contact-list li,
+      #map {
+        animation: none;
+      }
+
+      .contact-heading::after,
+      .contact-list li,
+      .contact-link,
+      #map {
+        transition: none;
+      }
     }
   </style>
 </head>
@@ -41,25 +226,54 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a> 
-      <a href="contact.html">Contact</a>
+      <a href="contact.html" aria-current="page">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
   </header>
 
-  <main>
+  <main class="contact-main">
+    <section class="contact-hero">
+      <div>
+        <h2>Contact</h2>
+        <p>
+          Based in San Diego and studying at UC San Diego. Reach me through personal email,
+          school email, phone, GitHub, or LinkedIn.
+        </p>
+      </div>
+      <aside class="contact-note" aria-label="Current location">
+        <strong>San Diego, CA</strong>
+        <span>University of California, San Diego</span>
+      </aside>
+    </section>
+
     <section>
-      <h2>Contact</h2>
+      <h2 class="contact-heading">Direct</h2>
       <ul class="contact-list">
-        <li><span>Phone:</span> <i class="fas fa-phone"></i> <a href="tel:+16263417790">+1 (626) 341-7790</a></li>
-        <li><span>Email:</span> <i class="fas fa-envelope"></i> <a href="mailto:tqsui619@gmail.com">tqsui619@gmail.com</a></li>
-        <li><span>School Email:</span> <i class="fas fa-university"></i> <a href="mailto:tisui@ucsd.edu">tisui@ucsd.edu</a></li>
-        <li><span>GitHub:</span> <i class="fab fa-github"></i> <a href="https://github.com/marksui" target="_blank" rel="noopener">github.com/marksui</a></li>
-        <li><span>LinkedIn:</span> <i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mark-sui-38ab24283" target="_blank" rel="noopener">linkedin.com/in/mark-sui-38ab24283</a></li>
+        <li>
+          <span class="contact-label">Phone</span>
+          <a class="contact-link" href="tel:+16263417790"><i class="fas fa-phone"></i>+1 (626) 341-7790</a>
+        </li>
+        <li>
+          <span class="contact-label">Email</span>
+          <a class="contact-link" href="mailto:tqsui619@gmail.com"><i class="fas fa-envelope"></i>tqsui619@gmail.com</a>
+        </li>
+        <li>
+          <span class="contact-label">School Email</span>
+          <a class="contact-link" href="mailto:tisui@ucsd.edu"><i class="fas fa-university"></i>tisui@ucsd.edu</a>
+        </li>
+        <li>
+          <span class="contact-label">GitHub</span>
+          <a class="contact-link" href="https://github.com/marksui" target="_blank" rel="noopener"><i class="fab fa-github"></i>github.com/marksui</a>
+        </li>
+        <li>
+          <span class="contact-label">LinkedIn</span>
+          <a class="contact-link" href="https://linkedin.com/in/mark-sui-38ab24283" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>linkedin.com/in/mark-sui-38ab24283</a>
+        </li>
       </ul>
     </section>
 
     <section>
-      <h2>Location</h2>
+      <h2 class="contact-heading">Location</h2>
       <p>Based in San Diego, studying at the University of California, San Diego.</p>
       <div id="map"></div>
     </section>

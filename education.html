@@ -6,84 +6,281 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
-  
+  <style>
+    .education-main {
+      max-width: 860px;
+      --edu-accent: #5f6f7a;
+      --edu-rule: #d8d4cc;
+      --edu-wash: rgba(95, 111, 122, 0.07);
+    }
+
+    html[data-theme="dark"] .education-main {
+      --edu-accent: #a9b4bc;
+      --edu-rule: #3f423f;
+      --edu-wash: rgba(169, 180, 188, 0.08);
+    }
+
+    .education-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(220px, 0.7fr);
+      gap: 1.5rem;
+      align-items: end;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--edu-rule);
+    }
+
+    .education-intro {
+      padding: 0;
+    }
+
+    .education-intro h2 {
+      margin-top: 0;
+      margin-bottom: 0.55rem;
+    }
+
+    .education-intro p {
+      margin: 0;
+      max-width: 650px;
+    }
+
+    .education-stats {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+    }
+
+    .stat-item {
+      padding: 0.15rem 0 0.45rem;
+      border-bottom: 1px solid var(--edu-rule);
+    }
+
+    .stat-value {
+      display: block;
+      color: var(--edu-accent);
+      font-size: 1.08rem;
+      font-weight: bold;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 0.25rem;
+      opacity: 0.78;
+      font-size: 0.9rem;
+    }
+
+    .education-timeline {
+      position: relative;
+      display: grid;
+      gap: 0;
+      margin-top: 1rem;
+    }
+
+    .education-card {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(150px, 0.3fr) minmax(0, 1fr);
+      gap: 1.4rem;
+      padding: 1.15rem 0;
+      border-bottom: 1px solid var(--edu-rule);
+    }
+
+    .education-date {
+      color: var(--edu-accent);
+      font-style: italic;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .education-body h3 {
+      margin: 0;
+      font-size: 1.22rem;
+    }
+
+    .education-body p {
+      margin: 0.25rem 0 0;
+    }
+
+    .school-meta {
+      color: var(--text);
+      opacity: 0.82;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.7rem;
+    }
+
+    .tag-row span {
+      display: inline-block;
+      padding: 0.18rem 0.46rem;
+      border: 1px solid var(--edu-rule);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .education-note {
+      margin-top: 0.75rem;
+      padding: 0.62rem 0.75rem;
+      border-left: 2px solid var(--edu-accent);
+      background: var(--edu-wash);
+      border-radius: 0 6px 6px 0;
+    }
+
+    @media (max-width: 760px) {
+      .education-hero,
+      .education-card {
+        grid-template-columns: 1fr;
+      }
+
+      .education-card {
+        gap: 0.55rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
     <h1>Mark Sui</h1>
     <nav>
       <a href="index.html">About</a>
-      <a href="education.html">Education</a>
+      <a href="education.html" aria-current="page">Education</a>
       <a href="experience.html">Experience</a> 
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
   </header>
 
-  <main>
+  <main class="education-main">
     <section>
-      <h2>Education</h2> 
-      <ul>
-        <li>
-          <strong>University of California, San Diego</strong> – La Jolla, CA<br>
-          <em>Jacobs School of Engineering</em><br>
-          <em>Master of Science</em> in Electrical and Computer Engineering<br>
-          <em>Sep 2025 – Jun 2026</em><br>
-          <br>
-          <em>Bachelor of Science</em> in Computer Engineering<br>
-          <em>Sep 2023 – Jun 2025</em><br>
-          <em>Bachelor of Science</em> in Mathematics – Applied Science<br>
-          <em>Sep 2023 – Jun 2025</em><br>
-          <em>Seventh College</em><br>
-          GPA: 3.6 &nbsp;|&nbsp; Provost Honors<br>
-          <em>Focus: Embedded systems, machine learning, digital circuit design, and cryptography.</em><br>
-          <u>Selected Coursework:</u> CSE 141/141L (Computer Architecture),  
-          CSE 140/140L (Digital Systems),  
-          CSE 100 (Data Structures),  
-          MATH 187A/B (Cryptography),  
-          MATH 170A (Numerical Analysis),  
-          ECE 108 (Digital Circuits).
-        </li>
+      <div class="education-hero">
+        <div class="education-intro">
+          <h2>Education</h2>
+          <p>
+            My academic path moves across electrical and computer engineering, computer engineering,
+            mathematics, international study, and early STEM leadership. At UC San Diego, my master's
+            study is centered on Very Large Scale Integration (VLSI).
+          </p>
+        </div>
+        <div class="education-stats" aria-label="Education highlights">
+          <div class="stat-item">
+            <span class="stat-value">M.S.</span>
+            <span class="stat-label">Electrical and Computer Engineering</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">2x B.S.</span>
+            <span class="stat-label">Computer Engineering + Mathematics</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">VLSI</span>
+            <span class="stat-label">Graduate study focus</span>
+          </div>
+        </div>
+      </div>
 
-        <li>
-          <strong>National University of Singapore</strong> – Singapore<br>
-          <em>School of Computing</em><br>
-          University of California Education Abroad Program<br>
-          <em>Aug 2024 – Dec 2024</em><br>
-          <em>Completed advanced coursework in Algorithms, Cryptography, and Internet of Things, 
-          gaining international academic and cultural experience.</em><br>
-          <u>Selected Coursework:</u> CS3230 (Design and Analysis of Algorithms),  
-          CS2107 (Information Security) and CS3237 (Internet of Things).
-        </li>
+      <div class="education-timeline">
+        <article class="education-card">
+          <div class="education-date">Sep 2025 - Jun 2026</div>
+          <div class="education-body">
+            <h3>University of California, San Diego</h3>
+            <p class="school-meta">Jacobs School of Engineering · La Jolla, CA</p>
+            <p><strong>Master of Science</strong> in Electrical and Computer Engineering</p>
+            <div class="education-note">
+              Primary graduate focus: <strong>Very Large Scale Integration (VLSI)</strong>,
+              digital IC design, RTL/FPGA design, and computer architecture.
+            </div>
+            <div class="tag-row" aria-label="Graduate coursework">
+              <span>Digital IC Design</span>
+              <span>VLSI</span>
+              <span>Computer Architecture</span>
+              <span>FPGA / RTL Design</span>
+            </div>
+          </div>
+        </article>
 
-        <li>
-          <strong>University of California, Davis</strong> – Davis, CA<br>
-          <em>College of Letters and Science</em><br>
-          Applied Mathematics & Computer Science<br>
-          <em>Sep 2021 – Jun 2023</em><br>
-          <em>Completed foundational coursework before transferring to UC San Diego.</em><br>
-          <u>Selected Coursework:</u> ECS 36A/B/C (Programming & Data Structures) and  
-          ECS 50 (Computer Organization).
-        </li>
+        <article class="education-card">
+          <div class="education-date">Sep 2023 - Jun 2025</div>
+          <div class="education-body">
+            <h3>University of California, San Diego</h3>
+            <p class="school-meta">Seventh College · La Jolla, CA</p>
+            <p><strong>Bachelor of Science</strong> in Computer Engineering</p>
+            <p><strong>Bachelor of Science</strong> in Mathematics - Applied Science</p>
+            <p>GPA: 3.6 · Provost Honors</p>
+            <div class="tag-row" aria-label="Undergraduate coursework">
+              <span>CSE 141/141L Computer Architecture</span>
+              <span>CSE 140/140L Digital Systems</span>
+              <span>CSE 100 Data Structures</span>
+              <span>MATH 187A/B Cryptography</span>
+              <span>MATH 170A Numerical Analysis</span>
+              <span>ECE 108 Digital Circuits</span>
+            </div>
+          </div>
+        </article>
 
-        <li>
-          <strong>University of California – Summer Sessions</strong> (Remote)<br>
-          <em>UC Santa Cruz; UC Los Angeles; 
-          UC Irvine; and UC Online</em><br>
-          <em>Summer 2022 & Summer 2023</em><br>
-          <em>Enrolled in online summer sessions across multiple UC campuses to broaden academic experience.</em>
-        </li>
+        <article class="education-card">
+          <div class="education-date">Aug 2024 - Dec 2024</div>
+          <div class="education-body">
+            <h3>National University of Singapore</h3>
+            <p class="school-meta">School of Computing · Singapore</p>
+            <p>University of California Education Abroad Program</p>
+            <p>
+              Completed advanced coursework in algorithms, cryptography, and Internet of Things while
+              gaining international academic and cultural experience.
+            </p>
+            <div class="tag-row" aria-label="NUS coursework">
+              <span>CS3230 Design and Analysis of Algorithms</span>
+              <span>CS2107 Information Security</span>
+              <span>CS3237 Internet of Things</span>
+            </div>
+          </div>
+        </article>
 
+        <article class="education-card">
+          <div class="education-date">Sep 2021 - Jun 2023</div>
+          <div class="education-body">
+            <h3>University of California, Davis</h3>
+            <p class="school-meta">College of Letters and Science · Davis, CA</p>
+            <p>Applied Mathematics & Computer Science</p>
+            <p>Completed foundational coursework before transferring to UC San Diego.</p>
+            <div class="tag-row" aria-label="UC Davis coursework">
+              <span>ECS 36A/B/C Programming & Data Structures</span>
+              <span>ECS 50 Computer Organization</span>
+            </div>
+          </div>
+        </article>
 
+        <article class="education-card">
+          <div class="education-date">Summer 2022 & Summer 2023</div>
+          <div class="education-body">
+            <h3>University of California - Summer Sessions</h3>
+            <p class="school-meta">Remote · UC Santa Cruz, UC Los Angeles, UC Irvine, UC Online</p>
+            <p>Enrolled across multiple UC campuses to broaden academic experience.</p>
+          </div>
+        </article>
 
-        <li>
-          <strong>Yorba Linda High School</strong> – Yorba Linda, CA<br>
-          <em>Aug 2017 – Jun 2021</em><br>
-          <em>Recognized with the <strong>President’s Volunteer Service Award – Gold</strong> 
-          for outstanding community service and leadership. 
-          Built a strong foundation in STEM before pursuing engineering and mathematics at the university level.</em>
-        </li>
-      </ul>
+        <article class="education-card">
+          <div class="education-date">Aug 2017 - Jun 2021</div>
+          <div class="education-body">
+            <h3>Yorba Linda High School</h3>
+            <p class="school-meta">Yorba Linda, CA</p>
+            <p>
+              Built a strong foundation in STEM before pursuing engineering and mathematics at the
+              university level.
+            </p>
+            <div class="education-note">
+              Leadership: <strong>Vice President, Chinese Association Club</strong>. Recognized with the
+              <strong>President's Volunteer Service Award - Gold</strong> for community service and leadership.
+            </div>
+          </div>
+        </article>
+      </div>
     </section>
   </main>
 </body>

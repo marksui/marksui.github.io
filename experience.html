@@ -6,6 +6,107 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
+  <style>
+    .experience-main {
+      max-width: 900px;
+      --exp-accent: #56665f;
+      --exp-secondary: #7b7467;
+      --exp-rule: #d9d5cc;
+      --exp-wash: rgba(86, 102, 95, 0.065);
+    }
+
+    html[data-theme="dark"] .experience-main {
+      --exp-accent: #a8b6ae;
+      --exp-secondary: #b8b0a3;
+      --exp-rule: #3f423f;
+      --exp-wash: rgba(168, 182, 174, 0.08);
+    }
+
+    .experience-main section {
+      margin-bottom: 0;
+    }
+
+    .experience-main h2 {
+      margin-bottom: 0.35rem;
+    }
+
+    .experience-main section > h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2rem 0 0.7rem;
+      color: var(--exp-accent);
+      font-size: 1.08rem;
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    .experience-main section > h3::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--exp-rule), transparent);
+    }
+
+    .experience-main section > ul {
+      margin: 0 0 2.2rem;
+      border-top: 1px solid var(--exp-rule);
+    }
+
+    .experience-main section > ul > li {
+      position: relative;
+      margin: 0;
+      padding: 1.05rem 0 1.05rem 1.15rem;
+      border-bottom: 1px solid var(--exp-rule);
+      transition: background 0.2s ease;
+    }
+
+    .experience-main section > ul > li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.15rem;
+      bottom: 1.15rem;
+      width: 3px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, var(--exp-accent), var(--exp-secondary));
+      opacity: 0.72;
+    }
+
+    .experience-main section > ul > li:hover {
+      background: var(--exp-wash);
+    }
+
+    .experience-main strong {
+      font-size: 1.08rem;
+    }
+
+    .experience-main em {
+      color: var(--exp-accent);
+    }
+
+    .experience-main li em:last-child {
+      display: inline-block;
+      margin-top: 0.35rem;
+      color: var(--exp-secondary);
+    }
+
+    @media (max-width: 640px) {
+      .experience-main section > ul > li {
+        padding-left: 0.9rem;
+      }
+
+      .experience-main section > h3 {
+        display: block;
+      }
+
+      .experience-main section > h3::after {
+        display: block;
+        margin-top: 0.45rem;
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -13,13 +114,13 @@
     <nav>
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
-      <a href="experience.html">Experience</a> 
+      <a href="experience.html" aria-current="page">Experience</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
   </header>
 
-  <main>
+  <main class="experience-main">
     <section>
       <h2>Experience</h2>
 

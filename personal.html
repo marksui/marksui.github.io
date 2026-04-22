@@ -9,27 +9,52 @@
   <script src="theme.js"></script>
   <style>
     .personal-main {
-      max-width: 1060px;
+      max-width: 1120px;
+      --personal-accent: #55645e;
+      --personal-secondary: #7b7467;
+      --personal-rule: #d9d5cc;
+      --personal-wash: rgba(85, 100, 94, 0.065);
+      --personal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .personal-main {
+      --personal-accent: #a8b6ae;
+      --personal-secondary: #b8b0a3;
+      --personal-rule: #3f423f;
+      --personal-wash: rgba(168, 182, 174, 0.08);
     }
 
     .travel-intro {
       max-width: 720px;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--personal-rule);
+      animation: personalFadeUp 0.65s var(--personal-ease) both;
+    }
+
+    .travel-intro h2 {
+      margin-top: 0;
+      margin-bottom: 0.55rem;
+    }
+
+    .travel-intro p {
+      margin: 0;
     }
 
     .travel-dashboard {
       display: grid;
       grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.9fr);
-      gap: 1rem;
+      gap: 1.25rem;
       align-items: stretch;
-      margin-top: 1.2rem;
+      margin-top: 1.35rem;
+      animation: personalFadeUp 0.7s var(--personal-ease) both;
     }
 
     .map-panel,
     .selected-panel {
-      border: 1px solid var(--border);
+      border: 1px solid var(--personal-rule);
       border-radius: 8px;
       background: var(--surface);
-      box-shadow: var(--shadow);
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -43,7 +68,10 @@
       justify-content: space-between;
       gap: 1rem;
       align-items: baseline;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--personal-rule);
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent),
+        var(--surface);
     }
 
     .map-header h3,
@@ -54,7 +82,7 @@
 
     .map-count,
     .eyebrow {
-      color: var(--accent);
+      color: var(--personal-accent);
       font-size: 0.9rem;
       font-weight: bold;
       letter-spacing: 0.02em;
@@ -64,6 +92,7 @@
       width: 100%;
       height: 460px;
       background: var(--tag-bg);
+      filter: saturate(0.76) contrast(0.98);
     }
 
     .region-filters {
@@ -71,17 +100,17 @@
       flex-wrap: wrap;
       gap: 0.45rem;
       padding: 1rem;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--personal-rule);
     }
 
     .region-filter,
     .place-button {
-      border: 1px solid var(--tag-border);
-      background: var(--tag-bg);
+      border: 1px solid var(--personal-rule);
+      background: transparent;
       color: var(--text);
       cursor: pointer;
       font: inherit;
-      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+      transition: border-color 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease;
     }
 
     .region-filter {
@@ -92,8 +121,9 @@
 
     .region-filter:hover,
     .region-filter.active {
-      border-color: var(--accent);
-      background: var(--surface);
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
       transform: translateY(-1px);
     }
 
@@ -101,6 +131,9 @@
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent 36%),
+        var(--surface);
     }
 
     .selected-panel p {
@@ -108,7 +141,7 @@
     }
 
     .selected-meta {
-      color: var(--accent);
+      color: var(--personal-secondary);
       font-style: italic;
     }
 
@@ -118,17 +151,23 @@
 
     .photo-slots {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.6rem;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0.85rem;
+      align-items: start;
       margin-top: 0.35rem;
     }
 
+    .selected-panel .photo-slots {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
     .photo-slot {
-      min-height: 92px;
-      border: 1px dashed var(--tag-border);
+      grid-column: span 4;
+      min-height: 118px;
+      border: 1px dashed var(--personal-rule);
       border-radius: 8px;
       background:
-        linear-gradient(135deg, transparent 0 48%, var(--border) 49%, transparent 51%),
+        linear-gradient(135deg, transparent 0 48%, var(--personal-rule) 49%, transparent 51%),
         var(--tag-bg);
       display: flex;
       align-items: center;
@@ -139,15 +178,160 @@
       text-align: center;
     }
 
+    .photo-slot.filled {
+      display: block;
+      min-height: 0;
+      overflow: hidden;
+      border-style: solid;
+      background: var(--surface);
+      opacity: 1;
+      transition: border-color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease;
+    }
+
+    .photo-slot.filled:hover {
+      border-color: var(--personal-accent);
+      background: var(--personal-wash);
+      transform: translateY(-2px);
+    }
+
+    .photo-slot.landscape {
+      grid-column: span 6;
+    }
+
+    .photo-slot.portrait {
+      grid-column: span 3;
+    }
+
+    .selected-panel .photo-slot {
+      grid-column: span 6;
+    }
+
+    .photo-break {
+      grid-column: 1 / -1;
+      height: 1px;
+      margin: 0.15rem 0;
+      background: var(--border);
+      opacity: 0.9;
+    }
+
+    .photo-link {
+      display: block;
+      line-height: 0;
+      background: var(--tag-bg);
+      cursor: zoom-in;
+      overflow: hidden;
+    }
+
+    .photo-slot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      transition: filter 0.28s ease, transform 0.32s var(--personal-ease);
+    }
+
+    .photo-slot.filled:hover img {
+      filter: saturate(0.92) contrast(1.02);
+      transform: scale(1.012);
+    }
+
+    .photo-slot figcaption {
+      padding: 0.35rem 0.45rem 0.45rem;
+      font-size: 0.82rem;
+      line-height: 1.25;
+      color: var(--personal-secondary);
+    }
+
+    body.viewer-open {
+      overflow: hidden;
+    }
+
+    .photo-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      place-items: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .photo-viewer.open {
+      display: grid;
+    }
+
+    .photo-viewer-content {
+      width: min(96vw, 1400px);
+      text-align: center;
+    }
+
+    .photo-viewer img {
+      display: block;
+      max-width: 100%;
+      max-height: 84vh;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+      object-fit: contain;
+    }
+
+    .photo-viewer-caption {
+      margin: 0.75rem 0 0;
+      color: #ffffff;
+      font-size: 0.95rem;
+      opacity: 0.88;
+    }
+
+    .photo-viewer-original {
+      display: inline-block;
+      margin-top: 0.45rem;
+      color: #ffffff;
+      font-size: 0.9rem;
+      opacity: 0.78;
+    }
+
+    .photo-viewer-original:hover {
+      opacity: 1;
+    }
+
+    .photo-viewer-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: bold;
+    }
+
+    .photo-viewer-close:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
     .region-list details {
-      border-bottom: 1px solid var(--border);
-      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--personal-rule);
+      padding: 0.7rem 0;
+      animation: personalFadeUp 0.58s var(--personal-ease) both;
     }
 
     .region-list summary {
       cursor: pointer;
       font-weight: bold;
       font-size: 1.08rem;
+      transition: color 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .region-list summary:hover {
+      color: var(--personal-accent);
+      transform: translateX(2px);
     }
 
     .region-summary {
@@ -167,10 +351,10 @@
       justify-content: center;
       min-width: 1.6rem;
       padding: 0.1rem 0.45rem;
-      border: 1px solid var(--tag-border);
+      border: 1px solid var(--personal-rule);
       border-radius: 999px;
-      color: var(--accent);
-      background: var(--tag-bg);
+      color: var(--personal-accent);
+      background: transparent;
       font-size: 0.9rem;
       line-height: 1.2;
       white-space: nowrap;
@@ -189,13 +373,14 @@
     .place-button {
       width: 100%;
       border-radius: 8px;
-      padding: 0.75rem;
+      padding: 0.75rem 0.8rem;
       text-align: left;
     }
 
     .place-button:hover,
     .place-button.active {
-      border-color: var(--accent);
+      border-color: var(--personal-accent);
+      background: var(--personal-wash);
       transform: translateY(-1px);
     }
 
@@ -218,6 +403,41 @@
       line-height: 1.4;
     }
 
+    .personal-main > section + section h2 {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--personal-accent);
+      font-size: 1.14rem;
+      font-style: italic;
+    }
+
+    .personal-main > section + section h2::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--personal-rule), transparent);
+      transform: scaleX(0.84);
+      transform-origin: left;
+      transition: transform 0.38s var(--personal-ease), background 0.25s ease;
+    }
+
+    .personal-main > section + section:hover h2::after {
+      transform: scaleX(1);
+      background: linear-gradient(90deg, var(--personal-accent), transparent);
+    }
+
+    @keyframes personalFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 820px) {
       .travel-dashboard {
         grid-template-columns: 1fr;
@@ -225,6 +445,10 @@
 
       #travel-map {
         height: 360px;
+      }
+
+      .selected-panel {
+        background: var(--surface);
       }
     }
 
@@ -235,6 +459,40 @@
 
       .photo-slots {
         grid-template-columns: 1fr;
+      }
+
+      .photo-slot,
+      .photo-slot.landscape,
+      .photo-slot.portrait,
+      .selected-panel .photo-slot {
+        grid-column: 1 / -1;
+      }
+
+      .personal-main > section + section h2 {
+        display: block;
+      }
+
+      .personal-main > section + section h2::after {
+        display: block;
+        margin-top: 0.45rem;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .travel-intro,
+      .travel-dashboard,
+      .region-list details {
+        animation: none;
+      }
+
+      .region-filter,
+      .place-button,
+      .photo-slot.filled,
+      .photo-slot img,
+      .region-list summary,
+      .personal-main > section + section h2::after {
+        transition: none;
       }
     }
   </style>
@@ -247,7 +505,7 @@
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
       <a href="contact.html">Contact</a>
-      <a href="personal.html">Personal</a>
+      <a href="personal.html" aria-current="page">Personal</a>
     </nav>
   </header>
 
@@ -286,6 +544,15 @@
     </section>
   </main>
 
+  <div class="photo-viewer" id="photo-viewer" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="photo-viewer-close" type="button" aria-label="Close photo">X</button>
+    <div class="photo-viewer-content">
+      <img id="photo-viewer-img" src="" alt="">
+      <p class="photo-viewer-caption" id="photo-viewer-caption"></p>
+      <a class="photo-viewer-original" id="photo-viewer-original" href="" target="_blank" rel="noopener">Open original file</a>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     var places = [
@@ -298,7 +565,17 @@
       { region: "California", name: "Ventura", coords: [34.2746, -119.2290], spots: ["Ventura Pier", "Mission San Buenaventura"] },
       { region: "Texas", name: "Dallas", coords: [32.7767, -96.7970], spots: ["Dealey Plaza", "Reunion Tower", "Dallas Arts District"] },
       { region: "Texas", name: "Austin", coords: [30.2672, -97.7431], spots: ["Texas State Capitol", "Lady Bird Lake", "South Congress"] },
-      { region: "Nevada", name: "Las Vegas", coords: [36.1699, -115.1398], spots: ["The Strip", "Bellagio Fountains", "Fremont Street"] },
+      {
+        region: "Nevada",
+        name: "Las Vegas",
+        coords: [36.1699, -115.1398],
+        spots: ["The Strip", "Bellagio Fountains", "Fremont Street", "Arte Museum Las Vegas"],
+        photos: [
+          { src: "img/nevada/las-vegas-arte-museum-flower-lights.jpg", caption: "Arte Museum Las Vegas - Flower Lights" },
+          { src: "img/nevada/las-vegas-arte-museum-floral-room.jpg", caption: "Arte Museum Las Vegas - Floral Room" },
+          { src: "img/nevada/las-vegas-arte-museum-immersive-room.jpg", caption: "Arte Museum Las Vegas - Immersive Room" }
+        ]
+      },
       { region: "Washington", name: "Seattle", coords: [47.6062, -122.3321], spots: ["Space Needle", "Pike Place Market", "Seattle Waterfront"] },
       { region: "New York", name: "New York City", coords: [40.7128, -74.0060], spots: ["Times Square", "Central Park", "Brooklyn Bridge"] },
       { region: "New York", name: "Ithaca", coords: [42.4430, -76.5019], spots: ["Cornell University", "Ithaca Commons", "Ithaca Falls"] },
@@ -306,7 +583,43 @@
       { region: "Australia", name: "Sydney", coords: [-33.8688, 151.2093], spots: ["Sydney Opera House", "Harbour Bridge", "Darling Harbour"] },
       { region: "Singapore", name: "Singapore", localName: "新加坡", coords: [1.3521, 103.8198], spots: ["Marina Bay Sands", "Gardens by the Bay", "Merlion Park"] },
       { region: "Japan", name: "Kyoto", localName: "京都", coords: [35.0116, 135.7681], spots: ["Kiyomizu-dera", "Fushimi Inari Taisha", "Arashiyama"], spotsLocal: ["清水寺", "伏見稲荷大社", "嵐山"] },
-      { region: "Japan", name: "Osaka", localName: "大阪", coords: [34.6937, 135.5023], spots: ["Osaka Castle", "Dotonbori", "Shinsekai"], spotsLocal: ["大阪城", "道頓堀", "新世界"] },
+      {
+        region: "Japan",
+        name: "Osaka",
+        localName: "大阪",
+        coords: [34.6937, 135.5023],
+        spots: ["Osaka City Museum of Fine Arts", "Keitakuen Garden", "River Tower View", "Dotonbori", "Shitennoji Temple", "Tennoji Zoo", "Shinsekai", "Tsutenkaku", "Nagai Botanical Garden", "Nagai Park"],
+        spotsLocal: ["大阪市立美術館", "慶沢園", "River Tower View", "道頓堀", "四天王寺", "天王寺動物園", "新世界", "通天閣", "長居植物園", "長居公園"],
+        photos: [
+          { src: "img/japan/osaka-city-museum-city-view.jpg", caption: "Osaka City Museum of Fine Arts - City View" },
+          { src: "img/japan/osaka-keitakuen-garden-bridge.jpg", caption: "Keitakuen Garden - Bridge" },
+          { src: "img/japan/osaka-keitakuen-autumn-maples.jpg", caption: "Keitakuen Garden - Autumn Maples" },
+          { src: "img/japan/osaka-keitakuen-garden-reflection.jpg", caption: "Keitakuen Garden - Reflection" },
+          { src: "img/japan/osaka-keitakuen-water-reflection.jpg", caption: "Keitakuen Garden - Water Reflection" },
+          { src: "img/japan/osaka-keitakuen-maple-leaves.jpg", caption: "Keitakuen Garden - Maple Leaves" },
+          { src: "img/japan/osaka-river-tower-sunset-skyline.jpg", caption: "River Tower View - Sunset Skyline" },
+          { src: "img/japan/osaka-river-tower-window-view.jpg", caption: "River Tower View - Window View" },
+          { src: "img/japan/osaka-shitennoji-five-story-pagoda.jpg", caption: "Shitennoji Temple - Five-story Pagoda" },
+          { src: "img/japan/osaka-tennoji-zoo-habitat-waterfall.jpg", caption: "Tennoji Zoo - Habitat Waterfall" },
+          { src: "img/japan/osaka-tennoji-zoo-deer.jpg", caption: "Tennoji Zoo - Deer" },
+          { src: "img/japan/osaka-tennoji-zoo-zebra.jpg", caption: "Tennoji Zoo - Zebra" },
+          { src: "img/japan/osaka-tennoji-zoo-flamingos.jpg", caption: "Tennoji Zoo - Flamingos" },
+          { src: "img/japan/osaka-tennoji-zoo-tiger.jpg", caption: "Tennoji Zoo - Tiger" },
+          { src: "img/japan/osaka-shinsekai-tsutenkaku.jpg", caption: "Shinsekai - Tsutenkaku" },
+          { src: "img/japan/osaka-nagai-botanical-pond-reflection.jpg", caption: "Nagai Botanical Garden - Pond Reflection" },
+          { src: "img/japan/osaka-nagai-botanical-waterfall.jpg", caption: "Nagai Botanical Garden - Waterfall" },
+          { src: "img/japan/osaka-nagai-botanical-camellia.jpg", caption: "Nagai Botanical Garden - Camellia" },
+          { src: "img/japan/osaka-nagai-botanical-autumn-leaves.jpg", caption: "Nagai Botanical Garden - Autumn Leaves" },
+          { src: "img/japan/osaka-nagai-botanical-winter-garden.jpg", caption: "Nagai Botanical Garden - Winter Garden" },
+          { src: "img/japan/osaka-nagai-botanical-white-blossoms.jpg", caption: "Nagai Botanical Garden - White Blossoms" },
+          { src: "img/japan/osaka-nagai-botanical-red-bridge.jpg", caption: "Nagai Botanical Garden - Red Bridge" },
+          { src: "img/japan/osaka-nagai-botanical-tree-path.jpg", caption: "Nagai Botanical Garden - Tree Path" },
+          { src: "img/japan/osaka-nagai-botanical-branches.jpg", caption: "Nagai Botanical Garden - Branches" },
+          { src: "img/japan/osaka-nagai-botanical-cherry-blossoms.jpg", caption: "Nagai Botanical Garden - Cherry Blossoms" },
+          { src: "img/japan/osaka-nagai-botanical-lake-fountain.jpg", caption: "Nagai Botanical Garden - Lake Fountain" },
+          { src: "img/japan/osaka-nagai-botanical-water-view.jpg", caption: "Nagai Botanical Garden - Water View" }
+        ]
+      },
       { region: "Japan", name: "Otaru, Hokkaido", localName: "小樽, 北海道", coords: [43.1907, 140.9947], spots: ["Otaru Canal", "Sakaimachi Street", "Otaru Music Box Museum"], spotsLocal: ["小樽運河", "堺町通り", "小樽オルゴール堂"] },
       { region: "Japan", name: "Yoichi, Hokkaido", localName: "余市, 北海道", coords: [43.1951, 140.7835], spots: ["Nikka Whisky Yoichi Distillery", "Yoichi Port"], spotsLocal: ["ニッカウヰスキー余市蒸溜所", "余市港"] },
       { region: "Brunei", name: "Bandar Seri Begawan", localName: "بندر سري بڬاوان", coords: [4.9031, 114.9398], spots: ["Sultan Omar Ali Saifuddien Mosque", "Kampong Ayer", "Royal Regalia Museum"], spotsLocal: ["Masjid Omar Ali Saifuddien", "كامڤوڠ اير", "Muzium Alat Kebesaran Diraja"] },
@@ -316,12 +629,83 @@
       { region: "Cambodia", name: "Phnom Penh", localName: "ភ្នំពេញ", coords: [11.5564, 104.9282], spots: ["Royal Palace", "Wat Phnom", "Central Market"], spotsLocal: ["ព្រះបរមរាជវាំង", "វត្តភ្នំ", "ផ្សារធំថ្មី"] },
       { region: "Indonesia", name: "Batam", localName: "Kota Batam", coords: [1.0456, 104.0305], spots: ["Barelang Bridge", "Maha Vihara Duta Maitreya", "Nagoya Hill"], spotsLocal: ["Jembatan Barelang", "Maha Vihara Duta Maitreya", "Nagoya Hill"] },
       { region: "Vietnam", name: "Ho Chi Minh City", localName: "Thành phố Hồ Chí Minh", coords: [10.8231, 106.6297], spots: ["Ben Thanh Market", "War Remnants Museum", "Notre-Dame Cathedral Basilica"], spotsLocal: ["Chợ Bến Thành", "Bảo tàng Chứng tích Chiến tranh", "Nhà thờ Đức Bà Sài Gòn"] },
-      { region: "Vietnam", name: "Hanoi", localName: "Hà Nội", coords: [21.0278, 105.8342], spots: ["Hoan Kiem Lake", "Old Quarter", "Temple of Literature"], spotsLocal: ["Hồ Hoàn Kiếm", "Phố cổ Hà Nội", "Văn Miếu"] },
+      {
+        region: "Vietnam",
+        name: "Hanoi",
+        localName: "Hà Nội",
+        coords: [21.0278, 105.8342],
+        spots: ["Hoan Kiem Lake", "Old Quarter", "St. Joseph's Cathedral", "Temple of Literature", "Vietnam Fine Arts Museum"],
+        spotsLocal: ["Hồ Hoàn Kiếm", "Phố cổ Hà Nội", "Nhà thờ Lớn Hà Nội", "Văn Miếu", "Bảo tàng Mỹ thuật Việt Nam"],
+        photos: [
+          { src: "img/vietnam/hanoi-old-quarter-lanterns-building.jpg", caption: "Hanoi - Old Quarter Lanterns" },
+          { src: "img/vietnam/hanoi-old-quarter-red-lanterns.jpg", caption: "Hanoi - Old Quarter Red Lanterns" },
+          { src: "img/vietnam/hanoi-st-joseph-cathedral.jpg", caption: "Hanoi - St. Joseph's Cathedral" },
+          { src: "img/vietnam/hanoi-hoan-kiem-lake-turtle-tower.jpg", caption: "Hanoi - Hoan Kiem Lake Turtle Tower" },
+          { src: "img/vietnam/hanoi-hoan-kiem-lake-shore.jpg", caption: "Hanoi - Hoan Kiem Lake Shore" },
+          { src: "img/vietnam/hanoi-hoan-kiem-lake-flowers.jpg", caption: "Hanoi - Hoan Kiem Lake Flowers" },
+          { src: "img/vietnam/hanoi-lenin-statue.jpg", caption: "Hanoi - Lenin Statue" },
+          { src: "img/vietnam/hanoi-flag-tower.jpg", caption: "Hanoi - Flag Tower" },
+          { src: "img/vietnam/hanoi-military-history-museum-aircraft.jpg", caption: "Hanoi - Military History Museum Aircraft" },
+          { src: "img/vietnam/hanoi-war-memorial-monument.jpg", caption: "Hanoi - War Memorial Monument" },
+          { src: "img/vietnam/hanoi-temple-of-literature-gate.jpg", caption: "Hanoi - Temple of Literature Gate" },
+          { src: "img/vietnam/hanoi-ho-chi-minh-mausoleum.jpg", caption: "Hanoi - Ho Chi Minh Mausoleum" },
+          { src: "img/vietnam/hanoi-museum-facade.jpg", caption: "Hanoi - Museum Facade" },
+          { src: "img/vietnam/hanoi-fine-arts-museum-building.jpg", caption: "Hanoi - Fine Arts Museum Building" },
+          { src: "img/vietnam/hanoi-fine-arts-museum-gallery.jpg", caption: "Hanoi - Fine Arts Museum Gallery" },
+          { src: "img/vietnam/hanoi-fine-arts-painting-harbor.jpg", caption: "Hanoi - Fine Arts Painting Harbor" },
+          { src: "img/vietnam/hanoi-fine-arts-painting-scene.jpg", caption: "Hanoi - Fine Arts Painting Scene" },
+          { src: "img/vietnam/hanoi-fine-arts-lacquer-panel.jpg", caption: "Hanoi - Fine Arts Lacquer Panel" },
+          { src: "img/vietnam/hanoi-fine-arts-museum-interior.jpg", caption: "Hanoi - Fine Arts Museum Interior" },
+          { src: "img/vietnam/hanoi-hoan-kiem-lake-yellow-colonial-building.jpg", caption: "Hoan Kiem Lake / Hồ Hoàn Kiếm - Yellow Colonial Building" },
+          { src: "img/vietnam/hanoi-old-gate.jpg", caption: "Hanoi - Old Gate" },
+          { src: "img/vietnam/hanoi-one-pillar-pagoda.jpg", caption: "Hanoi - One Pillar Pagoda" },
+          { src: "img/vietnam/hanoi-temple-gate.jpg", caption: "Hanoi - Temple Gate" }
+        ]
+      },
       { region: "Thailand", name: "Bangkok", localName: "กรุงเทพฯ", coords: [13.7563, 100.5018], spots: ["Grand Palace", "Wat Arun", "Wat Pho"], spotsLocal: ["พระบรมมหาราชวัง", "วัดอรุณ", "วัดโพธิ์"] },
-      { region: "Taiwan", name: "Taipei", localName: "臺北", coords: [25.0330, 121.5654], spots: ["Taipei 101", "Chiang Kai-shek Memorial Hall", "Ximending"], spotsLocal: ["台北101", "中正紀念堂", "西門町"] },
+      {
+        region: "Taiwan",
+        name: "Taipei",
+        localName: "臺北",
+        coords: [25.0330, 121.5654],
+        spots: ["Taipei 101", "The Grand Hotel", "Chiang Kai-shek Memorial Hall", "Ximending"],
+        spotsLocal: ["台北101", "圓山大飯店", "中正紀念堂", "西門町"],
+        photos: [
+          { src: "img/taiwan/grand-hotel-taipei-christmas-tree.jpg", caption: "Taipei - The Grand Hotel Christmas Tree" },
+          { src: "img/taiwan/grand-hotel-taipei-ceiling.jpg", caption: "Taipei - The Grand Hotel Ceiling" },
+          { src: "img/taiwan/grand-hotel-taipei-rainy-skyline.jpg", caption: "Taipei - The Grand Hotel / 圓山大飯店 - Rainy Skyline" }
+        ]
+      },
       { region: "Taiwan", name: "Hualien", localName: "花蓮", coords: [23.9872, 121.6015], spots: ["Taroko Gorge", "Qixingtan Beach"], spotsLocal: ["太魯閣", "七星潭"] },
       { region: "Taiwan", name: "Hsinchu", localName: "新竹", coords: [24.8138, 120.9675], spots: ["Hsinchu City God Temple", "East Gate"], spotsLocal: ["新竹都城隍廟", "迎曦門"] },
-      { region: "Taiwan", name: "Tainan", localName: "臺南", coords: [22.9999, 120.2270], spots: ["Chihkan Tower", "Anping Old Fort"], spotsLocal: ["赤崁樓", "安平古堡"] },
+      {
+        region: "Taiwan",
+        name: "Nantou",
+        localName: "南投",
+        coords: [23.8656, 120.9159],
+        spots: ["Sun Moon Lake", "Shuishe Pier", "Ita Thao"],
+        spotsLocal: ["日月潭", "水社碼頭", "伊達邵"],
+        photos: [
+          { src: "img/taiwan/sun-moon-lake-lake-view.jpg", caption: "Sun Moon Lake / 日月潭 - Lake View" },
+          { src: "img/taiwan/sun-moon-lake-trail.jpg", caption: "Sun Moon Lake / 日月潭 - Trail" },
+          { src: "img/taiwan/sun-moon-lake-temple-view.jpg", caption: "Sun Moon Lake / 日月潭 - Temple View" },
+          { src: "img/taiwan/sun-moon-lake-pagoda-view.jpg", caption: "Sun Moon Lake / 日月潭 - Pagoda View" },
+          { src: "img/taiwan/sun-moon-lake-lakeside-sculpture.jpg", caption: "Sun Moon Lake / 日月潭 - Lakeside Sculpture" }
+        ]
+      },
+      {
+        region: "Taiwan",
+        name: "Tainan",
+        localName: "臺南",
+        coords: [22.9999, 120.2270],
+        spots: ["Chihkan Tower", "Anping Old Fort", "Chimei Museum"],
+        spotsLocal: ["赤崁樓", "安平古堡", "奇美博物館"],
+        photos: [
+          { src: "img/taiwan/chimei-museum-interior.jpg", caption: "Chimei Museum - Interior" },
+          { src: "img/taiwan/chimei-museum-exterior.jpg", caption: "Chimei Museum - Exterior" },
+          { src: "img/taiwan/anping-fort-watchtower.jpg", caption: "Anping Old Fort - Watchtower" }
+        ]
+      },
       { region: "Taiwan", name: "Kaohsiung", localName: "高雄", coords: [22.6273, 120.3014], spots: ["Lotus Pond", "Pier-2 Art Center"], spotsLocal: ["蓮池潭", "駁二藝術特區"] },
       { region: "Yunnan", name: "Kunming", localName: "昆明", coords: [25.0389, 102.7183], spots: ["Dianchi Lake", "Stone Forest", "Green Lake Park"] },
       { region: "Yunnan", name: "Dali", localName: "大理", coords: [25.6065, 100.2676], spots: ["Erhai Lake", "Dali Ancient City", "Cangshan"] },
@@ -377,15 +761,111 @@
     function markerStyle(active) {
       return {
         radius: active ? 9 : 6,
-        color: active ? "#111" : "#ffffff",
+        color: active ? "#2f332f" : "#fdfdfc",
         weight: active ? 2 : 1,
-        fillColor: active ? "#f6b73c" : "#005890",
+        fillColor: active ? "#7b7467" : "#55645e",
         fillOpacity: active ? 1 : 0.86
       };
     }
 
-    function makePhotoSlots() {
+    function makePhotoSlots(place) {
+      if (place && place.photos && place.photos.length) {
+        return place.photos.map(function(photo) {
+          var caption = photo.caption || "";
+          return '' +
+            '<figure class="photo-slot filled">' +
+              '<a class="photo-link" href="' + escapeHtml(photo.src) + '" data-photo-src="' + escapeHtml(photo.src) + '" data-photo-caption="' + escapeHtml(caption) + '">' +
+                '<img src="' + escapeHtml(photo.src) + '" alt="' + escapeHtml(caption || place.name) + '" loading="lazy">' +
+              '</a>' +
+              '<figcaption>' + escapeHtml(caption) + '</figcaption>' +
+            '</figure>';
+        }).join("");
+      }
+
       return '<div class="photo-slot">Photo</div><div class="photo-slot">Photo</div><div class="photo-slot">Photo</div>';
+    }
+
+    function directPhotoFigures(grid) {
+      return Array.prototype.filter.call(grid.children, function(child) {
+        return child.classList &&
+          child.classList.contains("photo-slot") &&
+          child.classList.contains("filled");
+      });
+    }
+
+    function arrangePhotoGrid(grid) {
+      var figures = directPhotoFigures(grid);
+      if (!figures.length || figures.some(function(figure) { return !figure.dataset.orientation; })) {
+        return;
+      }
+
+      Array.prototype.slice.call(grid.children).forEach(function(child) {
+        if (child.classList && child.classList.contains("photo-break")) {
+          child.remove();
+        }
+      });
+
+      var landscapes = figures.filter(function(figure) {
+        return figure.dataset.orientation === "landscape";
+      });
+      var portraits = figures.filter(function(figure) {
+        return figure.dataset.orientation === "portrait";
+      });
+
+      landscapes.concat(portraits).forEach(function(figure) {
+        grid.appendChild(figure);
+      });
+
+      if (landscapes.length && portraits.length) {
+        var divider = document.createElement("div");
+        divider.className = "photo-break";
+        divider.setAttribute("aria-hidden", "true");
+        grid.insertBefore(divider, portraits[0]);
+      }
+    }
+
+    function setPhotoOrientation(figure, image, grid) {
+      var orientation = image.naturalWidth >= image.naturalHeight ? "landscape" : "portrait";
+      figure.dataset.orientation = orientation;
+      figure.classList.remove("landscape", "portrait");
+      figure.classList.add(orientation);
+      arrangePhotoGrid(grid);
+    }
+
+    function organizePhotoGrid(grid) {
+      directPhotoFigures(grid).forEach(function(figure) {
+        var image = figure.querySelector("img");
+        if (!image || figure.dataset.orientation) {
+          return;
+        }
+
+        if (image.complete && image.naturalWidth) {
+          setPhotoOrientation(figure, image, grid);
+          return;
+        }
+
+        image.addEventListener("load", function() {
+          setPhotoOrientation(figure, image, grid);
+        }, { once: true });
+        image.addEventListener("error", function() {
+          figure.dataset.orientation = "landscape";
+          figure.classList.add("landscape");
+          arrangePhotoGrid(grid);
+        }, { once: true });
+      });
+    }
+
+    function organizePhotoGrids(root) {
+      var grids = [];
+      if (root.classList && root.classList.contains("photo-slots")) {
+        grids.push(root);
+      }
+      if (root.querySelectorAll) {
+        root.querySelectorAll(".photo-slots").forEach(function(grid) {
+          grids.push(grid);
+        });
+      }
+      grids.forEach(organizePhotoGrid);
     }
 
     function escapeHtml(value) {
@@ -440,7 +920,8 @@
       document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
       document.getElementById("selected-region").innerHTML = regionHtml(place.region);
       document.getElementById("selected-spots").innerHTML = spotsHtml(place);
-      document.getElementById("selected-photos").innerHTML = makePhotoSlots();
+      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place);
+      organizePhotoGrids(document.getElementById("selected-photos"));
 
       markers.forEach(function(marker, markerIndex) {
         marker.setStyle(markerStyle(markerIndex === index));
@@ -453,6 +934,31 @@
       if (map && moveMap) {
         map.setView(place.coords, 7, { animate: true });
       }
+    }
+
+    function openPhotoViewer(src, caption) {
+      var viewer = document.getElementById("photo-viewer");
+      var image = document.getElementById("photo-viewer-img");
+      var captionElement = document.getElementById("photo-viewer-caption");
+      var originalLink = document.getElementById("photo-viewer-original");
+      image.src = src;
+      image.alt = caption || "Travel photo";
+      originalLink.href = src;
+      captionElement.textContent = caption || "";
+      viewer.classList.add("open");
+      viewer.setAttribute("aria-hidden", "false");
+      document.body.classList.add("viewer-open");
+    }
+
+    function closePhotoViewer() {
+      var viewer = document.getElementById("photo-viewer");
+      var image = document.getElementById("photo-viewer-img");
+      var originalLink = document.getElementById("photo-viewer-original");
+      viewer.classList.remove("open");
+      viewer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("viewer-open");
+      image.src = "";
+      originalLink.href = "";
     }
 
     function renderFilters() {
@@ -496,7 +1002,7 @@
                 '<span class="place-name">' + htmlLabel(item.place.name, item.place.localName) + '</span>' +
                 '<span class="place-spots">' + spotsHtml(item.place) + '</span>' +
               '</button>' +
-              '<div class="photo-slots">' + makePhotoSlots() + '</div>' +
+              '<div class="photo-slots">' + makePhotoSlots(item.place) + '</div>' +
             '</li>';
         }).join("");
 
@@ -516,6 +1022,7 @@
         });
       });
 
+      organizePhotoGrids(list);
       updateSelected(selectedIndex, false);
     }
 
@@ -560,6 +1067,25 @@
 
       fitMapToRegion("All");
     }
+
+    document.addEventListener("click", function(event) {
+      var photoLink = event.target.closest(".photo-link");
+      if (photoLink) {
+        event.preventDefault();
+        openPhotoViewer(photoLink.dataset.photoSrc, photoLink.dataset.photoCaption);
+        return;
+      }
+
+      if (event.target.id === "photo-viewer" || event.target.closest(".photo-viewer-close")) {
+        closePhotoViewer();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closePhotoViewer();
+      }
+    });
 
     renderFilters();
     renderRegionList();
