@@ -22,7 +22,10 @@
   }
 
   function updateButton(button, theme) {
-    button.textContent = theme === "dark" ? "Light" : "Dark";
+    var icon = button.querySelector(".theme-toggle-icon");
+    var label = button.querySelector(".theme-toggle-label");
+    icon.textContent = theme === "dark" ? "☀" : "◐";
+    label.textContent = theme === "dark" ? "Light" : "Dark";
     button.setAttribute(
       "aria-label",
       theme === "dark" ? "Switch to light theme" : "Switch to dark theme"
@@ -33,14 +36,20 @@
   setTheme(initialTheme);
 
   document.addEventListener("DOMContentLoaded", function() {
-    var header = document.querySelector("header");
-    if (!header) {
+    if (!document.body) {
       return;
     }
 
     var button = document.createElement("button");
     button.type = "button";
     button.className = "theme-toggle";
+    var icon = document.createElement("span");
+    icon.className = "theme-toggle-icon";
+    icon.setAttribute("aria-hidden", "true");
+    var label = document.createElement("span");
+    label.className = "theme-toggle-label";
+    button.appendChild(icon);
+    button.appendChild(label);
     updateButton(button, document.documentElement.getAttribute("data-theme"));
 
     button.addEventListener("click", function() {
@@ -51,6 +60,6 @@
       updateButton(button, nextTheme);
     });
 
-    header.appendChild(button);
+    document.body.appendChild(button);
   });
 })();

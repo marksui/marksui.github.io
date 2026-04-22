@@ -10,26 +10,43 @@
     details {
       margin: 1rem 0;
     }
+
     summary {
       font-weight: bold;
       cursor: pointer;
       font-size: 1.1rem;
     }
-    .photo-grid {
+
+    .place-list {
       margin-top: 0.8rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
+      padding-left: 0.9rem;
     }
-    .photo-grid img {
-      width: 250px;
+
+    .place-item {
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .place-item em {
+      display: block;
+      margin: 0.2rem 0 0.65rem;
+      opacity: 0.85;
+    }
+
+    .photo-slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.45rem;
+    }
+
+    .photo-slot {
+      min-height: 86px;
+      border: 1px dashed var(--tag-border);
       border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.2s ease;
+      background: var(--surface);
     }
-    .photo-grid img:hover {
-      transform: scale(1.05);
-    } 
   </style>
 </head>
 <body>
@@ -48,51 +65,402 @@
     <section>
       <h2>Travel & Photography</h2>
       <p>I enjoy exploring new places and capturing memories through photography. Here are some places I have visited.</p>
-      <ul>
-        <li><strong>San Diego, California, USA</strong></li>
-        <li><strong>Los Angeles, California, USA</strong></li>
-        <li><strong>San Francisco, California, USA</strong></li>
-        <li><strong>Sacramento, California, USA</strong></li>
-        <li><strong>Davis, California, USA</strong></li>
-        <li><strong>Santa Barbara, California, USA</strong></li>
-        <li><strong>Ventura, California, USA</strong></li>
-        <li><strong>Las Vegas, Nevada, USA</strong></li>
-        <li><strong>Seattle, Washington, USA</strong></li>
-        <li><strong>Dallas, Texas, USA</strong></li>
-        <li><strong>Austin, Texas, USA</strong></li>
-        <li><strong>Sydney, Australia</strong></li>
-        <li><strong>Singapore</strong></li>
-        <li><strong>Kyoto, Japan</strong></li>
-        <li><strong>Osaka, Japan</strong></li>
-        <li><strong>Otaru, Hokkaido, Japan</strong></li>
-        <li><strong>Yoichi, Hokkaido, Japan</strong></li>
-        <li><strong>Bandar Seri Begawan, Brunei</strong></li>
-        <li><strong>Kuala Lumpur, Malaysia</strong></li>
-        <li><strong>Johor Bahru, Malaysia</strong></li>
-        <li><strong>Vientiane, Laos</strong></li>
-        <li><strong>Phnom Penh, Cambodia</strong></li>
-        <li><strong>Batam, Indonesia</strong></li>
-        <li><strong>Ho Chi Minh City, Vietnam</strong></li>
-        <li><strong>Hanoi, Vietnam</strong></li>
-        <li><strong>Bangkok, Thailand</strong></li>
-        <li><strong>Taipei, Taiwan</strong></li>
-        <li><strong>Hualien, Taiwan</strong></li>
-        <li><strong>Hsinchu, Taiwan</strong></li>
-        <li><strong>Tainan, Taiwan</strong></li>
-        <li><strong>Kaohsiung, Taiwan</strong></li>
-        <li><strong>Kunming, Yunnan, China</strong></li>
-        <li><strong>Dali, Yunnan, China</strong></li>
-        <li><strong>Lijiang, Yunnan, China</strong></li>
-        <li><strong>Guiyang, Guizhou, China</strong></li>
-        <li><strong>Zunyi, Guizhou, China</strong></li>
-        <li><strong>Maotai Town, Renhuai, Guizhou, China</strong></li>
-        <li><strong>Anshun / Huangguoshu Waterfall, Guizhou, China</strong></li>
-        <li><strong>Qingdao, Shandong, China</strong></li>
-        <li><strong>Gaomi, Shandong, China</strong></li>
-        <li><strong>Fuzhou, Fujian, China</strong></li>
-        <li><strong>Wuhan, Hubei, China</strong></li>
-        <li><strong>Changchun, Jilin, China</strong></li>
-        <li><strong>Shenyang, Liaoning, China</strong></li>
+      <ul class="travel-list">
+        <li>
+          <details>
+            <summary><strong>California</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>San Diego</strong>
+                <em>UC San Diego · La Jolla Cove · Balboa Park</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Los Angeles</strong>
+                <em>Griffith Observatory · Santa Monica Pier · The Getty Center</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>San Francisco</strong>
+                <em>Golden Gate Bridge · Fisherman's Wharf · Pier 39</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Sacramento</strong>
+                <em>California State Capitol · Old Sacramento Waterfront</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Davis</strong>
+                <em>UC Davis Arboretum · Downtown Davis</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Santa Barbara</strong>
+                <em>Stearns Wharf · Santa Barbara County Courthouse</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Ventura</strong>
+                <em>Ventura Pier · Mission San Buenaventura</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Texas</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Dallas</strong>
+                <em>Dealey Plaza · Reunion Tower · Dallas Arts District</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Austin</strong>
+                <em>Texas State Capitol · Lady Bird Lake · South Congress</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Nevada</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Las Vegas</strong>
+                <em>The Strip · Bellagio Fountains · Fremont Street</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Washington</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Seattle</strong>
+                <em>Space Needle · Pike Place Market · Seattle Waterfront</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Australia</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Sydney</strong>
+                <em>Sydney Opera House · Harbour Bridge · Darling Harbour</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Singapore</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Singapore</strong>
+                <em>Marina Bay Sands · Gardens by the Bay · Merlion Park</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Japan</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Kyoto</strong>
+                <em>Kiyomizu-dera · Fushimi Inari Taisha · Arashiyama</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Osaka</strong>
+                <em>Osaka Castle · Dotonbori · Shinsekai</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Otaru, Hokkaido</strong>
+                <em>Otaru Canal · Sakaimachi Street · Otaru Music Box Museum</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Yoichi, Hokkaido</strong>
+                <em>Nikka Whisky Yoichi Distillery · Yoichi Port</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Brunei</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Bandar Seri Begawan</strong>
+                <em>Sultan Omar Ali Saifuddien Mosque · Kampong Ayer · Royal Regalia Museum</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Malaysia</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Kuala Lumpur</strong>
+                <em>Petronas Twin Towers · Batu Caves · Merdeka Square</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Johor Bahru</strong>
+                <em>Sultan Abu Bakar Mosque · Johor Bahru City Square · Danga Bay</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Laos</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Vientiane</strong>
+                <em>Pha That Luang · Patuxai · Wat Sisaket</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Cambodia</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Phnom Penh</strong>
+                <em>Royal Palace · Wat Phnom · Central Market</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Indonesia</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Batam</strong>
+                <em>Barelang Bridge · Maha Vihara Duta Maitreya · Nagoya Hill</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Vietnam</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Ho Chi Minh City</strong>
+                <em>Ben Thanh Market · War Remnants Museum · Notre-Dame Cathedral Basilica</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Hanoi</strong>
+                <em>Hoan Kiem Lake · Old Quarter · Temple of Literature</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Thailand</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Bangkok</strong>
+                <em>Grand Palace · Wat Arun · Wat Pho</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Taiwan</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Taipei</strong>
+                <em>Taipei 101 · Chiang Kai-shek Memorial Hall · Ximending</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Hualien</strong>
+                <em>Taroko Gorge · Qixingtan Beach</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Hsinchu</strong>
+                <em>Hsinchu City God Temple · East Gate</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Tainan</strong>
+                <em>Chihkan Tower · Anping Old Fort</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Kaohsiung</strong>
+                <em>Lotus Pond · Pier-2 Art Center</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Yunnan</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Kunming</strong>
+                <em>Dianchi Lake · Stone Forest · Green Lake Park</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Dali</strong>
+                <em>Erhai Lake · Dali Ancient City · Cangshan</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Lijiang</strong>
+                <em>Lijiang Old Town · Jade Dragon Snow Mountain · Black Dragon Pool</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Guizhou</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Guiyang</strong>
+                <em>Jiaxiu Pavilion · Qingyan Ancient Town</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Zunyi</strong>
+                <em>Zunyi Conference Site · Hongjun Mountain</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Maotai Town, Renhuai</strong>
+                <em>Maotai Distillery · Chishui River</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Anshun / Huangguoshu Waterfall</strong>
+                <em>Huangguoshu Waterfall · Tianxingqiao Scenic Area</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Shandong</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Qingdao</strong>
+                <em>Zhanqiao Pier · Badaguan · May Fourth Square</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+              <li class="place-item">
+                <strong>Gaomi</strong>
+                <em>Mo Yan Former Residence · Gaomi City Museum</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Fujian</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Fuzhou</strong>
+                <em>Three Lanes and Seven Alleys · West Lake Park</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Hubei</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Wuhan</strong>
+                <em>Yellow Crane Tower · East Lake · Wuhan Yangtze River Bridge</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Jilin</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Changchun</strong>
+                <em>Puppet Emperor's Palace Museum · Jingyuetan National Forest Park</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
+
+        <li>
+          <details>
+            <summary><strong>Liaoning</strong></summary>
+            <ul class="place-list">
+              <li class="place-item">
+                <strong>Shenyang</strong>
+                <em>Shenyang Imperial Palace · Marshal Zhang's Mansion</em>
+                <div class="photo-slots"><div class="photo-slot"></div><div class="photo-slot"></div><div class="photo-slot"></div></div>
+              </li>
+            </ul>
+          </details>
+        </li>
       </ul>
     </section>
   </main>
