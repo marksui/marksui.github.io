@@ -151,6 +151,9 @@ a {
 }
 
 .theme-toggle {
+  position: absolute;
+  top: 0.95rem;
+  right: 1.15rem;
   display: flex;
   align-items: center;
   gap: 0.45rem;
@@ -231,6 +234,13 @@ ul li {
   }
 
   .theme-toggle {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
     padding: 0.08rem 0.42rem;
   }
 

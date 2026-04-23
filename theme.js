@@ -61,6 +61,12 @@
     });
 
     var nav = document.querySelector("header nav");
-    (nav || document.body).appendChild(button);
+    var header = document.querySelector("header");
+    if (header && nav) {
+      header.insertBefore(button, nav);
+      return;
+    }
+
+    (header || document.body).appendChild(button);
   });
 })();

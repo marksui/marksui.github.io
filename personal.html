@@ -293,7 +293,7 @@
     }
 
     .photo-slot.landscape {
-      grid-column: span 4;
+      grid-column: span 3;
     }
 
     .photo-slot.portrait {
@@ -315,10 +315,12 @@
 
     .photo-break {
       grid-column: 1 / -1;
-      height: 1px;
-      margin: 0.15rem 0;
-      background: var(--border);
-      opacity: 0.9;
+      height: 0;
+      margin: 0.2rem 0 0.05rem;
+    }
+
+    .selected-panel .photo-break {
+      margin: 0.08rem 0;
     }
 
     .photo-link {
@@ -443,34 +445,51 @@
       margin: 0;
     }
 
-    .places-view-toggle {
-      display: inline-flex;
-      gap: 0.35rem;
-      padding: 0.18rem;
-      border: 1px solid var(--personal-rule);
-      border-radius: 999px;
-      background: var(--personal-panel);
+    .places-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      min-width: 0;
     }
 
-    .places-view-button {
-      border: 0;
+    .places-view-note {
+      margin: 0;
+      color: var(--personal-secondary);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      text-align: right;
+    }
+
+    .places-view-select {
+      max-width: 12.5rem;
+      border: 1px solid var(--personal-rule);
       border-radius: 999px;
-      padding: 0.3rem 0.72rem;
-      background: transparent;
+      padding: 0.32rem 1.85rem 0.32rem 0.75rem;
+      background:
+        linear-gradient(45deg, transparent 50%, var(--personal-accent) 50%) right 0.78rem top 50% / 0.38rem 0.38rem no-repeat,
+        var(--personal-panel);
       color: var(--text);
       cursor: pointer;
       font: inherit;
       font-size: 0.88rem;
       line-height: 1.2;
-      white-space: nowrap;
-      transition: background 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease);
+      appearance: none;
+      transition: border-color 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease);
     }
 
-    .places-view-button:hover,
-    .places-view-button.active {
-      background: var(--personal-wash);
+    .places-view-select:hover,
+    .places-view-select:focus-visible {
+      border-color: var(--personal-accent);
       color: var(--personal-accent);
-      transform: translateY(-1px);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
     }
 
     .region-list {
@@ -722,8 +741,15 @@
         display: block;
       }
 
-      .places-view-toggle {
+      .places-tools {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         margin-top: 0.65rem;
+      }
+
+      .places-view-note {
+        text-align: left;
       }
 
       .photo-slots {
@@ -827,9 +853,13 @@
     <section class="places-section">
       <div class="places-header">
         <h2>Places / Photos</h2>
-        <div class="places-view-toggle" aria-label="Places view">
-          <button class="places-view-button active" type="button" data-places-view="photos">Photos</button>
-          <button class="places-view-button" type="button" data-places-view="all">All Places</button>
+        <div class="places-tools">
+          <p class="places-view-note" id="places-view-note"></p>
+          <label class="sr-only" for="places-view-select">Places view</label>
+          <select class="places-view-select" id="places-view-select">
+            <option value="photos">Photo archive</option>
+            <option value="all">All visited places</option>
+          </select>
         </div>
       </div>
       <ul class="region-list" id="region-list"></ul>
@@ -1007,10 +1037,10 @@
         spots: ["Dianchi Lake", "Stone Forest", "Green Lake Park"],
         spotsLocal: ["滇池", "石林", "翠湖公园"],
         photos: [
-          { src: "img/云南/DSC09902.jpg", caption: "Kunming / 昆明 - Garden Lake View" },
-          { src: "img/云南/DSC09918.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Rock Window" },
-          { src: "img/云南/DSC09942.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Karst Passage" },
-          { src: "img/云南/DSC09945.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Mossy Path" }
+          { src: "img/yunnan/kunming-garden-lake-view.jpg", caption: "Kunming / 昆明 - Garden Lake View" },
+          { src: "img/yunnan/kunming-stone-forest-rock-window.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Rock Window" },
+          { src: "img/yunnan/kunming-stone-forest-karst-passage.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Karst Passage" },
+          { src: "img/yunnan/kunming-stone-forest-mossy-path.jpg", caption: "Kunming / 昆明 - Stone Forest / 石林 - Mossy Path" }
         ]
       },
       {
@@ -1021,9 +1051,9 @@
         spots: ["Erhai Lake"],
         spotsLocal: ["洱海"],
         photos: [
-          { src: "img/云南/DSC09888.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Mountain Horizon" },
-          { src: "img/云南/DSC09894.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Lakeside View" },
-          { src: "img/云南/DSC09974.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Water and Mountains" }
+          { src: "img/yunnan/dali-erhai-lake-mountain-horizon.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Mountain Horizon" },
+          { src: "img/yunnan/dali-erhai-lake-lakeside-view.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Lakeside View" },
+          { src: "img/yunnan/dali-erhai-lake-water-and-mountains.jpg", caption: "Dali / 大理 - Erhai Lake / 洱海 - Water and Mountains" }
         ]
       },
       {
@@ -1034,21 +1064,21 @@
         spots: ["Lijiang Old Town", "Jade Dragon Snow Mountain", "Blue Moon Valley", "Black Dragon Pool"],
         spotsLocal: ["丽江古城", "玉龙雪山", "蓝月谷", "黑龙潭"],
         photos: [
-          { src: "img/云南/DSC00015.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Highland Meadow" },
-          { src: "img/云南/DSC00036.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Yak Trail" },
-          { src: "img/云南/DSC00045.JPG", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Cloudy Meadow" },
-          { src: "img/云南/DSC00054.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Walk" },
-          { src: "img/云南/DSC00077.JPG", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Valley View" },
-          { src: "img/云南/DSC00108.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Turquoise Water" },
-          { src: "img/云南/DSC00114.JPG", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Waterfall Steps" },
-          { src: "img/云南/DSC00117.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Canopy" },
-          { src: "img/云南/DSC00118.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Clear Pool" },
-          { src: "img/云南/DSC00125.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Mountain Stream" },
-          { src: "img/云南/DSC00127.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier" },
-          { src: "img/云南/DSC00132.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier View" },
-          { src: "img/云南/DSC00141.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Misty Peak" },
-          { src: "img/云南/DSC00157.jpg", caption: "Lijiang / 丽江 - Evening City View" },
-          { src: "img/云南/DSC00160.jpg", caption: "Lijiang / 丽江 - Mountain City View" }
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-highland-meadow.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Highland Meadow" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-yak-trail.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Yak Trail" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-cloudy-meadow.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Cloudy Meadow" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-forest-walk.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Walk" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-valley-view.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Valley View" },
+          { src: "img/yunnan/lijiang-blue-moon-valley-turquoise-water.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Turquoise Water" },
+          { src: "img/yunnan/lijiang-blue-moon-valley-waterfall-steps.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Waterfall Steps" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-forest-canopy.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Forest Canopy" },
+          { src: "img/yunnan/lijiang-blue-moon-valley-clear-pool.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Clear Pool" },
+          { src: "img/yunnan/lijiang-blue-moon-valley-mountain-stream.jpg", caption: "Lijiang / 丽江 - Blue Moon Valley / 蓝月谷 - Mountain Stream" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-glacier.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-glacier-view.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Glacier View" },
+          { src: "img/yunnan/lijiang-jade-dragon-snow-mountain-misty-peak.jpg", caption: "Lijiang / 丽江 - Jade Dragon Snow Mountain / 玉龙雪山 - Misty Peak" },
+          { src: "img/yunnan/lijiang-evening-city-view.jpg", caption: "Lijiang / 丽江 - Evening City View" },
+          { src: "img/yunnan/lijiang-mountain-city-view.jpg", caption: "Lijiang / 丽江 - Mountain City View" }
         ]
       },
       {
@@ -1059,9 +1089,9 @@
         spots: ["Xifeng Concentration Camp"],
         spotsLocal: ["息烽集中营"],
         photos: [
-          { src: "img/贵州/DSC00024.jpg", caption: "Guiyang / 贵阳 - Memorial Grounds" },
-          { src: "img/贵州/DSC00096.jpg", caption: "Guiyang / 贵阳 - Temple Courtyard" },
-          { src: "img/贵州/息烽集中营.jpg", caption: "Guiyang / 贵阳 - Xifeng Concentration Camp / 息烽集中营" }
+          { src: "img/guizhou/guiyang-memorial-grounds.jpg", caption: "Guiyang / 贵阳 - Memorial Grounds" },
+          { src: "img/guizhou/guiyang-temple-courtyard.jpg", caption: "Guiyang / 贵阳 - Temple Courtyard" },
+          { src: "img/guizhou/guiyang-xifeng-concentration-camp.jpg", caption: "Guiyang / 贵阳 - Xifeng Concentration Camp / 息烽集中营" }
         ]
       },
       {
@@ -1072,13 +1102,13 @@
         spots: ["Zunyi Conference Site", "Hongjun Mountain", "Historical Exhibition"],
         spotsLocal: ["遵义会议会址", "红军山", "历史展陈"],
         photos: [
-          { src: "img/贵州/DSC00144.jpg", caption: "Zunyi / 遵义 - Historical Exhibition" },
-          { src: "img/贵州/DSC09776.jpg", caption: "Zunyi / 遵义 - City View" },
-          { src: "img/贵州/DSC09826.JPG", caption: "Zunyi / 遵义 - Historical Document" },
-          { src: "img/贵州/DSC09828.JPG", caption: "Zunyi / 遵义 - Exhibition Detail" },
-          { src: "img/贵州/DSC09830.JPG", caption: "Zunyi / 遵义 - Museum Artifact" },
-          { src: "img/贵州/毛泽东住居.jpg", caption: "Zunyi / 遵义 - Mao Zedong Residence / 毛泽东住居" },
-          { src: "img/贵州/遵义会议.jpg", caption: "Zunyi / 遵义 - Zunyi Conference Site / 遵义会议会址" }
+          { src: "img/guizhou/zunyi-historical-exhibition.jpg", caption: "Zunyi / 遵义 - Historical Exhibition" },
+          { src: "img/guizhou/zunyi-city-view.jpg", caption: "Zunyi / 遵义 - City View" },
+          { src: "img/guizhou/zunyi-historical-document.jpg", caption: "Zunyi / 遵义 - Historical Document" },
+          { src: "img/guizhou/zunyi-exhibition-detail.jpg", caption: "Zunyi / 遵义 - Exhibition Detail" },
+          { src: "img/guizhou/zunyi-museum-artifact.jpg", caption: "Zunyi / 遵义 - Museum Artifact" },
+          { src: "img/guizhou/zunyi-mao-zedong-residence.jpg", caption: "Zunyi / 遵义 - Mao Zedong Residence / 毛泽东住居" },
+          { src: "img/guizhou/zunyi-conference-site.jpg", caption: "Zunyi / 遵义 - Zunyi Conference Site / 遵义会议会址" }
         ]
       },
       {
@@ -1089,12 +1119,12 @@
         spots: ["Maotai Town", "Chishui River", "Maotai Distillery"],
         spotsLocal: ["茅台镇", "赤水河", "茅台酒厂"],
         photos: [
-          { src: "img/贵州/DSC00114 2.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - River Valley" },
-          { src: "img/贵州/DSC00120.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Hillside View" },
-          { src: "img/贵州/DSC00125 2.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Mountain Town" },
-          { src: "img/贵州/DSC00126.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Red Bridge" },
-          { src: "img/贵州/DSC00131.JPG", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Riverside Buildings" },
-          { src: "img/贵州/DSC00137.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Green Hills" }
+          { src: "img/guizhou/renhuai-maotai-town-river-valley.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - River Valley" },
+          { src: "img/guizhou/renhuai-maotai-town-hillside-view.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Hillside View" },
+          { src: "img/guizhou/renhuai-maotai-town-mountain-town.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Mountain Town" },
+          { src: "img/guizhou/renhuai-maotai-town-red-bridge.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Red Bridge" },
+          { src: "img/guizhou/renhuai-maotai-town-riverside-buildings.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Riverside Buildings" },
+          { src: "img/guizhou/renhuai-maotai-town-green-hills.jpg", caption: "Renhuai / 仁怀 - Maotai Town / 茅台镇 - Green Hills" }
         ]
       },
       {
@@ -1105,10 +1135,10 @@
         spots: ["Huangguoshu Waterfall", "Tianxingqiao Scenic Area"],
         spotsLocal: ["黄果树瀑布", "天星桥景区"],
         photos: [
-          { src: "img/贵州/DSC09853.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Water Trail" },
-          { src: "img/贵州/DSC09855.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Bridge View" },
-          { src: "img/贵州/DSC09879.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Mist View" },
-          { src: "img/贵州/DSC09896.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Wide View" }
+          { src: "img/guizhou/anshun-tianxingqiao-water-trail.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Water Trail" },
+          { src: "img/guizhou/anshun-tianxingqiao-bridge-view.jpg", caption: "Anshun / 安顺 - Tianxingqiao Scenic Area / 天星桥景区 - Bridge View" },
+          { src: "img/guizhou/anshun-huangguoshu-waterfall-mist-view.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Mist View" },
+          { src: "img/guizhou/anshun-huangguoshu-waterfall-wide-view.jpg", caption: "Anshun / 安顺 - Huangguoshu Waterfall / 黄果树瀑布 - Wide View" }
         ]
       },
       {
@@ -1119,13 +1149,13 @@
         spots: ["Laoshan"],
         spotsLocal: ["崂山"],
         photos: [
-          { src: "img/山东/DSC09655.jpg", caption: "Qingdao / 青岛 - Park Lake Tower" },
-          { src: "img/山东/DSC09675.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain View" },
-          { src: "img/山东/DSC09682.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Cloudy Hills" },
-          { src: "img/山东/DSC09691.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Forest Walk" },
-          { src: "img/山东/DSC09746.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Monkey" },
-          { src: "img/山东/DSC09753.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain Stream" },
-          { src: "img/山东/DSC09755.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Gorge View" }
+          { src: "img/shandong/qingdao-park-lake-tower.jpg", caption: "Qingdao / 青岛 - Park Lake Tower" },
+          { src: "img/shandong/qingdao-laoshan-mountain-view.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain View" },
+          { src: "img/shandong/qingdao-laoshan-cloudy-hills.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Cloudy Hills" },
+          { src: "img/shandong/qingdao-laoshan-forest-walk.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Forest Walk" },
+          { src: "img/shandong/qingdao-laoshan-monkey.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Monkey" },
+          { src: "img/shandong/qingdao-laoshan-mountain-stream.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Mountain Stream" },
+          { src: "img/shandong/qingdao-laoshan-gorge-view.jpg", caption: "Qingdao / 青岛 - Laoshan / 崂山 - Gorge View" }
         ]
       },
       { region: "Shandong", name: "Gaomi", localName: "高密", coords: [36.3833, 119.7520], spots: ["Mo Yan Former Residence", "Gaomi City Museum"], spotsLocal: ["莫言旧居", "高密市博物馆"] },
@@ -1139,21 +1169,21 @@
         spots: ["Puppet Emperor's Palace Museum", "Jingyuetan National Forest Park", "City Streets"],
         spotsLocal: ["伪满皇宫博物院", "净月潭国家森林公园", "城市街景"],
         photos: [
-          { src: "img/吉林/DSC00172.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Gate" },
-          { src: "img/吉林/DSC00190.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Chandelier" },
-          { src: "img/吉林/DSC00192.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Interior Room" },
-          { src: "img/吉林/DSC00196.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Corridor View" },
-          { src: "img/吉林/DSC00202.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Historical Document" },
-          { src: "img/吉林/DSC00215.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Exhibition Flag" },
-          { src: "img/吉林/DSC00231.JPG", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Throne Room" },
-          { src: "img/吉林/DSC00250.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Palace Roof" },
-          { src: "img/吉林/DSC00264.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Roof Detail" },
-          { src: "img/吉林/DSC00275.JPG", caption: "Changchun / 长春 - City Road" },
-          { src: "img/吉林/DSC00282.JPG", caption: "Changchun / 长春 - Monument Sculpture" },
-          { src: "img/吉林/DSC00292.jpg", caption: "Changchun / 长春 - Monument Building" },
-          { src: "img/吉林/DSC00308.jpg", caption: "Changchun / 长春 - Red Brick Building" },
-          { src: "img/吉林/DSC00358.jpg", caption: "Changchun / 长春 - Museum Vehicle" },
-          { src: "img/吉林/DSC00371.JPG", caption: "Changchun / 长春 - Night Street" }
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-gate.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Gate" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-chandelier.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Chandelier" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-interior-room.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Interior Room" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-corridor-view.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Corridor View" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-historical-document.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Historical Document" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-exhibition-flag.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Exhibition Flag" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-throne-room.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Throne Room" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-palace-roof.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Palace Roof" },
+          { src: "img/jilin/changchun-puppet-emperors-palace-museum-roof-detail.jpg", caption: "Changchun / 长春 - Puppet Emperor's Palace Museum / 伪满皇宫博物院 - Roof Detail" },
+          { src: "img/jilin/changchun-city-road.jpg", caption: "Changchun / 长春 - City Road" },
+          { src: "img/jilin/changchun-monument-sculpture.jpg", caption: "Changchun / 长春 - Monument Sculpture" },
+          { src: "img/jilin/changchun-monument-building.jpg", caption: "Changchun / 长春 - Monument Building" },
+          { src: "img/jilin/changchun-red-brick-building.jpg", caption: "Changchun / 长春 - Red Brick Building" },
+          { src: "img/jilin/changchun-museum-vehicle.jpg", caption: "Changchun / 长春 - Museum Vehicle" },
+          { src: "img/jilin/changchun-night-street.jpg", caption: "Changchun / 长春 - Night Street" }
         ]
       },
       { region: "Jilin", name: "Songyuan", localName: "松原", coords: [45.1411, 124.8251], spots: ["Chagan Lake", "Songyuan Museum"], spotsLocal: ["查干湖", "松原市博物馆"] },
@@ -1165,27 +1195,27 @@
         spots: ["Shenyang Imperial Palace", "Marshal Zhang's Mansion", "Liaoning Provincial Museum"],
         spotsLocal: ["沈阳故宫", "张氏帅府", "辽宁省博物馆"],
         photos: [
-          { src: "img/辽宁/DSC00376.JPG", caption: "Shenyang / 沈阳 - Museum Facade" },
-          { src: "img/辽宁/DSC00420.JPG", caption: "Shenyang / 沈阳 - Historical Painting" },
-          { src: "img/辽宁/DSC00472.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Courtyard" },
-          { src: "img/辽宁/DSC00525.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Gate" },
-          { src: "img/辽宁/DSC00529.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Interior Detail" },
-          { src: "img/辽宁/DSC00533.JPG", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Hall" },
-          { src: "img/辽宁/DSC00571.JPG", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Painted Column" },
-          { src: "img/辽宁/DSC00590.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Roofline" },
-          { src: "img/辽宁/DSC00606.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Door Plaque" },
-          { src: "img/辽宁/DSC00624.jpg", caption: "Shenyang / 沈阳 - Museum Artifact" },
-          { src: "img/辽宁/DSC00647.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Exterior" },
-          { src: "img/辽宁/DSC00697.JPG", caption: "Shenyang / 沈阳 - Interior Pattern" },
-          { src: "img/辽宁/DSC00722.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Interior Room" },
-          { src: "img/辽宁/DSC00726.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Meeting Room" },
-          { src: "img/辽宁/DSC00728.JPG", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Study Room" },
-          { src: "img/辽宁/DSC00736.JPG", caption: "Shenyang / 沈阳 - Museum Sculpture" },
-          { src: "img/辽宁/DSC00741.JPG", caption: "Shenyang / 沈阳 - Museum Artifact" },
-          { src: "img/辽宁/DSC00743.JPG", caption: "Shenyang / 沈阳 - Museum Artifacts" },
-          { src: "img/辽宁/DSC00745.JPG", caption: "Shenyang / 沈阳 - Museum Figure" },
-          { src: "img/辽宁/DSC00805.jpg", caption: "Shenyang / 沈阳 - Ceramic Vase" },
-          { src: "img/辽宁/Snapseed.jpg", caption: "Shenyang / 沈阳 - Palace Plaque Detail" }
+          { src: "img/liaoning/shenyang-museum-facade.jpg", caption: "Shenyang / 沈阳 - Museum Facade" },
+          { src: "img/liaoning/shenyang-historical-painting.jpg", caption: "Shenyang / 沈阳 - Historical Painting" },
+          { src: "img/liaoning/shenyang-imperial-palace-courtyard.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Courtyard" },
+          { src: "img/liaoning/shenyang-imperial-palace-gate.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Gate" },
+          { src: "img/liaoning/shenyang-imperial-palace-interior-detail.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Interior Detail" },
+          { src: "img/liaoning/shenyang-imperial-palace-hall.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Palace Hall" },
+          { src: "img/liaoning/shenyang-imperial-palace-painted-column.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Painted Column" },
+          { src: "img/liaoning/shenyang-imperial-palace-roofline.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Roofline" },
+          { src: "img/liaoning/shenyang-imperial-palace-door-plaque.jpg", caption: "Shenyang / 沈阳 - Shenyang Imperial Palace / 沈阳故宫 - Door Plaque" },
+          { src: "img/liaoning/shenyang-museum-artifact.jpg", caption: "Shenyang / 沈阳 - Museum Artifact" },
+          { src: "img/liaoning/shenyang-marshal-zhangs-mansion-exterior.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Exterior" },
+          { src: "img/liaoning/shenyang-interior-pattern.jpg", caption: "Shenyang / 沈阳 - Interior Pattern" },
+          { src: "img/liaoning/shenyang-marshal-zhangs-mansion-interior-room.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Interior Room" },
+          { src: "img/liaoning/shenyang-marshal-zhangs-mansion-meeting-room.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Meeting Room" },
+          { src: "img/liaoning/shenyang-marshal-zhangs-mansion-study-room.jpg", caption: "Shenyang / 沈阳 - Marshal Zhang's Mansion / 张氏帅府 - Study Room" },
+          { src: "img/liaoning/shenyang-museum-sculpture.jpg", caption: "Shenyang / 沈阳 - Museum Sculpture" },
+          { src: "img/liaoning/shenyang-museum-artifact-2.jpg", caption: "Shenyang / 沈阳 - Museum Artifact" },
+          { src: "img/liaoning/shenyang-museum-artifacts.jpg", caption: "Shenyang / 沈阳 - Museum Artifacts" },
+          { src: "img/liaoning/shenyang-museum-figure.jpg", caption: "Shenyang / 沈阳 - Museum Figure" },
+          { src: "img/liaoning/shenyang-ceramic-vase.jpg", caption: "Shenyang / 沈阳 - Ceramic Vase" },
+          { src: "img/liaoning/shenyang-palace-plaque-detail.jpg", caption: "Shenyang / 沈阳 - Palace Plaque Detail" }
         ]
       }
     ];
@@ -1220,6 +1250,157 @@
     var placesView = "photos";
     var markers = [];
     var map;
+    var photoOrientations = {
+      "img/guizhou/anshun-huangguoshu-waterfall-mist-view.jpg": "landscape",
+      "img/guizhou/anshun-huangguoshu-waterfall-wide-view.jpg": "landscape",
+      "img/guizhou/anshun-tianxingqiao-bridge-view.jpg": "landscape",
+      "img/guizhou/anshun-tianxingqiao-water-trail.jpg": "landscape",
+      "img/guizhou/guiyang-memorial-grounds.jpg": "portrait",
+      "img/guizhou/guiyang-temple-courtyard.jpg": "portrait",
+      "img/guizhou/guiyang-xifeng-concentration-camp.jpg": "portrait",
+      "img/guizhou/renhuai-maotai-town-green-hills.jpg": "portrait",
+      "img/guizhou/renhuai-maotai-town-hillside-view.jpg": "landscape",
+      "img/guizhou/renhuai-maotai-town-mountain-town.jpg": "landscape",
+      "img/guizhou/renhuai-maotai-town-red-bridge.jpg": "landscape",
+      "img/guizhou/renhuai-maotai-town-river-valley.jpg": "landscape",
+      "img/guizhou/renhuai-maotai-town-riverside-buildings.jpg": "landscape",
+      "img/guizhou/zunyi-city-view.jpg": "portrait",
+      "img/guizhou/zunyi-conference-site.jpg": "landscape",
+      "img/guizhou/zunyi-exhibition-detail.jpg": "landscape",
+      "img/guizhou/zunyi-historical-document.jpg": "landscape",
+      "img/guizhou/zunyi-historical-exhibition.jpg": "portrait",
+      "img/guizhou/zunyi-mao-zedong-residence.jpg": "portrait",
+      "img/guizhou/zunyi-museum-artifact.jpg": "landscape",
+      "img/japan/osaka-city-museum-city-view.jpg": "portrait",
+      "img/japan/osaka-keitakuen-autumn-maples.jpg": "landscape",
+      "img/japan/osaka-keitakuen-garden-bridge.jpg": "portrait",
+      "img/japan/osaka-keitakuen-garden-reflection.jpg": "landscape",
+      "img/japan/osaka-keitakuen-maple-leaves.jpg": "portrait",
+      "img/japan/osaka-keitakuen-water-reflection.jpg": "landscape",
+      "img/japan/osaka-nagai-botanical-autumn-leaves.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-branches.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-camellia.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-cherry-blossoms.jpg": "landscape",
+      "img/japan/osaka-nagai-botanical-lake-fountain.jpg": "landscape",
+      "img/japan/osaka-nagai-botanical-pond-reflection.jpg": "landscape",
+      "img/japan/osaka-nagai-botanical-red-bridge.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-tree-path.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-water-view.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-waterfall.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-white-blossoms.jpg": "portrait",
+      "img/japan/osaka-nagai-botanical-winter-garden.jpg": "portrait",
+      "img/japan/osaka-river-tower-sunset-skyline.jpg": "landscape",
+      "img/japan/osaka-river-tower-window-view.jpg": "landscape",
+      "img/japan/osaka-shinsekai-tsutenkaku.jpg": "portrait",
+      "img/japan/osaka-shitennoji-five-story-pagoda.jpg": "portrait",
+      "img/japan/osaka-tennoji-zoo-deer.jpg": "portrait",
+      "img/japan/osaka-tennoji-zoo-flamingos.jpg": "portrait",
+      "img/japan/osaka-tennoji-zoo-habitat-waterfall.jpg": "landscape",
+      "img/japan/osaka-tennoji-zoo-tiger.jpg": "landscape",
+      "img/japan/osaka-tennoji-zoo-zebra.jpg": "landscape",
+      "img/jilin/changchun-city-road.jpg": "landscape",
+      "img/jilin/changchun-monument-building.jpg": "landscape",
+      "img/jilin/changchun-monument-sculpture.jpg": "landscape",
+      "img/jilin/changchun-museum-vehicle.jpg": "landscape",
+      "img/jilin/changchun-night-street.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-chandelier.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-corridor-view.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-exhibition-flag.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-gate.jpg": "portrait",
+      "img/jilin/changchun-puppet-emperors-palace-museum-historical-document.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-interior-room.jpg": "landscape",
+      "img/jilin/changchun-puppet-emperors-palace-museum-palace-roof.jpg": "portrait",
+      "img/jilin/changchun-puppet-emperors-palace-museum-roof-detail.jpg": "portrait",
+      "img/jilin/changchun-puppet-emperors-palace-museum-throne-room.jpg": "landscape",
+      "img/jilin/changchun-red-brick-building.jpg": "landscape",
+      "img/liaoning/shenyang-ceramic-vase.jpg": "portrait",
+      "img/liaoning/shenyang-historical-painting.jpg": "landscape",
+      "img/liaoning/shenyang-imperial-palace-courtyard.jpg": "landscape",
+      "img/liaoning/shenyang-imperial-palace-door-plaque.jpg": "portrait",
+      "img/liaoning/shenyang-imperial-palace-gate.jpg": "landscape",
+      "img/liaoning/shenyang-imperial-palace-hall.jpg": "landscape",
+      "img/liaoning/shenyang-imperial-palace-interior-detail.jpg": "portrait",
+      "img/liaoning/shenyang-imperial-palace-painted-column.jpg": "landscape",
+      "img/liaoning/shenyang-imperial-palace-roofline.jpg": "landscape",
+      "img/liaoning/shenyang-interior-pattern.jpg": "landscape",
+      "img/liaoning/shenyang-marshal-zhangs-mansion-exterior.jpg": "landscape",
+      "img/liaoning/shenyang-marshal-zhangs-mansion-interior-room.jpg": "landscape",
+      "img/liaoning/shenyang-marshal-zhangs-mansion-meeting-room.jpg": "landscape",
+      "img/liaoning/shenyang-marshal-zhangs-mansion-study-room.jpg": "landscape",
+      "img/liaoning/shenyang-museum-artifact-2.jpg": "landscape",
+      "img/liaoning/shenyang-museum-artifact.jpg": "portrait",
+      "img/liaoning/shenyang-museum-artifacts.jpg": "landscape",
+      "img/liaoning/shenyang-museum-facade.jpg": "landscape",
+      "img/liaoning/shenyang-museum-figure.jpg": "landscape",
+      "img/liaoning/shenyang-museum-sculpture.jpg": "landscape",
+      "img/liaoning/shenyang-palace-plaque-detail.jpg": "landscape",
+      "img/nevada/las-vegas-arte-museum-floral-room.jpg": "landscape",
+      "img/nevada/las-vegas-arte-museum-flower-lights.jpg": "landscape",
+      "img/nevada/las-vegas-arte-museum-immersive-room.jpg": "landscape",
+      "img/shandong/qingdao-laoshan-cloudy-hills.jpg": "landscape",
+      "img/shandong/qingdao-laoshan-forest-walk.jpg": "portrait",
+      "img/shandong/qingdao-laoshan-gorge-view.jpg": "portrait",
+      "img/shandong/qingdao-laoshan-monkey.jpg": "portrait",
+      "img/shandong/qingdao-laoshan-mountain-stream.jpg": "landscape",
+      "img/shandong/qingdao-laoshan-mountain-view.jpg": "landscape",
+      "img/shandong/qingdao-park-lake-tower.jpg": "portrait",
+      "img/taiwan/anping-fort-watchtower.jpg": "portrait",
+      "img/taiwan/chimei-museum-exterior.jpg": "portrait",
+      "img/taiwan/chimei-museum-interior.jpg": "portrait",
+      "img/taiwan/grand-hotel-taipei-ceiling.jpg": "portrait",
+      "img/taiwan/grand-hotel-taipei-christmas-tree.jpg": "portrait",
+      "img/taiwan/grand-hotel-taipei-rainy-skyline.jpg": "portrait",
+      "img/taiwan/sun-moon-lake-lake-view.jpg": "landscape",
+      "img/taiwan/sun-moon-lake-lakeside-sculpture.jpg": "portrait",
+      "img/taiwan/sun-moon-lake-pagoda-view.jpg": "portrait",
+      "img/taiwan/sun-moon-lake-temple-view.jpg": "portrait",
+      "img/taiwan/sun-moon-lake-trail.jpg": "portrait",
+      "img/vietnam/hanoi-fine-arts-lacquer-panel.jpg": "landscape",
+      "img/vietnam/hanoi-fine-arts-museum-building.jpg": "landscape",
+      "img/vietnam/hanoi-fine-arts-museum-gallery.jpg": "portrait",
+      "img/vietnam/hanoi-fine-arts-museum-interior.jpg": "portrait",
+      "img/vietnam/hanoi-fine-arts-painting-harbor.jpg": "landscape",
+      "img/vietnam/hanoi-fine-arts-painting-scene.jpg": "landscape",
+      "img/vietnam/hanoi-flag-tower.jpg": "portrait",
+      "img/vietnam/hanoi-ho-chi-minh-mausoleum.jpg": "portrait",
+      "img/vietnam/hanoi-hoan-kiem-lake-flowers.jpg": "landscape",
+      "img/vietnam/hanoi-hoan-kiem-lake-shore.jpg": "portrait",
+      "img/vietnam/hanoi-hoan-kiem-lake-turtle-tower.jpg": "portrait",
+      "img/vietnam/hanoi-hoan-kiem-lake-yellow-colonial-building.jpg": "portrait",
+      "img/vietnam/hanoi-lenin-statue.jpg": "landscape",
+      "img/vietnam/hanoi-military-history-museum-aircraft.jpg": "landscape",
+      "img/vietnam/hanoi-museum-facade.jpg": "landscape",
+      "img/vietnam/hanoi-old-gate.jpg": "portrait",
+      "img/vietnam/hanoi-old-quarter-lanterns-building.jpg": "landscape",
+      "img/vietnam/hanoi-old-quarter-red-lanterns.jpg": "portrait",
+      "img/vietnam/hanoi-one-pillar-pagoda.jpg": "portrait",
+      "img/vietnam/hanoi-st-joseph-cathedral.jpg": "portrait",
+      "img/vietnam/hanoi-temple-gate.jpg": "portrait",
+      "img/vietnam/hanoi-temple-of-literature-gate.jpg": "portrait",
+      "img/vietnam/hanoi-war-memorial-monument.jpg": "portrait",
+      "img/yunnan/dali-erhai-lake-lakeside-view.jpg": "portrait",
+      "img/yunnan/dali-erhai-lake-mountain-horizon.jpg": "landscape",
+      "img/yunnan/dali-erhai-lake-water-and-mountains.jpg": "landscape",
+      "img/yunnan/kunming-garden-lake-view.jpg": "portrait",
+      "img/yunnan/kunming-stone-forest-karst-passage.jpg": "portrait",
+      "img/yunnan/kunming-stone-forest-mossy-path.jpg": "portrait",
+      "img/yunnan/kunming-stone-forest-rock-window.jpg": "portrait",
+      "img/yunnan/lijiang-blue-moon-valley-clear-pool.jpg": "portrait",
+      "img/yunnan/lijiang-blue-moon-valley-mountain-stream.jpg": "portrait",
+      "img/yunnan/lijiang-blue-moon-valley-turquoise-water.jpg": "portrait",
+      "img/yunnan/lijiang-blue-moon-valley-waterfall-steps.jpg": "landscape",
+      "img/yunnan/lijiang-evening-city-view.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-cloudy-meadow.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-forest-canopy.jpg": "portrait",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-forest-walk.jpg": "portrait",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-glacier-view.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-glacier.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-highland-meadow.jpg": "portrait",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-misty-peak.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-valley-view.jpg": "landscape",
+      "img/yunnan/lijiang-jade-dragon-snow-mountain-yak-trail.jpg": "portrait",
+      "img/yunnan/lijiang-mountain-city-view.jpg": "landscape"
+    };
 
     function uniqueRegions() {
       var regions = [];
@@ -1281,8 +1462,11 @@
         var photos = limit ? place.photos.slice(0, limit) : place.photos;
         return photos.map(function(photo) {
           var caption = photo.caption || "";
+          var orientation = photoOrientations[photo.src] || "";
+          var orientationClass = orientation ? " " + orientation : "";
+          var orientationData = orientation ? ' data-orientation="' + orientation + '"' : "";
           return '' +
-            '<figure class="photo-slot filled">' +
+            '<figure class="photo-slot filled' + orientationClass + '"' + orientationData + '>' +
               '<a class="photo-link" href="' + escapeHtml(photo.src) + '" data-photo-src="' + escapeHtml(photo.src) + '" data-photo-caption="' + escapeHtml(caption) + '">' +
                 '<img src="' + escapeHtml(photo.src) + '" alt="' + escapeHtml(caption || place.name) + '" loading="lazy">' +
               '</a>' +
@@ -1325,13 +1509,27 @@
         return figure.dataset.orientation === "portrait";
       });
 
-      landscapes.concat(portraits).forEach(function(figure) {
-        grid.appendChild(figure);
-      });
+      if (landscapes.length && portraits.length) {
+        landscapes.forEach(function(figure) {
+          grid.appendChild(figure);
+        });
+        grid.appendChild(makePhotoBreak());
+        portraits.forEach(function(figure) {
+          grid.appendChild(figure);
+        });
+        return;
+      }
 
-      landscapes.concat(portraits).forEach(function(figure) {
+      figures.forEach(function(figure) {
         grid.appendChild(figure);
       });
+    }
+
+    function makePhotoBreak() {
+      var element = document.createElement("div");
+      element.className = "photo-break";
+      element.setAttribute("aria-hidden", "true");
+      return element;
     }
 
     function setPhotoOrientation(figure, image, grid) {
@@ -1363,6 +1561,7 @@
           arrangePhotoGrid(grid);
         }, { once: true });
       });
+      arrangePhotoGrid(grid);
     }
 
     function organizePhotoGrids(root) {
@@ -1505,11 +1704,16 @@
     }
 
     function renderPlacesViewToggle() {
-      document.querySelectorAll(".places-view-button").forEach(function(button) {
-        var active = button.dataset.placesView === placesView;
-        button.classList.toggle("active", active);
-        button.setAttribute("aria-pressed", String(active));
-      });
+      var select = document.getElementById("places-view-select");
+      var note = document.getElementById("places-view-note");
+      if (select) {
+        select.value = placesView;
+      }
+      if (note) {
+        note.textContent = placesView === "photos"
+          ? "Showing places with photos."
+          : "Showing every visited place.";
+      }
     }
 
     function regionsForPlacesList() {
@@ -1648,13 +1852,14 @@
       }
     });
 
-    document.querySelectorAll(".places-view-button").forEach(function(button) {
-      button.addEventListener("click", function() {
-        placesView = button.dataset.placesView;
+    var placesViewSelect = document.getElementById("places-view-select");
+    if (placesViewSelect) {
+      placesViewSelect.addEventListener("change", function() {
+        placesView = placesViewSelect.value;
         renderPlacesViewToggle();
         renderRegionList();
       });
-    });
+    }
 
     setTravelStats();
     renderFilters();
