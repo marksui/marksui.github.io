@@ -1572,18 +1572,27 @@
       };
     }
 
-    function makePhotoSlots(place, limit, includePlaceholders) {
+    function thumbnailSrc(src) {
+      return src
+        .replace(/^img\//, "img/thumbs/")
+        .replace(/\.(jpe?g|png|webp|heic)$/i, ".webp");
+    }
+
+    function makePhotoSlots(place, limit, includePlaceholders, prioritize) {
       if (place && place.photos && place.photos.length) {
         var photos = limit ? place.photos.slice(0, limit) : place.photos;
-        return photos.map(function(photo) {
+        return photos.map(function(photo, photoIndex) {
           var caption = photo.caption || "";
           var orientation = photoOrientations[photo.src] || "";
           var orientationClass = orientation ? " " + orientation : "";
           var orientationData = orientation ? ' data-orientation="' + orientation + '"' : "";
+          var previewSrc = thumbnailSrc(photo.src);
+          var loading = prioritize && photoIndex < 2 ? "eager" : "lazy";
+          var fetchPriority = prioritize && photoIndex === 0 ? "high" : "low";
           return '' +
             '<figure class="photo-slot filled' + orientationClass + '"' + orientationData + '>' +
               '<a class="photo-link" href="' + escapeHtml(photo.src) + '" data-photo-src="' + escapeHtml(photo.src) + '" data-photo-caption="' + escapeHtml(caption) + '">' +
-                '<img src="' + escapeHtml(photo.src) + '" alt="' + escapeHtml(caption || place.name) + '" loading="lazy">' +
+                '<img src="' + escapeHtml(previewSrc) + '" data-full-src="' + escapeHtml(photo.src) + '" alt="' + escapeHtml(caption || place.name) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
               '</a>' +
               '<figcaption>' + escapeHtml(caption) + '</figcaption>' +
             '</figure>';
@@ -1671,6 +1680,10 @@
           setPhotoOrientation(figure, image, grid);
         }, { once: true });
         image.addEventListener("error", function() {
+          if (image.dataset.fullSrc && image.currentSrc !== image.dataset.fullSrc && image.src !== image.dataset.fullSrc) {
+            image.src = image.dataset.fullSrc;
+            return;
+          }
           figure.dataset.orientation = "landscape";
           figure.classList.add("landscape");
           arrangePhotoGrid(grid);
@@ -1752,7 +1765,7 @@
       document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
       document.getElementById("selected-region").innerHTML = regionHtml(place.region);
       document.getElementById("selected-photo-meta").textContent = photoLabel(countPhotosForPlace(place));
-      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place, 2);
+      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place, 2, undefined, true);
       organizePhotoGrids(document.getElementById("selected-photos"));
 
       markers.forEach(function(marker, markerIndex) {
