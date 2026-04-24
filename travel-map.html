@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Sui - Travel Atlas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="theme.js"></script>
+  <script src="travel-data.js"></script>
+  <script src="travel-shared.js"></script>
+  <style>
+    .personal-main {
+      max-width: 1180px;
+      --personal-accent: #55645e;
+      --personal-secondary: #7b7467;
+      --personal-rule: #d9d5cc;
+      --personal-wash: rgba(85, 100, 94, 0.065);
+      --personal-panel: rgba(255, 255, 255, 0.78);
+      --personal-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --personal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .personal-main {
+      --personal-accent: #a8b6ae;
+      --personal-secondary: #b8b0a3;
+      --personal-rule: #3f423f;
+      --personal-wash: rgba(168, 182, 174, 0.08);
+      --personal-panel: rgba(24, 24, 24, 0.76);
+      --personal-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .travel-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 340px);
+      gap: 1.8rem;
+      align-items: end;
+      min-width: 0;
+      padding-bottom: 1.55rem;
+      border-bottom: 1px solid var(--personal-rule);
+      animation: personalFadeUp 0.65s var(--personal-ease) both;
+    }
+
+    .travel-local-nav {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.32rem;
+      margin-top: 1.15rem;
+      padding: 0.28rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      background: var(--personal-panel);
+      box-shadow: var(--personal-shadow);
+    }
+
+    .travel-local-nav a {
+      padding: 0.28rem 0.72rem;
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.24s var(--personal-ease), background 0.24s ease, color 0.24s ease;
+    }
+
+    .travel-local-nav a:hover,
+    .travel-local-nav a:focus-visible,
+    .travel-local-nav a[aria-current="page"] {
+      background: var(--personal-wash);
+      color: var(--personal-accent);
+      transform: translateY(-1px);
+    }
+
+    .travel-intro {
+      min-width: 0;
+      max-width: 760px;
+    }
+
+    .travel-kicker {
+      margin: 0 0 0.45rem;
+      color: var(--personal-accent);
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+
+    .travel-intro h2 {
+      margin-top: 0;
+      margin-bottom: 0.55rem;
+      font-size: 2.45rem;
+      line-height: 1.04;
+    }
+
+    .travel-intro p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+    }
+
+    .travel-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.65rem;
+      min-width: 0;
+      margin: 0;
+    }
+
+    .travel-stats div {
+      min-width: 0;
+      padding: 0.8rem 0.85rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent 78%),
+        var(--personal-panel);
+    }
+
+    .travel-stats dt {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+
+    .travel-stats dd {
+      margin: 0.25rem 0 0;
+      color: var(--personal-secondary);
+      font-size: 0.84rem;
+      line-height: 1.2;
+    }
+
+    .travel-dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(300px, 0.78fr);
+      gap: 1.45rem;
+      align-items: start;
+      margin-top: 1.55rem;
+      animation: personalFadeUp 0.7s var(--personal-ease) both;
+    }
+
+    .map-panel,
+    .selected-panel {
+      min-width: 0;
+      border: 1px solid var(--personal-rule);
+      border-radius: 8px;
+      background: var(--personal-panel);
+      box-shadow: var(--personal-shadow);
+      overflow: hidden;
+    }
+
+    .map-header,
+    .selected-panel {
+      padding: 1rem;
+    }
+
+    .map-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+      border-bottom: 1px solid var(--personal-rule);
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent 72%),
+        var(--personal-panel);
+    }
+
+    .map-title {
+      min-width: 0;
+    }
+
+    .map-title .eyebrow {
+      margin: 0 0 0.12rem;
+    }
+
+    .map-header h3,
+    .selected-panel h3 {
+      margin: 0;
+      font-size: 1.3rem;
+    }
+
+    .map-count,
+    .eyebrow {
+      color: var(--personal-accent);
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 0;
+    }
+
+    #travel-map {
+      width: 100%;
+      height: 430px;
+      background: var(--tag-bg);
+      filter: saturate(0.68) contrast(0.98);
+    }
+
+    .leaflet-control-attribution,
+    .leaflet-control-zoom a {
+      font-family: inherit;
+    }
+
+    .leaflet-control-zoom {
+      border: 1px solid var(--personal-rule) !important;
+      box-shadow: none !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+    }
+
+    .region-filters {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.45rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.95rem 1rem 1rem;
+      border-top: 1px solid var(--personal-rule);
+      scrollbar-width: thin;
+    }
+
+    .region-filter,
+    .place-button {
+      border: 1px solid var(--personal-rule);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      transition: border-color 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease;
+    }
+
+    .region-filter {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 0.3rem 0.7rem;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .region-filter:hover,
+    .region-filter.active {
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
+      transform: translateY(-1px);
+    }
+
+    .selected-panel {
+      position: sticky;
+      top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      max-height: 620px;
+      overflow: auto;
+      background:
+        linear-gradient(180deg, var(--personal-wash), transparent 42%),
+        var(--personal-panel);
+    }
+
+    .selected-panel p {
+      margin: 0;
+    }
+
+    .selected-meta {
+      color: var(--personal-secondary);
+      font-style: italic;
+    }
+
+    .selected-photo-meta {
+      padding-top: 0.45rem;
+      border-top: 1px solid var(--personal-rule);
+      color: var(--personal-secondary);
+      font-size: 0.86rem;
+    }
+
+    .photo-slots {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 0.95rem;
+      align-items: start;
+      margin-top: 0.5rem;
+    }
+
+    .selected-panel .photo-slots {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.72rem;
+    }
+
+    .photo-slot {
+      grid-column: span 3;
+      min-height: 126px;
+      border: 1px dashed var(--personal-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, transparent 0 48%, var(--personal-rule) 49%, transparent 51%),
+        var(--tag-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: 0.78;
+      font-size: 0.88rem;
+      text-align: center;
+    }
+
+    .photo-slot.filled {
+      display: block;
+      min-height: 0;
+      overflow: hidden;
+      border-style: solid;
+      background: var(--personal-panel);
+      opacity: 1;
+      box-shadow: 0 10px 28px rgba(53, 55, 49, 0.045);
+      transition: border-color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .photo-slot.filled:hover {
+      border-color: var(--personal-accent);
+      background: var(--personal-wash);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 32px rgba(53, 55, 49, 0.075);
+    }
+
+    .photo-slot.landscape {
+      grid-column: span 3;
+    }
+
+    .photo-slot.portrait {
+      grid-column: span 3;
+    }
+
+    .selected-panel .photo-slot.landscape {
+      grid-column: span 6;
+    }
+
+    .selected-panel .photo-slot.portrait {
+      grid-column: span 6;
+    }
+
+    .selected-panel .photo-slot:not(.filled) {
+      grid-column: span 2;
+      min-height: 84px;
+    }
+
+    .photo-break {
+      grid-column: 1 / -1;
+      height: 0;
+      margin: 0.2rem 0 0.05rem;
+    }
+
+    .selected-panel .photo-break {
+      margin: 0.08rem 0;
+    }
+
+    .photo-link {
+      display: block;
+      line-height: 0;
+      background: var(--tag-bg);
+      cursor: zoom-in;
+      overflow: hidden;
+    }
+
+    .photo-slot img {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      transition: filter 0.28s ease, transform 0.32s var(--personal-ease);
+    }
+
+    .photo-slot.filled:hover img {
+      filter: saturate(0.92) contrast(1.02);
+      transform: scale(1.012);
+    }
+
+    .photo-slot figcaption {
+      padding: 0.35rem 0.45rem 0.45rem;
+      font-size: 0.82rem;
+      line-height: 1.25;
+      color: var(--personal-secondary);
+    }
+
+    .selected-panel .photo-slot figcaption {
+      font-size: 0.78rem;
+    }
+
+    body.viewer-open {
+      overflow: hidden;
+    }
+
+    .photo-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      place-items: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .photo-viewer.open {
+      display: grid;
+    }
+
+    .photo-viewer-content {
+      width: min(96vw, 1400px);
+      text-align: center;
+    }
+
+    .photo-viewer img {
+      display: block;
+      max-width: 100%;
+      max-height: 84vh;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+      object-fit: contain;
+    }
+
+    .photo-viewer-caption {
+      margin: 0.75rem 0 0;
+      color: #ffffff;
+      font-size: 0.95rem;
+      opacity: 0.88;
+    }
+
+    .photo-viewer-original {
+      display: inline-block;
+      margin-top: 0.45rem;
+      color: #ffffff;
+      font-size: 0.9rem;
+      opacity: 0.78;
+    }
+
+    .photo-viewer-original:hover {
+      opacity: 1;
+    }
+
+    .photo-viewer-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: bold;
+    }
+
+    .photo-viewer-close:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .places-section {
+      margin-top: 3.35rem;
+    }
+
+    .places-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .places-header h2 {
+      margin: 0;
+    }
+
+    .places-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      min-width: 0;
+    }
+
+    .places-view-note {
+      margin: 0;
+      color: var(--personal-secondary);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      text-align: right;
+    }
+
+    .places-view-select {
+      max-width: 12.5rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      padding: 0.32rem 1.85rem 0.32rem 0.75rem;
+      background:
+        linear-gradient(45deg, transparent 50%, var(--personal-accent) 50%) right 0.78rem top 50% / 0.38rem 0.38rem no-repeat,
+        var(--personal-panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.88rem;
+      line-height: 1.2;
+      appearance: none;
+      transition: border-color 0.24s ease, color 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .places-view-select:hover,
+    .places-view-select:focus-visible {
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .region-list {
+      margin: 0;
+    }
+
+    .region-list details {
+      border-top: 1px solid var(--personal-rule);
+      padding: 0;
+      animation: personalFadeUp 0.58s var(--personal-ease) both;
+    }
+
+    .region-list summary {
+      list-style: none;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 1rem 0;
+      font-size: 1.16rem;
+      transition: color 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .region-list summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .region-list summary:hover {
+      color: var(--personal-accent);
+    }
+
+    .region-summary {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      max-width: 100%;
+    }
+
+    .region-title {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      min-width: 0;
+    }
+
+    .region-title::before {
+      content: "+";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.35rem;
+      height: 1.35rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--personal-accent);
+      font-size: 0.92rem;
+      line-height: 1;
+      transition: border-color 0.24s ease, background 0.24s ease, transform 0.28s var(--personal-ease);
+    }
+
+    .region-list details[open] .region-title::before {
+      content: "-";
+      border-color: var(--personal-accent);
+      background: var(--personal-wash);
+      transform: rotate(180deg);
+    }
+
+    .region-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.6rem;
+      padding: 0.1rem 0.45rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--personal-accent);
+      background: transparent;
+      font-size: 0.9rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .place-list {
+      margin: 0;
+      padding-left: 0;
+    }
+
+    .place-item {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      align-items: start;
+      margin: 0;
+      padding: 1rem 0 1.25rem;
+      border-top: 1px solid rgba(85, 100, 94, 0.16);
+    }
+
+    html[data-theme="dark"] .place-item {
+      border-top-color: rgba(168, 182, 174, 0.16);
+    }
+
+    .place-button {
+      width: 100%;
+      border: 0;
+      border-left: 0;
+      border-bottom: 1px solid var(--personal-rule);
+      border-radius: 0;
+      padding: 0 0 0.55rem;
+      text-align: left;
+    }
+
+    .place-button:hover,
+    .place-button.active {
+      border-color: var(--personal-accent);
+      background: transparent;
+      color: var(--personal-accent);
+      transform: translateY(-1px);
+    }
+
+    .place-topline {
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .place-name {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+
+    .place-photo-count {
+      flex: 0 0 auto;
+      padding: 0.12rem 0.45rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--personal-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .place-button.active .place-photo-count,
+    .place-button:hover .place-photo-count {
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
+    }
+
+    .local-name {
+      opacity: 0.75;
+      font-weight: normal;
+      unicode-bidi: isolate;
+    }
+
+    .place-spots {
+      display: inline-block;
+      margin-top: 0.2rem;
+      font-style: italic;
+      opacity: 0.85;
+      line-height: 1.4;
+    }
+
+    .personal-main > section + section h2 {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--personal-accent);
+      font-size: 1.14rem;
+      font-style: italic;
+    }
+
+    .personal-main > section + section h2::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--personal-rule), transparent);
+      transform: scaleX(0.84);
+      transform-origin: left;
+      transition: transform 0.38s var(--personal-ease), background 0.25s ease;
+    }
+
+    .personal-main > section + section:hover h2::after {
+      transform: scaleX(1);
+      background: linear-gradient(90deg, var(--personal-accent), transparent);
+    }
+
+    @keyframes personalFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 820px) {
+      .travel-hero {
+        grid-template-columns: 1fr;
+      }
+
+      .travel-dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      #travel-map {
+        height: 320px;
+      }
+
+      .selected-panel {
+        position: static;
+        background: var(--surface);
+      }
+
+      .travel-local-nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .place-item {
+        grid-template-columns: 1fr;
+      }
+
+      .place-button {
+        position: static;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .personal-main {
+        padding-bottom: 2rem;
+      }
+
+      .map-header {
+        display: block;
+      }
+
+      .map-count {
+        display: block;
+        margin-top: 0.45rem;
+      }
+
+      .travel-intro h2 {
+        font-size: 2.1rem;
+      }
+
+      .travel-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .places-header {
+        display: block;
+      }
+
+      .places-tools {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        margin-top: 0.65rem;
+      }
+
+      .places-view-note {
+        text-align: left;
+      }
+
+      .photo-slots {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-slot,
+      .photo-slot.landscape,
+      .photo-slot.portrait,
+      .selected-panel .photo-slot {
+        grid-column: 1 / -1;
+      }
+
+      .personal-main > section + section h2 {
+        display: block;
+      }
+
+      .personal-main > section + section h2::after {
+        display: block;
+        margin-top: 0.45rem;
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .travel-intro,
+      .travel-dashboard,
+      .region-list details {
+        animation: none;
+      }
+
+      .region-filter,
+      .place-button,
+      .photo-slot.filled,
+      .photo-slot img,
+      .region-list summary,
+      .personal-main > section + section h2::after {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body class="personal-page">
+  <header>
+    <h1>Mark Sui</h1>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="education.html">Education</a>
+      <a href="experience.html">Experience</a>
+      <a href="contact.html">Contact</a>
+      <a href="personal.html">Personal</a>
+    </nav>
+  </header>
+
+  <main class="personal-main">
+    <section>
+      <div class="travel-hero">
+        <div class="travel-intro">
+          <p class="travel-kicker">Atlas</p>
+          <h2>Visited places, grouped by region and connected to the photo archive.</h2>
+          <p>
+            A denser navigation view for the archive: open a region, pick a city, and move between places and their photo sets without losing map context.
+          </p>
+          <nav class="travel-local-nav" aria-label="Personal pages">
+            <a href="personal.html">Overview</a>
+            <a href="travel-gallery.html">Gallery</a>
+            <a href="travel-map.html" aria-current="page">Atlas</a>
+            <a href="travel-collections.html">Collections</a>
+          </nav>
+        </div>
+
+        <dl class="travel-stats" aria-label="Travel archive totals">
+          <div>
+            <dt id="stat-places">0</dt>
+            <dd>Places</dd>
+          </div>
+          <div>
+            <dt id="stat-photos">0</dt>
+            <dd>Photos</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="travel-dashboard">
+        <div class="map-panel">
+          <div class="map-header">
+            <div class="map-title">
+              <p class="eyebrow">Atlas</p>
+              <h3>Visited Map</h3>
+            </div>
+            <span class="map-count" id="map-count"></span>
+          </div>
+          <div id="travel-map"></div>
+          <div class="region-filters" id="region-filters"></div>
+        </div>
+
+        <aside class="selected-panel">
+          <p class="eyebrow">Selected Place</p>
+          <h3 id="selected-place"></h3>
+          <p class="selected-meta" id="selected-region"></p>
+          <p class="selected-photo-meta" id="selected-photo-meta"></p>
+          <div class="photo-slots" id="selected-photos"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="places-section">
+      <div class="places-header">
+        <h2>Places / Photos</h2>
+        <div class="places-tools">
+          <p class="places-view-note" id="places-view-note"></p>
+          <label class="sr-only" for="places-view-select">Places view</label>
+          <select class="places-view-select" id="places-view-select">
+            <option value="photos">Photo archive</option>
+            <option value="all">All visited places</option>
+          </select>
+        </div>
+      </div>
+      <ul class="region-list" id="region-list"></ul>
+    </section>
+  </main>
+
+  <div class="photo-viewer" id="photo-viewer" role="dialog" aria-modal="true" aria-hidden="true">
+    <button class="photo-viewer-close" type="button" aria-label="Close photo">X</button>
+    <div class="photo-viewer-content">
+      <img id="photo-viewer-img" src="" alt="">
+      <p class="photo-viewer-caption" id="photo-viewer-caption"></p>
+      <a class="photo-viewer-original" id="photo-viewer-original" href="" target="_blank" rel="noopener">Open original file</a>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    var travelData = window.travelData || { places: [], regionLocalNames: {}, photoOrientations: {} };
+    var places = travelData.places || [];
+    var regionLocalNames = travelData.regionLocalNames || {};
+    var selectedIndex = places.findIndex(function(place) {
+      return place.photos && place.photos.length;
+    });
+    if (selectedIndex < 0) {
+      selectedIndex = 0;
+    }
+    var currentRegion = "All";
+    var placesView = "photos";
+    var markers = [];
+    var map;
+    var photoOrientations = travelData.photoOrientations || {};
+    var query = new URLSearchParams(window.location.search);
+    var requestedRegion = query.get("region");
+
+    if (requestedRegion && places.some(function(place) { return place.region === requestedRegion; })) {
+      currentRegion = requestedRegion;
+      var requestedIndex = places.findIndex(function(place) {
+        return place.region === requestedRegion && place.photos && place.photos.length;
+      });
+      if (requestedIndex < 0) {
+        requestedIndex = places.findIndex(function(place) {
+          return place.region === requestedRegion;
+        });
+      }
+      if (requestedIndex >= 0) {
+        selectedIndex = requestedIndex;
+      }
+    }
+
+
+    function uniqueRegions() {
+      var regions = [];
+      places.forEach(function(place) {
+        if (regions.indexOf(place.region) === -1) {
+          regions.push(place.region);
+        }
+      });
+      return regions;
+    }
+
+    function countPhotosForPlace(place) {
+      return place.photos ? place.photos.length : 0;
+    }
+
+    function totalPhotoCount() {
+      return places.reduce(function(total, place) {
+        return total + countPhotosForPlace(place);
+      }, 0);
+    }
+
+    function regionPhotoCount(region) {
+      return places.reduce(function(total, place) {
+        return total + (place.region === region ? countPhotosForPlace(place) : 0);
+      }, 0);
+    }
+
+    function photoLabel(count) {
+      return count + " photo" + (count === 1 ? "" : "s");
+    }
+
+    function firstIndexForRegion(region) {
+      if (region === "All") {
+        return selectedIndex;
+      }
+
+      return places.findIndex(function(place) {
+        return place.region === region;
+      });
+    }
+
+    function setTravelStats() {
+      document.getElementById("stat-places").textContent = places.length;
+      document.getElementById("stat-photos").textContent = totalPhotoCount();
+    }
+
+    function markerStyle(active) {
+      return {
+        radius: active ? 9 : 6,
+        color: active ? "#2f332f" : "#fdfdfc",
+        weight: active ? 2 : 1,
+        fillColor: active ? "#7b7467" : "#55645e",
+        fillOpacity: active ? 1 : 0.86
+      };
+    }
+
+    function thumbnailSrc(src) {
+      return src
+        .replace(/^img\//, "img/thumbs/")
+        .replace(/\.(jpe?g|png|webp|heic)$/i, ".webp");
+    }
+
+    function makePhotoSlots(place, limit, includePlaceholders, prioritize) {
+      if (place && place.photos && place.photos.length) {
+        var photos = limit ? place.photos.slice(0, limit) : place.photos;
+        return photos.map(function(photo, photoIndex) {
+          var caption = photo.caption || "";
+          var orientation = photoOrientations[photo.src] || "";
+          var orientationClass = orientation ? " " + orientation : "";
+          var orientationData = orientation ? ' data-orientation="' + orientation + '"' : "";
+          var previewSrc = thumbnailSrc(photo.src);
+          var loading = prioritize && photoIndex < 2 ? "eager" : "lazy";
+          var fetchPriority = prioritize && photoIndex === 0 ? "high" : "low";
+          return '' +
+            '<figure class="photo-slot filled' + orientationClass + '"' + orientationData + '>' +
+              '<a class="photo-link" href="' + escapeHtml(photo.src) + '" data-photo-src="' + escapeHtml(photo.src) + '" data-photo-caption="' + escapeHtml(caption) + '">' +
+                '<img src="' + escapeHtml(previewSrc) + '" data-full-src="' + escapeHtml(photo.src) + '" alt="' + escapeHtml(caption || place.name) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
+              '</a>' +
+              '<figcaption>' + escapeHtml(caption) + '</figcaption>' +
+            '</figure>';
+        }).join("");
+      }
+
+      if (includePlaceholders === false) {
+        return "";
+      }
+
+      return '<div class="photo-slot">Photo</div><div class="photo-slot">Photo</div><div class="photo-slot">Photo</div>';
+    }
+
+    function directPhotoFigures(grid) {
+      return Array.prototype.filter.call(grid.children, function(child) {
+        return child.classList &&
+          child.classList.contains("photo-slot") &&
+          child.classList.contains("filled");
+      });
+    }
+
+    function arrangePhotoGrid(grid) {
+      var figures = directPhotoFigures(grid);
+      if (!figures.length || figures.some(function(figure) { return !figure.dataset.orientation; })) {
+        return;
+      }
+
+      Array.prototype.slice.call(grid.children).forEach(function(child) {
+        if (child.classList && child.classList.contains("photo-break")) {
+          child.remove();
+        }
+      });
+
+      var landscapes = figures.filter(function(figure) {
+        return figure.dataset.orientation === "landscape";
+      });
+      var portraits = figures.filter(function(figure) {
+        return figure.dataset.orientation === "portrait";
+      });
+
+      if (landscapes.length && portraits.length) {
+        landscapes.forEach(function(figure) {
+          grid.appendChild(figure);
+        });
+        grid.appendChild(makePhotoBreak());
+        portraits.forEach(function(figure) {
+          grid.appendChild(figure);
+        });
+        return;
+      }
+
+      figures.forEach(function(figure) {
+        grid.appendChild(figure);
+      });
+    }
+
+    function makePhotoBreak() {
+      var element = document.createElement("div");
+      element.className = "photo-break";
+      element.setAttribute("aria-hidden", "true");
+      return element;
+    }
+
+    function setPhotoOrientation(figure, image, grid) {
+      var orientation = image.naturalWidth >= image.naturalHeight ? "landscape" : "portrait";
+      figure.dataset.orientation = orientation;
+      figure.classList.remove("landscape", "portrait");
+      figure.classList.add(orientation);
+      arrangePhotoGrid(grid);
+    }
+
+    function organizePhotoGrid(grid) {
+      directPhotoFigures(grid).forEach(function(figure) {
+        var image = figure.querySelector("img");
+        if (!image || figure.dataset.orientation) {
+          return;
+        }
+
+        if (image.complete && image.naturalWidth) {
+          setPhotoOrientation(figure, image, grid);
+          return;
+        }
+
+        image.addEventListener("load", function() {
+          setPhotoOrientation(figure, image, grid);
+        }, { once: true });
+        image.addEventListener("error", function() {
+          if (image.dataset.fullSrc && image.currentSrc !== image.dataset.fullSrc && image.src !== image.dataset.fullSrc) {
+            image.src = image.dataset.fullSrc;
+            return;
+          }
+          figure.dataset.orientation = "landscape";
+          figure.classList.add("landscape");
+          arrangePhotoGrid(grid);
+        }, { once: true });
+      });
+      arrangePhotoGrid(grid);
+    }
+
+    function organizePhotoGrids(root) {
+      var grids = [];
+      if (root.classList && root.classList.contains("photo-slots")) {
+        grids.push(root);
+      }
+      if (root.querySelectorAll) {
+        root.querySelectorAll(".photo-slots").forEach(function(grid) {
+          grids.push(grid);
+        });
+      }
+      grids.forEach(organizePhotoGrid);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function(character) {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[character];
+      });
+    }
+
+    function textLabel(primary, local) {
+      return local && local !== primary ? primary + " / " + local : primary;
+    }
+
+    function htmlLabel(primary, local) {
+      if (!local || local === primary) {
+        return escapeHtml(primary);
+      }
+
+      return escapeHtml(primary) + ' <span class="local-name">/ <bdi dir="auto">' + escapeHtml(local) + '</bdi></span>';
+    }
+
+    function spotsHtml(place) {
+      return place.spots.map(function(spot, index) {
+        var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+        return htmlLabel(spot, localSpot);
+      }).join(" · ");
+    }
+
+    function spotsText(place) {
+      return place.spots.map(function(spot, index) {
+        var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+        return textLabel(spot, localSpot);
+      }).join(" · ");
+    }
+
+    function placeDetailsHtml(place) {
+      if (!place.photos || !place.photos.length || !place.spots || !place.spots.length) {
+        return "";
+      }
+
+      return '<span class="place-spots">' + spotsHtml(place) + '</span>';
+    }
+
+    function regionHtml(region) {
+      return htmlLabel(region, regionLocalNames[region]);
+    }
+
+    function regionText(region) {
+      return textLabel(region, regionLocalNames[region]);
+    }
+
+    function updateSelected(index, moveMap) {
+      selectedIndex = index;
+      var place = places[index];
+      document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
+      document.getElementById("selected-region").innerHTML = regionHtml(place.region);
+      document.getElementById("selected-photo-meta").textContent = photoLabel(countPhotosForPlace(place));
+      document.getElementById("selected-photos").innerHTML = makePhotoSlots(place, 2, undefined, true);
+      organizePhotoGrids(document.getElementById("selected-photos"));
+
+      markers.forEach(function(marker, markerIndex) {
+        marker.setStyle(markerStyle(markerIndex === index));
+      });
+
+      document.querySelectorAll(".place-button").forEach(function(button) {
+        var active = Number(button.dataset.index) === index;
+        button.classList.toggle("active", active);
+        button.setAttribute("aria-pressed", String(active));
+      });
+
+      if (map && moveMap) {
+        map.setView(place.coords, 7, { animate: true });
+      }
+    }
+
+    function openPhotoViewer(src, caption) {
+      var viewer = document.getElementById("photo-viewer");
+      var image = document.getElementById("photo-viewer-img");
+      var captionElement = document.getElementById("photo-viewer-caption");
+      var originalLink = document.getElementById("photo-viewer-original");
+      image.src = src;
+      image.alt = caption || "Travel photo";
+      originalLink.href = src;
+      captionElement.textContent = caption || "";
+      viewer.classList.add("open");
+      viewer.setAttribute("aria-hidden", "false");
+      document.body.classList.add("viewer-open");
+    }
+
+    function closePhotoViewer() {
+      var viewer = document.getElementById("photo-viewer");
+      var image = document.getElementById("photo-viewer-img");
+      var originalLink = document.getElementById("photo-viewer-original");
+      viewer.classList.remove("open");
+      viewer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("viewer-open");
+      image.src = "";
+      originalLink.href = "";
+    }
+
+    function renderFilters() {
+      var filterWrap = document.getElementById("region-filters");
+      var regions = ["All"].concat(uniqueRegions());
+      filterWrap.innerHTML = regions.map(function(region) {
+        var activeClass = region === currentRegion ? " active" : "";
+        var label = region === "All" ? "All" : regionHtml(region);
+        return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '" aria-pressed="' + String(region === currentRegion) + '">' + label + '</button>';
+      }).join("");
+
+      filterWrap.querySelectorAll(".region-filter").forEach(function(button) {
+        button.addEventListener("click", function() {
+          currentRegion = button.dataset.region;
+          var nextIndex = firstIndexForRegion(currentRegion);
+          if (nextIndex >= 0) {
+            selectedIndex = nextIndex;
+          }
+          renderFilters();
+          renderRegionList();
+          fitMapToRegion(currentRegion);
+        });
+      });
+    }
+
+    function renderPlacesViewToggle() {
+      var select = document.getElementById("places-view-select");
+      var note = document.getElementById("places-view-note");
+      if (select) {
+        select.value = placesView;
+      }
+      if (note) {
+        note.textContent = placesView === "photos"
+          ? "Showing places with photos."
+          : "Showing every visited place.";
+      }
+    }
+
+    function regionsForPlacesList() {
+      var regions = uniqueRegions();
+      if (currentRegion !== "All") {
+        return regions.filter(function(region) {
+          return region === currentRegion;
+        });
+      }
+
+      if (placesView === "photos") {
+        return regions.filter(function(region) {
+          return regionPhotoCount(region) > 0;
+        });
+      }
+
+      return regions;
+    }
+
+    function renderRegionList() {
+      var list = document.getElementById("region-list");
+      var regions = regionsForPlacesList();
+
+      list.innerHTML = regions.map(function(region) {
+        var photoOnly = placesView === "photos" && currentRegion === "All";
+        var regionPlaces = places
+          .map(function(place, index) {
+            return { place: place, index: index };
+          })
+          .filter(function(item) {
+            return item.place.region === region && (!photoOnly || countPhotosForPlace(item.place) > 0);
+          });
+
+        var placeHtml = regionPlaces.map(function(item) {
+          var placePhotoCount = countPhotosForPlace(item.place);
+          var active = item.index === selectedIndex;
+          var photoGrid = placePhotoCount
+            ? '<div class="photo-slots">' + makePhotoSlots(item.place, null, false) + '</div>'
+            : '';
+          return '' +
+            '<li class="place-item">' +
+              '<button class="place-button' + (active ? ' active' : '') + '" type="button" data-index="' + item.index + '" aria-pressed="' + String(active) + '">' +
+                '<span class="place-topline">' +
+                  '<span class="place-name">' + htmlLabel(item.place.name, item.place.localName) + '</span>' +
+                  '<span class="place-photo-count">' + photoLabel(placePhotoCount) + '</span>' +
+                '</span>' +
+                placeDetailsHtml(item.place) +
+              '</button>' +
+              photoGrid +
+            '</li>';
+        }).join("");
+
+        var open = currentRegion === region || (currentRegion === "All" && places[selectedIndex].region === region) ? " open" : "";
+        var regionCount = photoOnly ? regionPhotoCount(region) : regionPlaces.length;
+        return '' +
+          '<li>' +
+            '<details' + open + '>' +
+              '<summary><span class="region-summary"><span class="region-title"><strong>' + regionHtml(region) + '</strong></span><span class="region-count">' + regionCount + '</span></span></summary>' +
+              '<ul class="place-list">' + placeHtml + '</ul>' +
+            '</details>' +
+          '</li>';
+      }).join("");
+
+      list.querySelectorAll(".place-button").forEach(function(button) {
+        button.addEventListener("click", function() {
+          updateSelected(Number(button.dataset.index), true);
+        });
+      });
+
+      organizePhotoGrids(list);
+      updateSelected(selectedIndex, false);
+    }
+
+    function fitMapToRegion(region) {
+      if (!map) {
+        return;
+      }
+
+      var filteredPlaces = region === "All"
+        ? places
+        : places.filter(function(place) { return place.region === region; });
+      var bounds = L.latLngBounds(filteredPlaces.map(function(place) { return place.coords; }));
+      map.fitBounds(bounds.pad(0.18));
+    }
+
+    function initMap() {
+      document.getElementById("map-count").textContent = places.length + " places · " + totalPhotoCount() + " photos";
+      if (!window.L) {
+        document.getElementById("travel-map").textContent = "Map is unavailable.";
+        return;
+      }
+
+      map = L.map("travel-map", {
+        scrollWheelZoom: false
+      });
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+      }).addTo(map);
+
+      markers = places.map(function(place, index) {
+        var marker = L.circleMarker(place.coords, markerStyle(index === selectedIndex))
+          .addTo(map)
+          .bindTooltip(textLabel(place.name, place.localName), { direction: "top", opacity: 0.9 });
+
+        marker.on("click", function() {
+          currentRegion = place.region;
+          selectedIndex = index;
+          renderFilters();
+          renderRegionList();
+          updateSelected(index, true);
+        });
+
+        return marker;
+      });
+
+      fitMapToRegion("All");
+    }
+
+    document.addEventListener("click", function(event) {
+      var photoLink = event.target.closest(".photo-link");
+      if (photoLink) {
+        event.preventDefault();
+        openPhotoViewer(photoLink.dataset.photoSrc, photoLink.dataset.photoCaption);
+        return;
+      }
+
+      if (event.target.id === "photo-viewer" || event.target.closest(".photo-viewer-close")) {
+        closePhotoViewer();
+      }
+    });
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        closePhotoViewer();
+      }
+    });
+
+    var placesViewSelect = document.getElementById("places-view-select");
+    if (placesViewSelect) {
+      placesViewSelect.addEventListener("change", function() {
+        placesView = placesViewSelect.value;
+        renderPlacesViewToggle();
+        renderRegionList();
+      });
+    }
+
+    setTravelStats();
+    renderFilters();
+    renderPlacesViewToggle();
+    renderRegionList();
+    initMap();
+    updateSelected(selectedIndex, false);
+  </script>
+</body>
+</html>
