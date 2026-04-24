@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Sui - Travel Gallery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script src="theme.js"></script>
+  <script src="travel-data.js"></script>
+  <script src="travel-shared.js"></script>
+  <style>
+    .gallery-main {
+      max-width: 1260px;
+      --gallery-accent: #55645e;
+      --gallery-secondary: #7b7467;
+      --gallery-rule: #d9d5cc;
+      --gallery-wash: rgba(85, 100, 94, 0.065);
+      --gallery-panel: rgba(255, 255, 255, 0.8);
+      --gallery-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --gallery-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .gallery-main {
+      --gallery-accent: #a8b6ae;
+      --gallery-secondary: #b8b0a3;
+      --gallery-rule: #3f423f;
+      --gallery-wash: rgba(168, 182, 174, 0.08);
+      --gallery-panel: rgba(24, 24, 24, 0.76);
+      --gallery-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .travel-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+      gap: 1.5rem;
+      align-items: end;
+      padding-bottom: 1.4rem;
+      border-bottom: 1px solid var(--gallery-rule);
+      animation: galleryFadeUp 0.62s var(--gallery-ease) both;
+    }
+
+    .travel-kicker {
+      margin: 0 0 0.45rem;
+      color: var(--gallery-accent);
+      font-size: 0.9rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .travel-copy h2 {
+      margin: 0 0 0.6rem;
+      max-width: 11em;
+      font-size: 2.56rem;
+      line-height: 1.03;
+    }
+
+    .travel-copy p {
+      margin: 0;
+      max-width: 680px;
+      opacity: 0.84;
+    }
+
+    .travel-local-nav {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 0.32rem;
+      margin-top: 1.1rem;
+      padding: 0.28rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 999px;
+      background: var(--gallery-panel);
+      box-shadow: var(--gallery-shadow);
+    }
+
+    .travel-local-nav a {
+      padding: 0.3rem 0.74rem;
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.24s var(--gallery-ease), background 0.24s ease, color 0.24s ease;
+    }
+
+    .travel-local-nav a:hover,
+    .travel-local-nav a:focus-visible,
+    .travel-local-nav a[aria-current="page"] {
+      background: var(--gallery-wash);
+      color: var(--gallery-accent);
+      transform: translateY(-1px);
+    }
+
+    .gallery-glance {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .gallery-glance article {
+      padding: 0.9rem 0.95rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--gallery-wash), transparent 78%),
+        var(--gallery-panel);
+      box-shadow: var(--gallery-shadow);
+    }
+
+    .gallery-glance strong {
+      display: block;
+      color: var(--gallery-accent);
+      font-size: 1.42rem;
+      line-height: 1;
+    }
+
+    .gallery-glance span {
+      display: block;
+      margin-top: 0.26rem;
+      color: var(--gallery-secondary);
+      font-size: 0.86rem;
+      line-height: 1.2;
+    }
+
+    .gallery-shell {
+      margin-top: 1.45rem;
+      animation: galleryFadeUp 0.7s var(--gallery-ease) both;
+    }
+
+    .gallery-toolbar {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .gallery-search-panel,
+    .gallery-note-panel {
+      border: 1px solid var(--gallery-rule);
+      border-radius: 8px;
+      background: var(--gallery-panel);
+      box-shadow: var(--gallery-shadow);
+    }
+
+    .gallery-search-panel {
+      padding: 1rem;
+    }
+
+    .gallery-search-label {
+      display: block;
+      color: var(--gallery-accent);
+      font-size: 0.84rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .gallery-search-input {
+      width: 100%;
+      margin-top: 0.55rem;
+      padding: 0.78rem 0.9rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .gallery-search-input:hover,
+    .gallery-search-input:focus-visible {
+      border-color: var(--gallery-accent);
+      background: var(--gallery-wash);
+      outline: none;
+    }
+
+    .gallery-search-hint {
+      margin: 0.5rem 0 0;
+      color: var(--gallery-secondary);
+      font-size: 0.86rem;
+      line-height: 1.3;
+    }
+
+    .gallery-note-panel {
+      display: grid;
+      align-content: center;
+      padding: 1rem;
+      background:
+        linear-gradient(180deg, var(--gallery-wash), transparent 72%),
+        var(--gallery-panel);
+    }
+
+    .gallery-note-panel p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.86;
+    }
+
+    .gallery-filter-block {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gallery-rule);
+    }
+
+    .gallery-filter-heading {
+      margin: 0 0 0.55rem;
+      color: var(--gallery-accent);
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.15rem;
+      scrollbar-width: thin;
+    }
+
+    .filter-chip {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.42rem;
+      padding: 0.34rem 0.76rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      line-height: 1.2;
+      white-space: nowrap;
+      transition: transform 0.24s var(--gallery-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
+    }
+
+    .filter-chip:hover,
+    .filter-chip:focus-visible,
+    .filter-chip.active {
+      border-color: var(--gallery-accent);
+      color: var(--gallery-accent);
+      background: var(--gallery-wash);
+      transform: translateY(-1px);
+    }
+
+    .filter-chip small {
+      color: var(--gallery-secondary);
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .gallery-active {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .active-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.68rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 999px;
+      color: var(--gallery-secondary);
+      font-size: 0.86rem;
+      line-height: 1.2;
+      background: var(--gallery-panel);
+    }
+
+    .active-pill strong {
+      color: var(--gallery-accent);
+      font-weight: bold;
+    }
+
+    .gallery-stream {
+      margin-top: 1.35rem;
+    }
+
+    .gallery-grid {
+      display: grid;
+      align-items: start;
+      gap: 0.95rem;
+    }
+
+    .gallery-grid.wide-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .gallery-grid.tall-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .gallery-divider {
+      height: 1px;
+      margin: 1.4rem 0;
+      background: linear-gradient(90deg, transparent, var(--gallery-rule), transparent);
+    }
+
+    .gallery-card {
+      border: 1px solid var(--gallery-rule);
+      border-radius: 8px;
+      background: var(--gallery-panel);
+      box-shadow: var(--gallery-shadow);
+      overflow: hidden;
+      transition: transform 0.3s var(--gallery-ease), border-color 0.24s ease, box-shadow 0.24s ease;
+    }
+
+    .gallery-card:hover,
+    .gallery-card:focus-within {
+      transform: translateY(-3px);
+      border-color: var(--gallery-accent);
+      box-shadow: 0 20px 42px rgba(53, 55, 49, 0.12);
+    }
+
+    .gallery-hit {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: linear-gradient(180deg, var(--gallery-wash), transparent 50%), var(--tag-bg);
+      cursor: zoom-in;
+    }
+
+    .gallery-hit img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 560px;
+      margin: 0 auto;
+      object-fit: contain;
+      transition: transform 0.34s var(--gallery-ease), filter 0.28s ease;
+    }
+
+    .gallery-card:hover .gallery-hit img,
+    .gallery-card:focus-within .gallery-hit img {
+      transform: scale(1.014);
+      filter: saturate(0.94) contrast(1.02);
+    }
+
+    .gallery-meta {
+      display: grid;
+      gap: 0.34rem;
+      padding: 0.68rem 0.78rem 0.8rem;
+      border-top: 1px solid rgba(85, 100, 94, 0.14);
+    }
+
+    html[data-theme="dark"] .gallery-meta {
+      border-top-color: rgba(168, 182, 174, 0.14);
+    }
+
+    .gallery-place {
+      color: var(--gallery-accent);
+      font-size: 0.84rem;
+      line-height: 1.2;
+    }
+
+    .gallery-caption {
+      color: var(--text);
+      font-size: 0.94rem;
+      line-height: 1.34;
+    }
+
+    .gallery-region {
+      color: var(--gallery-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
+    .gallery-empty {
+      padding: 1.6rem 1rem;
+      border: 1px dashed var(--gallery-rule);
+      border-radius: 8px;
+      color: var(--gallery-secondary);
+      text-align: center;
+      background: var(--gallery-wash);
+    }
+
+    body.viewer-open {
+      overflow: hidden;
+    }
+
+    .photo-viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      display: none;
+      place-items: center;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(10px);
+    }
+
+    .photo-viewer.open {
+      display: grid;
+    }
+
+    .photo-viewer-content {
+      width: min(96vw, 1400px);
+      text-align: center;
+    }
+
+    .photo-viewer img {
+      display: block;
+      max-width: 100%;
+      max-height: 84vh;
+      width: auto;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
+      object-fit: contain;
+    }
+
+    .photo-viewer-caption {
+      margin: 0.75rem 0 0;
+      color: #ffffff;
+      font-size: 0.95rem;
+      opacity: 0.88;
+    }
+
+    .photo-viewer-original {
+      display: inline-block;
+      margin-top: 0.45rem;
+      color: #ffffff;
+      font-size: 0.9rem;
+      opacity: 0.78;
+    }
+
+    .photo-viewer-original:hover {
+      opacity: 1;
+    }
+
+    .photo-viewer-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      cursor: pointer;
+      font: inherit;
+      font-weight: bold;
+    }
+
+    .photo-viewer-close:hover {
+      background: rgba(255, 255, 255, 0.24);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    @keyframes galleryFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .travel-hero,
+      .gallery-toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid.wide-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-grid.tall-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .travel-copy h2 {
+        font-size: 2.2rem;
+      }
+
+      .gallery-glance {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid.wide-grid,
+      .gallery-grid.tall-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 520px) {
+      .gallery-grid.wide-grid,
+      .gallery-grid.tall-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mark Sui</h1>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="education.html">Education</a>
+      <a href="experience.html">Experience</a>
+      <a href="contact.html">Contact</a>
+      <a href="personal.html" aria-current="page">Personal</a>
+    </nav>
+  </header>
+
+  <main class="gallery-main">
+    <section class="travel-hero">
+      <div class="travel-copy">
+        <p class="travel-kicker">Gallery</p>
+        <h2>A denser photo field for the archive.</h2>
+        <p>
+          This page is for browsing images first. Region, place, and keyword filters trim the archive down quickly,
+          while the layout keeps wide and tall photos from fighting each other on the same row.
+        </p>
+        <nav class="travel-local-nav" aria-label="Personal pages">
+          <a href="personal.html">Overview</a>
+          <a href="travel-gallery.html" aria-current="page">Gallery</a>
+          <a href="travel-map.html">Atlas</a>
+          <a href="travel-collections.html">Collections</a>
+        </nav>
+      </div>
+
+      <div class="gallery-glance" aria-label="Gallery totals">
+        <article>
+          <strong id="glance-photo-count">0</strong>
+          <span>Photos currently in view</span>
+        </article>
+        <article>
+          <strong id="glance-place-count">0</strong>
+          <span>Places matching the current filters</span>
+        </article>
+        <article>
+          <strong id="glance-region-count">0</strong>
+          <span>Regions represented in the result set</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="gallery-shell">
+      <div class="gallery-toolbar">
+        <div class="gallery-search-panel">
+          <label class="gallery-search-label" for="gallery-search">Search captions, places, and regions</label>
+          <input class="gallery-search-input" id="gallery-search" type="search" placeholder="Try Osaka, museum, lake, palace, skyline...">
+          <p class="gallery-search-hint">Search checks place names, local names, region names, spot names, and photo captions.</p>
+        </div>
+        <aside class="gallery-note-panel">
+          <p id="gallery-summary">Archive view.</p>
+        </aside>
+      </div>
+
+      <div class="gallery-filter-block">
+        <p class="gallery-filter-heading">Regions</p>
+        <div class="filter-row" id="region-filters"></div>
+      </div>
+
+      <div class="gallery-filter-block">
+        <p class="gallery-filter-heading">Places</p>
+        <div class="filter-row" id="place-filters"></div>
+      </div>
+
+      <div class="gallery-active" id="gallery-active"></div>
+
+      <div class="gallery-stream">
+        <div class="gallery-grid wide-grid" id="gallery-wide"></div>
+        <div class="gallery-divider" id="gallery-divider" hidden></div>
+        <div class="gallery-grid tall-grid" id="gallery-tall"></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function() {
+      var shared = window.travelShared;
+      var viewer = shared.createPhotoViewer();
+      var allPlaces = shared.data.places.filter(function(place) {
+        return shared.countPhotosForPlace(place) > 0;
+      });
+      var allRegions = shared.uniqueRegions({ onlyWithPhotos: true });
+      var params = new URLSearchParams(window.location.search);
+      var currentRegion = allRegions.indexOf(params.get("region")) >= 0 ? params.get("region") : "All";
+      var currentPlace = params.get("place") || "";
+      var currentQuery = (params.get("q") || "").trim();
+      var searchInput = document.getElementById("gallery-search");
+      var regionFilters = document.getElementById("region-filters");
+      var placeFilters = document.getElementById("place-filters");
+      var activeWrap = document.getElementById("gallery-active");
+      var wideWrap = document.getElementById("gallery-wide");
+      var tallWrap = document.getElementById("gallery-tall");
+      var divider = document.getElementById("gallery-divider");
+
+      function normalize(value) {
+        return String(value || "").toLowerCase().trim();
+      }
+
+      function matchesQuery(place, query) {
+        if (!query) {
+          return true;
+        }
+
+        var haystack = [
+          place.region,
+          shared.data.regionLocalNames[place.region],
+          place.name,
+          place.localName,
+          (place.spots || []).join(" "),
+          (place.spotsLocal || []).join(" "),
+          (place.photos || []).map(function(photo) { return photo.caption || ""; }).join(" ")
+        ].join(" ").toLowerCase();
+
+        return haystack.indexOf(query) >= 0;
+      }
+
+      function photoEntries() {
+        return shared.flattenPhotos({ onlyWithPhotos: true }).filter(function(entry) {
+          if (currentRegion !== "All" && entry.region !== currentRegion) {
+            return false;
+          }
+          if (currentPlace && entry.place.name !== currentPlace) {
+            return false;
+          }
+          if (!currentQuery) {
+            return true;
+          }
+          return matchesQuery(entry.place, currentQuery);
+        });
+      }
+
+      function matchingPlaces() {
+        return allPlaces.filter(function(place) {
+          if (currentRegion !== "All" && place.region !== currentRegion) {
+            return false;
+          }
+          if (currentPlace && place.name !== currentPlace) {
+            return false;
+          }
+          if (!currentQuery) {
+            return true;
+          }
+          return matchesQuery(place, currentQuery);
+        });
+      }
+
+      function visiblePlaceOptions() {
+        return allPlaces.filter(function(place) {
+          if (currentRegion !== "All" && place.region !== currentRegion) {
+            return false;
+          }
+          if (!currentQuery) {
+            return true;
+          }
+          return matchesQuery(place, currentQuery);
+        });
+      }
+
+      function updateUrl() {
+        var next = new URLSearchParams();
+        if (currentRegion !== "All") {
+          next.set("region", currentRegion);
+        }
+        if (currentPlace) {
+          next.set("place", currentPlace);
+        }
+        if (currentQuery) {
+          next.set("q", currentQuery);
+        }
+        var query = next.toString();
+        var nextUrl = query ? window.location.pathname + "?" + query : window.location.pathname;
+        history.replaceState(null, "", nextUrl);
+      }
+
+      function cardHtml(entry, priority) {
+        var caption = entry.photo.caption || shared.placeLabel(entry.place);
+        var thumbnail = entry.thumbnail;
+        var loading = priority ? "eager" : "lazy";
+        var fetchPriority = priority ? "high" : "low";
+        return '' +
+          '<article class="gallery-card ' + shared.escapeHtml(entry.orientation || "landscape") + '">' +
+            '<button class="gallery-hit" type="button" data-photo-src="' + shared.escapeHtml(entry.photo.src) + '" data-photo-caption="' + shared.escapeHtml(caption) + '">' +
+              '<img src="' + shared.escapeHtml(thumbnail) + '" data-full-src="' + shared.escapeHtml(entry.photo.src) + '" alt="' + shared.escapeHtml(caption) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
+            '</button>' +
+            '<div class="gallery-meta">' +
+              '<div class="gallery-place">' + shared.htmlLabel(entry.place.name, entry.place.localName) + '</div>' +
+              '<div class="gallery-caption">' + shared.escapeHtml(caption) + '</div>' +
+              '<div class="gallery-region">' + shared.htmlLabel(entry.region, shared.data.regionLocalNames[entry.region]) + '</div>' +
+            '</div>' +
+          '</article>';
+      }
+
+      function attachViewer(root) {
+        root.querySelectorAll(".gallery-hit").forEach(function(button) {
+          var image = button.querySelector("img");
+          if (!image) {
+            return;
+          }
+
+          image.addEventListener("error", function() {
+            if (image.dataset.fullSrc && image.src !== image.dataset.fullSrc) {
+              image.src = image.dataset.fullSrc;
+            }
+          }, { once: true });
+
+          button.addEventListener("click", function() {
+            viewer.open(button.dataset.photoSrc, button.dataset.photoCaption);
+          });
+        });
+      }
+
+      function renderStats(entries, places) {
+        var regionNames = [];
+        entries.forEach(function(entry) {
+          if (regionNames.indexOf(entry.region) === -1) {
+            regionNames.push(entry.region);
+          }
+        });
+        document.getElementById("glance-photo-count").textContent = entries.length;
+        document.getElementById("glance-place-count").textContent = places.length;
+        document.getElementById("glance-region-count").textContent = regionNames.length;
+      }
+
+      function renderRegions() {
+        var regions = ["All"].concat(allRegions);
+        regionFilters.innerHTML = regions.map(function(region) {
+          var active = region === currentRegion;
+          var label = region === "All" ? "Archive" : shared.htmlLabel(region, shared.data.regionLocalNames[region]);
+          var count = region === "All"
+            ? shared.totalPhotoCount()
+            : shared.regionPhotoCount(region);
+          return '' +
+            '<button class="filter-chip' + (active ? ' active' : '') + '" type="button" data-region="' + shared.escapeHtml(region) + '" aria-pressed="' + String(active) + '">' +
+              '<span>' + label + '</span>' +
+              '<small>' + count + '</small>' +
+            '</button>';
+        }).join("");
+
+        regionFilters.querySelectorAll("[data-region]").forEach(function(button) {
+          button.addEventListener("click", function() {
+            currentRegion = button.dataset.region;
+            if (currentPlace) {
+              var stillVisible = visiblePlaceOptions().some(function(place) {
+                return place.name === currentPlace;
+              });
+              if (!stillVisible) {
+                currentPlace = "";
+              }
+            }
+            updateAll();
+          });
+        });
+      }
+
+      function renderPlaces() {
+        var places = visiblePlaceOptions();
+        if (!places.length) {
+          placeFilters.innerHTML = '<div class="gallery-empty">No places match the current search.</div>';
+          return;
+        }
+
+        placeFilters.innerHTML = '' +
+          '<button class="filter-chip' + (!currentPlace ? ' active' : '') + '" type="button" data-place="" aria-pressed="' + String(!currentPlace) + '">' +
+            '<span>All results</span>' +
+          '</button>' +
+          places.map(function(place) {
+            var active = currentPlace === place.name;
+            return '' +
+              '<button class="filter-chip' + (active ? ' active' : '') + '" type="button" data-place="' + shared.escapeHtml(place.name) + '" aria-pressed="' + String(active) + '">' +
+                '<span>' + shared.htmlLabel(place.name, place.localName) + '</span>' +
+                '<small>' + shared.countPhotosForPlace(place) + '</small>' +
+              '</button>';
+          }).join("");
+
+        placeFilters.querySelectorAll("[data-place]").forEach(function(button) {
+          button.addEventListener("click", function() {
+            currentPlace = button.dataset.place;
+            updateAll();
+          });
+        });
+      }
+
+      function renderActiveSummary(entries, places) {
+        var pills = [];
+        if (currentRegion !== "All") {
+          pills.push('<div class="active-pill"><strong>Region</strong><span>' + shared.htmlLabel(currentRegion, shared.data.regionLocalNames[currentRegion]) + '</span></div>');
+        }
+        if (currentPlace) {
+          var place = allPlaces.find(function(item) { return item.name === currentPlace; });
+          if (place) {
+            pills.push('<div class="active-pill"><strong>Place</strong><span>' + shared.htmlLabel(place.name, place.localName) + '</span></div>');
+          }
+        }
+        if (currentQuery) {
+          pills.push('<div class="active-pill"><strong>Search</strong><span>' + shared.escapeHtml(currentQuery) + '</span></div>');
+        }
+        if (!pills.length) {
+          pills.push('<div class="active-pill"><strong>View</strong><span>Full archive</span></div>');
+        }
+        activeWrap.innerHTML = pills.join("");
+
+        var summary = entries.length
+          ? entries.length + ' photos from ' + places.length + ' places.'
+          : 'No photos match the current filters.';
+        document.getElementById("gallery-summary").textContent = summary;
+      }
+
+      function renderGrid(entries) {
+        if (!entries.length) {
+          wideWrap.innerHTML = '<div class="gallery-empty">No photos found. Try clearing one filter or using a broader keyword.</div>';
+          tallWrap.innerHTML = "";
+          divider.hidden = true;
+          return;
+        }
+
+        var landscapes = entries.filter(function(entry) {
+          return entry.orientation !== "portrait";
+        });
+        var portraits = entries.filter(function(entry) {
+          return entry.orientation === "portrait";
+        });
+
+        wideWrap.innerHTML = landscapes.length
+          ? landscapes.map(function(entry, index) { return cardHtml(entry, index < 3); }).join("")
+          : "";
+        tallWrap.innerHTML = portraits.length
+          ? portraits.map(function(entry, index) { return cardHtml(entry, !landscapes.length && index < 3); }).join("")
+          : "";
+        divider.hidden = !(landscapes.length && portraits.length);
+        attachViewer(wideWrap);
+        attachViewer(tallWrap);
+      }
+
+      function syncSearch() {
+        currentQuery = searchInput.value.trim();
+        if (currentPlace) {
+          var visible = visiblePlaceOptions().some(function(place) {
+            return place.name === currentPlace;
+          });
+          if (!visible) {
+            currentPlace = "";
+          }
+        }
+        updateAll();
+      }
+
+      function updateAll() {
+        var places = matchingPlaces();
+        var entries = photoEntries();
+        updateUrl();
+        renderRegions();
+        renderPlaces();
+        renderStats(entries, places);
+        renderActiveSummary(entries, places);
+        renderGrid(entries);
+      }
+
+      if (currentPlace) {
+        var validPlace = allPlaces.some(function(place) {
+          return place.name === currentPlace && (currentRegion === "All" || place.region === currentRegion);
+        });
+        if (!validPlace) {
+          currentPlace = "";
+        }
+      }
+
+      searchInput.value = currentQuery;
+      searchInput.addEventListener("input", syncSearch);
+      updateAll();
+    })();
+  </script>
+</body>
+</html>
