@@ -159,14 +159,66 @@
       margin-top: 1rem;
       border: 1px solid var(--contact-rule);
       border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--contact-wash), transparent 68%),
+        var(--tag-bg);
       filter: saturate(0.72) contrast(0.98);
       animation: contactFadeUp 0.65s var(--contact-ease) both;
       transition: filter 0.3s ease, border-color 0.25s ease;
+      overflow: hidden;
     }
 
     #map:hover {
       border-color: var(--contact-accent);
       filter: saturate(0.86) contrast(1);
+    }
+
+    .leaflet-control-attribution,
+    .leaflet-control-zoom a,
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      font-family: inherit;
+    }
+
+    .leaflet-control-zoom {
+      border: 1px solid var(--contact-rule) !important;
+      box-shadow: none !important;
+    }
+
+    .leaflet-control-zoom a {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+      border-bottom-color: var(--contact-rule) !important;
+    }
+
+    .leaflet-control-attribution {
+      background: rgba(253, 253, 252, 0.84) !important;
+      color: var(--contact-secondary) !important;
+    }
+
+    .leaflet-control-attribution a {
+      color: var(--contact-accent) !important;
+    }
+
+    .leaflet-popup-content-wrapper,
+    .leaflet-popup-tip {
+      background: var(--surface) !important;
+      color: var(--text) !important;
+      box-shadow: 0 14px 34px rgba(53, 55, 49, 0.14) !important;
+    }
+
+    .leaflet-popup-content {
+      margin: 0.75rem 0.85rem !important;
+      line-height: 1.45;
+    }
+
+    html[data-theme="dark"] .leaflet-control-attribution {
+      background: rgba(24, 24, 24, 0.84) !important;
+    }
+
+    html[data-theme="dark"] .leaflet-popup-content-wrapper,
+    html[data-theme="dark"] .leaflet-popup-tip {
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.36) !important;
     }
 
     @keyframes contactFadeUp {
@@ -225,7 +277,7 @@
     <nav>
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
-      <a href="experience.html">Experience</a> 
+      <a href="experience.html">Experience</a>
       <a href="contact.html" aria-current="page">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
@@ -267,7 +319,7 @@
         </li>
         <li>
           <span class="contact-label">LinkedIn</span>
-          <a class="contact-link" href="https://linkedin.com/in/mark-sui-38ab24283" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>linkedin.com/in/mark-sui-38ab24283</a>
+          <a class="contact-link" href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>linkedin.com/in/marksui6</a>
         </li>
       </ul>
     </section>
@@ -281,15 +333,50 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    var map = L.map('map').setView([32.8801, -117.2340], 14);
+    var map = L.map('map', {
+      scrollWheelZoom: false
+    }).setView([32.8801, -117.2340], 14);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    var tileUrls = {
+      light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    };
 
-    L.marker([32.8801, -117.2340]).addTo(map)
+    var tileOptions = {
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+    };
+
+    var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    var tiles = L.tileLayer(tileUrls[currentTheme] || tileUrls.light, tileOptions).addTo(map);
+
+    function markerStyle(theme) {
+      return {
+        radius: 8,
+        color: theme === 'dark' ? '#101010' : '#fdfdfc',
+        weight: 2,
+        fillColor: theme === 'dark' ? '#a8b6ae' : '#55645e',
+        fillOpacity: 0.95
+      };
+    }
+
+    var marker = L.circleMarker([32.8801, -117.2340], markerStyle(currentTheme)).addTo(map)
       .bindPopup("<b>University of California, San Diego</b><br>My current location.")
       .openPopup();
+
+    function applyMapTheme(theme) {
+      var resolved = theme === 'dark' ? 'dark' : 'light';
+      tiles.setUrl(tileUrls[resolved]);
+      marker.setStyle(markerStyle(resolved));
+    }
+
+    var observer = new MutationObserver(function() {
+      applyMapTheme(document.documentElement.getAttribute('data-theme'));
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    });
   </script>
 </body>
 </html>

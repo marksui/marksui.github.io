@@ -77,27 +77,32 @@
     .travel-kicker {
       margin: 0 0 0.45rem;
       color: var(--personal-accent);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: bold;
-      letter-spacing: 0;
+      letter-spacing: 0.01em;
     }
 
     .travel-intro h2 {
       margin-top: 0;
-      margin-bottom: 0.55rem;
-      font-size: 2.45rem;
-      line-height: 1.04;
+      margin-bottom: 0.6rem;
+      max-width: 11em;
+      font-family: var(--display-serif);
+      font-size: 2.72rem;
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .travel-intro p {
       margin: 0;
       color: var(--text);
       opacity: 0.84;
+      font-size: 1.05rem;
     }
 
     .travel-stats {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.65rem;
       min-width: 0;
       margin: 0;
@@ -130,7 +135,7 @@
 
     .travel-dashboard {
       display: grid;
-      grid-template-columns: minmax(0, 1.48fr) minmax(300px, 0.78fr);
+      grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.62fr);
       gap: 1.45rem;
       align-items: start;
       margin-top: 1.55rem;
@@ -251,8 +256,9 @@
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
-      max-height: 620px;
-      overflow: auto;
+      align-self: start;
+      max-height: none;
+      overflow: visible;
       background:
         linear-gradient(180deg, var(--personal-wash), transparent 42%),
         var(--personal-panel);
@@ -274,6 +280,40 @@
       font-size: 0.86rem;
     }
 
+    .selected-spots {
+      color: var(--text);
+      opacity: 0.82;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .selected-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      padding-top: 0.1rem;
+    }
+
+    .selected-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.24s var(--personal-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
+    }
+
+    .selected-actions a:hover,
+    .selected-actions a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
+    }
+
     .photo-slots {
       display: grid;
       grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -283,8 +323,8 @@
     }
 
     .selected-panel .photo-slots {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 0.72rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.65rem;
     }
 
     .photo-slot {
@@ -331,11 +371,11 @@
     }
 
     .selected-panel .photo-slot.landscape {
-      grid-column: span 6;
+      grid-column: span 2;
     }
 
     .selected-panel .photo-slot.portrait {
-      grid-column: span 6;
+      grid-column: span 2;
     }
 
     .selected-panel .photo-slot:not(.filled) {
@@ -382,7 +422,7 @@
     }
 
     .selected-panel .photo-slot figcaption {
-      font-size: 0.78rem;
+      display: none;
     }
 
     body.viewer-open {
@@ -559,9 +599,14 @@
 
     .region-title {
       display: inline-flex;
-      align-items: baseline;
+      align-items: flex-start;
       gap: 0.6rem;
       min-width: 0;
+    }
+
+    .region-copy {
+      display: grid;
+      gap: 0.12rem;
     }
 
     .region-title::before {
@@ -599,6 +644,13 @@
       font-size: 0.9rem;
       line-height: 1.2;
       white-space: nowrap;
+    }
+
+    .region-meta {
+      color: var(--personal-secondary);
+      font-size: 0.82rem;
+      font-weight: normal;
+      line-height: 1.25;
     }
 
     .place-list {
@@ -687,9 +739,12 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
+      margin: 2.2rem 0 0.85rem;
       color: var(--personal-accent);
-      font-size: 1.14rem;
+      font-family: var(--display-serif);
+      font-size: 1.12rem;
       font-style: italic;
+      font-weight: 500;
     }
 
     .personal-main > section + section h2::after {
@@ -765,7 +820,7 @@
       }
 
       .travel-intro h2 {
-        font-size: 2.1rem;
+        font-size: 2.2rem;
       }
 
       .travel-stats {
@@ -844,9 +899,9 @@
       <div class="travel-hero">
         <div class="travel-intro">
           <p class="travel-kicker">Atlas</p>
-          <h2>Visited places, grouped by region and connected to the photo archive.</h2>
+          <h2>Visited places, grouped by region and tied back to the photo archive.</h2>
           <p>
-            A denser navigation view for the archive: open a region, pick a city, and move between places and their photo sets without losing map context.
+            This is the place-first view of the archive: open a region, choose a city, and move into photo sets without losing geographic context.
           </p>
           <nav class="travel-local-nav" aria-label="Personal pages">
             <a href="personal.html">Overview</a>
@@ -859,11 +914,15 @@
         <dl class="travel-stats" aria-label="Travel archive totals">
           <div>
             <dt id="stat-places">0</dt>
-            <dd>Places</dd>
+            <dd>Visited places</dd>
           </div>
           <div>
             <dt id="stat-photos">0</dt>
-            <dd>Photos</dd>
+            <dd>Photos in archive</dd>
+          </div>
+          <div>
+            <dt id="stat-regions">0</dt>
+            <dd>Regions with photos</dd>
           </div>
         </dl>
       </div>
@@ -882,10 +941,15 @@
         </div>
 
         <aside class="selected-panel">
-          <p class="eyebrow">Selected Place</p>
+          <p class="eyebrow">Selected</p>
           <h3 id="selected-place"></h3>
           <p class="selected-meta" id="selected-region"></p>
+          <p class="selected-spots" id="selected-spots" hidden></p>
           <p class="selected-photo-meta" id="selected-photo-meta"></p>
+          <div class="selected-actions">
+            <a id="selected-gallery-link" href="travel-gallery.html">Gallery Set</a>
+            <a id="selected-collection-link" href="travel-collections.html">Region Set</a>
+          </div>
           <div class="photo-slots" id="selected-photos"></div>
         </aside>
       </div>
@@ -898,8 +962,8 @@
           <p class="places-view-note" id="places-view-note"></p>
           <label class="sr-only" for="places-view-select">Places view</label>
           <select class="places-view-select" id="places-view-select">
-            <option value="photos">Photo archive</option>
-            <option value="all">All visited places</option>
+            <option value="photos">Photo sets</option>
+            <option value="all">Visited list</option>
           </select>
         </div>
       </div>
@@ -919,12 +983,29 @@
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     var travelData = window.travelData || { places: [], regionLocalNames: {}, photoOrientations: {} };
+    var shared = window.travelShared || null;
     var places = travelData.places || [];
     var regionLocalNames = travelData.regionLocalNames || {};
-    var selectedIndex = places.findIndex(function(place) {
-      return place.photos && place.photos.length;
-    });
-    if (selectedIndex < 0) {
+    var query = new URLSearchParams(window.location.search);
+    var requestedRegion = query.get("region");
+    var requestedPlace = query.get("place");
+    var selectedIndex = places
+      .map(function(place, index) {
+        return { place: place, index: index };
+      })
+      .filter(function(entry) {
+        return entry.place.photos && entry.place.photos.length;
+      })
+      .sort(function(a, b) {
+        if (shared && shared.comparePlaces) {
+          return shared.comparePlaces(a.place, b.place);
+        }
+        return a.place.name.localeCompare(b.place.name);
+      })
+      .map(function(entry) {
+        return entry.index;
+      })[0];
+    if (typeof selectedIndex !== "number" || selectedIndex < 0) {
       selectedIndex = 0;
     }
     var currentRegion = "All";
@@ -932,8 +1013,6 @@
     var markers = [];
     var map;
     var photoOrientations = travelData.photoOrientations || {};
-    var query = new URLSearchParams(window.location.search);
-    var requestedRegion = query.get("region");
 
     if (requestedRegion && places.some(function(place) { return place.region === requestedRegion; })) {
       currentRegion = requestedRegion;
@@ -950,6 +1029,16 @@
       }
     }
 
+    if (requestedPlace) {
+      var requestedPlaceIndex = places.findIndex(function(place) {
+        return place.name === requestedPlace && (currentRegion === "All" || place.region === currentRegion);
+      });
+      if (requestedPlaceIndex >= 0) {
+        selectedIndex = requestedPlaceIndex;
+        currentRegion = places[requestedPlaceIndex].region;
+      }
+    }
+
 
     function uniqueRegions() {
       var regions = [];
@@ -958,7 +1047,16 @@
           regions.push(place.region);
         }
       });
-      return regions;
+      return regions.sort(function(a, b) {
+        if (shared && shared.compareRegions) {
+          return shared.compareRegions(a, b);
+        }
+        var delta = regionPhotoCount(b) - regionPhotoCount(a);
+        if (delta !== 0) {
+          return delta;
+        }
+        return a.localeCompare(b);
+      });
     }
 
     function countPhotosForPlace(place) {
@@ -994,6 +1092,9 @@
     function setTravelStats() {
       document.getElementById("stat-places").textContent = places.length;
       document.getElementById("stat-photos").textContent = totalPhotoCount();
+      document.getElementById("stat-regions").textContent = uniqueRegions().filter(function(region) {
+        return regionPhotoCount(region) > 0;
+      }).length;
     }
 
     function markerStyle(active) {
@@ -1193,12 +1294,37 @@
       return textLabel(region, regionLocalNames[region]);
     }
 
+    function updateUrl() {
+      var next = new URLSearchParams();
+      var selectedPlace = places[selectedIndex];
+      if (selectedPlace && selectedPlace.name) {
+        next.set("region", currentRegion !== "All" ? currentRegion : selectedPlace.region);
+        next.set("place", selectedPlace.name);
+      } else if (currentRegion !== "All") {
+        next.set("region", currentRegion);
+      }
+      var queryString = next.toString();
+      var nextUrl = queryString ? window.location.pathname + "?" + queryString : window.location.pathname;
+      history.replaceState(null, "", nextUrl);
+    }
+
     function updateSelected(index, moveMap) {
       selectedIndex = index;
       var place = places[index];
+      currentRegion = currentRegion === "All" ? currentRegion : place.region;
       document.getElementById("selected-place").innerHTML = htmlLabel(place.name, place.localName);
       document.getElementById("selected-region").innerHTML = regionHtml(place.region);
       document.getElementById("selected-photo-meta").textContent = photoLabel(countPhotosForPlace(place));
+      document.getElementById("selected-gallery-link").href = "travel-gallery.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
+      document.getElementById("selected-collection-link").href = "travel-collections.html?region=" + encodeURIComponent(place.region);
+      var selectedSpots = document.getElementById("selected-spots");
+      if (place.spots && place.spots.length) {
+        selectedSpots.textContent = spotsText(place);
+        selectedSpots.hidden = false;
+      } else {
+        selectedSpots.textContent = "";
+        selectedSpots.hidden = true;
+      }
       document.getElementById("selected-photos").innerHTML = makePhotoSlots(place, 2, undefined, true);
       organizePhotoGrids(document.getElementById("selected-photos"));
 
@@ -1211,6 +1337,8 @@
         button.classList.toggle("active", active);
         button.setAttribute("aria-pressed", String(active));
       });
+
+      updateUrl();
 
       if (map && moveMap) {
         map.setView(place.coords, 7, { animate: true });
@@ -1247,7 +1375,7 @@
       var regions = ["All"].concat(uniqueRegions());
       filterWrap.innerHTML = regions.map(function(region) {
         var activeClass = region === currentRegion ? " active" : "";
-        var label = region === "All" ? "All" : regionHtml(region);
+        var label = region === "All" ? "Archive" : regionHtml(region);
         return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '" aria-pressed="' + String(region === currentRegion) + '">' + label + '</button>';
       }).join("");
 
@@ -1273,7 +1401,7 @@
       }
       if (note) {
         note.textContent = placesView === "photos"
-          ? "Showing places with photos."
+          ? "Showing photographed places."
           : "Showing every visited place.";
       }
     }
@@ -1307,6 +1435,12 @@
           })
           .filter(function(item) {
             return item.place.region === region && (!photoOnly || countPhotosForPlace(item.place) > 0);
+          })
+          .sort(function(a, b) {
+            if (shared && shared.comparePlaces) {
+              return shared.comparePlaces(a.place, b.place);
+            }
+            return a.place.name.localeCompare(b.place.name);
           });
 
         var placeHtml = regionPlaces.map(function(item) {
@@ -1329,11 +1463,14 @@
         }).join("");
 
         var open = currentRegion === region || (currentRegion === "All" && places[selectedIndex].region === region) ? " open" : "";
-        var regionCount = photoOnly ? regionPhotoCount(region) : regionPlaces.length;
+        var regionCount = regionPlaces.length;
+        var regionPhotos = regionPlaces.reduce(function(total, item) {
+          return total + countPhotosForPlace(item.place);
+        }, 0);
         return '' +
           '<li>' +
             '<details' + open + '>' +
-              '<summary><span class="region-summary"><span class="region-title"><strong>' + regionHtml(region) + '</strong></span><span class="region-count">' + regionCount + '</span></span></summary>' +
+              '<summary><span class="region-summary"><span class="region-title"><span class="region-copy"><strong>' + regionHtml(region) + '</strong><span class="region-meta">' + regionCount + (regionCount === 1 ? ' place' : ' places') + ' · ' + photoLabel(regionPhotos) + '</span></span></span><span class="region-count">' + regionCount + '</span></span></summary>' +
               '<ul class="place-list">' + placeHtml + '</ul>' +
             '</details>' +
           '</li>';
@@ -1357,12 +1494,16 @@
       var filteredPlaces = region === "All"
         ? places
         : places.filter(function(place) { return place.region === region; });
+      document.getElementById("map-count").textContent = (region === "All" ? "Archive" : regionText(region)) + " · " + filteredPlaces.length + " places · " + filteredPlaces.reduce(function(total, place) {
+        return total + countPhotosForPlace(place);
+      }, 0) + " photos";
       var bounds = L.latLngBounds(filteredPlaces.map(function(place) { return place.coords; }));
       map.fitBounds(bounds.pad(0.18));
+      updateUrl();
     }
 
     function initMap() {
-      document.getElementById("map-count").textContent = places.length + " places · " + totalPhotoCount() + " photos";
+      document.getElementById("map-count").textContent = "Archive · " + places.length + " places · " + totalPhotoCount() + " photos";
       if (!window.L) {
         document.getElementById("travel-map").textContent = "Map is unavailable.";
         return;

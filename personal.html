@@ -45,13 +45,17 @@
       font-size: 0.92rem;
       font-weight: bold;
       line-height: 1.2;
+      letter-spacing: 0.01em;
     }
 
     .hub-copy h2 {
       margin: 0 0 0.6rem;
       max-width: 11em;
-      font-size: 2.6rem;
+      font-family: var(--display-serif);
+      font-size: 2.72rem;
       line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .hub-copy p {
@@ -59,6 +63,7 @@
       max-width: 680px;
       color: var(--text);
       opacity: 0.86;
+      font-size: 1.05rem;
     }
 
     .travel-local-nav {
@@ -174,10 +179,12 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      margin: 2.35rem 0 0.8rem;
+      margin: 2.2rem 0 0.85rem;
       color: var(--hub-accent);
-      font-size: 1.14rem;
+      font-family: var(--display-serif);
+      font-size: 1.12rem;
       font-style: italic;
+      font-weight: 500;
     }
 
     .section-heading::after {
@@ -230,6 +237,14 @@
       line-height: 1.2;
     }
 
+    .portal-topline {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
     .portal-card span {
       display: block;
       color: var(--hub-accent);
@@ -239,9 +254,28 @@
     }
 
     .portal-card p {
-      margin: 0;
+      margin: 0.18rem 0 0;
       color: var(--text);
       opacity: 0.84;
+    }
+
+    .portal-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .portal-metrics li {
+      margin: 0;
+      padding: 0.16rem 0.46rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 999px;
+      color: var(--hub-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
     }
 
     .feature-grid {
@@ -256,16 +290,21 @@
       grid-template-columns: minmax(180px, 0.74fr) minmax(0, 1fr);
       gap: 0.95rem;
       align-items: stretch;
-      border-top: 1px solid var(--hub-rule);
-      padding-top: 1rem;
+      padding: 0.95rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 8px;
+      background: var(--hub-panel);
+      box-shadow: var(--hub-shadow);
       color: var(--text);
       text-decoration: none;
-      transition: transform 0.28s var(--hub-ease);
+      transition: transform 0.28s var(--hub-ease), border-color 0.24s ease, background 0.24s ease;
     }
 
     .feature-card:hover,
     .feature-card:focus-visible {
       transform: translateY(-2px);
+      border-color: var(--hub-accent);
+      background: linear-gradient(180deg, var(--hub-wash), transparent 90%), var(--hub-panel);
     }
 
     .feature-card img {
@@ -334,12 +373,12 @@
     }
 
     .region-strip a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.34rem 0.72rem;
+      display: inline-grid;
+      gap: 0.18rem;
+      min-width: 10.4rem;
+      padding: 0.52rem 0.76rem;
       border: 1px solid var(--hub-rule);
-      border-radius: 999px;
+      border-radius: 8px;
       color: var(--text);
       text-decoration: none;
       transition: transform 0.24s var(--hub-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
@@ -353,9 +392,15 @@
       background: var(--hub-wash);
     }
 
+    .region-strip strong {
+      font-size: 0.96rem;
+      line-height: 1.2;
+    }
+
     .region-strip small {
       color: var(--hub-secondary);
       font-size: 0.82rem;
+      line-height: 1.2;
     }
 
     @keyframes hubFadeUp {
@@ -426,11 +471,10 @@
     <section class="hub-hero">
       <div class="hub-copy">
         <p class="hub-kicker">Personal Archive</p>
-        <h2>Photography, places, and a quieter side of the site.</h2>
+        <h2>Places, photographs, and the archive behind them.</h2>
         <p>
-          This part of the site is less about resume lines and more about how places accumulate into memory:
-          museums, streets, lakes, city views, and the visual texture around them. The archive now opens as a small
-          system instead of one overloaded page, so browsing it feels more deliberate.
+          This part of the site is built for browsing rather than resume reading. The gallery is the fastest way to scan
+          images, the atlas keeps geography in view, and the collections page groups the archive into stronger regional sets.
         </p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html" aria-current="page">Overview</a>
@@ -442,16 +486,16 @@
 
       <div class="hero-collage" aria-label="Featured archive images">
         <figure class="hero-shot tall">
-          <img src="img/thumbs/japan/osaka-keitakuen-autumn-maples.webp" alt="Osaka Keitakuen Garden autumn maples" loading="eager" decoding="async">
-          <figcaption>Osaka</figcaption>
+          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" alt="Dana Point ocean terrace view" loading="eager" decoding="async">
+          <figcaption>Dana Point</figcaption>
         </figure>
         <figure class="hero-shot">
-          <img src="img/thumbs/cambodia/phnom-penh-royal-palace-throne-hall.webp" alt="Phnom Penh Royal Palace" loading="eager" decoding="async">
-          <figcaption>Phnom Penh</figcaption>
+          <img src="img/thumbs/japan/osaka/osaka-keitakuen-autumn-maples.webp" alt="Osaka Keitakuen Garden autumn maples" loading="eager" decoding="async">
+          <figcaption>Japan</figcaption>
         </figure>
         <figure class="hero-shot">
-          <img src="img/thumbs/taiwan/sun-moon-lake-lake-view.webp" alt="Sun Moon Lake" loading="eager" decoding="async">
-          <figcaption>Sun Moon Lake</figcaption>
+          <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-yellow-colonial-building.webp" alt="Hanoi yellow colonial building by Hoan Kiem Lake" loading="eager" decoding="async">
+          <figcaption>Vietnam</figcaption>
         </figure>
       </div>
     </section>
@@ -475,25 +519,43 @@
       <h2 class="section-heading">Explore</h2>
       <div class="portal-grid">
         <a class="portal-card" href="travel-gallery.html">
-          <img src="img/thumbs/vietnam/hanoi-hoan-kiem-lake-flowers.webp" alt="Hanoi Hoan Kiem Lake flowers" loading="lazy" decoding="async">
+          <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-flowers.webp" alt="Hanoi Hoan Kiem Lake flowers" loading="lazy" decoding="async">
           <div>
-            <span>Dense image browsing</span>
+            <div class="portal-topline">
+              <span>Image-first browsing</span>
+              <ul class="portal-metrics">
+                <li id="gallery-photo-metric">0 photos</li>
+                <li id="gallery-place-metric">0 places</li>
+              </ul>
+            </div>
             <strong>Gallery</strong>
             <p>All photos in one visual field, with region and keyword filtering built for fast scanning.</p>
           </div>
         </a>
         <a class="portal-card" href="travel-map.html">
-          <img src="img/thumbs/laos/vientiane-pha-that-luang-golden-stupa.webp" alt="Vientiane Pha That Luang" loading="lazy" decoding="async">
+          <img src="img/thumbs/laos/vientiane/vientiane-pha-that-luang-golden-stupa.webp" alt="Vientiane Pha That Luang" loading="lazy" decoding="async">
           <div>
-            <span>Places first</span>
+            <div class="portal-topline">
+              <span>Places first</span>
+              <ul class="portal-metrics">
+                <li id="atlas-place-metric">0 places</li>
+                <li id="atlas-region-metric">0 regions</li>
+              </ul>
+            </div>
             <strong>Atlas</strong>
             <p>Map, region filters, and city-level navigation when you want geography and context before photos.</p>
           </div>
         </a>
         <a class="portal-card" href="travel-collections.html">
-          <img src="img/thumbs/yunnan/lijiang-jade-dragon-snow-mountain-glacier-view.webp" alt="Lijiang Jade Dragon Snow Mountain" loading="lazy" decoding="async">
+          <img src="img/thumbs/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-glacier-view.webp" alt="Lijiang Jade Dragon Snow Mountain" loading="lazy" decoding="async">
           <div>
-            <span>Grouped sets</span>
+            <div class="portal-topline">
+              <span>Grouped sets</span>
+              <ul class="portal-metrics">
+                <li id="collections-region-metric">0 regions</li>
+                <li id="collections-place-metric">0 place sets</li>
+              </ul>
+            </div>
             <strong>Collections</strong>
             <p>Region-level entry points with cover images, place counts, and faster ways into each cluster.</p>
           </div>
@@ -522,10 +584,38 @@
       document.getElementById("stat-photo-count").textContent = String(shared.totalPhotoCount());
       document.getElementById("stat-region-count").textContent = String(photoRegions.length);
 
-      var featuredNames = ["Osaka", "Phnom Penh", "Hanoi", "Nantou"];
-      var featuredPlaces = featuredNames.map(function(name) {
-        return places.find(function(place) { return place.name === name; });
-      }).filter(Boolean);
+      var placesWithPhotos = places.filter(function(place) {
+        return shared.countPhotosForPlace(place) > 0;
+      });
+      var featuredPlaces = [];
+      var usedRegions = [];
+      placesWithPhotos.slice().sort(shared.comparePlaces).forEach(function(place) {
+        if (featuredPlaces.length >= 4) {
+          return;
+        }
+        if (usedRegions.indexOf(place.region) >= 0) {
+          return;
+        }
+        featuredPlaces.push(place);
+        usedRegions.push(place.region);
+      });
+      if (featuredPlaces.length < 4) {
+        placesWithPhotos.forEach(function(place) {
+          if (featuredPlaces.length >= 4) {
+            return;
+          }
+          if (featuredPlaces.indexOf(place) === -1) {
+            featuredPlaces.push(place);
+          }
+        });
+      }
+
+      document.getElementById("gallery-photo-metric").textContent = shared.photoLabel(shared.totalPhotoCount());
+      document.getElementById("gallery-place-metric").textContent = placesWithPhotos.length + (placesWithPhotos.length === 1 ? " place" : " places");
+      document.getElementById("atlas-place-metric").textContent = places.length + (places.length === 1 ? " place" : " places");
+      document.getElementById("atlas-region-metric").textContent = photoRegions.length + (photoRegions.length === 1 ? " region" : " regions");
+      document.getElementById("collections-region-metric").textContent = photoRegions.length + (photoRegions.length === 1 ? " region" : " regions");
+      document.getElementById("collections-place-metric").textContent = placesWithPhotos.length + (placesWithPhotos.length === 1 ? " set" : " sets");
 
       document.getElementById("featured-places").innerHTML = featuredPlaces.map(function(place) {
         var cover = place.photos && place.photos[0] ? place.photos[0] : null;
@@ -539,8 +629,8 @@
           '<a class="feature-card" href="' + href + '">' +
             '<img src="' + shared.escapeHtml(shared.thumbnailSrc(cover.src)) + '" alt="' + shared.escapeHtml(cover.caption || place.name) + '" loading="lazy" decoding="async">' +
             '<div class="feature-meta">' +
-              '<span>' + shared.escapeHtml(shared.regionLabel(place.region)) + "</span>" +
-              '<strong>' + shared.escapeHtml(shared.placeLabel(place)) + "</strong>" +
+              '<span>' + shared.htmlLabel(place.region, shared.data.regionLocalNames[place.region]) + "</span>" +
+              '<strong>' + shared.htmlLabel(place.name, place.localName) + "</strong>" +
               '<p>' + shared.escapeHtml(shared.photoLabel(shared.countPhotosForPlace(place))) + '</p>' +
               '<ul>' + spots + "</ul>" +
             "</div>" +
@@ -548,10 +638,13 @@
       }).join("");
 
       document.getElementById("region-strip").innerHTML = photoRegions.map(function(region) {
+        var regionPlaceCount = places.filter(function(place) {
+          return place.region === region && shared.countPhotosForPlace(place) > 0;
+        }).length;
         return '' +
           '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">' +
-            '<span>' + shared.escapeHtml(shared.regionLabel(region)) + "</span>" +
-            '<small>' + shared.escapeHtml(shared.photoLabel(shared.regionPhotoCount(region))) + "</small>" +
+            '<strong>' + shared.htmlLabel(region, shared.data.regionLocalNames[region]) + "</strong>" +
+            '<small>' + regionPlaceCount + (regionPlaceCount === 1 ? " place" : " places") + ' · ' + shared.escapeHtml(shared.photoLabel(shared.regionPhotoCount(region))) + "</small>" +
           "</a>";
       }).join("");
     })();

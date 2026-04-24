@@ -4,6 +4,32 @@
     regionLocalNames: {},
     photoOrientations: {}
   };
+  var preferredRegionOrder = [
+    "California",
+    "Texas",
+    "Washington",
+    "Nevada",
+    "District of Columbia",
+    "New York",
+    "Taiwan",
+    "Japan",
+    "Vietnam",
+    "Thailand",
+    "Laos",
+    "Cambodia",
+    "Malaysia",
+    "Brunei",
+    "Indonesia",
+    "Singapore",
+    "Australia",
+    "Shandong",
+    "Yunnan",
+    "Guizhou",
+    "Fujian",
+    "Hubei",
+    "Jilin",
+    "Liaoning"
+  ];
 
   function escapeHtml(value) {
     return String(value).replace(/[&<>"']/g, function(character) {
@@ -45,6 +71,39 @@
     }, 0);
   }
 
+  function regionOrder(region) {
+    var index = preferredRegionOrder.indexOf(region);
+    return index >= 0 ? index : preferredRegionOrder.length + 1;
+  }
+
+  function compareRegions(a, b) {
+    var rankDelta = regionOrder(a) - regionOrder(b);
+    if (rankDelta !== 0) {
+      return rankDelta;
+    }
+
+    var photoDelta = regionPhotoCount(b) - regionPhotoCount(a);
+    if (photoDelta !== 0) {
+      return photoDelta;
+    }
+
+    return String(a).localeCompare(String(b));
+  }
+
+  function comparePlaces(a, b) {
+    var regionDelta = compareRegions(a.region, b.region);
+    if (regionDelta !== 0) {
+      return regionDelta;
+    }
+
+    var photoDelta = countPhotosForPlace(b) - countPhotosForPlace(a);
+    if (photoDelta !== 0) {
+      return photoDelta;
+    }
+
+    return textLabel(a.name, a.localName).localeCompare(textLabel(b.name, b.localName));
+  }
+
   function uniqueRegions(options) {
     var onlyWithPhotos = options && options.onlyWithPhotos;
     var regions = [];
@@ -56,7 +115,7 @@
         regions.push(place.region);
       }
     });
-    return regions;
+    return regions.sort(compareRegions);
   }
 
   function regionPhotoCount(region) {
@@ -94,13 +153,24 @@
         });
       });
     });
-    return entries;
+    return entries.sort(function(a, b) {
+      if (a.type === "place" || b.type === "place") {
+        return comparePlaces(a.place, b.place);
+      }
+
+      var placeDelta = comparePlaces(a.place, b.place);
+      if (placeDelta !== 0) {
+        return placeDelta;
+      }
+
+      return a.photoIndex - b.photoIndex;
+    });
   }
 
   function placesWithPhotos(region) {
     return data.places.filter(function(place) {
       return (!region || place.region === region) && countPhotosForPlace(place) > 0;
-    });
+    }).sort(comparePlaces);
   }
 
   function firstPhotoForRegion(region) {
@@ -178,6 +248,10 @@
     htmlLabel: htmlLabel,
     countPhotosForPlace: countPhotosForPlace,
     totalPhotoCount: totalPhotoCount,
+    preferredRegionOrder: preferredRegionOrder.slice(),
+    regionOrder: regionOrder,
+    compareRegions: compareRegions,
+    comparePlaces: comparePlaces,
     uniqueRegions: uniqueRegions,
     regionPhotoCount: regionPhotoCount,
     flattenPhotos: flattenPhotos,

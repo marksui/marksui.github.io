@@ -1,5 +1,7 @@
 html {
   color-scheme: light;
+  --formal-serif: "Times New Roman", "Songti SC", "Songti TC", "STSong", "Noto Serif CJK SC", serif;
+  --display-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Songti SC", "STSong", serif;
   --bg: #fdfdfc;
   --text: #111;
   --border: #ddd;
@@ -32,12 +34,20 @@ body {
   padding: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: 'EB Garamond', serif;
+  font-family: var(--formal-serif);
+  font-feature-settings: "liga", "kern";
   line-height: 1.62;
   font-size: 17px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   transition: background 0.2s ease, color 0.2s ease;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 ::selection {
@@ -60,9 +70,15 @@ header {
 }
 
 h1 {
+  font-family: var(--display-serif);
   font-size: 2.62rem;
   margin: 0 0 0.68rem;
   line-height: 1.05;
+}
+
+h2,
+h3 {
+  font-family: var(--display-serif);
 }
 
 header h1 {
@@ -70,6 +86,7 @@ header h1 {
   display: inline-block;
   color: var(--text);
   transition: color 0.25s ease, transform 0.3s var(--ease);
+  transform-origin: center;
 }
 
 header h1::after {
@@ -85,13 +102,13 @@ header h1::after {
   transition: background 0.25s ease, transform 0.32s var(--ease);
 }
 
-header:hover h1 {
-  color: var(--nav-accent);
-  transform: translateY(-1px);
+header h1:hover {
+  color: var(--accent);
+  transform: translateY(-1px) scale(1.02);
 }
 
-header:hover h1::after {
-  background: var(--nav-accent);
+header h1:hover::after {
+  background: var(--accent);
   transform: translateX(-50%) scaleX(1);
 }
 

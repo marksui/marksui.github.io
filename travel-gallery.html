@@ -42,22 +42,27 @@
     .travel-kicker {
       margin: 0 0 0.45rem;
       color: var(--gallery-accent);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: bold;
       line-height: 1.2;
+      letter-spacing: 0.01em;
     }
 
     .travel-copy h2 {
       margin: 0 0 0.6rem;
       max-width: 11em;
-      font-size: 2.56rem;
-      line-height: 1.03;
+      font-family: var(--display-serif);
+      font-size: 2.72rem;
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .travel-copy p {
       margin: 0;
       max-width: 680px;
       opacity: 0.84;
+      font-size: 1.05rem;
     }
 
     .travel-local-nav {
@@ -194,6 +199,21 @@
       opacity: 0.86;
     }
 
+    .gallery-note-panel strong {
+      display: block;
+      margin-bottom: 0.28rem;
+      color: var(--gallery-accent);
+      font-size: 0.96rem;
+      line-height: 1.25;
+    }
+
+    .gallery-note-panel small {
+      display: block;
+      color: var(--gallery-secondary);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
     .gallery-filter-block {
       margin-top: 1rem;
       padding-top: 1rem;
@@ -248,11 +268,19 @@
       line-height: 1.1;
     }
 
+    .gallery-active-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
     .gallery-active {
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-top: 1rem;
     }
 
     .active-pill {
@@ -271,6 +299,29 @@
     .active-pill strong {
       color: var(--gallery-accent);
       font-weight: bold;
+    }
+
+    .gallery-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.34rem 0.78rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 999px;
+      background: var(--gallery-panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      line-height: 1.2;
+      transition: transform 0.24s var(--gallery-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
+    }
+
+    .gallery-reset:hover,
+    .gallery-reset:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--gallery-accent);
+      color: var(--gallery-accent);
+      background: var(--gallery-wash);
     }
 
     .gallery-stream {
@@ -524,10 +575,10 @@
     <section class="travel-hero">
       <div class="travel-copy">
         <p class="travel-kicker">Gallery</p>
-        <h2>A denser photo field for the archive.</h2>
+        <h2>A focused browse view for the archive.</h2>
         <p>
-          This page is for browsing images first. Region, place, and keyword filters trim the archive down quickly,
-          while the layout keeps wide and tall photos from fighting each other on the same row.
+          This page is built for scanning images quickly. Region, place, and keyword filters narrow the archive fast,
+          while the layout keeps the photo field balanced without crowding different frame shapes together.
         </p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
@@ -561,7 +612,8 @@
           <p class="gallery-search-hint">Search checks place names, local names, region names, spot names, and photo captions.</p>
         </div>
         <aside class="gallery-note-panel">
-          <p id="gallery-summary">Archive view.</p>
+          <strong id="gallery-summary">Archive view.</strong>
+          <small id="gallery-summary-detail">Use filters to narrow by region, place, or keyword.</small>
         </aside>
       </div>
 
@@ -575,7 +627,10 @@
         <div class="filter-row" id="place-filters"></div>
       </div>
 
-      <div class="gallery-active" id="gallery-active"></div>
+      <div class="gallery-active-bar">
+        <div class="gallery-active" id="gallery-active"></div>
+        <button class="gallery-reset" id="gallery-reset" type="button" hidden>Clear filters</button>
+      </div>
 
       <div class="gallery-stream">
         <div class="gallery-grid wide-grid" id="gallery-wide"></div>
@@ -591,7 +646,7 @@
       var viewer = shared.createPhotoViewer();
       var allPlaces = shared.data.places.filter(function(place) {
         return shared.countPhotosForPlace(place) > 0;
-      });
+      }).sort(shared.comparePlaces);
       var allRegions = shared.uniqueRegions({ onlyWithPhotos: true });
       var params = new URLSearchParams(window.location.search);
       var currentRegion = allRegions.indexOf(params.get("region")) >= 0 ? params.get("region") : "All";
@@ -601,9 +656,11 @@
       var regionFilters = document.getElementById("region-filters");
       var placeFilters = document.getElementById("place-filters");
       var activeWrap = document.getElementById("gallery-active");
+      var resetButton = document.getElementById("gallery-reset");
       var wideWrap = document.getElementById("gallery-wide");
       var tallWrap = document.getElementById("gallery-tall");
       var divider = document.getElementById("gallery-divider");
+      var summaryDetail = document.getElementById("gallery-summary-detail");
 
       function normalize(value) {
         return String(value || "").toLowerCase().trim();
@@ -654,7 +711,7 @@
             return true;
           }
           return matchesQuery(place, currentQuery);
-        });
+        }).sort(shared.comparePlaces);
       }
 
       function visiblePlaceOptions() {
@@ -666,7 +723,7 @@
             return true;
           }
           return matchesQuery(place, currentQuery);
-        });
+        }).sort(shared.comparePlaces);
       }
 
       function updateUrl() {
@@ -811,11 +868,24 @@
           pills.push('<div class="active-pill"><strong>View</strong><span>Full archive</span></div>');
         }
         activeWrap.innerHTML = pills.join("");
+        resetButton.hidden = !(currentRegion !== "All" || currentPlace || currentQuery);
 
         var summary = entries.length
-          ? entries.length + ' photos from ' + places.length + ' places.'
+          ? entries.length + ' photos across ' + places.length + ' places.'
           : 'No photos match the current filters.';
         document.getElementById("gallery-summary").textContent = summary;
+
+        if (!entries.length) {
+          summaryDetail.textContent = "Try a broader region, a different place, or a shorter keyword.";
+          return;
+        }
+
+        var leadPlaces = places.slice(0, 3).map(function(place) {
+          return shared.placeLabel(place);
+        });
+        summaryDetail.textContent = leadPlaces.length
+          ? "Leading sets: " + leadPlaces.join(" · ") + (places.length > 3 ? " ..." : "")
+          : "Use filters to move through the archive.";
       }
 
       function renderGrid(entries) {
@@ -879,6 +949,13 @@
 
       searchInput.value = currentQuery;
       searchInput.addEventListener("input", syncSearch);
+      resetButton.addEventListener("click", function() {
+        currentRegion = "All";
+        currentPlace = "";
+        currentQuery = "";
+        searchInput.value = "";
+        updateAll();
+      });
       updateAll();
     })();
   </script>

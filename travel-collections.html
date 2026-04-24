@@ -42,22 +42,27 @@
     .travel-kicker {
       margin: 0 0 0.45rem;
       color: var(--collections-accent);
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: bold;
       line-height: 1.2;
+      letter-spacing: 0.01em;
     }
 
     .travel-copy h2 {
       margin: 0 0 0.6rem;
       max-width: 11em;
-      font-size: 2.56rem;
-      line-height: 1.03;
+      font-family: var(--display-serif);
+      font-size: 2.72rem;
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .travel-copy p {
       margin: 0;
       max-width: 680px;
       opacity: 0.84;
+      font-size: 1.05rem;
     }
 
     .travel-local-nav {
@@ -124,6 +129,11 @@
       animation: collectionsFadeUp 0.7s var(--collections-ease) both;
     }
 
+    .collections-filter-bar {
+      display: grid;
+      gap: 0.72rem;
+    }
+
     .region-filter-row {
       display: flex;
       flex-wrap: nowrap;
@@ -131,6 +141,13 @@
       overflow-x: auto;
       padding-bottom: 0.15rem;
       scrollbar-width: thin;
+    }
+
+    .collections-filter-note {
+      margin: 0;
+      color: var(--collections-secondary);
+      font-size: 0.88rem;
+      line-height: 1.35;
     }
 
     .filter-chip {
@@ -169,10 +186,12 @@
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      margin: 1.65rem 0 0.8rem;
+      margin: 2.2rem 0 0.85rem;
       color: var(--collections-accent);
-      font-size: 1.1rem;
+      font-family: var(--display-serif);
+      font-size: 1.12rem;
       font-style: italic;
+      font-weight: 500;
     }
 
     .section-heading::after {
@@ -230,6 +249,7 @@
 
     .collection-content {
       display: grid;
+      align-content: start;
       gap: 0.8rem;
       padding: 1rem 1rem 1.05rem;
     }
@@ -245,6 +265,20 @@
       line-height: 1.2;
     }
 
+    .collection-title-topline {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .collection-rank {
+      color: var(--collections-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
     .collection-title h3 {
       margin: 0;
       font-size: 1.34rem;
@@ -252,22 +286,27 @@
     }
 
     .collection-stats {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, max-content));
       gap: 0.45rem;
       margin: 0;
       padding: 0;
       list-style: none;
+      align-items: start;
+      justify-content: start;
     }
 
     .collection-stats li {
       margin: 0;
+      display: inline-flex;
+      align-items: center;
       padding: 0.18rem 0.48rem;
       border: 1px solid var(--collections-rule);
       border-radius: 999px;
       color: var(--collections-secondary);
       font-size: 0.84rem;
       line-height: 1.2;
+      white-space: nowrap;
     }
 
     .collection-places {
@@ -281,6 +320,8 @@
 
     .collection-places li {
       margin: 0;
+      display: inline-flex;
+      align-items: center;
       padding: 0.16rem 0.46rem;
       border: 1px solid rgba(85, 100, 94, 0.16);
       border-radius: 999px;
@@ -294,21 +335,24 @@
     }
 
     .collection-actions {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.6rem;
-      margin-top: auto;
+      margin-top: 0.15rem;
     }
 
     .collection-actions a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-sizing: border-box;
+      width: 100%;
       padding: 0.36rem 0.78rem;
       border: 1px solid var(--collections-rule);
       border-radius: 999px;
       color: var(--text);
       text-decoration: none;
+      white-space: nowrap;
       transition: transform 0.24s var(--collections-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
     }
 
@@ -420,6 +464,24 @@
       .collection-cover {
         min-height: 220px;
       }
+
+      .collection-content {
+        gap: 0.72rem;
+        padding: 0.9rem 0.9rem 0.95rem;
+      }
+
+      .collection-title h3 {
+        font-size: 1.22rem;
+      }
+
+      .collection-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .collection-stats li,
+      .collection-places li {
+        justify-content: center;
+      }
     }
   </style>
 </head>
@@ -439,9 +501,9 @@
     <section class="travel-hero">
       <div class="travel-copy">
         <p class="travel-kicker">Collections</p>
-        <h2>The archive grouped into regional sets.</h2>
+        <h2>The archive, grouped into stronger regional sets.</h2>
         <p>
-          This view is less about individual frames and more about clusters: which regions have the richest sets,
+          This page is less about individual frames and more about clusters: which regions hold the richest sets,
           which places anchor them, and where it makes sense to jump next into the gallery or atlas.
         </p>
         <nav class="travel-local-nav" aria-label="Personal pages">
@@ -469,7 +531,10 @@
     </section>
 
     <section class="collections-shell">
-      <div class="region-filter-row" id="collection-region-filters"></div>
+      <div class="collections-filter-bar">
+        <div class="region-filter-row" id="collection-region-filters"></div>
+        <p class="collections-filter-note" id="collections-filter-note"></p>
+      </div>
 
       <section>
         <h2 class="section-heading">Regional Sets</h2>
@@ -477,7 +542,7 @@
       </section>
 
       <section>
-        <h2 class="section-heading">Most Photographed Places</h2>
+        <h2 class="section-heading">Dense Place Sets</h2>
         <div class="spotlight-grid" id="spotlight-grid"></div>
       </section>
     </section>
@@ -492,11 +557,10 @@
       var regionFilters = document.getElementById("collection-region-filters");
       var collectionGrid = document.getElementById("collection-grid");
       var spotlightGrid = document.getElementById("spotlight-grid");
+      var filterNote = document.getElementById("collections-filter-note");
 
       function regionPlaces(region) {
-        return shared.placesWithPhotos(region === "All" ? "" : region).slice().sort(function(a, b) {
-          return shared.countPhotosForPlace(b) - shared.countPhotosForPlace(a);
-        });
+        return shared.placesWithPhotos(region === "All" ? "" : region).slice().sort(shared.comparePlaces);
       }
 
       function regionPhotoTotal(region) {
@@ -556,7 +620,7 @@
         }, 0);
       }
 
-      function collectionCardHtml(region) {
+      function collectionCardHtml(region, rank) {
         var places = regionPlaces(region);
         if (!places.length) {
           return "";
@@ -574,7 +638,10 @@
             '</a>' +
             '<div class="collection-content">' +
               '<div class="collection-title">' +
-                '<span>Collection</span>' +
+                '<div class="collection-title-topline">' +
+                  '<span>Collection</span>' +
+                  '<span class="collection-rank">#' + rank + '</span>' +
+                '</div>' +
                 '<h3>' + shared.htmlLabel(region, shared.data.regionLocalNames[region]) + '</h3>' +
               '</div>' +
               '<ul class="collection-stats">' +
@@ -587,8 +654,8 @@
                 }).join("") +
               '</ul>' +
               '<div class="collection-actions">' +
-                '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Open Gallery</a>' +
-                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Open Atlas</a>' +
+                '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Gallery Set</a>' +
+                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Atlas View</a>' +
               '</div>' +
             '</div>' +
           '</article>';
@@ -596,7 +663,9 @@
 
       function renderCollections() {
         var regions = currentRegion === "All" ? photoRegions : [currentRegion];
-        var html = regions.map(collectionCardHtml).join("");
+        var html = regions.map(function(region, index) {
+          return collectionCardHtml(region, index + 1);
+        }).join("");
         collectionGrid.innerHTML = html || '<div class="collections-empty">No region cards available yet.</div>';
       }
 
@@ -612,13 +681,17 @@
           var cover = shared.thumbnailSrc(firstPhoto.src);
           var label = shared.placeLabel(place);
           var photoCount = shared.countPhotosForPlace(place);
+          var leadSpots = (place.spots || []).slice(0, 2).map(function(spot, index) {
+            var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+            return shared.textLabel(spot, localSpot);
+          }).join(" · ");
           return '' +
             '<a class="spotlight-card" href="travel-gallery.html?region=' + encodeURIComponent(place.region) + '&place=' + encodeURIComponent(place.name) + '">' +
               '<img src="' + shared.escapeHtml(cover) + '" alt="' + shared.escapeHtml(label) + '" loading="lazy" decoding="async">' +
               '<div>' +
                 '<span>' + shared.htmlLabel(place.region, shared.data.regionLocalNames[place.region]) + '</span>' +
                 '<strong>' + shared.htmlLabel(place.name, place.localName) + '</strong>' +
-                '<p>' + photoCount + ' photos in this place set.</p>' +
+                '<p>' + (leadSpots || (photoCount + ' photos in this place set.')) + '</p>' +
               '</div>' +
             '</a>';
         }).join("");
@@ -630,6 +703,9 @@
         renderStats();
         renderCollections();
         renderSpotlights();
+        filterNote.textContent = currentRegion === "All"
+          ? "Sorted by photo count across the full archive."
+          : "Showing one regional set and its densest place groups.";
       }
 
       updateAll();

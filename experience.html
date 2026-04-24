@@ -9,20 +9,22 @@
   <style>
     .experience-main {
       max-width: 1100px;
-      --exp-accent: #56665f;
-      --exp-secondary: #7b7467;
+      --exp-accent: #516560;
+      --exp-secondary: #797268;
       --exp-rule: #d9d5cc;
-      --exp-wash: rgba(86, 102, 95, 0.065);
+      --exp-wash: rgba(81, 101, 96, 0.068);
       --exp-panel: rgba(255, 255, 255, 0.8);
       --exp-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
       --exp-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      font-feature-settings: "liga", "kern";
+      font-family: var(--formal-serif);
     }
 
     html[data-theme="dark"] .experience-main {
-      --exp-accent: #a8b6ae;
-      --exp-secondary: #b8b0a3;
+      --exp-accent: #afc0ba;
+      --exp-secondary: #c1b8ab;
       --exp-rule: #3f423f;
-      --exp-wash: rgba(168, 182, 174, 0.08);
+      --exp-wash: rgba(175, 192, 186, 0.082);
       --exp-panel: rgba(24, 24, 24, 0.76);
       --exp-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
     }
@@ -47,6 +49,7 @@
       font-size: 0.92rem;
       font-weight: bold;
       line-height: 1.2;
+      letter-spacing: 0.01em;
     }
 
     .experience-copy h2 {
@@ -54,12 +57,15 @@
       max-width: 11em;
       font-size: 2.72rem;
       line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .experience-copy p {
       margin: 0;
       max-width: 700px;
       opacity: 0.86;
+      font-size: 1.05rem;
     }
 
     .capability-grid {
@@ -89,6 +95,8 @@
       color: var(--exp-accent);
       font-size: 1rem;
       line-height: 1.15;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .capability-card span {
@@ -107,6 +115,7 @@
       color: var(--exp-accent);
       font-size: 1.12rem;
       font-style: italic;
+      font-weight: 500;
     }
 
     .section-heading::after {
@@ -114,6 +123,14 @@
       flex: 1;
       height: 1px;
       background: linear-gradient(90deg, var(--exp-rule), transparent);
+    }
+
+    .section-note {
+      margin: -0.2rem 0 1rem;
+      max-width: 860px;
+      color: var(--exp-secondary);
+      font-size: 0.98rem;
+      line-height: 1.55;
     }
 
     .role-stack {
@@ -176,6 +193,8 @@
       color: var(--exp-accent);
       font-size: 0.82rem;
       line-height: 1.2;
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
     .role-date {
@@ -195,6 +214,8 @@
       margin: 0;
       font-size: 1.28rem;
       line-height: 1.15;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .role-org {
@@ -202,12 +223,24 @@
       color: var(--exp-accent);
       font-size: 0.98rem;
       line-height: 1.25;
+      font-weight: 500;
     }
 
     .role-summary {
       margin: 0.62rem 0 0;
       color: var(--text);
       opacity: 0.86;
+      font-size: 1.03rem;
+      line-height: 1.56;
+    }
+
+    .role-summary + .role-summary {
+      margin-top: 0.42rem;
+    }
+
+    .role-summary strong {
+      color: var(--exp-accent);
+      font-weight: 600;
     }
 
     .impact-list {
@@ -219,6 +252,7 @@
     .impact-list li {
       margin: 0.3rem 0 0;
       padding-left: 0.1rem;
+      line-height: 1.56;
     }
 
     .stack-row {
@@ -287,6 +321,8 @@
       margin: 0.32rem 0 0.18rem;
       font-size: 1.14rem;
       line-height: 1.16;
+      font-weight: 600;
+      letter-spacing: 0.01em;
     }
 
     .project-context,
@@ -298,10 +334,41 @@
       line-height: 1.32;
     }
 
+    .experience-main :is(
+      h2,
+      h3,
+      p,
+      span,
+      strong,
+      div,
+      li,
+      .experience-kicker,
+      .section-heading
+    ) {
+      font-family: var(--formal-serif);
+    }
+
+    .experience-copy h2,
+    .capability-card strong,
+    .role-content h3,
+    .project-card h3,
+    .foundation-card h3,
+    .mini-card h3,
+    .section-heading {
+      font-family: var(--display-serif);
+    }
+
     .project-card p + p {
       margin-top: 0.6rem;
       color: var(--text);
       opacity: 0.86;
+      font-size: 1.02rem;
+      line-height: 1.54;
+    }
+
+    .project-card p strong {
+      color: var(--exp-accent);
+      font-weight: 600;
     }
 
     .foundation-grid,
@@ -402,6 +469,10 @@
 
     <section>
       <h2 class="section-heading">Research and Industry</h2>
+      <p class="section-note">
+        The strongest common thread across these roles is not just technical breadth, but structured problem solving:
+        define the system, identify where it breaks, make the failure measurable, and then iterate until the result is stable enough to trust.
+      </p>
       <div class="role-stack">
         <article class="role-card">
           <div class="role-meta">
@@ -413,12 +484,19 @@
             <h3>Research Fellow</h3>
             <p class="role-org">Handshake</p>
             <p class="role-summary">
-              Selected for the MOVE AI program to support safety and reliability research for large language models.
+              <strong>Scope.</strong> Selected for the MOVE AI program to support safety and reliability research for large language models, with work centered on adversarial prompting, evaluation design, and structured review of failure behavior in high-risk scenarios.
+            </p>
+            <p class="role-summary">
+              <strong>Bottleneck.</strong> The hard part was that many failures did not appear on short, isolated prompts. Models often looked reasonable at first glance but became inconsistent over longer chains of reasoning, under adversarial reframing, or when the prompt mixed benign context with unsafe intent.
+            </p>
+            <p class="role-summary">
+              <strong>How I approached it.</strong> I organized prompts into scenario families, varied wording and escalation patterns, and evaluated not just final answers but whether the model preserved context, grounded facts correctly, and maintained appropriate mitigation behavior as the conversation unfolded.
             </p>
             <ul class="impact-list">
-              <li>Designed adversarial prompts and jailbreak strategies to stress-test agentic model behavior in biosafety and information-hazard scenarios.</li>
-              <li>Conducted systematic QA in Project Castor, evaluating contextual accuracy, factual grounding, and mitigation quality for harmful or high-risk completions.</li>
-              <li>Worked with a cross-disciplinary team to document vulnerabilities and produce recommendations for safer model behavior.</li>
+              <li>Designed adversarial prompts and jailbreak strategies to stress-test agentic model behavior in biosafety and information-hazard scenarios, with emphasis on repeatable rather than one-off failures.</li>
+              <li>Conducted systematic QA in Project Castor, reviewing contextual accuracy, factual grounding, refusal behavior, and mitigation quality for harmful or high-risk completions.</li>
+              <li>Compared failure patterns across prompt variations to isolate where the model's reasoning diverged, where policy behavior weakened, and which scenarios were most likely to produce unstable responses.</li>
+              <li>Worked with a cross-disciplinary team to translate observations into concrete vulnerability reports and recommendations for safer model behavior.</li>
             </ul>
             <div class="stack-row">
               <span>Python</span>
@@ -439,12 +517,19 @@
             <h3>Embedded Systems Intern</h3>
             <p class="role-org">Shandong Haike Information Technology</p>
             <p class="role-summary">
-              Contributed to a radar-driven IoT monitoring system designed for elderly health and activity sensing without cameras.
+              <strong>Scope.</strong> Contributed to a radar-driven IoT monitoring system designed for elderly health and activity sensing without cameras, helping connect sensing hardware, validation workflows, and real-environment testing.
+            </p>
+            <p class="role-summary">
+              <strong>Bottleneck.</strong> The core challenge was that radar signals were sensitive to distance, body orientation, room geometry, and reflective clutter. Respiration and fine motion were especially easy to lose once the environment became less controlled.
+            </p>
+            <p class="role-summary">
+              <strong>How I approached it.</strong> I treated the system like a sensing experiment rather than a one-time demo: set up repeatable test conditions, compared logs across placements and environments, and traced instability back to specific physical conditions instead of treating missed detections as random noise.
             </p>
             <ul class="impact-list">
-              <li>Integrated mmWave radar modules to detect movement patterns, restroom usage, and respiration-related signals in privacy-sensitive environments.</li>
-              <li>Calibrated sensing performance under realistic household conditions, including noisy and low-visibility settings.</li>
-              <li>Produced weekly stability analysis and explored trade-offs among resolution, cost, and privacy constraints.</li>
+              <li>Integrated mmWave radar modules to detect movement patterns, restroom usage, and respiration-related signals in privacy-sensitive environments where cameras were not acceptable.</li>
+              <li>Calibrated sensing performance under realistic household conditions, testing how results changed with mounting position, target distance, posture, and environmental interference.</li>
+              <li>Analyzed logged outputs to identify stability limits, weak-signal cases, and false-detection conditions, then fed those observations back into system tuning and reporting.</li>
+              <li>Produced weekly technical summaries that clarified the trade-offs among detection quality, deployment practicality, hardware cost, and privacy requirements.</li>
             </ul>
             <div class="stack-row">
               <span>ESP32</span>
@@ -465,12 +550,19 @@
             <h3>Software Development Intern</h3>
             <p class="role-org">Liqun Group</p>
             <p class="role-summary">
-              Helped build a WeChat-based social product that combined messaging, secure payment, and community features.
+              <strong>Scope.</strong> Helped build a WeChat-based social product that combined messaging, secure payment, and community features, with work spanning front-end flow, API integration, matching logic, and basic performance tuning.
+            </p>
+            <p class="role-summary">
+              <strong>Bottleneck.</strong> The main product issues were friction in the payment flow, match quality that felt inconsistent to users, and response time slowdowns once more ranking logic was layered into the experience.
+            </p>
+            <p class="role-summary">
+              <strong>How I approached it.</strong> I treated those as connected product-engineering problems: tighten the interaction path, make backend behavior more reliable, and tune the matching logic using measurable feedback instead of intuition alone.
             </p>
             <ul class="impact-list">
-              <li>Supported front-end interaction redesign and implemented secure payment API integration for smoother product flow.</li>
-              <li>Optimized friend-matching similarity weights, improving match accuracy by about 20%.</li>
-              <li>Ran performance testing and tuning that reduced response latency by roughly 15%.</li>
+              <li>Supported front-end interaction redesign and implemented secure payment API integration so the core user flow from browsing to transaction felt more direct and stable.</li>
+              <li>Optimized friend-matching similarity weights against profile attributes and observed behavior, improving match accuracy by about 20%.</li>
+              <li>Ran performance tests to identify slow points in the request path, then tuned the implementation to reduce response latency by roughly 15%.</li>
+              <li>Worked across interface and backend concerns instead of treating them separately, which helped align user experience improvements with system-level changes.</li>
             </ul>
             <div class="stack-row">
               <span>WeChat Mini Program</span>
@@ -485,6 +577,9 @@
 
     <section>
       <h2 class="section-heading">Selected Technical Work</h2>
+      <p class="section-note">
+        These projects matter less as course titles and more as evidence of how I work: identify the limiting factor, choose the right level of abstraction, and then build or test until the system becomes explainable.
+      </p>
       <div class="project-grid">
         <article class="project-card">
           <span class="project-type">Embedded Hardware</span>
@@ -493,6 +588,9 @@
           <p>
             Designed an ESP32-based monitoring system for CO₂, PM2.5, VOCs, temperature, humidity, and noise, integrating
             BME680, SCD4x, PMSA003I, and ICS-43434 sensors on a custom PCB with TFT display, data logging, and power management.
+          </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The system challenge was not just reading sensors, but coordinating devices with different protocols, sample rates, and electrical behavior in a way that stayed reliable over longer runtimes. I addressed that by separating acquisition, visualization, and logging into cleaner firmware stages, handling bus coordination explicitly, and calibrating the full stack as a system rather than sensor by sensor.
           </p>
           <div class="stack-row">
             <span>ESP32</span>
@@ -510,6 +608,9 @@
             Built CNN, Vision Transformer, and MLP models for climate-field emulation on CMIP6 SSP data and finished
             Top 10 in the competition at <strong>#9 / 83</strong> with a fast and accurate MLP approach.
           </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> A key challenge was the trade-off between model complexity and competition practicality: larger models could fit structure well but were slower, harder to tune, and more prone to unstable validation behavior. I benchmarked architectures under the same preprocessing and evaluation pipeline, then selected the simpler MLP because it gave the strongest speed-to-accuracy trade-off rather than just the most sophisticated architecture on paper.
+          </p>
           <div class="stack-row">
             <span>Python</span>
             <span>PyTorch</span>
@@ -525,6 +626,9 @@
           <p>
             Developed a fruit-quality assessment prototype using ESP32, camera, and audio input, then combined CNN and LSTM
             models to estimate sweetness through non-destructive sensing.
+          </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The difficult part was that audio and visual signals were noisy, weakly aligned, and constrained by embedded hardware limits. I improved robustness by structuring the collection pipeline more carefully, treating sensing and model input quality as part of the problem, and combining temporal audio cues with image-based features instead of relying on either modality alone.
           </p>
           <div class="stack-row">
             <span>ESP32-CAM</span>
@@ -542,6 +646,9 @@
             Designed a convolutional encoder and FPGA-based Viterbi decoder in SystemVerilog, implementing BMC, ACS,
             and Traceback Unit components for accurate signal reconstruction.
           </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The main bottleneck was architectural complexity: branch-metric, path-cost, and traceback logic all needed to agree cycle by cycle without turning the design into something impossible to verify. I decomposed the decoder into smaller modules, verified them against controlled error cases, and used module boundaries to keep timing and correctness issues traceable.
+          </p>
           <div class="stack-row">
             <span>SystemVerilog</span>
             <span>FPGA</span>
@@ -557,6 +664,9 @@
             Studied lattice-based cryptography, delivered a one-hour seminar on Babai's Algorithm for the Closest Vector Problem,
             and analyzed NTRU signature schemes against lattice-reduction attacks.
           </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The challenge here was translating abstract lattice geometry into something both mathematically rigorous and implementable enough to explain clearly. I handled that by working from simplified examples upward, building intuition with smaller computational cases, and then connecting those examples back to the full security argument.
+          </p>
           <div class="stack-row">
             <span>Python</span>
             <span>SageMath</span>
@@ -571,6 +681,9 @@
           <p>
             Implemented Monte Carlo, temporal-difference, and Q-learning agents, simulated more than one million games,
             and built a custom visualization workflow to compare policy convergence.
+          </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> Reinforcement-learning results were initially noisy because variance dominated short training runs and it was hard to tell whether changes were real improvements or sampling artifacts. I pushed the simulation scale, standardized comparisons across algorithms, and visualized convergence so model behavior could be judged by trend rather than anecdote.
           </p>
           <div class="stack-row">
             <span>Python</span>
@@ -588,6 +701,9 @@
             Built a full MCTS pipeline with heuristic pruning, tuning search from 1000 to 6000 iterations and outperforming
             random-play baselines by a wide margin.
           </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The core difficulty was search explosion: naïve exploration wasted too much computation on obviously weak branches. I added heuristic pruning and tuned iteration budgets so the search spent more time on plausible continuations, which made the agent meaningfully stronger without requiring an impractical compute budget.
+          </p>
           <div class="stack-row">
             <span>Python</span>
             <span>Game AI</span>
@@ -602,6 +718,9 @@
           <p>
             Built Random Forest and Polynomial Regression models for precipitation and AQI prediction, reaching
             <strong>R² = 93.2%</strong> and <strong>MSE = 1.41</strong> for AQI with the Random Forest model.
+          </p>
+          <p>
+            <strong>Bottleneck and resolution.</strong> The main challenge was not model selection alone, but making heterogeneous environmental data trustworthy enough to learn from. I cleaned and integrated the datasets, compared model families under the same target definitions, and used feature-importance analysis to understand which variables were actually driving performance.
           </p>
           <div class="stack-row">
             <span>Python</span>
