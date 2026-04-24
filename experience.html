@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
   <meta charset="UTF-8">
   <title>Mark Sui - Experience</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,11 +8,14 @@
   <script src="theme.js"></script>
   <style>
     .experience-main {
-      max-width: 900px;
+      max-width: 1100px;
       --exp-accent: #56665f;
       --exp-secondary: #7b7467;
       --exp-rule: #d9d5cc;
       --exp-wash: rgba(86, 102, 95, 0.065);
+      --exp-panel: rgba(255, 255, 255, 0.8);
+      --exp-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --exp-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .experience-main {
@@ -20,90 +23,335 @@
       --exp-secondary: #b8b0a3;
       --exp-rule: #3f423f;
       --exp-wash: rgba(168, 182, 174, 0.08);
+      --exp-panel: rgba(24, 24, 24, 0.76);
+      --exp-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
     }
 
     .experience-main section {
       margin-bottom: 0;
     }
 
-    .experience-main h2 {
-      margin-bottom: 0.35rem;
+    .experience-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+      gap: 1.55rem;
+      align-items: end;
+      padding-bottom: 1.55rem;
+      border-bottom: 1px solid var(--exp-rule);
+      animation: experienceFadeUp 0.66s var(--exp-ease) both;
     }
 
-    .experience-main section > h3 {
+    .experience-kicker {
+      margin: 0 0 0.45rem;
+      color: var(--exp-accent);
+      font-size: 0.92rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .experience-copy h2 {
+      margin: 0 0 0.6rem;
+      max-width: 11em;
+      font-size: 2.72rem;
+      line-height: 1.02;
+    }
+
+    .experience-copy p {
+      margin: 0;
+      max-width: 700px;
+      opacity: 0.86;
+    }
+
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.72rem;
+    }
+
+    .capability-card {
+      padding: 0.88rem 0.94rem;
+      border: 1px solid var(--exp-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--exp-wash), transparent 76%),
+        var(--exp-panel);
+      box-shadow: var(--exp-shadow);
+      transition: transform 0.28s var(--exp-ease), border-color 0.24s ease;
+    }
+
+    .capability-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--exp-accent);
+    }
+
+    .capability-card strong {
+      display: block;
+      color: var(--exp-accent);
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    .capability-card span {
+      display: block;
+      margin-top: 0.22rem;
+      color: var(--exp-secondary);
+      font-size: 0.88rem;
+      line-height: 1.24;
+    }
+
+    .section-heading {
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      margin: 2rem 0 0.7rem;
+      margin: 2.2rem 0 0.85rem;
       color: var(--exp-accent);
-      font-size: 1.08rem;
+      font-size: 1.12rem;
       font-style: italic;
-      font-weight: bold;
     }
 
-    .experience-main section > h3::after {
+    .section-heading::after {
       content: "";
       flex: 1;
       height: 1px;
       background: linear-gradient(90deg, var(--exp-rule), transparent);
     }
 
-    .experience-main section > ul {
-      margin: 0 0 2.2rem;
-      border-top: 1px solid var(--exp-rule);
+    .role-stack {
+      display: grid;
+      gap: 1rem;
     }
 
-    .experience-main section > ul > li {
-      position: relative;
-      margin: 0;
-      padding: 1.05rem 0 1.05rem 1.15rem;
-      border-bottom: 1px solid var(--exp-rule);
-      transition: background 0.2s ease;
+    .role-card {
+      display: grid;
+      grid-template-columns: minmax(185px, 0.34fr) minmax(0, 1fr);
+      gap: 1.25rem;
+      padding: 1.05rem;
+      border: 1px solid var(--exp-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--exp-wash), transparent 82%),
+        var(--exp-panel);
+      box-shadow: var(--exp-shadow);
+      transition: transform 0.3s var(--exp-ease), border-color 0.24s ease, background 0.24s ease;
+      animation: experienceFadeUp 0.66s var(--exp-ease) both;
     }
 
-    .experience-main section > ul > li::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 1.15rem;
-      bottom: 1.15rem;
-      width: 3px;
-      border-radius: 6px;
-      background: linear-gradient(180deg, var(--exp-accent), var(--exp-secondary));
-      opacity: 0.72;
+    .role-card:nth-child(2) {
+      animation-delay: 0.06s;
     }
 
-    .experience-main section > ul > li:hover {
-      background: var(--exp-wash);
+    .role-card:nth-child(3) {
+      animation-delay: 0.12s;
     }
 
-    .experience-main strong {
-      font-size: 1.08rem;
+    .role-card:nth-child(4) {
+      animation-delay: 0.18s;
     }
 
-    .experience-main em {
+    .role-card:nth-child(5) {
+      animation-delay: 0.24s;
+    }
+
+    .role-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--exp-accent);
+      background: linear-gradient(180deg, var(--exp-wash), transparent 90%), var(--exp-panel);
+    }
+
+    .role-meta {
+      display: grid;
+      gap: 0.38rem;
+      align-content: start;
+      padding-top: 0.1rem;
+    }
+
+    .role-kind {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: fit-content;
+      padding: 0.18rem 0.48rem;
+      border: 1px solid var(--exp-rule);
+      border-radius: 999px;
       color: var(--exp-accent);
+      font-size: 0.82rem;
+      line-height: 1.2;
     }
 
-    .experience-main li em:last-child {
-      display: inline-block;
-      margin-top: 0.35rem;
+    .role-date {
       color: var(--exp-secondary);
+      font-size: 0.92rem;
+      line-height: 1.28;
+    }
+
+    .role-location {
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.28;
+      opacity: 0.82;
+    }
+
+    .role-content h3 {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.15;
+    }
+
+    .role-org {
+      margin: 0.18rem 0 0;
+      color: var(--exp-accent);
+      font-size: 0.98rem;
+      line-height: 1.25;
+    }
+
+    .role-summary {
+      margin: 0.62rem 0 0;
+      color: var(--text);
+      opacity: 0.86;
+    }
+
+    .impact-list {
+      margin: 0.72rem 0 0;
+      padding-left: 1.05rem;
+      list-style: disc;
+    }
+
+    .impact-list li {
+      margin: 0.3rem 0 0;
+      padding-left: 0.1rem;
+    }
+
+    .stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      margin-top: 0.82rem;
+    }
+
+    .stack-row span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.48rem;
+      border: 1px solid var(--exp-rule);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .project-card,
+    .foundation-card,
+    .mini-card {
+      border: 1px solid var(--exp-rule);
+      border-radius: 8px;
+      background: var(--exp-panel);
+      box-shadow: var(--exp-shadow);
+      transition: transform 0.3s var(--exp-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .project-card:hover,
+    .foundation-card:hover,
+    .mini-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--exp-accent);
+      background: linear-gradient(180deg, var(--exp-wash), transparent 88%), var(--exp-panel);
+    }
+
+    .project-card {
+      padding: 1rem 1rem 1.05rem;
+      animation: experienceFadeUp 0.66s var(--exp-ease) both;
+    }
+
+    .project-card:nth-child(2n) {
+      animation-delay: 0.05s;
+    }
+
+    .project-type,
+    .mini-type {
+      display: block;
+      color: var(--exp-accent);
+      font-size: 0.84rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .project-card h3,
+    .foundation-card h3,
+    .mini-card h3 {
+      margin: 0.32rem 0 0.18rem;
+      font-size: 1.14rem;
+      line-height: 1.16;
+    }
+
+    .project-context,
+    .foundation-card p,
+    .mini-card p {
+      margin: 0;
+      color: var(--exp-secondary);
+      font-size: 0.92rem;
+      line-height: 1.32;
+    }
+
+    .project-card p + p {
+      margin-top: 0.6rem;
+      color: var(--text);
+      opacity: 0.86;
+    }
+
+    .foundation-grid,
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .foundation-card,
+    .mini-card {
+      padding: 0.95rem 1rem 1rem;
+    }
+
+    .mini-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @keyframes experienceFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .experience-hero,
+      .project-grid,
+      .foundation-grid,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .role-card {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
     }
 
     @media (max-width: 640px) {
-      .experience-main section > ul > li {
-        padding-left: 0.9rem;
+      .experience-copy h2 {
+        font-size: 2.3rem;
       }
 
-      .experience-main section > h3 {
-        display: block;
-      }
-
-      .experience-main section > h3::after {
-        display: block;
-        margin-top: 0.45rem;
-        width: 100%;
+      .capability-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -121,195 +369,319 @@
   </header>
 
   <main class="experience-main">
+    <section class="experience-hero">
+      <div class="experience-copy">
+        <p class="experience-kicker">Professional Work</p>
+        <h2>Research, engineering, and technical work with measurable range.</h2>
+        <p>
+          My experience spans AI evaluation, embedded sensing systems, digital design, and applied machine learning.
+          Across internships, fellowships, and academic builds, the common thread is structured technical work:
+          turning ambiguous problems into systems, experiments, and results that can actually be inspected.
+        </p>
+      </div>
+
+      <div class="capability-grid" aria-label="Capability areas">
+        <article class="capability-card">
+          <strong>AI Evaluation</strong>
+          <span>Adversarial prompting, safety analysis, QA evaluation, and reporting.</span>
+        </article>
+        <article class="capability-card">
+          <strong>Embedded Systems</strong>
+          <span>Radar sensing, sensor integration, calibration, PCB work, and prototyping.</span>
+        </article>
+        <article class="capability-card">
+          <strong>Digital Design</strong>
+          <span>RTL, FPGA systems, architecture, and hardware-oriented verification.</span>
+        </article>
+        <article class="capability-card">
+          <strong>Applied ML</strong>
+          <span>Computer vision, climate emulation, reinforcement learning, and data analysis.</span>
+        </article>
+      </div>
+    </section>
+
     <section>
-      <h2>Experience</h2>
+      <h2 class="section-heading">Research and Industry</h2>
+      <div class="role-stack">
+        <article class="role-card">
+          <div class="role-meta">
+            <span class="role-kind">Research Fellowship</span>
+            <div class="role-date">Jun 2025 - Present</div>
+            <div class="role-location">Remote</div>
+          </div>
+          <div class="role-content">
+            <h3>Research Fellow</h3>
+            <p class="role-org">Handshake</p>
+            <p class="role-summary">
+              Selected for the MOVE AI program to support safety and reliability research for large language models.
+            </p>
+            <ul class="impact-list">
+              <li>Designed adversarial prompts and jailbreak strategies to stress-test agentic model behavior in biosafety and information-hazard scenarios.</li>
+              <li>Conducted systematic QA in Project Castor, evaluating contextual accuracy, factual grounding, and mitigation quality for harmful or high-risk completions.</li>
+              <li>Worked with a cross-disciplinary team to document vulnerabilities and produce recommendations for safer model behavior.</li>
+            </ul>
+            <div class="stack-row">
+              <span>Python</span>
+              <span>Prompt Engineering</span>
+              <span>LLM Evaluation</span>
+              <span>Safety Analysis</span>
+            </div>
+          </div>
+        </article>
 
-      <!-- Work Experience -->
-      <h3>Work Experience</h3>
-      <ul>
-        <li>
-        <strong>Research Fellow – Handshake</strong><br>
-        <em>Jun 2025 – Present · Remote</em><br>
-        Selected to participate in the MOVE AI program, contributing to safety and reliability research for large language models.  
-        Designed adversarial prompts and jailbreak strategies to stress-test OpenAI’s Agent model in biosafety and information-hazard scenarios.  
-        Conducted systematic QA evaluation of LLM outputs in Project Castor, focusing on contextual accuracy, factual grounding, and mitigation of harmful completions.  
-        Collaborated with a cross-disciplinary team to produce reports on AI system vulnerabilities and recommendations for risk reduction.  
-        <em>Technologies: Python, Prompt Engineering, Large Language Models, Evaluation Frameworks</em>
-        </li>
+        <article class="role-card">
+          <div class="role-meta">
+            <span class="role-kind">Embedded Systems Internship</span>
+            <div class="role-date">Jun 2024 - Dec 2024</div>
+            <div class="role-location">Hybrid</div>
+          </div>
+          <div class="role-content">
+            <h3>Embedded Systems Intern</h3>
+            <p class="role-org">Shandong Haike Information Technology</p>
+            <p class="role-summary">
+              Contributed to a radar-driven IoT monitoring system designed for elderly health and activity sensing without cameras.
+            </p>
+            <ul class="impact-list">
+              <li>Integrated mmWave radar modules to detect movement patterns, restroom usage, and respiration-related signals in privacy-sensitive environments.</li>
+              <li>Calibrated sensing performance under realistic household conditions, including noisy and low-visibility settings.</li>
+              <li>Produced weekly stability analysis and explored trade-offs among resolution, cost, and privacy constraints.</li>
+            </ul>
+            <div class="stack-row">
+              <span>ESP32</span>
+              <span>mmWave Radar</span>
+              <span>Python Data Analysis</span>
+              <span>IoT Systems</span>
+            </div>
+          </div>
+        </article>
 
-        <li>
-          <strong>Embedded Systems Intern – Shandong Haike Information Technology</strong><br>
-          <em>Jun 2024 – Dec 2024 · Hybrid</em><br>
-          Participated in the development of a radar-driven IoT system for elderly health monitoring.  
-          Worked with engineers to integrate mmWave radar modules that could track human movement patterns, restroom usage, and respiration signals without relying on cameras.  
-          Conducted sensor calibration and tested system accuracy under different household conditions, including low-light and high-noise environments.  
-          Delivered weekly reports on system stability and explored trade-offs between resolution, cost, and privacy protection.  
-          <em>Technologies: ESP32, mmWave radar, Python data analysis</em>
-        </li>
+        <article class="role-card">
+          <div class="role-meta">
+            <span class="role-kind">Software Internship</span>
+            <div class="role-date">Jun 2023 - Sep 2023</div>
+            <div class="role-location">Qingdao, China</div>
+          </div>
+          <div class="role-content">
+            <h3>Software Development Intern</h3>
+            <p class="role-org">Liqun Group</p>
+            <p class="role-summary">
+              Helped build a WeChat-based social product that combined messaging, secure payment, and community features.
+            </p>
+            <ul class="impact-list">
+              <li>Supported front-end interaction redesign and implemented secure payment API integration for smoother product flow.</li>
+              <li>Optimized friend-matching similarity weights, improving match accuracy by about 20%.</li>
+              <li>Ran performance testing and tuning that reduced response latency by roughly 15%.</li>
+            </ul>
+            <div class="stack-row">
+              <span>WeChat Mini Program</span>
+              <span>JavaScript</span>
+              <span>MySQL</span>
+              <span>Product Engineering</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
 
-        <li>
-          <strong>Software Development Intern – Liqun Group</strong><br>
-          <em>Jun 2023 – Sep 2023 · Qingdao, China</em><br>
-          Contributed to the design of a WeChat-based social networking app that combined messaging, secure payments, and local community features.  
-          Helped redesign the front-end interface for smoother user interaction, and implemented secure payment API integration.  
-          Assisted in optimizing the friend-matching algorithm by tuning similarity weights on profile attributes, which improved match accuracy by ~20%.  
-          Conducted performance testing that reduced app response latency by ~15%.  
-          <em>Technologies: WeChat Mini Program, JavaScript, MySQL</em>
-        </li>
+    <section>
+      <h2 class="section-heading">Selected Technical Work</h2>
+      <div class="project-grid">
+        <article class="project-card">
+          <span class="project-type">Embedded Hardware</span>
+          <h3>Indoor Environmental Monitoring System</h3>
+          <p class="project-context">UC San Diego · Spring 2025 · La Jolla, California</p>
+          <p>
+            Designed an ESP32-based monitoring system for CO₂, PM2.5, VOCs, temperature, humidity, and noise, integrating
+            BME680, SCD4x, PMSA003I, and ICS-43434 sensors on a custom PCB with TFT display, data logging, and power management.
+          </p>
+          <div class="stack-row">
+            <span>ESP32</span>
+            <span>PCB Design</span>
+            <span>I²C / I²S / SPI</span>
+            <span>Sensor Systems</span>
+          </div>
+        </article>
 
-        <li>
-          <strong>Student Staff – UC Davis Housing & Dining Services</strong><br>
-          <em>Jun 2022 – Nov 2022 · Davis, CA</em><br>
-          Supported dining operations during high-demand periods, coordinating with a team of 20+ staff.  
-          Assisted in inventory management, food service, and compliance with health regulations.  
-          Gained practical experience in teamwork, problem-solving under pressure, and service operations in a fast-paced environment.
-        </li>
+        <article class="project-card">
+          <span class="project-type">Machine Learning</span>
+          <h3>Deep Learning for Climate Emulation</h3>
+          <p class="project-context">UC San Diego · Spring 2025 · Kaggle Competition</p>
+          <p>
+            Built CNN, Vision Transformer, and MLP models for climate-field emulation on CMIP6 SSP data and finished
+            Top 10 in the competition at <strong>#9 / 83</strong> with a fast and accurate MLP approach.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>PyTorch</span>
+            <span>Vision Transformer</span>
+            <span>Kaggle</span>
+          </div>
+        </article>
 
-        <li>
-          <strong>Tutor – Kumon Learning Center</strong><br>
-          <em>2019 – 2021 · Yorba Linda, CA</em><br>
-          Tutored 50+ students across elementary to high school levels.  
-          Designed individualized study plans and explained advanced math concepts in accessible terms.  
-          Helped raise student performance on standardized assessments by ~25% on average.  
-          Mentored younger students on developing consistent study habits and problem-solving strategies.
-        </li>
+        <article class="project-card">
+          <span class="project-type">IoT + ML</span>
+          <h3>IoT Smart Agriculture Project</h3>
+          <p class="project-context">National University of Singapore · Fall 2024</p>
+          <p>
+            Developed a fruit-quality assessment prototype using ESP32, camera, and audio input, then combined CNN and LSTM
+            models to estimate sweetness through non-destructive sensing.
+          </p>
+          <div class="stack-row">
+            <span>ESP32-CAM</span>
+            <span>Python</span>
+            <span>ResNet</span>
+            <span>LSTM</span>
+          </div>
+        </article>
 
-      </ul>
+        <article class="project-card">
+          <span class="project-type">Digital Design</span>
+          <h3>FPGA-Based Viterbi Decoder</h3>
+          <p class="project-context">Advanced Digital Design · UC San Diego</p>
+          <p>
+            Designed a convolutional encoder and FPGA-based Viterbi decoder in SystemVerilog, implementing BMC, ACS,
+            and Traceback Unit components for accurate signal reconstruction.
+          </p>
+          <div class="stack-row">
+            <span>SystemVerilog</span>
+            <span>FPGA</span>
+            <span>Digital Design</span>
+          </div>
+        </article>
 
-      <!-- Academic Projects -->
-      <h3>Academic Projects</h3>
-      <ul>
-        <li>
-          <strong>Indoor Environmental Monitoring System – UC San Diego</strong><br>
-          <em>Spring 2025 · La Jolla, CA</em><br>
-          Designed and prototyped an ESP32-based environmental monitoring system capable of measuring CO₂, PM2.5, VOCs, temperature, humidity, and noise.  
-          Integrated multiple sensors (BME680, SCD4x, PMSA003I, ICS-43434) on a custom PCB, with data displayed on a TFT screen.  
-          Implemented a multi-page navigation interface, power management, and data logging features for long-term deployment.  
-          <em>Technologies: ESP32, Arduino, I²C/I²S/SPI, PCB Design</em>
-        </li>
+        <article class="project-card">
+          <span class="project-type">Security Research</span>
+          <h3>Cryptography Seminar and Research</h3>
+          <p class="project-context">UC San Diego · 2024 · La Jolla, California</p>
+          <p>
+            Studied lattice-based cryptography, delivered a one-hour seminar on Babai's Algorithm for the Closest Vector Problem,
+            and analyzed NTRU signature schemes against lattice-reduction attacks.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>SageMath</span>
+            <span>Cryptography</span>
+          </div>
+        </article>
 
-        <li>
-          <strong>Deep Learning for Climate Emulation – UC San Diego</strong><br>
-          <em>Spring 2025 · La Jolla, CA</em><br>
-          Participated in a Kaggle-hosted competition on climate model emulation.  
-          Built CNN, Vision Transformer, and MLP architectures to emulate global temperature and precipitation fields using CMIP6 SSP datasets.  
-          Benchmarked different models and achieved Top 10 finish (#9/83) with a fast and accurate MLP approach.  
-          <em>Technologies: Python, PyTorch, Vision Transformer, Kaggle</em>
-        </li>
+        <article class="project-card">
+          <span class="project-type">Reinforcement Learning</span>
+          <h3>Blackjack AI</h3>
+          <p class="project-context">UC San Diego · Spring 2025</p>
+          <p>
+            Implemented Monte Carlo, temporal-difference, and Q-learning agents, simulated more than one million games,
+            and built a custom visualization workflow to compare policy convergence.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>NumPy</span>
+            <span>RL Algorithms</span>
+            <span>Simulation</span>
+          </div>
+        </article>
 
-        <li>
-          <strong>IoT Smart Agriculture Project – National University of Singapore</strong><br>
-          <em>Fall 2024 · Singapore</em><br>
-          Developed an IoT prototype for fruit quality assessment using ESP32, camera module, and microphone.  
-          Collected tapping sound and visual data, then applied CNN + LSTM models for sweetness prediction.  
-          Reached high prediction accuracy while demonstrating non-destructive food quality assessment methods.  
-          <em>Technologies: ESP32-CAM, Python, ResNet, LSTM</em>
-        </li>
+        <article class="project-card">
+          <span class="project-type">Search and Planning</span>
+          <h3>Monte Carlo Tree Search Gomoku AI</h3>
+          <p class="project-context">UC San Diego · Spring 2025</p>
+          <p>
+            Built a full MCTS pipeline with heuristic pruning, tuning search from 1000 to 6000 iterations and outperforming
+            random-play baselines by a wide margin.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>Game AI</span>
+            <span>MCTS</span>
+          </div>
+        </article>
 
-        
-      <li>
-        <strong>FPGA-Based Viterbi Decoder</strong><br>
-        <em>Advanced Digital Design · UC San Diego</em><br>
-        Designed and implemented a convolutional encoder and Viterbi decoder on FPGA using SystemVerilog.  
-        Built a Mealy FSM-based encoder with recursive, systematic encoding at a rate of 1/2.  
-        Developed a decoder architecture with Branch Metric Calculation (BMC), Accumulated Cost Selection (ACS), and Traceback Unit (TBU) for accurate signal reconstruction.  
-        <em>Technologies: SystemVerilog, FPGA, Digital Design</em>
-      </li>
+        <article class="project-card">
+          <span class="project-type">Applied Data Science</span>
+          <h3>Weather Forecasting and Air Quality Prediction</h3>
+          <p class="project-context">Data Analysis and Inference · UC San Diego</p>
+          <p>
+            Built Random Forest and Polynomial Regression models for precipitation and AQI prediction, reaching
+            <strong>R² = 93.2%</strong> and <strong>MSE = 1.41</strong> for AQI with the Random Forest model.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>Scikit-learn</span>
+            <span>Environmental Data</span>
+          </div>
+        </article>
+      </div>
+    </section>
 
+    <section>
+      <h2 class="section-heading">Foundation, Service, and Leadership</h2>
+      <div class="foundation-grid">
+        <article class="foundation-card">
+          <span class="project-type">Operations and Teamwork</span>
+          <h3>Student Staff - UC Davis Housing and Dining Services</h3>
+          <p>
+            Supported high-demand dining operations, inventory handling, and service execution while working closely with a large team in a fast-paced environment.
+          </p>
+        </article>
 
-        <li>
-          <strong>Cryptography Seminar & Research – UC San Diego</strong><br>
-          <em> 2024 · La Jolla, CA</em><br>
-          Conducted research on lattice-based cryptography in MATH 187B.  
-          Delivered a one-hour seminar on Babai’s Algorithm for the Closest Vector Problem.  
-          Studied and implemented NTRU signature schemes, analyzing their security against lattice reduction attacks.  
-          <em>Technologies: Python, SageMath, Cryptography</em>
-        </li>
+        <article class="foundation-card">
+          <span class="project-type">Teaching and Communication</span>
+          <h3>Tutor - Kumon Learning Center</h3>
+          <p>
+            Tutored 50+ students from elementary through high school, building individualized study plans and improving math performance by about 25% on average.
+          </p>
+        </article>
 
-        <li>
-          <strong>Reinforcement Learning: Blackjack AI</strong><br>
-          <em>Spring 2025 · UC San Diego</em><br>
-          Implemented Monte Carlo, Temporal-Difference, and Q-learning methods to train an AI agent for Blackjack.  
-          Conducted large-scale simulations (1M+ games) to benchmark convergence of strategies.  
-          Achieved ~41% win rate against fixed policies and visualized training process with custom GUI.  
-          <em>Technologies: Python, NumPy, RL Algorithms</em>
-        </li>
+        <article class="foundation-card">
+          <span class="project-type">Community Engineering</span>
+          <h3>UCSD Global TIES Program</h3>
+          <p>
+            Worked with a multidisciplinary team to prototype and document technical solutions for nonprofit partners, applying embedded systems thinking in community-facing projects.
+          </p>
+        </article>
 
-        <li>
-          <strong>Monte Carlo Tree Search Gomoku AI</strong><br>
-          <em>Spring 2025 · UC San Diego</em><br>
-          Built a full Monte Carlo Tree Search pipeline (selection, expansion, simulation, backpropagation) for a Gomoku-playing AI.  
-          Tuned search iterations (1000–6000) and implemented heuristic pruning, outperforming random baseline significantly.  
-          <em>Technologies: Python, Game AI</em>
-        </li>
+        <article class="foundation-card">
+          <span class="project-type">Early Technical Leadership</span>
+          <h3>Team Leader - Yorba Linda High School Robotics Club</h3>
+          <p>
+            Led robot design and programming efforts for school competitions, supported app integration with MIT App Inventor, and helped organize robotics events.
+          </p>
+        </article>
+      </div>
+    </section>
 
-      <li>
-        <strong>Weather Forecasting and Air Quality Prediction</strong><br>
-        <em>Data Analysis and Inference · UC San Diego</em><br>
-        Developed machine learning models using Random Forest and Polynomial Regression to predict precipitation and air quality in San Diego County.  
-        Conducted feature importance analysis to identify key environmental factors, improving accuracy of AQI predictions.  
-        Processed and integrated large meteorological and air quality datasets to provide actionable insights for environmental monitoring.  
-        Achieved an R² of 93.2% and MSE of 1.41 for AQI prediction using Random Forest, significantly outperforming Polynomial Regression.  
-        <em>Technologies: Python, Scikit-learn, Data Analysis</em>
-      </li>
+    <section>
+      <h2 class="section-heading">Additional Build Work</h2>
+      <div class="mini-grid">
+        <article class="mini-card">
+          <span class="mini-type">Algorithms</span>
+          <h3>Undirected Graph Analysis</h3>
+          <p>Implemented graph construction, BFS-based connectivity, and Dijkstra shortest paths in C++.</p>
+        </article>
 
-      <li>
-      <strong>Undirected Graph Analysis</strong><br>
-      <em>Data Structures and Algorithms · C++</em><br>
-      Built an undirected graph class with support for graph construction, shortest path computation, and connected components detection.  
-      Implemented BFS for traversal and connectivity analysis, and applied Dijkstra’s algorithm for efficient shortest path finding.  
-      <em>Technologies: C++, Graph Algorithms, BFS, Dijkstra</em>
-    </li>
+        <article class="mini-card">
+          <span class="mini-type">Software Design</span>
+          <h3>Battleship Game</h3>
+          <p>Built a Linux terminal C++ Battleship game with an AI opponent and OOP-driven architecture.</p>
+        </article>
 
+        <article class="mini-card">
+          <span class="mini-type">Data Structures</span>
+          <h3>Doubly Linked List</h3>
+          <p>Implemented a templated doubly linked list with forward and reverse iterators from scratch.</p>
+        </article>
 
-        <li>
-          <strong>UCSD Global TIES Program</strong><br>
-          <em>2023 – 2024 · La Jolla, CA</em><br>
-          Joined a multidisciplinary engineering team to co-develop solutions for non-profit partners.  
-          Assisted with prototyping, testing, and documentation of technical components, applying embedded systems expertise to real-world challenges.  
-          <em>Focus: Community-based engineering, teamwork, embedded systems</em>
-        </li>
+        <article class="mini-card">
+          <span class="mini-type">Data Structures</span>
+          <h3>AVL Tree</h3>
+          <p>Designed a self-balancing AVL tree to support efficient insertion, deletion, and search operations.</p>
+        </article>
 
-        <li>
-        <strong>Image Classifier</strong><br>
-        <em>Engineering Problem Solving · MATLAB</em><br>
-        Built a versatile image classification tool using AlexNet, with user-selectable options and enhanced accuracy through pre-processing and augmentation.  
-        Added remote monitoring capabilities via ThingSpeak integration and Dropbox API for cloud-based storage.  
-        <em>Technologies: MATLAB, AlexNet, Image Processing</em>
-      </li>
-
-
-      <li>
-        <strong>Battleship Game</strong><br>
-        <em>Software Development & Object-Oriented Programming · C++</em><br>
-        Developed a Battleship game in C++ with an AI opponent, demonstrating inheritance and polymorphism.  
-        Integrated a Linux terminal-based user interface and reengineered the game architecture to showcase advanced OOP concepts.  
-        <em>Technologies: C++, Object-Oriented Programming, Linux</em>
-      </li>
-
-      <li>
-        <strong>Doubly Linked List</strong><br>
-        <em>Software Development & Object-Oriented Programming · C++</em><br>
-        Designed and implemented a templated doubly linked list class from scratch, supporting both forward and reverse iterators.  
-        Enhanced functionality with additional members and methods to improve efficiency and versatility for data management.  
-        <em>Technologies: C++, Data Structures, Algorithms</em>
-      </li>
-
-      <li>
-        <strong>AVL Tree</strong><br>
-        <em>Data Structures, Algorithms & Programming · C++</em><br>
-        Designed and implemented a self-balancing AVL tree from scratch to support efficient insertion, deletion, and retrieval operations.  
-        Optimized balancing mechanisms to reduce search time complexity and ensure consistent performance.  
-        <em>Technologies: C++, Data Structures, Algorithms</em>
-      </li>
-
-          <li>
-          <strong>Team Leader – Yorba Linda High School Robotics Club</strong><br>
-          <em>2018 – 2020 · Yorba Linda, CA</em><br>
-          Led the robotics team in designing and programming robots for competitions.  
-          Utilized MIT App Inventor for mobile app integration and organized school-wide robotics events.
-        </li>
-      </ul>
+        <article class="mini-card">
+          <span class="mini-type">Computer Vision</span>
+          <h3>Image Classifier</h3>
+          <p>Built an AlexNet-based image classifier with preprocessing, augmentation, and remote monitoring integrations.</p>
+        </article>
+      </div>
     </section>
   </main>
 </body>

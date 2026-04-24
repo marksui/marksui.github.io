@@ -1,147 +1,370 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"> 
-  <title>Mark Sui - Education</title> 
+  <meta charset="UTF-8">
+  <title>Mark Sui - Education</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
   <style>
     .education-main {
-      max-width: 860px;
-      --edu-accent: #5f6f7a;
+      max-width: 1040px;
+      --edu-accent: #5b6d67;
+      --edu-secondary: #7c7468;
       --edu-rule: #d8d4cc;
-      --edu-wash: rgba(95, 111, 122, 0.07);
+      --edu-wash: rgba(91, 109, 103, 0.065);
+      --edu-panel: rgba(255, 255, 255, 0.8);
+      --edu-shadow: 0 18px 42px rgba(53, 55, 49, 0.08);
+      --edu-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .education-main {
-      --edu-accent: #a9b4bc;
+      --edu-accent: #a8b6ae;
+      --edu-secondary: #b9b0a4;
       --edu-rule: #3f423f;
-      --edu-wash: rgba(169, 180, 188, 0.08);
+      --edu-wash: rgba(168, 182, 174, 0.08);
+      --edu-panel: rgba(24, 24, 24, 0.76);
+      --edu-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+    }
+
+    .education-main section {
+      margin-bottom: 0;
     }
 
     .education-hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(220px, 0.7fr);
+      grid-template-columns: minmax(0, 1.12fr) minmax(270px, 0.88fr);
       gap: 1.5rem;
       align-items: end;
-      margin-bottom: 1.8rem;
-      padding-bottom: 1.25rem;
+      padding-bottom: 1.55rem;
       border-bottom: 1px solid var(--edu-rule);
+      animation: educationFadeUp 0.66s var(--edu-ease) both;
     }
 
-    .education-intro {
-      padding: 0;
+    .education-kicker {
+      margin: 0 0 0.45rem;
+      color: var(--edu-accent);
+      font-size: 0.92rem;
+      font-weight: bold;
+      line-height: 1.2;
     }
 
-    .education-intro h2 {
-      margin-top: 0;
-      margin-bottom: 0.55rem;
+    .education-copy h2 {
+      margin: 0 0 0.6rem;
+      max-width: 11em;
+      font-size: 2.72rem;
+      line-height: 1.02;
     }
 
-    .education-intro p {
+    .education-copy p {
       margin: 0;
-      max-width: 650px;
+      max-width: 690px;
+      opacity: 0.86;
     }
 
-    .education-stats {
+    .education-summary {
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.55rem;
+      gap: 0.72rem;
     }
 
-    .stat-item {
-      padding: 0.15rem 0 0.45rem;
-      border-bottom: 1px solid var(--edu-rule);
+    .summary-card {
+      padding: 0.92rem 0.98rem;
+      border: 1px solid var(--edu-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--edu-wash), transparent 74%),
+        var(--edu-panel);
+      box-shadow: var(--edu-shadow);
+      transition: transform 0.28s var(--edu-ease), border-color 0.24s ease;
     }
 
-    .stat-value {
+    .summary-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--edu-accent);
+    }
+
+    .summary-card strong {
       display: block;
       color: var(--edu-accent);
-      font-size: 1.08rem;
-      font-weight: bold;
+      font-size: 1.18rem;
       line-height: 1.1;
     }
 
-    .stat-label {
+    .summary-card span {
       display: block;
-      margin-top: 0.25rem;
-      opacity: 0.78;
+      margin-top: 0.24rem;
+      color: var(--edu-secondary);
       font-size: 0.9rem;
+      line-height: 1.22;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2.2rem 0 0.85rem;
+      color: var(--edu-accent);
+      font-size: 1.12rem;
+      font-style: italic;
+    }
+
+    .section-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--edu-rule), transparent);
+    }
+
+    .study-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.95rem;
+    }
+
+    .study-card {
+      padding: 1rem 1rem 1.05rem;
+      border: 1px solid var(--edu-rule);
+      border-radius: 8px;
+      background: var(--edu-panel);
+      box-shadow: var(--edu-shadow);
+      transition: transform 0.3s var(--edu-ease), border-color 0.24s ease, background 0.24s ease;
+      animation: educationFadeUp 0.66s var(--edu-ease) both;
+    }
+
+    .study-card:nth-child(2) {
+      animation-delay: 0.06s;
+    }
+
+    .study-card:nth-child(3) {
+      animation-delay: 0.12s;
+    }
+
+    .study-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--edu-accent);
+      background: linear-gradient(180deg, var(--edu-wash), transparent 86%), var(--edu-panel);
+    }
+
+    .study-card span {
+      display: block;
+      color: var(--edu-accent);
+      font-size: 0.85rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .study-card h3 {
+      margin: 0.3rem 0 0.45rem;
+      font-size: 1.16rem;
+      line-height: 1.15;
+    }
+
+    .study-card p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
     }
 
     .education-timeline {
       position: relative;
-      display: grid;
-      gap: 0;
       margin-top: 1rem;
+      padding-left: 1.1rem;
     }
 
-    .education-card {
+    .education-timeline::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 10.1rem;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, var(--edu-rule) 6%, var(--edu-rule) 94%, transparent);
+    }
+
+    .education-entry {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(150px, 0.3fr) minmax(0, 1fr);
-      gap: 1.4rem;
-      padding: 1.15rem 0;
-      border-bottom: 1px solid var(--edu-rule);
+      grid-template-columns: 8.5rem minmax(0, 1fr);
+      gap: 1.6rem;
+      padding: 0 0 1.2rem;
+      animation: educationFadeUp 0.64s var(--edu-ease) both;
+    }
+
+    .education-entry:nth-child(2) {
+      animation-delay: 0.04s;
+    }
+
+    .education-entry:nth-child(3) {
+      animation-delay: 0.08s;
+    }
+
+    .education-entry:nth-child(4) {
+      animation-delay: 0.12s;
+    }
+
+    .education-entry:nth-child(5) {
+      animation-delay: 0.16s;
+    }
+
+    .education-entry:nth-child(6) {
+      animation-delay: 0.2s;
+    }
+
+    .education-entry::before {
+      content: "";
+      position: absolute;
+      left: 9.72rem;
+      top: 1.1rem;
+      width: 0.72rem;
+      height: 0.72rem;
+      border: 1px solid var(--edu-accent);
+      border-radius: 999px;
+      background: var(--bg);
+      box-shadow: 0 0 0 5px var(--bg);
     }
 
     .education-date {
+      padding-top: 0.82rem;
       color: var(--edu-accent);
-      font-style: italic;
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
+      line-height: 1.24;
+      text-align: right;
     }
 
-    .education-body h3 {
+    .education-card {
+      padding: 1rem 1.05rem 1.08rem;
+      border: 1px solid var(--edu-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--edu-wash), transparent 68%),
+        var(--edu-panel);
+      box-shadow: var(--edu-shadow);
+      transition: transform 0.3s var(--edu-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .education-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--edu-accent);
+      background: linear-gradient(180deg, var(--edu-wash), transparent 82%), var(--edu-panel);
+    }
+
+    .entry-type {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid var(--edu-rule);
+      border-radius: 999px;
+      color: var(--edu-accent);
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
+    .education-card h3 {
+      margin: 0.55rem 0 0.18rem;
+      font-size: 1.28rem;
+      line-height: 1.14;
+    }
+
+    .institution-meta {
       margin: 0;
-      font-size: 1.22rem;
+      color: var(--edu-secondary);
+      font-size: 0.94rem;
+      line-height: 1.28;
     }
 
-    .education-body p {
-      margin: 0.25rem 0 0;
+    .degree-lines {
+      margin-top: 0.7rem;
+      display: grid;
+      gap: 0.28rem;
     }
 
-    .school-meta {
+    .degree-lines p {
+      margin: 0;
+    }
+
+    .education-note {
+      margin-top: 0.82rem;
+      padding: 0.72rem 0.8rem;
+      border-left: 2px solid var(--edu-accent);
+      border-radius: 0 8px 8px 0;
+      background: var(--edu-wash);
       color: var(--text);
-      opacity: 0.82;
     }
 
-    .tag-row {
+    .course-group {
+      margin-top: 0.78rem;
+    }
+
+    .course-label {
+      display: block;
+      margin-bottom: 0.42rem;
+      color: var(--edu-accent);
+      font-size: 0.84rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .course-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-top: 0.7rem;
+      gap: 0.42rem;
     }
 
-    .tag-row span {
-      display: inline-block;
-      padding: 0.18rem 0.46rem;
+    .course-pills span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.18rem 0.48rem;
       border: 1px solid var(--edu-rule);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--text);
-      font-size: 0.88rem;
+      border-radius: 999px;
+      font-size: 0.86rem;
       line-height: 1.2;
       white-space: nowrap;
     }
 
-    .education-note {
-      margin-top: 0.75rem;
-      padding: 0.62rem 0.75rem;
-      border-left: 2px solid var(--edu-accent);
-      background: var(--edu-wash);
-      border-radius: 0 6px 6px 0;
+    @keyframes educationFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
-    @media (max-width: 760px) {
+    @media (max-width: 900px) {
       .education-hero,
-      .education-card {
+      .study-grid {
         grid-template-columns: 1fr;
       }
 
-      .education-card {
+      .education-timeline {
+        padding-left: 0;
+      }
+
+      .education-timeline::before {
+        display: none;
+      }
+
+      .education-entry {
+        grid-template-columns: 1fr;
         gap: 0.55rem;
+      }
+
+      .education-entry::before {
+        display: none;
+      }
+
+      .education-date {
+        padding-top: 0;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .education-copy h2 {
+        font-size: 2.28rem;
       }
     }
   </style>
@@ -152,131 +375,188 @@
     <nav>
       <a href="index.html">About</a>
       <a href="education.html" aria-current="page">Education</a>
-      <a href="experience.html">Experience</a> 
+      <a href="experience.html">Experience</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
   </header>
 
   <main class="education-main">
-    <section>
-      <div class="education-hero">
-        <div class="education-intro">
-          <h2>Education</h2>
-          <p>
-            My academic path moves across electrical and computer engineering, computer engineering,
-            mathematics, international study, and early STEM leadership. At UC San Diego, my master's
-            study is centered on Very Large Scale Integration (VLSI).
-          </p>
-        </div>
-        <div class="education-stats" aria-label="Education highlights">
-          <div class="stat-item">
-            <span class="stat-value">M.S.</span>
-            <span class="stat-label">Electrical and Computer Engineering</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">2x B.S.</span>
-            <span class="stat-label">Computer Engineering + Mathematics</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-value">VLSI</span>
-            <span class="stat-label">Graduate study focus</span>
-          </div>
-        </div>
+    <section class="education-hero">
+      <div class="education-copy">
+        <p class="education-kicker">Academic Arc</p>
+        <h2>Engineering depth, mathematical range, and international study.</h2>
+        <p>
+          My education sits at the intersection of Electrical and Computer Engineering, Computer Engineering,
+          and Mathematics. At UC San Diego, my master's work centers on Very Large Scale Integration (VLSI),
+          while the broader path includes rigorous systems coursework, applied math training, study abroad,
+          and early leadership experience.
+        </p>
       </div>
 
+      <div class="education-summary" aria-label="Education highlights">
+        <article class="summary-card">
+          <strong>M.S. in Electrical and Computer Engineering</strong>
+          <span>Graduate focus in Very Large Scale Integration, digital IC design, and architecture.</span>
+        </article>
+        <article class="summary-card">
+          <strong>Dual Bachelor of Science Degrees</strong>
+          <span>Computer Engineering and Mathematics, built as an interdisciplinary technical base.</span>
+        </article>
+        <article class="summary-card">
+          <strong>International + Leadership Range</strong>
+          <span>NUS study abroad, multi-campus summer coursework, and Chinese Association Club Vice President.</span>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Study Themes</h2>
+      <div class="study-grid">
+        <article class="study-card">
+          <span>Graduate Direction</span>
+          <h3>Very Large Scale Integration</h3>
+          <p>
+            Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, and computer architecture.
+          </p>
+        </article>
+        <article class="study-card">
+          <span>Interdisciplinary Base</span>
+          <h3>Engineering + Mathematics</h3>
+          <p>
+            Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, and cryptography.
+          </p>
+        </article>
+        <article class="study-card">
+          <span>Academic Breadth</span>
+          <h3>Global Study and Leadership</h3>
+          <p>
+            Broadened perspective through UC study abroad at NUS, summer coursework across multiple campuses, and student leadership.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Timeline</h2>
       <div class="education-timeline">
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Sep 2025 - Jun 2026</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Graduate Study</span>
             <h3>University of California, San Diego</h3>
-            <p class="school-meta">Jacobs School of Engineering · La Jolla, CA</p>
-            <p><strong>Master of Science</strong> in Electrical and Computer Engineering</p>
-            <div class="education-note">
-              Primary graduate focus: <strong>Very Large Scale Integration (VLSI)</strong>,
-              digital IC design, RTL/FPGA design, and computer architecture.
+            <p class="institution-meta">Jacobs School of Engineering · La Jolla, California</p>
+            <div class="degree-lines">
+              <p><strong>Master of Science</strong> in Electrical and Computer Engineering</p>
             </div>
-            <div class="tag-row" aria-label="Graduate coursework">
-              <span>Digital IC Design</span>
-              <span>VLSI</span>
-              <span>Computer Architecture</span>
-              <span>FPGA / RTL Design</span>
+            <div class="education-note">
+              Primary graduate emphasis: <strong>Very Large Scale Integration (VLSI)</strong>, digital IC design,
+              computer architecture, and FPGA / RTL implementation.
+            </div>
+            <div class="course-group">
+              <span class="course-label">Current focus</span>
+              <div class="course-pills">
+                <span>Digital IC Design</span>
+                <span>VLSI</span>
+                <span>Computer Architecture</span>
+                <span>FPGA / RTL Design</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Sep 2023 - Jun 2025</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Undergraduate Degree</span>
             <h3>University of California, San Diego</h3>
-            <p class="school-meta">Seventh College · La Jolla, CA</p>
-            <p><strong>Bachelor of Science</strong> in Computer Engineering</p>
-            <p><strong>Bachelor of Science</strong> in Mathematics - Applied Science</p>
-            <p>GPA: 3.6 · Provost Honors</p>
-            <div class="tag-row" aria-label="Undergraduate coursework">
-              <span>CSE 141/141L Computer Architecture</span>
-              <span>CSE 140/140L Digital Systems</span>
-              <span>CSE 100 Data Structures</span>
-              <span>MATH 187A/B Cryptography</span>
-              <span>MATH 170A Numerical Analysis</span>
-              <span>ECE 108 Digital Circuits</span>
+            <p class="institution-meta">Seventh College · La Jolla, California</p>
+            <div class="degree-lines">
+              <p><strong>Bachelor of Science</strong> in Computer Engineering</p>
+              <p><strong>Bachelor of Science</strong> in Mathematics - Applied Science</p>
+              <p>GPA: 3.6 · Provost Honors</p>
+            </div>
+            <div class="course-group">
+              <span class="course-label">Representative coursework</span>
+              <div class="course-pills">
+                <span>CSE 141 / 141L Computer Architecture</span>
+                <span>CSE 140 / 140L Digital Systems</span>
+                <span>CSE 100 Data Structures</span>
+                <span>MATH 187A / 187B Cryptography</span>
+                <span>MATH 170A Numerical Analysis</span>
+                <span>ECE 108 Digital Circuits</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Aug 2024 - Dec 2024</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Study Abroad</span>
             <h3>National University of Singapore</h3>
-            <p class="school-meta">School of Computing · Singapore</p>
-            <p>University of California Education Abroad Program</p>
-            <p>
-              Completed advanced coursework in algorithms, cryptography, and Internet of Things while
-              gaining international academic and cultural experience.
-            </p>
-            <div class="tag-row" aria-label="NUS coursework">
-              <span>CS3230 Design and Analysis of Algorithms</span>
-              <span>CS2107 Information Security</span>
-              <span>CS3237 Internet of Things</span>
+            <p class="institution-meta">School of Computing · Singapore</p>
+            <div class="degree-lines">
+              <p>University of California Education Abroad Program</p>
+              <p>
+                Advanced study in algorithms, cryptography, and Internet of Things within an international academic environment.
+              </p>
+            </div>
+            <div class="course-group">
+              <span class="course-label">NUS coursework</span>
+              <div class="course-pills">
+                <span>CS3230 Design and Analysis of Algorithms</span>
+                <span>CS2107 Information Security</span>
+                <span>CS3237 Internet of Things</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Sep 2021 - Jun 2023</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Transfer Foundation</span>
             <h3>University of California, Davis</h3>
-            <p class="school-meta">College of Letters and Science · Davis, CA</p>
-            <p>Applied Mathematics & Computer Science</p>
-            <p>Completed foundational coursework before transferring to UC San Diego.</p>
-            <div class="tag-row" aria-label="UC Davis coursework">
-              <span>ECS 36A/B/C Programming & Data Structures</span>
-              <span>ECS 50 Computer Organization</span>
+            <p class="institution-meta">College of Letters and Science · Davis, California</p>
+            <div class="degree-lines">
+              <p>Applied Mathematics and Computer Science</p>
+              <p>Completed foundational lower-division coursework before transferring to UC San Diego.</p>
+            </div>
+            <div class="course-group">
+              <span class="course-label">Core preparation</span>
+              <div class="course-pills">
+                <span>ECS 36A / 36B / 36C Programming and Data Structures</span>
+                <span>ECS 50 Computer Organization</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Summer 2022 & Summer 2023</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Summer Sessions</span>
             <h3>University of California - Summer Sessions</h3>
-            <p class="school-meta">Remote · UC Santa Cruz, UC Los Angeles, UC Irvine, UC Online</p>
-            <p>Enrolled across multiple UC campuses to broaden academic experience.</p>
+            <p class="institution-meta">Remote · UC Santa Cruz, UC Los Angeles, UC Irvine, UC Online</p>
+            <div class="degree-lines">
+              <p>Enrolled across multiple UC campuses to broaden academic exposure beyond the home-campus sequence.</p>
+            </div>
           </div>
         </article>
 
-        <article class="education-card">
+        <article class="education-entry">
           <div class="education-date">Aug 2017 - Jun 2021</div>
-          <div class="education-body">
+          <div class="education-card">
+            <span class="entry-type">Early Foundation</span>
             <h3>Yorba Linda High School</h3>
-            <p class="school-meta">Yorba Linda, CA</p>
-            <p>
-              Built a strong foundation in STEM before pursuing engineering and mathematics at the
-              university level.
-            </p>
+            <p class="institution-meta">Yorba Linda, California</p>
+            <div class="degree-lines">
+              <p>Built the early STEM foundation that led into engineering and mathematics at the university level.</p>
+            </div>
             <div class="education-note">
-              Leadership: <strong>Vice President, Chinese Association Club</strong>. Recognized with the
-              <strong>President's Volunteer Service Award - Gold</strong> for community service and leadership.
+              Leadership and service included <strong>Vice President, Chinese Association Club</strong> and the
+              <strong>President's Volunteer Service Award - Gold</strong>.
             </div>
           </div>
         </article>
