@@ -499,6 +499,10 @@
           {
             "src": "img/nevada/las-vegas/las-vegas-arte-museum-immersive-room.jpg",
             "caption": "Arte Museum Las Vegas - Immersive Room"
+          },
+          {
+            "src": "img/nevada/las-vegas/las-vegas-arte-museum-forest-installation.jpg",
+            "caption": "Arte Museum Las Vegas - Forest Installation"
           }
         ]
       },
@@ -787,10 +791,6 @@
             "caption": "teamLab Botanical Garden - Flower Lights"
           },
           {
-            "src": "img/japan/osaka/osaka-nagai-teamlab-forest-installation.jpg",
-            "caption": "teamLab Botanical Garden - Forest Installation"
-          },
-          {
             "src": "img/japan/osaka/osaka-nagai-teamlab-light-walk.jpg",
             "caption": "teamLab Botanical Garden - Light Walk"
           }
@@ -984,10 +984,6 @@
           {
             "src": "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-front-view.jpg",
             "caption": "Bandar Seri Begawan / بندر سري بڬاوان - Sultan Omar Ali Saifuddien Mosque Front View"
-          },
-          {
-            "src": "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-close-view.jpg",
-            "caption": "Bandar Seri Begawan / بندر سري بڬاوان - Sultan Omar Ali Saifuddien Mosque Close View"
           },
           {
             "src": "img/brunei/bandar-seri-begawan/bandar-seri-begawan-city-monument-clock.jpg",
@@ -2624,7 +2620,6 @@
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-rocky-shoreline-dusk.jpg": "portrait",
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-royal-regalia-cannon-display.jpg": "portrait",
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-shoreline-waves.jpg": "portrait",
-      "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-close-view.jpg": "landscape",
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-front-view.jpg": "landscape",
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-side-view.jpg": "portrait",
       "img/brunei/bandar-seri-begawan/bandar-seri-begawan-sunset-horizon.jpg": "portrait",
@@ -2783,7 +2778,6 @@
       "img/japan/osaka/osaka-nagai-botanical-white-blossoms.jpg": "portrait",
       "img/japan/osaka/osaka-nagai-botanical-winter-garden.jpg": "portrait",
       "img/japan/osaka/osaka-nagai-teamlab-flower-lights.jpg": "portrait",
-      "img/japan/osaka/osaka-nagai-teamlab-forest-installation.jpg": "landscape",
       "img/japan/osaka/osaka-nagai-teamlab-light-walk.jpg": "portrait",
       "img/japan/osaka/osaka-river-tower-sunset-skyline.jpg": "landscape",
       "img/japan/osaka/osaka-river-tower-window-view.jpg": "portrait",
@@ -2970,7 +2964,8 @@
       "img/japan/yoichi/yoichi-whisky-bottle-and-glasses.jpg": "landscape",
       "img/japan/yoichi/yoichi-whisky-bottle-lineup.jpg": "landscape",
       "img/japan/yoichi/yoichi-distillery-quote-wall.jpg": "landscape",
-      "img/japan/yoichi/yoichi-distillery-photo-exhibit.jpg": "landscape"
+      "img/japan/yoichi/yoichi-distillery-photo-exhibit.jpg": "landscape",
+      "img/nevada/las-vegas/las-vegas-arte-museum-forest-installation.jpg": "landscape"
     }
   };
 })();
