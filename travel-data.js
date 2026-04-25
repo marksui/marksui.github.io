@@ -807,12 +807,58 @@
         "spots": [
           "Otaru Canal",
           "Sakaimachi Street",
-          "Otaru Music Box Museum"
+          "Winter Lights"
         ],
         "spotsLocal": [
           "小樽運河",
           "堺町通り",
-          "小樽オルゴール堂"
+          "冬のイルミネーション"
+        ],
+        "photos": [
+          {
+            "src": "img/japan/otaru/otaru-night-street-figure.jpg",
+            "caption": "Otaru - Night Street Figure"
+          },
+          {
+            "src": "img/japan/otaru/otaru-seafood-bowl-dinner.jpg",
+            "caption": "Otaru - Seafood Bowl Dinner"
+          },
+          {
+            "src": "img/japan/otaru/otaru-snow-lit-garden.jpg",
+            "caption": "Otaru - Snow-lit Garden"
+          },
+          {
+            "src": "img/japan/otaru/otaru-candied-fruit-skewer.jpg",
+            "caption": "Otaru - Candied Fruit Skewer"
+          },
+          {
+            "src": "img/japan/otaru/otaru-sakaimachi-snow-street.jpg",
+            "caption": "Otaru - Sakaimachi Snow Street"
+          },
+          {
+            "src": "img/japan/otaru/otaru-snowy-street-walk.jpg",
+            "caption": "Otaru - Snowy Street Walk"
+          },
+          {
+            "src": "img/japan/otaru/otaru-winter-lights-tree.jpg",
+            "caption": "Otaru - Winter Lights Tree"
+          },
+          {
+            "src": "img/japan/otaru/otaru-snowy-courtyard.jpg",
+            "caption": "Otaru - Snowy Courtyard"
+          },
+          {
+            "src": "img/japan/otaru/otaru-purple-dusk-city-view.jpg",
+            "caption": "Otaru - Purple Dusk City View"
+          },
+          {
+            "src": "img/japan/otaru/otaru-winter-lights-silhouettes.jpg",
+            "caption": "Otaru - Winter Lights Silhouettes"
+          },
+          {
+            "src": "img/japan/otaru/otaru-snow-street-back-view.jpg",
+            "caption": "Otaru - Snow Street Back View"
+          }
         ]
       },
       {
@@ -825,11 +871,55 @@
         ],
         "spots": [
           "Nikka Whisky Yoichi Distillery",
-          "Yoichi Port"
+          "Yoichi Town Streets",
+          "Distillery Museum"
         ],
         "spotsLocal": [
           "ニッカウヰスキー余市蒸溜所",
-          "余市港"
+          "余市の街並み",
+          "蒸溜所ミュージアム"
+        ],
+        "photos": [
+          {
+            "src": "img/japan/yoichi/yoichi-snowy-town-road-signs.jpg",
+            "caption": "Yoichi - Snowy Town Road Signs"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-snowy-main-street.jpg",
+            "caption": "Yoichi - Snowy Main Street"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-snowy-hillside-road.jpg",
+            "caption": "Yoichi - Snowy Hillside Road"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-frozen-pond-view.jpg",
+            "caption": "Yoichi - Frozen Pond View"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-distillery-entrance.jpg",
+            "caption": "Yoichi - Distillery Entrance"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-whisky-tasting-display.jpg",
+            "caption": "Yoichi - Whisky Tasting Display"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-whisky-bottle-and-glasses.jpg",
+            "caption": "Yoichi - Whisky Bottle and Glasses"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-whisky-bottle-lineup.jpg",
+            "caption": "Yoichi - Whisky Bottle Lineup"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-distillery-quote-wall.jpg",
+            "caption": "Yoichi - Distillery Quote Wall"
+          },
+          {
+            "src": "img/japan/yoichi/yoichi-distillery-photo-exhibit.jpg",
+            "caption": "Yoichi - Distillery Photo Exhibit"
+          }
         ]
       },
       {
@@ -2859,7 +2949,28 @@
       "img/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-misty-peak.jpg": "landscape",
       "img/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-valley-view.jpg": "landscape",
       "img/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-yak-trail.jpg": "portrait",
-      "img/yunnan/lijiang/lijiang-mountain-city-view.jpg": "landscape"
+      "img/yunnan/lijiang/lijiang-mountain-city-view.jpg": "landscape",
+      "img/japan/otaru/otaru-night-street-figure.jpg": "landscape",
+      "img/japan/otaru/otaru-seafood-bowl-dinner.jpg": "landscape",
+      "img/japan/otaru/otaru-snow-lit-garden.jpg": "landscape",
+      "img/japan/otaru/otaru-candied-fruit-skewer.jpg": "landscape",
+      "img/japan/otaru/otaru-sakaimachi-snow-street.jpg": "landscape",
+      "img/japan/otaru/otaru-snowy-street-walk.jpg": "landscape",
+      "img/japan/otaru/otaru-winter-lights-tree.jpg": "portrait",
+      "img/japan/otaru/otaru-snowy-courtyard.jpg": "landscape",
+      "img/japan/otaru/otaru-purple-dusk-city-view.jpg": "landscape",
+      "img/japan/otaru/otaru-winter-lights-silhouettes.jpg": "landscape",
+      "img/japan/otaru/otaru-snow-street-back-view.jpg": "landscape",
+      "img/japan/yoichi/yoichi-snowy-town-road-signs.jpg": "landscape",
+      "img/japan/yoichi/yoichi-snowy-main-street.jpg": "landscape",
+      "img/japan/yoichi/yoichi-snowy-hillside-road.jpg": "landscape",
+      "img/japan/yoichi/yoichi-frozen-pond-view.jpg": "landscape",
+      "img/japan/yoichi/yoichi-distillery-entrance.jpg": "landscape",
+      "img/japan/yoichi/yoichi-whisky-tasting-display.jpg": "landscape",
+      "img/japan/yoichi/yoichi-whisky-bottle-and-glasses.jpg": "landscape",
+      "img/japan/yoichi/yoichi-whisky-bottle-lineup.jpg": "landscape",
+      "img/japan/yoichi/yoichi-distillery-quote-wall.jpg": "landscape",
+      "img/japan/yoichi/yoichi-distillery-photo-exhibit.jpg": "landscape"
     }
   };
 })();
