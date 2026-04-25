@@ -438,22 +438,95 @@
     }
 
     @media (max-width: 680px) {
+      .travel-local-nav {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.26rem;
+        box-sizing: border-box;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .travel-local-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .travel-local-nav a {
+        flex: 0 0 auto;
+      }
+
       .hub-copy h2 {
-        font-size: 2.2rem;
+        max-width: none;
+        font-size: 2.14rem;
+      }
+
+      .hub-copy p {
+        font-size: 1rem;
       }
 
       .hub-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .hub-stats article {
+        padding: 0.8rem 0.72rem;
+      }
+
+      .hub-stats strong {
+        font-size: 1.26rem;
+      }
+
+      .hub-stats span {
+        font-size: 0.76rem;
       }
 
       .hero-collage {
-        grid-template-columns: 1fr;
-        grid-template-rows: none;
-        min-height: 0;
+        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+        grid-template-rows: repeat(2, minmax(0, 1fr));
+        min-height: 320px;
+        gap: 0.7rem;
       }
 
       .hero-shot.tall {
-        grid-row: auto;
+        grid-row: 1 / span 2;
+      }
+
+      .hero-shot {
+        padding: 0.4rem 0.4rem 0.48rem;
+      }
+
+      .hero-shot figcaption {
+        margin-top: 0.42rem;
+        font-size: 0.84rem;
+      }
+
+      .portal-card,
+      .feature-card {
+        gap: 0.72rem;
+        padding: 0.9rem;
+      }
+
+      .region-strip {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 1rem 0 0.2rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .region-strip::-webkit-scrollbar {
+        display: none;
+      }
+
+      .region-strip a {
+        flex: 0 0 auto;
+        min-width: 8.8rem;
       }
     }
   </style>
@@ -474,12 +547,15 @@
     <section class="hub-hero">
       <div class="hub-copy">
         <p class="hub-kicker">Personal</p>
-        <h2>Places, photographs, and the archive behind them.</h2>
-        <p>This part is just for my travel photos.</p>
+        <h2>Life, travel, photos, and notes.</h2>
+        <p>
+          This is my personal travel archive. I use it to organize photos from places I have visited,
+          including cities, landscapes, streets, buildings, and small moments from each trip.
+        </p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html" aria-current="page">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
-          <a href="travel-map.html">Atlas</a>
+          <a href="travel-map.html">Places Map</a>
           <a href="travel-collections.html">Collections</a>
         </nav>
       </div>
@@ -503,15 +579,15 @@
     <section class="hub-stats" aria-label="Archive totals">
       <article>
         <strong id="stat-place-count">0</strong>
-        <span>Places recorded across the full map</span>
+        <span>Places</span>
       </article>
       <article>
         <strong id="stat-photo-count">0</strong>
-        <span>Photos currently organized into the archive</span>
+        <span>Photos</span>
       </article>
       <article>
         <strong id="stat-region-count">0</strong>
-        <span>Photo regions with their own visual collections</span>
+        <span>Regions</span>
       </article>
     </section>
 
@@ -522,7 +598,7 @@
           <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-flowers.webp" alt="Hanoi Hoan Kiem Lake flowers" loading="lazy" decoding="async">
           <div>
             <div class="portal-topline">
-              <span>Image-first browsing</span>
+              <span>All photos</span>
               <ul class="portal-metrics">
                 <li id="gallery-photo-metric">0 photos</li>
                 <li id="gallery-place-metric">0 places</li>
@@ -536,21 +612,21 @@
           <img src="img/thumbs/laos/vientiane/vientiane-pha-that-luang-golden-stupa.webp" alt="Vientiane Pha That Luang" loading="lazy" decoding="async">
           <div>
             <div class="portal-topline">
-              <span>Places first</span>
+              <span>By place</span>
               <ul class="portal-metrics">
                 <li id="atlas-place-metric">0 places</li>
                 <li id="atlas-region-metric">0 regions</li>
               </ul>
             </div>
-            <strong>Atlas</strong>
-            <p>The same archive, but organized by place.</p>
+            <strong>Places Map</strong>
+            <p>Cities and regions on the map.</p>
           </div>
         </a>
         <a class="portal-card" href="travel-collections.html">
           <img src="img/thumbs/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-glacier-view.webp" alt="Lijiang Jade Dragon Snow Mountain" loading="lazy" decoding="async">
           <div>
             <div class="portal-topline">
-              <span>Grouped sets</span>
+              <span>By region</span>
               <ul class="portal-metrics">
                 <li id="collections-region-metric">0 regions</li>
                 <li id="collections-place-metric">0 place sets</li>

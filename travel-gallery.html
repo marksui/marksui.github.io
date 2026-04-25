@@ -537,12 +537,69 @@
     }
 
     @media (max-width: 720px) {
+      .travel-local-nav {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.26rem;
+        box-sizing: border-box;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .travel-local-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .travel-local-nav a {
+        flex: 0 0 auto;
+      }
+
       .travel-copy h2 {
-        font-size: 2.2rem;
+        max-width: none;
+        font-size: 2.14rem;
+      }
+
+      .travel-copy p {
+        font-size: 1rem;
       }
 
       .gallery-glance {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .gallery-glance article {
+        padding: 0.75rem 0.68rem;
+      }
+
+      .gallery-glance strong {
+        font-size: 1.18rem;
+      }
+
+      .gallery-glance span {
+        font-size: 0.75rem;
+      }
+
+      .gallery-search-panel,
+      .gallery-note-panel {
+        padding: 0.9rem;
+      }
+
+      .gallery-search-label {
+        font-size: 0.8rem;
+      }
+
+      .gallery-search-input {
+        margin-top: 0.48rem;
+        padding: 0.72rem 0.82rem;
+      }
+
+      .gallery-search-hint {
+        font-size: 0.8rem;
       }
 
       .gallery-grid.wide-grid,
@@ -552,9 +609,20 @@
     }
 
     @media (max-width: 520px) {
-      .gallery-grid.wide-grid,
-      .gallery-grid.tall-grid {
+      .gallery-grid.wide-grid {
         grid-template-columns: 1fr;
+      }
+
+      .gallery-grid.tall-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .gallery-meta {
+        padding: 0.6rem 0.68rem 0.72rem;
+      }
+
+      .gallery-caption {
+        font-size: 0.88rem;
       }
     }
   </style>
@@ -580,7 +648,7 @@
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html" aria-current="page">Gallery</a>
-          <a href="travel-map.html">Atlas</a>
+          <a href="travel-map.html">Places Map</a>
           <a href="travel-collections.html">Collections</a>
         </nav>
       </div>
@@ -588,15 +656,15 @@
       <div class="gallery-glance" aria-label="Gallery totals">
         <article>
           <strong id="glance-photo-count">0</strong>
-          <span>Photos currently in view</span>
+          <span>Photos in view</span>
         </article>
         <article>
           <strong id="glance-place-count">0</strong>
-          <span>Places matching the current filters</span>
+          <span>Matching places</span>
         </article>
         <article>
           <strong id="glance-region-count">0</strong>
-          <span>Regions represented in the result set</span>
+          <span>Regions</span>
         </article>
       </div>
     </section>

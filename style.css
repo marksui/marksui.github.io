@@ -239,24 +239,41 @@ ul li {
 
 @media (max-width: 640px) {
   header {
-    padding: 1.45rem 1rem 0.95rem;
+    padding: 1.35rem 0.95rem 0.9rem;
   }
 
   h1 {
-    font-size: 2.25rem;
+    font-size: 2.12rem;
   }
 
   header nav {
-    gap: 0.42rem 0.82rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0.42rem 0.72rem;
+    width: min(100%, 26rem);
+    margin: 0 auto;
+    padding: 0.05rem 0.08rem 0.18rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  header nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  header nav a {
+    flex: 0 0 auto;
   }
 
   .theme-toggle {
     position: absolute;
-    top: 0.85rem;
-    right: 0.85rem;
+    top: 0.78rem;
+    right: 0.78rem;
     justify-content: center;
-    width: 2rem;
-    height: 2rem;
+    width: 2.05rem;
+    height: 2.05rem;
     margin: 0;
     padding: 0.08rem 0.42rem;
   }
@@ -268,6 +285,10 @@ ul li {
     overflow: hidden;
     clip: rect(0 0 0 0);
     white-space: nowrap;
+  }
+
+  main {
+    padding: 1.35rem 1rem calc(2rem + env(safe-area-inset-bottom));
   }
 }
 

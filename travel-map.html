@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Travel Atlas</title>
+  <title>Mark Sui - Places Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -792,8 +792,24 @@
       }
 
       .travel-local-nav {
+        display: flex;
+        flex-wrap: nowrap;
         width: 100%;
         justify-content: flex-start;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.26rem;
+        box-sizing: border-box;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .travel-local-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .travel-local-nav a {
+        flex: 0 0 auto;
       }
 
       .place-item {
@@ -820,11 +836,29 @@
       }
 
       .travel-intro h2 {
-        font-size: 2.2rem;
+        max-width: none;
+        font-size: 2.14rem;
       }
 
       .travel-stats {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+      }
+
+      .travel-stats div {
+        padding: 0.72rem 0.62rem;
+      }
+
+      .travel-stats dt {
+        font-size: 1.16rem;
+      }
+
+      .travel-stats dd {
+        font-size: 0.75rem;
+      }
+
+      #travel-map {
+        height: 300px;
       }
 
       .places-header {
@@ -832,14 +866,65 @@
       }
 
       .places-tools {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
+        display: grid;
+        gap: 0.55rem;
         margin-top: 0.65rem;
       }
 
       .places-view-note {
+        order: 2;
         text-align: left;
+      }
+
+      .places-view-select {
+        width: 100%;
+        max-width: none;
+      }
+
+      .region-list summary {
+        padding: 0.85rem 0;
+        font-size: 1.02rem;
+      }
+
+      .region-title {
+        gap: 0.5rem;
+      }
+
+      .region-title::before {
+        width: 1.18rem;
+        height: 1.18rem;
+        font-size: 0.82rem;
+      }
+
+      .region-count {
+        min-width: 1.4rem;
+        padding: 0.08rem 0.38rem;
+        font-size: 0.82rem;
+      }
+
+      .region-meta {
+        font-size: 0.76rem;
+      }
+
+      .place-item {
+        gap: 0.55rem;
+        padding: 0.85rem 0 1rem;
+      }
+
+      .place-button {
+        padding-bottom: 0.45rem;
+      }
+
+      .place-topline {
+        gap: 0.55rem;
+      }
+
+      .place-name {
+        font-size: 0.96rem;
+      }
+
+      .place-photo-count {
+        font-size: 0.74rem;
       }
 
       .photo-slots {
@@ -898,13 +983,13 @@
     <section>
       <div class="travel-hero">
         <div class="travel-intro">
-          <p class="travel-kicker">Atlas</p>
+          <p class="travel-kicker">Places Map</p>
           <h2>Places on the map.</h2>
-          <p>The archive, organized by place.</p>
+          <p>Places I have added to the archive.</p>
           <nav class="travel-local-nav" aria-label="Personal pages">
             <a href="personal.html">Overview</a>
             <a href="travel-gallery.html">Gallery</a>
-            <a href="travel-map.html" aria-current="page">Atlas</a>
+            <a href="travel-map.html" aria-current="page">Places Map</a>
             <a href="travel-collections.html">Collections</a>
           </nav>
         </div>
@@ -929,8 +1014,8 @@
         <div class="map-panel">
           <div class="map-header">
             <div class="map-title">
-              <p class="eyebrow">Atlas</p>
-              <h3>Visited Map</h3>
+              <p class="eyebrow">Places Map</p>
+              <h3>Visited Places</h3>
             </div>
             <span class="map-count" id="map-count"></span>
           </div>

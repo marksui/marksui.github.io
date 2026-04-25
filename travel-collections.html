@@ -449,12 +449,51 @@
     }
 
     @media (max-width: 760px) {
+      .travel-local-nav {
+        display: flex;
+        flex-wrap: nowrap;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.26rem;
+        box-sizing: border-box;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+      }
+
+      .travel-local-nav::-webkit-scrollbar {
+        display: none;
+      }
+
+      .travel-local-nav a {
+        flex: 0 0 auto;
+      }
+
       .travel-copy h2 {
-        font-size: 2.2rem;
+        max-width: none;
+        font-size: 2.14rem;
+      }
+
+      .travel-copy p {
+        font-size: 1rem;
       }
 
       .collections-glance {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.55rem;
+      }
+
+      .collections-glance article {
+        padding: 0.75rem 0.68rem;
+      }
+
+      .collections-glance strong {
+        font-size: 1.18rem;
+      }
+
+      .collections-glance span {
+        font-size: 0.75rem;
       }
 
       .collection-card {
@@ -462,20 +501,38 @@
       }
 
       .collection-cover {
-        min-height: 220px;
+        min-height: 200px;
       }
 
       .collection-content {
-        gap: 0.72rem;
-        padding: 0.9rem 0.9rem 0.95rem;
+        gap: 0.66rem;
+        padding: 0.82rem 0.88rem 0.9rem;
       }
 
       .collection-title h3 {
-        font-size: 1.22rem;
+        font-size: 1.15rem;
       }
 
       .collection-stats {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.35rem;
+      }
+
+      .collection-places {
+        gap: 0.34rem;
+      }
+
+      .collection-places li {
+        font-size: 0.8rem;
+      }
+
+      .collection-actions {
+        gap: 0.45rem;
+      }
+
+      .collection-actions a {
+        padding: 0.34rem 0.68rem;
+        font-size: 0.88rem;
       }
 
       .collection-stats li,
@@ -506,7 +563,7 @@
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
-          <a href="travel-map.html">Atlas</a>
+          <a href="travel-map.html">Places Map</a>
           <a href="travel-collections.html" aria-current="page">Collections</a>
         </nav>
       </div>
@@ -652,7 +709,7 @@
               '</ul>' +
               '<div class="collection-actions">' +
                 '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Gallery</a>' +
-                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Atlas</a>' +
+                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Places Map</a>' +
               '</div>' +
             '</div>' +
           '</article>';
