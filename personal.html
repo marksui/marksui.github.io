@@ -103,14 +103,18 @@
     }
 
     .hero-shot {
-      position: relative;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
       margin: 0;
       overflow: hidden;
+      align-items: stretch;
       border: 1px solid var(--hub-rule);
       border-radius: 8px;
       background: var(--hub-panel);
       box-shadow: var(--hub-shadow);
       min-height: 0;
+      padding: 0.5rem 0.5rem 0.58rem;
+      box-sizing: border-box;
     }
 
     .hero-shot.tall {
@@ -121,23 +125,22 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--hub-panel) 88%, var(--hub-wash) 12%);
       transition: transform 0.35s var(--hub-ease), filter 0.28s ease;
     }
 
     .hero-shot:hover img {
-      transform: scale(1.02);
+      transform: scale(1.01);
       filter: saturate(0.95) contrast(1.02);
     }
 
     .hero-shot figcaption {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 0.7rem 0.8rem 0.78rem;
-      background: linear-gradient(180deg, transparent, rgba(10, 10, 10, 0.72));
-      color: #ffffff;
+      margin-top: 0.5rem;
+      padding: 0 0.18rem;
+      color: var(--text);
       font-size: 0.92rem;
       line-height: 1.25;
     }
@@ -470,12 +473,9 @@
   <main class="personal-hub">
     <section class="hub-hero">
       <div class="hub-copy">
-        <p class="hub-kicker">Personal Archive</p>
+        <p class="hub-kicker">Personal</p>
         <h2>Places, photographs, and the archive behind them.</h2>
-        <p>
-          This part of the site is built for browsing rather than resume reading. The gallery is the fastest way to scan
-          images, the atlas keeps geography in view, and the collections page groups the archive into stronger regional sets.
-        </p>
+        <p>This part is just for my travel photos.</p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html" aria-current="page">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
@@ -529,7 +529,7 @@
               </ul>
             </div>
             <strong>Gallery</strong>
-            <p>All photos in one visual field, with region and keyword filtering built for fast scanning.</p>
+            <p>All photos in one place.</p>
           </div>
         </a>
         <a class="portal-card" href="travel-map.html">
@@ -543,7 +543,7 @@
               </ul>
             </div>
             <strong>Atlas</strong>
-            <p>Map, region filters, and city-level navigation when you want geography and context before photos.</p>
+            <p>The same archive, but organized by place.</p>
           </div>
         </a>
         <a class="portal-card" href="travel-collections.html">
@@ -557,7 +557,7 @@
               </ul>
             </div>
             <strong>Collections</strong>
-            <p>Region-level entry points with cover images, place counts, and faster ways into each cluster.</p>
+            <p>Grouped by region.</p>
           </div>
         </a>
       </div>

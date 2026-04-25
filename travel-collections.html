@@ -501,11 +501,8 @@
     <section class="travel-hero">
       <div class="travel-copy">
         <p class="travel-kicker">Collections</p>
-        <h2>The archive, grouped into stronger regional sets.</h2>
-        <p>
-          This page is less about individual frames and more about clusters: which regions hold the richest sets,
-          which places anchor them, and where it makes sense to jump next into the gallery or atlas.
-        </p>
+        <h2>Grouped by region.</h2>
+        <p>A broader view of the archive.</p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
@@ -525,7 +522,7 @@
         </article>
         <article>
           <strong id="collections-photo-count">0</strong>
-          <span>Photos represented by the cards below</span>
+          <span>Photos in the cards below</span>
         </article>
       </div>
     </section>
@@ -591,7 +588,7 @@
         var regions = ["All"].concat(photoRegions);
         regionFilters.innerHTML = regions.map(function(region) {
           var active = region === currentRegion;
-          var label = region === "All" ? "Archive" : shared.htmlLabel(region, shared.data.regionLocalNames[region]);
+          var label = region === "All" ? "All" : shared.htmlLabel(region, shared.data.regionLocalNames[region]);
           var count = region === "All"
             ? shared.totalPhotoCount()
             : regionPhotoTotal(region);
@@ -654,8 +651,8 @@
                 }).join("") +
               '</ul>' +
               '<div class="collection-actions">' +
-                '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Gallery Set</a>' +
-                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Atlas View</a>' +
+                '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Gallery</a>' +
+                '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Atlas</a>' +
               '</div>' +
             '</div>' +
           '</article>';
@@ -666,13 +663,13 @@
         var html = regions.map(function(region, index) {
           return collectionCardHtml(region, index + 1);
         }).join("");
-        collectionGrid.innerHTML = html || '<div class="collections-empty">No region cards available yet.</div>';
+        collectionGrid.innerHTML = html || '<div class="collections-empty">Nothing is showing here yet.</div>';
       }
 
       function renderSpotlights() {
         var places = regionPlaces(currentRegion).slice(0, 9);
         if (!places.length) {
-          spotlightGrid.innerHTML = '<div class="collections-empty">No place cards available for this region.</div>';
+          spotlightGrid.innerHTML = '<div class="collections-empty">No place cards for this region yet.</div>';
           return;
         }
 
@@ -691,7 +688,7 @@
               '<div>' +
                 '<span>' + shared.htmlLabel(place.region, shared.data.regionLocalNames[place.region]) + '</span>' +
                 '<strong>' + shared.htmlLabel(place.name, place.localName) + '</strong>' +
-                '<p>' + (leadSpots || (photoCount + ' photos in this place set.')) + '</p>' +
+                '<p>' + (leadSpots || (photoCount + ' photos here.')) + '</p>' +
               '</div>' +
             '</a>';
         }).join("");
@@ -704,8 +701,8 @@
         renderCollections();
         renderSpotlights();
         filterNote.textContent = currentRegion === "All"
-          ? "Sorted by photo count across the full archive."
-          : "Showing one regional set and its densest place groups.";
+          ? "Sorted by photo count across the whole archive."
+          : "Showing this region first, then the places with the most photos.";
       }
 
       updateAll();

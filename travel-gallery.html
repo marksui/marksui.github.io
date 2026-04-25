@@ -575,11 +575,8 @@
     <section class="travel-hero">
       <div class="travel-copy">
         <p class="travel-kicker">Gallery</p>
-        <h2>A focused browse view for the archive.</h2>
-        <p>
-          This page is built for scanning images quickly. Region, place, and keyword filters narrow the archive fast,
-          while the layout keeps the photo field balanced without crowding different frame shapes together.
-        </p>
+        <h2>All photos.</h2>
+        <p>Everything in one place.</p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html" aria-current="page">Gallery</a>
@@ -612,8 +609,8 @@
           <p class="gallery-search-hint">Search checks place names, local names, region names, spot names, and photo captions.</p>
         </div>
         <aside class="gallery-note-panel">
-          <strong id="gallery-summary">Archive view.</strong>
-          <small id="gallery-summary-detail">Use filters to narrow by region, place, or keyword.</small>
+          <strong id="gallery-summary">All photos.</strong>
+          <small id="gallery-summary-detail">Region, place, and caption search.</small>
         </aside>
       </div>
 
@@ -795,7 +792,7 @@
         var regions = ["All"].concat(allRegions);
         regionFilters.innerHTML = regions.map(function(region) {
           var active = region === currentRegion;
-          var label = region === "All" ? "Archive" : shared.htmlLabel(region, shared.data.regionLocalNames[region]);
+          var label = region === "All" ? "All" : shared.htmlLabel(region, shared.data.regionLocalNames[region]);
           var count = region === "All"
             ? shared.totalPhotoCount()
             : shared.regionPhotoCount(region);
@@ -865,18 +862,18 @@
           pills.push('<div class="active-pill"><strong>Search</strong><span>' + shared.escapeHtml(currentQuery) + '</span></div>');
         }
         if (!pills.length) {
-          pills.push('<div class="active-pill"><strong>View</strong><span>Full archive</span></div>');
+          pills.push('<div class="active-pill"><strong>View</strong><span>Everything</span></div>');
         }
         activeWrap.innerHTML = pills.join("");
         resetButton.hidden = !(currentRegion !== "All" || currentPlace || currentQuery);
 
         var summary = entries.length
           ? entries.length + ' photos across ' + places.length + ' places.'
-          : 'No photos match the current filters.';
+          : 'No photos here.';
         document.getElementById("gallery-summary").textContent = summary;
 
         if (!entries.length) {
-          summaryDetail.textContent = "Try a broader region, a different place, or a shorter keyword.";
+          summaryDetail.textContent = "Change the filters to see more.";
           return;
         }
 
@@ -885,7 +882,7 @@
         });
         summaryDetail.textContent = leadPlaces.length
           ? "Leading sets: " + leadPlaces.join(" · ") + (places.length > 3 ? " ..." : "")
-          : "Use filters to move through the archive.";
+          : "Region, place, and caption search.";
       }
 
       function renderGrid(entries) {

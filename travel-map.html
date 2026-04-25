@@ -899,10 +899,8 @@
       <div class="travel-hero">
         <div class="travel-intro">
           <p class="travel-kicker">Atlas</p>
-          <h2>Visited places, grouped by region and tied back to the photo archive.</h2>
-          <p>
-            This is the place-first view of the archive: open a region, choose a city, and move into photo sets without losing geographic context.
-          </p>
+          <h2>Places on the map.</h2>
+          <p>The archive, organized by place.</p>
           <nav class="travel-local-nav" aria-label="Personal pages">
             <a href="personal.html">Overview</a>
             <a href="travel-gallery.html">Gallery</a>
@@ -947,8 +945,8 @@
           <p class="selected-spots" id="selected-spots" hidden></p>
           <p class="selected-photo-meta" id="selected-photo-meta"></p>
           <div class="selected-actions">
-            <a id="selected-gallery-link" href="travel-gallery.html">Gallery Set</a>
-            <a id="selected-collection-link" href="travel-collections.html">Region Set</a>
+            <a id="selected-gallery-link" href="travel-gallery.html">Gallery</a>
+            <a id="selected-collection-link" href="travel-collections.html">Region</a>
           </div>
           <div class="photo-slots" id="selected-photos"></div>
         </aside>
@@ -1375,7 +1373,7 @@
       var regions = ["All"].concat(uniqueRegions());
       filterWrap.innerHTML = regions.map(function(region) {
         var activeClass = region === currentRegion ? " active" : "";
-        var label = region === "All" ? "Archive" : regionHtml(region);
+        var label = region === "All" ? "All" : regionHtml(region);
         return '<button class="region-filter' + activeClass + '" type="button" data-region="' + region + '" aria-pressed="' + String(region === currentRegion) + '">' + label + '</button>';
       }).join("");
 
@@ -1401,8 +1399,8 @@
       }
       if (note) {
         note.textContent = placesView === "photos"
-          ? "Showing photographed places."
-          : "Showing every visited place.";
+          ? "Showing places with photos."
+          : "Showing all the places I've added.";
       }
     }
 
@@ -1494,7 +1492,7 @@
       var filteredPlaces = region === "All"
         ? places
         : places.filter(function(place) { return place.region === region; });
-      document.getElementById("map-count").textContent = (region === "All" ? "Archive" : regionText(region)) + " · " + filteredPlaces.length + " places · " + filteredPlaces.reduce(function(total, place) {
+      document.getElementById("map-count").textContent = (region === "All" ? "All places" : regionText(region)) + " · " + filteredPlaces.length + " places · " + filteredPlaces.reduce(function(total, place) {
         return total + countPhotosForPlace(place);
       }, 0) + " photos";
       var bounds = L.latLngBounds(filteredPlaces.map(function(place) { return place.coords; }));
@@ -1503,7 +1501,7 @@
     }
 
     function initMap() {
-      document.getElementById("map-count").textContent = "Archive · " + places.length + " places · " + totalPhotoCount() + " photos";
+      document.getElementById("map-count").textContent = "All places · " + places.length + " places · " + totalPhotoCount() + " photos";
       if (!window.L) {
         document.getElementById("travel-map").textContent = "Map is unavailable.";
         return;
