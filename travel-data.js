@@ -85,10 +85,6 @@
           {
             "src": "img/california/yorba-linda/yorba-linda-lakeside-houses-at-dusk.jpg",
             "caption": "Yorba Linda - Lakeside Houses at Dusk"
-          },
-          {
-            "src": "img/california/yorba-linda/yorba-linda-fiery-lake-sunset.jpg",
-            "caption": "Yorba Linda - Fiery Lake Sunset"
           }
         ]
       },
@@ -1629,10 +1625,27 @@
           {
             "src": "img/taiwan/taipei/taipei-101-fountain-view.jpg",
             "caption": "Taipei - Taipei 101 Fountain View"
-          },
+          }
+        ]
+      },
+      {
+        "region": "Taiwan",
+        "name": "Taichung",
+        "localName": "臺中",
+        "coords": [
+          24.1477,
+          120.6736
+        ],
+        "spots": [
+          "National Taiwan Museum of Fine Arts"
+        ],
+        "spotsLocal": [
+          "國立臺灣美術館"
+        ],
+        "photos": [
           {
-            "src": "img/taiwan/taipei/taipei-paper-plane-message-wall.jpg",
-            "caption": "Taipei - Paper Plane Message Wall"
+            "src": "img/taiwan/taichung/taichung-national-taiwan-museum-of-fine-arts-paper-plane-wall.jpg",
+            "caption": "Taichung - National Taiwan Museum of Fine Arts Paper Plane Wall"
           }
         ]
       },
@@ -1658,10 +1671,6 @@
           {
             "src": "img/taiwan/hualien/hualien-harbor-overlook.jpg",
             "caption": "Hualien - Harbor Overlook"
-          },
-          {
-            "src": "img/taiwan/hualien/hualien-harbor-terrace-view.jpg",
-            "caption": "Hualien - Harbor Terrace View"
           },
           {
             "src": "img/taiwan/hualien/hualien-forest-trail.jpg",
@@ -2679,7 +2688,6 @@
       "img/california/ventura/ventura-pier-coastline-view.jpg": "landscape",
       "img/california/ventura/ventura-rocky-beach-surf.jpg": "portrait",
       "img/california/yorba-linda/yorba-linda-ducks-on-water.jpg": "landscape",
-      "img/california/yorba-linda/yorba-linda-fiery-lake-sunset.jpg": "portrait",
       "img/california/yorba-linda/yorba-linda-golden-hillside-homes.jpg": "portrait",
       "img/california/yorba-linda/yorba-linda-golden-sunset.jpg": "landscape",
       "img/california/yorba-linda/yorba-linda-hilltop-sunset-view.jpg": "landscape",
@@ -2867,7 +2875,6 @@
       "img/taiwan/hualien/hualien-foothill-path.jpg": "landscape",
       "img/taiwan/hualien/hualien-forest-trail.jpg": "portrait",
       "img/taiwan/hualien/hualien-harbor-overlook.jpg": "landscape",
-      "img/taiwan/hualien/hualien-harbor-terrace-view.jpg": "landscape",
       "img/taiwan/hualien/hualien-mountain-clouds.jpg": "landscape",
       "img/taiwan/hualien/hualien-pond-reflections.jpg": "portrait",
       "img/taiwan/hualien/hualien-qixingtan-coastline.jpg": "landscape",
@@ -2889,7 +2896,7 @@
       "img/taiwan/taipei/taipei-chiang-kai-shek-memorial-hall-ceiling.jpg": "landscape",
       "img/taiwan/taipei/taipei-chiang-kai-shek-memorial-hall-plaza.jpg": "landscape",
       "img/taiwan/taipei/taipei-national-sun-yat-sen-memorial-hall-entrance.jpg": "portrait",
-      "img/taiwan/taipei/taipei-paper-plane-message-wall.jpg": "portrait",
+      "img/taiwan/taichung/taichung-national-taiwan-museum-of-fine-arts-paper-plane-wall.jpg": "portrait",
       "img/vietnam/hanoi/hanoi-fine-arts-lacquer-panel.jpg": "landscape",
       "img/vietnam/hanoi/hanoi-fine-arts-museum-building.jpg": "portrait",
       "img/vietnam/hanoi/hanoi-fine-arts-museum-gallery.jpg": "portrait",
