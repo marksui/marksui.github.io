@@ -985,7 +985,7 @@
         <div class="travel-intro">
           <p class="travel-kicker">Places Map</p>
           <h2>Places on the map.</h2>
-          <p>Places I have added to the archive.</p>
+          <p>This is the main way I browse the archive.</p>
           <nav class="travel-local-nav" aria-label="Personal pages">
             <a href="personal.html">Overview</a>
             <a href="travel-gallery.html">Gallery</a>
@@ -997,15 +997,15 @@
         <dl class="travel-stats" aria-label="Travel archive totals">
           <div>
             <dt id="stat-places">0</dt>
-            <dd>Visited places</dd>
+            <dd>Places</dd>
           </div>
           <div>
             <dt id="stat-photos">0</dt>
-            <dd>Photos in archive</dd>
+            <dd>Photos</dd>
           </div>
           <div>
             <dt id="stat-regions">0</dt>
-            <dd>Regions with photos</dd>
+            <dd>Regions</dd>
           </div>
         </dl>
       </div>
@@ -1072,6 +1072,10 @@
     var query = new URLSearchParams(window.location.search);
     var requestedRegion = query.get("region");
     var requestedPlace = query.get("place");
+    var defaultPlaceName = "Dana Point";
+    var defaultPlaceIndex = places.findIndex(function(place) {
+      return place.name === defaultPlaceName && place.photos && place.photos.length;
+    });
     var selectedIndex = places
       .map(function(place, index) {
         return { place: place, index: index };
@@ -1120,6 +1124,11 @@
         selectedIndex = requestedPlaceIndex;
         currentRegion = places[requestedPlaceIndex].region;
       }
+    }
+
+    if (!requestedRegion && !requestedPlace && defaultPlaceIndex >= 0) {
+      selectedIndex = defaultPlaceIndex;
+      currentRegion = places[defaultPlaceIndex].region;
     }
 
 
@@ -1424,7 +1433,7 @@
       updateUrl();
 
       if (map && moveMap) {
-        map.setView(place.coords, 7, { animate: true });
+        focusSelectedPlace(true);
       }
     }
 
@@ -1484,8 +1493,8 @@
       }
       if (note) {
         note.textContent = placesView === "photos"
-          ? "Showing places with photos."
-          : "Showing all the places I've added.";
+          ? "Photo sets only."
+          : "All added places.";
       }
     }
 
@@ -1585,6 +1594,20 @@
       updateUrl();
     }
 
+    function focusSelectedPlace(animate) {
+      if (!map || !places[selectedIndex]) {
+        return;
+      }
+
+      var place = places[selectedIndex];
+      document.getElementById("map-count").textContent = textLabel(place.name, place.localName) + " · " + photoLabel(countPhotosForPlace(place));
+      map.setView(place.coords, 10, { animate: animate !== false });
+
+      if (markers[selectedIndex] && markers[selectedIndex].openPopup) {
+        markers[selectedIndex].openPopup();
+      }
+    }
+
     function initMap() {
       document.getElementById("map-count").textContent = "All places · " + places.length + " places · " + totalPhotoCount() + " photos";
       if (!window.L) {
@@ -1603,7 +1626,11 @@
       markers = places.map(function(place, index) {
         var marker = L.circleMarker(place.coords, markerStyle(index === selectedIndex))
           .addTo(map)
-          .bindTooltip(textLabel(place.name, place.localName), { direction: "top", opacity: 0.9 });
+          .bindTooltip(textLabel(place.name, place.localName), { direction: "top", opacity: 0.9 })
+          .bindPopup(
+            '<strong>' + htmlLabel(place.name, place.localName) + '</strong><br><span>' + regionHtml(place.region) + ' · ' + escapeHtml(photoLabel(countPhotosForPlace(place))) + '</span>',
+            { closeButton: false, autoClose: false, offset: [0, -6] }
+          );
 
         marker.on("click", function() {
           currentRegion = place.region;
@@ -1616,7 +1643,11 @@
         return marker;
       });
 
-      fitMapToRegion("All");
+      if (requestedPlace || (!requestedRegion && !requestedPlace)) {
+        focusSelectedPlace(false);
+      } else {
+        fitMapToRegion(currentRegion);
+      }
     }
 
     document.addEventListener("click", function(event) {
