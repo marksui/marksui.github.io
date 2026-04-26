@@ -11,7 +11,7 @@
   <script src="travel-shared.js"></script>
   <style>
     .tree-main {
-      max-width: 1240px;
+      max-width: 1160px;
       --tree-accent: #5d6b66;
       --tree-accent-soft: rgba(93, 107, 102, 0.14);
       --tree-accent-strong: rgba(93, 107, 102, 0.22);
@@ -37,10 +37,7 @@
     }
 
     .tree-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-      gap: 1.6rem;
-      align-items: stretch;
+      display: block;
     }
 
     .tree-copy p:last-of-type {
@@ -80,54 +77,11 @@
       outline: none;
     }
 
-    .tree-glance {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.9rem;
-    }
-
-    .tree-glance article {
-      min-height: 116px;
-      padding: 1.1rem 1.05rem 1rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 22px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.18)),
-        var(--tree-surface);
-      box-shadow: var(--tree-shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      transition: transform 0.28s var(--tree-ease), box-shadow 0.28s ease, border-color 0.24s ease;
-      animation: treeFadeLift 0.62s var(--tree-ease) both;
-      backdrop-filter: blur(10px);
-    }
-
-    .tree-glance article:hover {
-      transform: translateY(-4px);
-      border-color: var(--tree-accent);
-      box-shadow: var(--tree-shadow-hover);
-    }
-
-    .tree-glance strong {
-      font-size: clamp(2rem, 3vw, 2.55rem);
-      line-height: 0.92;
-      color: var(--tree-accent);
-      letter-spacing: 0;
-    }
-
-    .tree-glance span {
-      display: block;
-      margin-top: 0.62rem;
-      font-size: 0.92rem;
-      color: var(--text);
-    }
-
     .tree-shell {
       display: grid;
       grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.84fr);
       gap: 1.25rem;
-      margin-top: 1.4rem;
+      margin-top: 0.72rem;
       align-items: start;
     }
 
@@ -202,10 +156,10 @@
         radial-gradient(circle at 50% 48%, rgba(93, 107, 102, 0.08), transparent 42%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.16));
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-      overflow-x: auto;
-      overflow-y: hidden;
+      overflow: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
+      overscroll-behavior: contain;
     }
 
     .mindmap-board::-webkit-scrollbar {
@@ -221,7 +175,7 @@
 
     .mindmap-canvas {
       position: relative;
-      min-width: 760px;
+      min-width: 700px;
       min-height: 420px;
       padding: 1.1rem;
     }
@@ -273,9 +227,9 @@
 
     .mindmap-center {
       position: relative;
-      min-width: 240px;
-      max-width: 320px;
-      padding: 1rem 1.35rem 0.95rem;
+      min-width: 216px;
+      max-width: 286px;
+      padding: 0.9rem 1.18rem 0.88rem;
       border: 0;
       border-radius: 999px;
       background: linear-gradient(135deg, #7c56f4, #5c3de4);
@@ -329,16 +283,17 @@
 
     .mindmap-center strong {
       display: block;
-      font-size: 1.45rem;
+      font-size: 1.34rem;
       line-height: 1.05;
       letter-spacing: 0;
       font-weight: 600;
+      overflow-wrap: anywhere;
     }
 
     .mindmap-center span {
       display: block;
       margin-top: 0.3rem;
-      font-size: 0.82rem;
+      font-size: 0.79rem;
       opacity: 0.92;
     }
 
@@ -347,9 +302,9 @@
       left: var(--node-x, 50%);
       top: var(--node-y, 50%);
       transform: translate(-50%, -50%);
-      min-width: 146px;
-      max-width: 210px;
-      padding: 0.72rem 0.95rem 0.68rem;
+      min-width: 132px;
+      max-width: 188px;
+      padding: 0.66rem 0.84rem 0.62rem;
       border: 1px solid var(--node-border, rgba(93, 107, 102, 0.26));
       border-radius: 999px;
       background: var(--node-soft, rgba(255, 255, 255, 0.72));
@@ -378,25 +333,26 @@
     }
 
     .mindmap-child.is-leaf {
-      min-width: 122px;
-      max-width: 180px;
-      padding: 0.58rem 0.78rem 0.56rem;
+      min-width: 110px;
+      max-width: 160px;
+      padding: 0.52rem 0.7rem 0.5rem;
       cursor: default;
       border-style: dashed;
     }
 
     .mindmap-child strong {
       display: block;
-      font-size: 1.02rem;
+      font-size: 0.96rem;
       line-height: 1.08;
       font-weight: 600;
       letter-spacing: 0;
+      overflow-wrap: anywhere;
     }
 
     .mindmap-child small {
       display: block;
       margin-top: 0.22rem;
-      font-size: 0.76rem;
+      font-size: 0.72rem;
       color: var(--muted);
       line-height: 1.22;
     }
@@ -1082,7 +1038,6 @@
     }
 
     @media (max-width: 1080px) {
-      .tree-hero,
       .tree-shell {
         grid-template-columns: 1fr;
       }
@@ -1100,16 +1055,10 @@
     }
 
     @media (max-width: 720px) {
-      .tree-glance,
       .preview-stats,
       .preview-grid,
       .preview-photo-grid {
         grid-template-columns: 1fr;
-      }
-
-      .tree-glance article {
-        min-height: 0;
-        padding: 0.95rem 0.92rem 0.88rem;
       }
 
       .tree-toolbar {
@@ -1157,7 +1106,7 @@
       }
 
       .mindmap-canvas {
-        min-width: 700px;
+        min-width: 620px;
         min-height: 360px;
       }
 
@@ -1166,14 +1115,14 @@
       }
 
       .mindmap-center {
-        min-width: 210px;
-        max-width: 260px;
+        min-width: 188px;
+        max-width: 236px;
       }
 
       .mindmap-child {
-        min-width: 126px;
-        max-width: 176px;
-        padding: 0.62rem 0.78rem 0.58rem;
+        min-width: 114px;
+        max-width: 156px;
+        padding: 0.56rem 0.7rem 0.52rem;
       }
 
       .mindmap-child strong {
@@ -1186,7 +1135,6 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .tree-glance article,
       .tree-children,
       .tree-children::before,
       .tree-branch::before,
@@ -1240,21 +1188,6 @@
           <a href="travel-tree.html" aria-current="page">Tree</a>
           <a href="travel-collections.html">Collections</a>
         </nav>
-      </div>
-
-      <div class="tree-glance" aria-label="Tree overview">
-        <article>
-          <strong id="tree-branch-count">0</strong>
-          <span>Top branches</span>
-        </article>
-        <article>
-          <strong id="tree-region-count">0</strong>
-          <span>Regions in the archive</span>
-        </article>
-        <article>
-          <strong id="tree-photo-count">0</strong>
-          <span>Photos connected here</span>
-        </article>
       </div>
     </section>
 
@@ -1974,7 +1907,7 @@
           kicker: "Root",
           titleHtml: shared.escapeHtml(root.label),
           meta: children.length + (children.length === 1 ? " branch" : " branches"),
-          canGoUp: false,
+          canGoUp: true,
           children: children
         };
       }
@@ -1992,12 +1925,13 @@
 
         var count = focus.children.length;
         var boardWidth = Math.max(board.clientWidth || 0, 720);
-        var canvasWidth = Math.max(boardWidth, count > 9 ? 980 : count > 6 ? 900 : count > 3 ? 780 : boardWidth);
-        var canvasHeight = count > 9 ? 470 : count > 5 ? 430 : 390;
+        var boardHeight = Math.max(board.clientHeight || 0, 420);
+        var canvasWidth = Math.max(boardWidth, count > 9 ? 1040 : count > 6 ? 940 : count > 3 ? 820 : boardWidth);
+        var canvasHeight = Math.max(boardHeight, count > 9 ? 520 : count > 5 ? 460 : 410);
         var centerX = canvasWidth / 2;
         var centerY = canvasHeight / 2;
-        var radiusX = Math.min(canvasWidth * 0.34, count > 9 ? 360 : 300);
-        var radiusY = Math.min(canvasHeight * 0.34, count > 9 ? 188 : 162);
+        var radiusX = Math.max(120, Math.min((canvasWidth / 2) - 132, count > 9 ? 360 : 300));
+        var radiusY = Math.max(92, Math.min((canvasHeight / 2) - 108, count > 9 ? 188 : 162));
 
         canvas.style.width = canvasWidth + "px";
         canvas.style.height = canvasHeight + "px";
@@ -2065,11 +1999,18 @@
           path.style.animationDelay = (index * 55) + "ms";
         });
 
-        if (canvasWidth > board.clientWidth) {
-          board.scrollLeft = Math.max(0, (canvasWidth - board.clientWidth) / 2);
-        } else {
-          board.scrollLeft = 0;
-        }
+        var selectedNode = stage.querySelector(".mindmap-child.is-selected");
+        var focusNode = selectedNode || centerEl;
+        var focusRect = focusNode.getBoundingClientRect();
+        var boardRect = board.getBoundingClientRect();
+        var focusCenterX = board.scrollLeft + (focusRect.left - boardRect.left) + (focusRect.width / 2);
+        var focusCenterY = board.scrollTop + (focusRect.top - boardRect.top) + (focusRect.height / 2);
+        var nextLeft = Math.max(0, focusCenterX - (board.clientWidth / 2));
+        var nextTop = Math.max(0, focusCenterY - (board.clientHeight / 2));
+        var maxLeft = Math.max(0, canvasWidth - board.clientWidth);
+        var maxTop = Math.max(0, canvasHeight - board.clientHeight);
+        board.scrollLeft = Math.min(nextLeft, maxLeft);
+        board.scrollTop = Math.min(nextTop, maxTop);
       }
 
       function renderTree() {
@@ -2738,20 +2679,15 @@
           state.region = "";
         } else if (state.branch) {
           state.branch = "";
+        } else if (state.root) {
+          state.root = "";
         }
         rerender();
-      }
-
-      function renderStats() {
-        document.getElementById("tree-branch-count").textContent = String(rootDefinitions.length);
-        document.getElementById("tree-region-count").textContent = String(photoRegionCount);
-        document.getElementById("tree-photo-count").textContent = String(shared.totalPhotoCount());
       }
 
       function rerender() {
         sanitizeState();
         setModeButtons();
-        renderStats();
         renderMindmap();
         renderTree();
         renderPreview();
