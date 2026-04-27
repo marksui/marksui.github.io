@@ -8,7 +8,7 @@
   <script src="theme.js"></script>
   <style>
     .home-main {
-      max-width: 1000px;
+      max-width: 1120px;
       --home-accent: #55645e;
       --home-secondary: #7b7467;
       --home-rule: #d9d5cc;
@@ -29,28 +29,63 @@
 
     .home-hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(230px, 0.65fr);
-      gap: 1.7rem;
-      align-items: end;
-      padding-bottom: 1.35rem;
+      grid-template-columns: minmax(0, 1.18fr) minmax(300px, 0.82fr);
+      gap: 1.2rem;
+      align-items: start;
+      padding-bottom: 1.45rem;
       border-bottom: 1px solid var(--home-rule);
       animation: homeFadeUp 0.7s var(--home-ease) both;
     }
 
+    .home-copy {
+      display: grid;
+      align-content: start;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .home-kicker {
+      margin: 0;
+      color: var(--home-accent);
+      font-size: 0.92rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
     .home-hero h2 {
-      margin-top: 0;
-      margin-bottom: 0.55rem;
+      margin: 0;
+      max-width: 12em;
+      font-size: 2.54rem;
+      line-height: 1.02;
+      font-weight: 600;
+      letter-spacing: 0;
     }
 
     .home-hero p {
       margin: 0;
     }
 
+    .home-lede {
+      max-width: 45rem;
+      color: var(--text);
+      font-size: 1.04rem;
+      line-height: 1.58;
+      opacity: 0.9;
+    }
+
+    .home-position {
+      max-width: 45rem;
+      padding-left: 0.9rem;
+      border-left: 2px solid var(--home-accent);
+      color: var(--text);
+      opacity: 0.86;
+    }
+
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 0.55rem;
-      margin-top: 1.1rem;
+      margin-top: 0.2rem;
     }
 
     .hero-actions a {
@@ -67,6 +102,12 @@
       transition: transform 0.24s var(--home-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
     }
 
+    .hero-actions a:first-child {
+      border-color: var(--home-accent);
+      background: var(--home-accent);
+      color: #f7f3ee;
+    }
+
     .hero-actions a:hover,
     .hero-actions a:focus-visible {
       transform: translateY(-1px);
@@ -75,51 +116,96 @@
       background: linear-gradient(180deg, var(--home-wash), transparent 90%), var(--home-panel);
     }
 
-    .home-highlights {
-      display: grid;
-      gap: 0.6rem;
-      border-left: 1px solid var(--home-rule);
-      padding-left: 1rem;
-    }
-
-    .highlight-item {
-      padding-bottom: 0.55rem;
-      border-bottom: 1px solid var(--home-rule);
-      transition: transform 0.28s var(--home-ease), border-color 0.28s ease;
-      animation: homeFadeUp 0.6s var(--home-ease) both;
-    }
-
-    .highlight-item:nth-child(2) {
-      animation-delay: 0.08s;
-    }
-
-    .highlight-item:nth-child(3) {
-      animation-delay: 0.16s;
-    }
-
-    .highlight-item:hover {
-      transform: translateX(3px);
-      border-color: var(--home-accent);
-    }
-
-    .highlight-item:last-child {
-      border-bottom: 0;
-      padding-bottom: 0;
-    }
-
-    .highlight-value {
-      display: block;
+    .hero-actions a:first-child:hover,
+    .hero-actions a:first-child:focus-visible {
       color: var(--home-accent);
-      font-weight: bold;
-      line-height: 1.15;
-      transition: color 0.25s ease;
+      background: linear-gradient(180deg, var(--home-wash), transparent 90%), var(--home-panel);
     }
 
-    .highlight-label {
+    .home-profile-card {
+      display: grid;
+      grid-template-rows: auto auto;
+      min-width: 0;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: var(--home-panel);
+      box-shadow: var(--home-shadow);
+      overflow: hidden;
+    }
+
+    .home-profile-visual {
+      margin: 0;
+      border-bottom: 1px solid var(--home-rule);
+      background: var(--home-wash);
+      aspect-ratio: 16 / 10;
+    }
+
+    .home-profile-visual img {
       display: block;
-      margin-top: 0.22rem;
-      font-size: 0.92rem;
-      opacity: 0.78;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.92) contrast(1.02);
+      transition: transform 0.5s var(--home-ease), filter 0.3s ease;
+    }
+
+    .home-profile-card:hover .home-profile-visual img {
+      transform: scale(1.018);
+      filter: saturate(1) contrast(1.03);
+    }
+
+    .home-profile-body {
+      display: grid;
+      gap: 0.85rem;
+      padding: 0.95rem;
+    }
+
+    .home-profile-caption {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      color: var(--home-secondary);
+      font-size: 0.88rem;
+      line-height: 1.25;
+    }
+
+    .home-profile-caption strong {
+      color: var(--home-accent);
+      font-size: 1rem;
+    }
+
+    .home-facts {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.55rem;
+    }
+
+    .home-fact {
+      padding: 0.62rem 0.68rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.38);
+    }
+
+    html[data-theme="dark"] .home-fact {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .home-fact span {
+      display: block;
+      color: var(--home-secondary);
+      font-size: 0.78rem;
+      line-height: 1.15;
+    }
+
+    .home-fact strong {
+      display: block;
+      margin-top: 0.18rem;
+      color: var(--text);
+      font-size: 0.94rem;
+      line-height: 1.2;
     }
 
     .section-heading {
@@ -149,7 +235,7 @@
 
     .skills-band {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.8rem;
       margin-top: 0.85rem;
     }
@@ -363,14 +449,23 @@
         gap: 1rem;
       }
 
+      .home-hero h2 {
+        max-width: none;
+        font-size: 2.12rem;
+      }
+
+      .home-lede {
+        font-size: 1rem;
+      }
+
+      .home-profile-visual,
+      .home-profile-visual img {
+        min-height: 0;
+      }
+
       .skills-band,
       .updates-list {
         grid-template-columns: 1fr;
-      }
-
-      .home-highlights {
-        border-left: 0;
-        padding-left: 0;
       }
 
       .section-heading {
@@ -381,6 +476,16 @@
         display: block;
         margin-top: 0.45rem;
         width: 100%;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .home-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions a {
+        flex: 1 1 100%;
       }
     }
 
@@ -397,14 +502,12 @@
 
     @media (prefers-reduced-motion: reduce) {
       .home-hero,
-      .highlight-item,
       .skills-band-card,
       .updates-list li,
       .skill-card {
         animation: none;
       }
 
-      .highlight-item,
       .section-heading::after,
       .hero-actions a,
       .skills-band-card,
@@ -433,40 +536,55 @@
 
   <main class="home-main">
     <section class="home-hero">
-      <div>
-        <h2>About</h2>
-        <p>
-          I’m <strong>Mark Sui</strong>, an <strong>Electrical and Computer Engineering (ECE)</strong>
+      <div class="home-copy">
+        <p class="home-kicker">About</p>
+        <h2>ECE, hardware, and the personal archive around it.</h2>
+        <p class="home-lede">
+          I’m <strong>Mark Sui</strong>, an <strong>Electrical and Computer Engineering</strong>
           student at the University of California, San Diego, currently pursuing a
           <strong>Master of Science in Electrical and Computer Engineering</strong>. I already hold
           Bachelor of Science degrees in <strong>Computer Engineering</strong> and
-          <strong>Mathematics</strong>. My background bridges hardware, software, and applied mathematics,
-          with interests in <strong>embedded systems</strong>, <strong>computer architecture</strong>,
-          <strong>digital IC / VLSI design</strong>, and <strong>AI systems</strong>. I am especially interested
-          in <strong>hardware</strong>, <strong>SoC performance</strong>, <strong>computer architecture</strong>,
-          <strong>RTL design</strong>, and <strong>VLSI-related engineering roles</strong>.<br>
-          This site is both a personal homepage and a portfolio: I use it to keep my education, projects,
-          experience, travel, photography, and other notes in one place.
+          <strong>Mathematics</strong>.
+        </p>
+        <p class="home-position">
+          My work sits around hardware, software, and applied mathematics. I am especially interested in
+          <strong>hardware</strong>, <strong>SoC performance</strong>, <strong>computer architecture</strong>,
+          <strong>RTL design</strong>, and <strong>VLSI-related engineering roles</strong>.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
-          <a href="education.html">Academic Path</a>
           <a href="experience.html">Technical Work</a>
+          <a href="education.html">Academic Path</a>
           <a href="personal.html">Travel Archive</a>
           <a href="contact.html">Get in Touch</a>
         </div>
       </div>
-      <aside class="home-highlights" aria-label="Profile highlights">
-        <div class="highlight-item">
-          <span class="highlight-value">UC San Diego</span>
-          <span class="highlight-label">M.S. Electrical and Computer Engineering</span>
-        </div>
-        <div class="highlight-item">
-          <span class="highlight-value">VLSI / RTL</span>
-          <span class="highlight-label">Digital IC, FPGA, architecture, verification</span>
-        </div>
-        <div class="highlight-item">
-          <span class="highlight-value">Computer Engineering + Mathematics</span>
-          <span class="highlight-label">Dual B.S. background</span>
+      <aside class="home-profile-card" aria-label="Profile snapshot">
+        <figure class="home-profile-visual">
+          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" alt="Dana Point ocean terrace view" loading="eager" decoding="async">
+        </figure>
+        <div class="home-profile-body">
+          <div class="home-profile-caption">
+            <strong>Mark Sui</strong>
+            <span>San Diego, California</span>
+          </div>
+          <div class="home-facts">
+            <div class="home-fact">
+              <span>Current</span>
+              <strong>UC San Diego ECE</strong>
+            </div>
+            <div class="home-fact">
+              <span>Focus</span>
+              <strong>VLSI / RTL</strong>
+            </div>
+            <div class="home-fact">
+              <span>Background</span>
+              <strong>Computer Engineering</strong>
+            </div>
+            <div class="home-fact">
+              <span>Second B.S.</span>
+              <strong>Mathematics</strong>
+            </div>
+          </div>
         </div>
       </aside>
     </section>

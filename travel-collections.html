@@ -130,8 +130,17 @@
     }
 
     .collections-filter-bar {
+      position: sticky;
+      top: 0.7rem;
+      z-index: 8;
       display: grid;
       gap: 0.72rem;
+      padding: 0.72rem;
+      border: 1px solid var(--collections-rule);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--collections-panel) 92%, var(--surface) 8%);
+      box-shadow: 0 12px 32px rgba(53, 55, 49, 0.075);
+      backdrop-filter: blur(10px);
     }
 
     .region-filter-row {
@@ -336,7 +345,7 @@
 
     .collection-actions {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.6rem;
       margin-top: 0.15rem;
     }
@@ -518,6 +527,10 @@
         gap: 0.35rem;
       }
 
+      .collection-actions {
+        grid-template-columns: 1fr;
+      }
+
       .collection-places {
         gap: 0.34rem;
       }
@@ -572,15 +585,15 @@
       <div class="collections-glance" aria-label="Collection totals">
         <article>
           <strong id="collections-region-count">0</strong>
-          <span>Regions with photo collections</span>
+          <span>Regions</span>
         </article>
         <article>
           <strong id="collections-place-count">0</strong>
-          <span>Places inside the current region scope</span>
+          <span>Places</span>
         </article>
         <article>
           <strong id="collections-photo-count">0</strong>
-          <span>Photos in the cards below</span>
+          <span>Photos</span>
         </article>
       </div>
     </section>
@@ -711,6 +724,7 @@
               '<div class="collection-actions">' +
                 '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">Gallery</a>' +
                 '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">Places Map</a>' +
+                '<a href="travel-tree.html?region=' + encodeURIComponent(region) + '">Tree</a>' +
               '</div>' +
             '</div>' +
           '</article>';

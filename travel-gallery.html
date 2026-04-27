@@ -269,12 +269,21 @@
     }
 
     .gallery-active-bar {
+      position: sticky;
+      top: 0.7rem;
+      z-index: 8;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0.8rem;
       flex-wrap: wrap;
       margin-top: 1rem;
+      padding: 0.58rem;
+      border: 1px solid var(--gallery-rule);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--gallery-panel) 92%, var(--surface) 8%);
+      box-shadow: 0 12px 32px rgba(53, 55, 49, 0.075);
+      backdrop-filter: blur(10px);
     }
 
     .gallery-active {
@@ -293,7 +302,7 @@
       color: var(--gallery-secondary);
       font-size: 0.86rem;
       line-height: 1.2;
-      background: var(--gallery-panel);
+      background: transparent;
     }
 
     .active-pill strong {
@@ -673,9 +682,9 @@
     <section class="gallery-shell">
       <div class="gallery-toolbar">
         <div class="gallery-search-panel">
-          <label class="gallery-search-label" for="gallery-search">Search captions, places, and regions</label>
+          <label class="gallery-search-label" for="gallery-search">Search</label>
           <input class="gallery-search-input" id="gallery-search" type="search" placeholder="Try Osaka, museum, lake, palace, skyline...">
-          <p class="gallery-search-hint">Search checks place names, local names, region names, spot names, and photo captions.</p>
+          <p class="gallery-search-hint">Places, regions, spots, and captions.</p>
         </div>
         <aside class="gallery-note-panel">
           <strong id="gallery-summary">All photos.</strong>
@@ -695,7 +704,7 @@
 
       <div class="gallery-active-bar">
         <div class="gallery-active" id="gallery-active"></div>
-        <button class="gallery-reset" id="gallery-reset" type="button" hidden>Clear filters</button>
+        <button class="gallery-reset" id="gallery-reset" type="button" hidden>Clear</button>
       </div>
 
       <div class="gallery-stream">

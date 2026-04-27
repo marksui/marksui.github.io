@@ -146,6 +146,153 @@
       font-size: 0.92rem;
     }
 
+    .tree-context {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 0.7rem;
+      margin-bottom: 0.95rem;
+      padding: 0.82rem 0.9rem 0.88rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.38);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    }
+
+    html[data-theme="dark"] .tree-context {
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .tree-context-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
+    .tree-context-track {
+      display: flex;
+      align-items: center;
+      gap: 0.42rem;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .tree-context-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 2rem;
+      padding: 0.34rem 0.72rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.22s var(--tree-ease), border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+    }
+
+    .tree-context-chip:hover,
+    .tree-context-chip:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--tree-accent);
+      background: var(--tree-accent-soft);
+      color: var(--tree-accent);
+      outline: none;
+    }
+
+    .tree-context-chip.is-current {
+      border-color: var(--tree-accent);
+      background: var(--tree-accent-soft);
+      color: var(--tree-accent);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+    }
+
+    .tree-context-separator {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1;
+    }
+
+    .tree-context-meta {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    .tree-context-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tree-context-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .tree-context-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2rem;
+      padding: 0.34rem 0.76rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      transition: transform 0.22s var(--tree-ease), border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+    }
+
+    .tree-context-action:hover,
+    .tree-context-action:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--tree-accent);
+      background: var(--tree-accent-soft);
+      color: var(--tree-accent);
+      outline: none;
+    }
+
+    .tree-context-note {
+      color: var(--text);
+      font-size: 0.92rem;
+      line-height: 1.42;
+    }
+
+    .tree-list-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.72rem;
+      padding-bottom: 0.72rem;
+      border-bottom: 1px solid rgba(93, 107, 102, 0.14);
+    }
+
+    .tree-list-head strong {
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    .tree-list-head span {
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
     .mindmap-board {
       position: relative;
       z-index: 1;
@@ -1061,6 +1208,20 @@
         grid-template-columns: 1fr;
       }
 
+      .tree-context-top {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .tree-context-bottom {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .tree-context-meta {
+        white-space: normal;
+      }
+
       .tree-toolbar {
         flex-direction: column;
         align-items: flex-start;
@@ -1195,19 +1356,24 @@
       <div class="tree-panel">
         <div class="tree-toolbar">
           <div class="tree-toolbar-copy">
-            <strong>Branch Board</strong>
-            <span>Start from continents, then go narrower from there.</span>
+            <strong id="tree-toolbar-title">Branch Board</strong>
+            <span id="tree-toolbar-note">Start from continents, then go narrower from there.</span>
           </div>
           <div class="tree-mode" role="tablist" aria-label="Tree view mode">
-            <button class="is-active" id="tree-mode-photos" type="button" data-mode="photos" role="tab" aria-selected="true">Photo sets</button>
-            <button id="tree-mode-all" type="button" data-mode="all" role="tab" aria-selected="false">All places</button>
+            <button class="is-active" id="tree-mode-photos" type="button" data-mode="photos" role="tab" aria-selected="true">Photos</button>
+            <button id="tree-mode-all" type="button" data-mode="all" role="tab" aria-selected="false">Places</button>
           </div>
         </div>
+        <div class="tree-context" id="tree-context"></div>
         <div class="mindmap-board" id="mindmap-board">
           <div class="mindmap-canvas" id="mindmap-canvas">
             <svg class="mindmap-svg" id="mindmap-svg" aria-hidden="true"></svg>
             <div class="mindmap-stage" id="mindmap-stage"></div>
           </div>
+        </div>
+        <div class="tree-list-head">
+          <strong id="tree-list-title">Tree List</strong>
+          <span id="tree-list-meta">Pick the next branch from the list below.</span>
         </div>
         <div class="tree-root" id="tree-root"></div>
       </div>
@@ -1611,6 +1777,171 @@
         return parts.filter(Boolean).filter(function(part, index, list) {
           return index === 0 || list[index - 1] !== part;
         }).join(" / ");
+      }
+
+      function rootDefinitionByKey(rootKey) {
+        return rootDefinitions.find(function(definition) {
+          return definition.key === rootKey;
+        }) || null;
+      }
+
+      function resetToOverview() {
+        state.root = "";
+        state.branch = "";
+        state.region = "";
+        state.place = "";
+        rerender();
+      }
+
+      function scopeMetaText() {
+        var scope = currentScope();
+        if (scope.type === "overview") {
+          return rootDefinitions.length + " continents · " + photoRegionCount + " regions · " + shared.totalPhotoCount() + " photos";
+        }
+        if (scope.type === "place" && scope.places.length) {
+          var place = scope.places[0];
+          var spots = (place.spots || []).length;
+          return shared.photoLabel(shared.countPhotosForPlace(place)) + (spots ? " · " + spots + (spots === 1 ? " spot" : " spots") : "");
+        }
+        return scope.places.length + (scope.places.length === 1 ? " city" : " cities") + " · " + shared.photoLabel(photoTotalForPlaces(scope.places));
+      }
+
+      function toolbarNoteText() {
+        if (!state.root) {
+          return "Start from continents, then go narrower from there.";
+        }
+        if (state.place) {
+          return "This city is selected. Open photos here or step back up the tree.";
+        }
+        if (state.region) {
+          return "This region is open. Pick a city next.";
+        }
+        if (state.branch) {
+          return "This branch is open. Pick the next region.";
+        }
+        return "This continent is open. Pick the next branch.";
+      }
+
+      function renderToolbarMeta() {
+        var note = document.getElementById("tree-toolbar-note");
+        if (note) {
+          note.textContent = toolbarNoteText();
+        }
+      }
+
+      function contextTrailItems() {
+        var items = [{
+          labelHtml: "Continents",
+          attrs: 'data-tree-jump="overview"',
+          current: !state.root
+        }];
+
+        if (!state.root) {
+          return items;
+        }
+
+        var root = rootDefinitionByKey(state.root);
+        if (root) {
+          items.push({
+            labelHtml: shared.escapeHtml(root.label),
+            attrs: 'data-tree-jump="root" data-root="' + shared.escapeHtml(root.key) + '"',
+            current: !!state.root && !state.branch && !state.region && !state.place
+          });
+        }
+
+        if (state.branch) {
+          items.push({
+            labelHtml: branchHtmlLabel(state.branch),
+            attrs: 'data-tree-jump="branch" data-branch="' + shared.escapeHtml(state.branch) + '"',
+            current: !state.region && !state.place
+          });
+        }
+
+        if (state.region) {
+          items.push({
+            labelHtml: regionHtmlLabel(state.region),
+            attrs: 'data-tree-jump="region" data-region="' + shared.escapeHtml(state.region) + '"' + (state.branch ? ' data-branch="' + shared.escapeHtml(state.branch) + '"' : ""),
+            current: !state.place
+          });
+        }
+
+        if (state.place && state.region) {
+          var place = placeByName(state.region, state.place);
+          if (place) {
+            items.push({
+              labelHtml: shared.htmlLabel(place.name, place.localName),
+              attrs: 'data-tree-jump="place" data-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(place.region) + '"' + (state.branch ? ' data-branch="' + shared.escapeHtml(state.branch) + '"' : ""),
+              current: true
+            });
+          }
+        }
+
+        return items;
+      }
+
+      function renderContextBar() {
+        var wrap = document.getElementById("tree-context");
+        if (!wrap) {
+          return;
+        }
+
+        var trail = contextTrailItems();
+        var canStepBack = !!(state.root || state.branch || state.region || state.place);
+        wrap.innerHTML = '' +
+          '<div class="tree-context-top">' +
+            '<div class="tree-context-track">' +
+              trail.map(function(item, index) {
+                return '' +
+                  (index ? '<span class="tree-context-separator" aria-hidden="true">/</span>' : "") +
+                  '<button class="tree-context-chip' + (item.current ? ' is-current' : '') + '" type="button" ' + item.attrs + (item.current ? ' aria-current="true"' : '') + '>' +
+                    item.labelHtml +
+                  "</button>";
+              }).join("") +
+            "</div>" +
+            '<span class="tree-context-meta">' + shared.escapeHtml(scopeMetaText()) + "</span>" +
+          "</div>" +
+          '<div class="tree-context-bottom">' +
+            '<div class="tree-context-note">' + shared.escapeHtml(toolbarNoteText()) + "</div>" +
+            '<div class="tree-context-actions">' +
+              (canStepBack ? '<button class="tree-context-action" type="button" data-tree-action="back">Back</button>' : "") +
+              (canStepBack ? '<button class="tree-context-action" type="button" data-tree-action="reset">Reset</button>' : "") +
+            "</div>" +
+          "</div>";
+      }
+
+      function renderListMeta() {
+        var title = document.getElementById("tree-list-title");
+        var meta = document.getElementById("tree-list-meta");
+        if (!title || !meta) {
+          return;
+        }
+
+        if (!state.root) {
+          title.textContent = "Tree List";
+          meta.textContent = "All top-level continents are listed below.";
+          return;
+        }
+
+        if (state.place) {
+          title.textContent = "Nearby Branches";
+          meta.textContent = "Step back to the region or use the list to move sideways.";
+          return;
+        }
+
+        if (state.region) {
+          title.textContent = "Cities";
+          meta.textContent = "Cities inside this region.";
+          return;
+        }
+
+        if (state.branch) {
+          title.textContent = "Regions";
+          meta.textContent = "Regions inside this branch.";
+          return;
+        }
+
+        title.textContent = "Branches";
+        meta.textContent = "Branches inside this continent.";
       }
 
       function sanitizeState() {
@@ -2688,6 +3019,9 @@
       function rerender() {
         sanitizeState();
         setModeButtons();
+        renderToolbarMeta();
+        renderContextBar();
+        renderListMeta();
         renderMindmap();
         renderTree();
         renderPreview();
@@ -2770,6 +3104,64 @@
             placeButton.getAttribute("data-select-place"),
             placeButton.getAttribute("data-branch") || state.branch || ""
           );
+        }
+      });
+
+      document.getElementById("tree-context").addEventListener("click", function(event) {
+        var actionButton = event.target.closest("[data-tree-action]");
+        var jumpButton = event.target.closest("[data-tree-jump]");
+
+        if (actionButton) {
+          if (actionButton.getAttribute("data-tree-action") === "back") {
+            goUpOneLevel();
+            return;
+          }
+          if (actionButton.getAttribute("data-tree-action") === "reset") {
+            resetToOverview();
+          }
+          return;
+        }
+
+        if (!jumpButton) {
+          return;
+        }
+
+        var jump = jumpButton.getAttribute("data-tree-jump");
+        if (jump === "overview") {
+          resetToOverview();
+          return;
+        }
+
+        if (jump === "root") {
+          state.root = jumpButton.getAttribute("data-root") || "";
+          state.branch = "";
+          state.region = "";
+          state.place = "";
+          rerender();
+          return;
+        }
+
+        if (jump === "branch") {
+          state.branch = jumpButton.getAttribute("data-branch") || "";
+          state.region = "";
+          state.place = "";
+          rerender();
+          return;
+        }
+
+        if (jump === "region") {
+          state.branch = jumpButton.getAttribute("data-branch") || "";
+          state.region = jumpButton.getAttribute("data-region") || "";
+          state.place = "";
+          rerender();
+          return;
+        }
+
+        if (jump === "place") {
+          state.branch = jumpButton.getAttribute("data-branch") || "";
+          state.region = jumpButton.getAttribute("data-region") || "";
+          state.place = jumpButton.getAttribute("data-place") || "";
+          rerender();
         }
       });
 

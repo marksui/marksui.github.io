@@ -1033,6 +1033,7 @@
           <div class="selected-actions">
             <a id="selected-gallery-link" href="travel-gallery.html">Gallery</a>
             <a id="selected-collection-link" href="travel-collections.html">Region</a>
+            <a id="selected-tree-link" href="travel-tree.html">Tree</a>
           </div>
           <div class="photo-slots" id="selected-photos"></div>
         </aside>
@@ -1100,6 +1101,7 @@
     var placesView = "photos";
     var markers = [];
     var map;
+    var mapTileLayer;
     var photoOrientations = travelData.photoOrientations || {};
 
     if (requestedRegion && places.some(function(place) { return place.region === requestedRegion; })) {
@@ -1193,11 +1195,21 @@
     function markerStyle(active) {
       return {
         radius: active ? 9 : 6,
-        color: active ? "#2f332f" : "#fdfdfc",
+        color: active ? (themeMode() === "dark" ? "#f3eee6" : "#2f332f") : (themeMode() === "dark" ? "#2b2d2c" : "#fdfdfc"),
         weight: active ? 2 : 1,
-        fillColor: active ? "#7b7467" : "#55645e",
+        fillColor: active ? (themeMode() === "dark" ? "#b8b0a3" : "#7b7467") : (themeMode() === "dark" ? "#a8b6ae" : "#55645e"),
         fillOpacity: active ? 1 : 0.86
       };
+    }
+
+    function themeMode() {
+      return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    }
+
+    function mapTileUrl() {
+      return themeMode() === "dark"
+        ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+        : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
     }
 
     function thumbnailSrc(src) {
@@ -1410,6 +1422,7 @@
       document.getElementById("selected-photo-meta").textContent = photoLabel(countPhotosForPlace(place));
       document.getElementById("selected-gallery-link").href = "travel-gallery.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
       document.getElementById("selected-collection-link").href = "travel-collections.html?region=" + encodeURIComponent(place.region);
+      document.getElementById("selected-tree-link").href = "travel-tree.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
       var selectedSpots = document.getElementById("selected-spots");
       if (place.spots && place.spots.length) {
         selectedSpots.textContent = spotsText(place);
@@ -1620,7 +1633,7 @@
         scrollWheelZoom: false
       });
 
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      mapTileLayer = L.tileLayer(mapTileUrl(), {
         attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
       }).addTo(map);
 
@@ -1678,6 +1691,19 @@
         renderRegionList();
       });
     }
+
+    new MutationObserver(function(mutations) {
+      var changedTheme = mutations.some(function(mutation) {
+        return mutation.attributeName === "data-theme";
+      });
+      if (!changedTheme || !mapTileLayer) {
+        return;
+      }
+      mapTileLayer.setUrl(mapTileUrl());
+      markers.forEach(function(marker, markerIndex) {
+        marker.setStyle(markerStyle(markerIndex === selectedIndex));
+      });
+    }).observe(document.documentElement, { attributes: true });
 
     setTravelStats();
     renderFilters();
