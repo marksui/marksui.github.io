@@ -290,6 +290,130 @@
       white-space: nowrap;
     }
 
+    .recent-project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.85rem;
+    }
+
+    .recent-project-card {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: var(--home-panel);
+      box-shadow: var(--home-shadow);
+      transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .recent-project-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--home-accent);
+      background: linear-gradient(180deg, var(--home-wash), transparent 92%), var(--home-panel);
+    }
+
+    .project-visual {
+      display: grid;
+      place-items: center;
+      margin: 0;
+      aspect-ratio: 16 / 10;
+      border-bottom: 1px solid var(--home-rule);
+      background:
+        linear-gradient(135deg, var(--home-wash), transparent 72%),
+        color-mix(in srgb, var(--home-panel) 88%, var(--home-wash) 12%);
+    }
+
+    .project-visual-link {
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .project-visual img {
+      display: block;
+      width: 44%;
+      height: 44%;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 24px rgba(53, 55, 49, 0.12));
+    }
+
+    html[data-theme="dark"] .project-visual img {
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.32));
+    }
+
+    .recent-project-body {
+      display: grid;
+      align-content: start;
+      gap: 0.58rem;
+      padding: 0.95rem;
+    }
+
+    .project-meta {
+      display: block;
+      color: var(--home-accent);
+      font-size: 0.84rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .recent-project-card h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.12rem;
+      line-height: 1.16;
+    }
+
+    .project-title-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.22s ease;
+    }
+
+    .project-title-link:hover,
+    .project-title-link:focus-visible {
+      color: var(--home-accent);
+    }
+
+    .recent-project-card p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+      font-size: 0.94rem;
+      line-height: 1.46;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      margin-top: 0.08rem;
+    }
+
+    .project-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
+      color: var(--home-secondary);
+      font-size: 0.84rem;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: transform 0.24s var(--home-ease), border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+
+    .project-links a:hover,
+    .project-links a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--home-accent);
+      color: var(--home-accent);
+      background: var(--home-wash);
+    }
+
     .updates-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -464,6 +588,7 @@
       }
 
       .skills-band,
+      .recent-project-grid,
       .updates-list {
         grid-template-columns: 1fr;
       }
@@ -502,6 +627,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .home-hero,
+      .recent-project-card,
       .skills-band-card,
       .updates-list li,
       .skill-card {
@@ -510,6 +636,9 @@
 
       .section-heading::after,
       .hero-actions a,
+      .recent-project-card,
+      .project-title-link,
+      .project-links a,
       .skills-band-card,
       .updates-list li,
       .updates-list li::before,
@@ -636,6 +765,72 @@
     </section>
 
     <section>
+      <h2 class="section-heading">Recent Project Builds</h2>
+      <div class="recent-project-grid">
+        <article class="recent-project-card">
+          <figure class="project-visual">
+            <a class="project-visual-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
+              <img src="img/projects/logic-cmos-studio-icon.svg" alt="Logic and CMOS Studio app icon" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <div class="recent-project-body">
+            <span class="project-meta">Educational EDA Tool · React / TypeScript</span>
+            <h3><a class="project-title-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Logic &amp; CMOS Studio</a></h3>
+            <p>
+              Browser-based tool that turns Boolean logic into truth tables, K-maps,
+              simplified equations, Verilog, and static CMOS pull-up / pull-down schematics.
+            </p>
+            <div class="project-links" aria-label="Logic and CMOS Studio links">
+              <a href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Live app</a>
+              <a href="https://github.com/marksui/logic-cmos-studio" target="_blank" rel="noopener">Source</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="recent-project-card">
+          <figure class="project-visual">
+            <a class="project-visual-link" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
+              <img src="img/projects/hardware-interview-trainer.svg" alt="Hardware Interview Trainer app icon" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <div class="recent-project-body">
+            <span class="project-meta">Hardware Prep Tool · React / TypeScript</span>
+            <h3><a class="project-title-link" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Hardware Interview Trainer</a></h3>
+            <p>
+              Local-first interview practice app with a 160-question bank, timed mock rounds,
+              wrong-question review, progress analytics, and JSON import / export.
+            </p>
+            <div class="project-links" aria-label="Hardware Interview Trainer links">
+              <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Live app</a>
+              <a href="https://github.com/marksui/Hardware_Interview_Trainer" target="_blank" rel="noopener">Source</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="recent-project-card">
+          <figure class="project-visual">
+            <a class="project-visual-link" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener" aria-label="Open MarkMacZip project page">
+              <img src="img/projects/markmaczip-icon.png" alt="MarkMacZip macOS app icon" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <div class="recent-project-body">
+            <span class="project-meta">macOS Utility · Swift / C++</span>
+            <h3><a class="project-title-link" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">MarkMacZip</a></h3>
+            <p>
+              Local archive app for macOS that compresses and extracts common formats,
+              supports password workflows, tracks job history, and keeps files on device.
+            </p>
+            <div class="project-links" aria-label="MarkMacZip links">
+              <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">Project page</a>
+              <a href="https://github.com/marksui/MacZip" target="_blank" rel="noopener">Source</a>
+              <a href="https://github.com/marksui/MacZip/releases" target="_blank" rel="noopener">Releases</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
       <h2 class="section-heading">Selected Highlights</h2>
       <ul class="updates-list">
         <li>
@@ -653,10 +848,10 @@
         </li>
 
         <li>
-          <strong>Recent Hardware Projects</strong><br>
-          <em>RTL, FPGA, physical design, and embedded PCB work</em><br>
-          Added a dual-core vector accelerator, custom 8-bit RISC processor, convolutional Viterbi decoder,
-          and ESP32-S3 indoor environmental monitor to my project work.
+          <strong>Recent Portfolio Projects</strong><br>
+          <em>Educational EDA, interview preparation, and local-first macOS software</em><br>
+          Built Logic &amp; CMOS Studio, Hardware Interview Trainer, and MarkMacZip as polished public projects
+          around hardware learning, tool-building, and practical desktop utility.
         </li>
 
         <li>
