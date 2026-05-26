@@ -435,24 +435,20 @@ body.viewer-open {
   }
 
   header nav {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 0.42rem 0.72rem;
-    width: min(100%, 26rem);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.32rem 0.72rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 23rem;
     margin: 0 auto;
-    padding: 0.05rem 0.08rem 0.18rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  header nav::-webkit-scrollbar {
-    display: none;
+    padding: 0.05rem 2.2rem 0.12rem;
+    overflow: visible;
   }
 
   header nav a {
-    flex: 0 0 auto;
+    flex: 0 1 auto;
+    line-height: 1.24;
   }
 
   .theme-toggle {

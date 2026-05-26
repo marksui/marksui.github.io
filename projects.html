@@ -2,38 +2,123 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Projects</title>
+  <title>Mark Sui - Engineering Projects</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Project portfolio for Mark Sui, including hardware learning tools, macOS utilities, embedded monitors, interactive maps, documentation sites, and AI or data projects.">
+  <meta name="description" content="Engineering projects by Mark Sui, including Logic &amp; CMOS Studio, hardware interview tooling, macOS utilities, embedded monitors, maps, and data systems.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#55645e">
   <link rel="canonical" href="https://marksui.github.io/projects.html">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mark Sui">
-  <meta property="og:title" content="Mark Sui - Projects">
-  <meta property="og:description" content="Project portfolio for Mark Sui, including hardware learning tools, macOS utilities, embedded monitors, interactive maps, documentation sites, and AI or data projects.">
+  <meta property="og:title" content="Mark Sui - Engineering Projects">
+  <meta property="og:description" content="Public builds across hardware learning tools, local-first macOS utilities, embedded monitors, interactive maps, and data systems.">
   <meta property="og:url" content="https://marksui.github.io/projects.html">
   <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
-  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:secure_url" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Mark Sui engineering projects social preview card">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mark Sui - Projects">
-  <meta name="twitter:description" content="Project portfolio for Mark Sui, including hardware learning tools, macOS utilities, embedded monitors, interactive maps, documentation sites, and AI or data projects.">
+  <meta name="twitter:title" content="Mark Sui - Engineering Projects">
+  <meta name="twitter:description" content="Public builds across hardware learning tools, local-first macOS utilities, embedded monitors, interactive maps, and data systems.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <meta name="twitter:image:alt" content="Mark Sui engineering projects social preview card">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "CollectionPage",
-      "name": "Mark Sui - Projects",
-      "url": "https://marksui.github.io/projects.html",
-      "description": "Project portfolio for Mark Sui, including hardware learning tools, macOS utilities, embedded monitors, interactive maps, documentation sites, and AI or data projects.",
-      "isPartOf": {
-        "@type": "WebSite",
-        "name": "Mark Sui",
-        "url": "https://marksui.github.io/"
-      }
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://marksui.github.io/#website",
+          "name": "Mark Sui",
+          "url": "https://marksui.github.io/"
+        },
+        {
+          "@type": "Person",
+          "@id": "https://marksui.github.io/#person",
+          "name": "Mark Sui",
+          "url": "https://marksui.github.io/",
+          "sameAs": [
+            "https://github.com/marksui",
+            "https://www.linkedin.com/in/marksui6"
+          ],
+          "knowsAbout": [
+            "Electrical and Computer Engineering",
+            "RTL Design",
+            "VLSI",
+            "Embedded Systems",
+            "macOS Utilities",
+            "Interactive Maps"
+          ]
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://marksui.github.io/projects.html#projects",
+          "name": "Mark Sui - Engineering Projects",
+          "url": "https://marksui.github.io/projects.html",
+          "description": "Engineering projects by Mark Sui, including Logic & CMOS Studio, hardware interview tooling, macOS utilities, embedded monitors, maps, and data systems.",
+          "isPartOf": {
+            "@id": "https://marksui.github.io/#website"
+          },
+          "about": {
+            "@id": "https://marksui.github.io/#person"
+          },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://marksui.github.io/img/site-card.png",
+            "width": 1200,
+            "height": 630
+          },
+          "mainEntity": {
+            "@type": "ItemList",
+            "name": "Featured engineering projects",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Logic & CMOS Studio",
+                  "applicationCategory": "EducationalApplication",
+                  "operatingSystem": "Web",
+                  "url": "https://marksui.github.io/logic-cmos-studio/",
+                  "codeRepository": "https://github.com/marksui/logic-cmos-studio",
+                  "description": "Browser-based tool for Boolean logic, truth tables, K-maps, Verilog, and static CMOS schematics."
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "Hardware Interview Trainer",
+                  "applicationCategory": "EducationalApplication",
+                  "operatingSystem": "Web",
+                  "url": "https://marksui.github.io/Hardware_Interview_Trainer/",
+                  "codeRepository": "https://github.com/marksui/Hardware_Interview_Trainer",
+                  "description": "Local-first hardware interview practice app with mock rounds, review history, progress analytics, and import/export."
+                }
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "name": "MarkMacZip",
+                  "applicationCategory": "UtilitiesApplication",
+                  "operatingSystem": "macOS",
+                  "url": "https://marksui.github.io/MacZip/",
+                  "codeRepository": "https://github.com/marksui/MacZip",
+                  "description": "macOS archive utility for local compression and extraction workflows."
+                }
+              }
+            ]
+          }
+        }
+      ]
     }
   </script>
   <link rel="stylesheet" href="style.css">
@@ -145,6 +230,134 @@
     section:hover .section-heading::after {
       transform: scaleX(1);
       background: linear-gradient(90deg, var(--projects-accent), transparent);
+    }
+
+    .project-lanes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.72rem;
+      margin-top: 1rem;
+    }
+
+    .project-lane {
+      display: grid;
+      gap: 0.32rem;
+      padding: 0.82rem 0.86rem;
+      border: 1px solid var(--projects-rule);
+      border-radius: 8px;
+      background: var(--projects-panel);
+      box-shadow: var(--projects-shadow);
+    }
+
+    .project-lane span {
+      color: var(--projects-secondary);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .project-lane strong {
+      color: var(--projects-accent);
+      font-size: 0.98rem;
+      line-height: 1.18;
+    }
+
+    .project-lane p {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.38;
+      opacity: 0.82;
+    }
+
+    .project-filter-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.9rem;
+      align-items: center;
+      margin-top: 1rem;
+      padding: 0.78rem 0;
+      border-top: 1px solid var(--projects-rule);
+      border-bottom: 1px solid var(--projects-rule);
+    }
+
+    .project-filter-copy {
+      display: grid;
+      gap: 0.12rem;
+      min-width: 0;
+    }
+
+    .project-filter-copy span {
+      color: var(--projects-secondary);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .project-filter-copy strong {
+      color: var(--text);
+      font-size: 0.98rem;
+      line-height: 1.24;
+    }
+
+    .project-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.42rem;
+    }
+
+    .project-filter-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2rem;
+      padding: 0.24rem 0.62rem;
+      border: 1px solid var(--projects-rule);
+      border-radius: 999px;
+      background: var(--projects-panel);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.86rem;
+      line-height: 1.2;
+      transition: transform 0.24s var(--projects-ease), border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+
+    .project-filter-button:hover,
+    .project-filter-button:focus-visible,
+    .project-filter-button[aria-pressed="true"] {
+      transform: translateY(-1px);
+      border-color: var(--projects-accent);
+      background: var(--projects-wash);
+      color: var(--projects-accent);
+    }
+
+    .project-filter-button[aria-pressed="true"] {
+      font-weight: bold;
+    }
+
+    .project-filter-status {
+      margin: 0.5rem 0 0;
+      color: var(--projects-secondary);
+      font-size: 0.86rem;
+      line-height: 1.34;
+    }
+
+    [data-project-card][hidden],
+    .project-section-empty[hidden] {
+      display: none;
+    }
+
+    .project-section-empty {
+      margin: 0;
+      padding: 0.9rem 0.95rem;
+      border: 1px solid var(--projects-rule);
+      border-radius: 8px;
+      background: var(--projects-panel);
+      color: var(--projects-secondary);
+      font-size: 0.92rem;
+      line-height: 1.42;
     }
 
     .featured-grid {
@@ -298,6 +511,20 @@
       line-height: 1.2;
     }
 
+    .project-outcome,
+    .site-outcome {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid color-mix(in srgb, var(--site-accent, var(--projects-accent)) 38%, var(--projects-rule));
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--site-accent, var(--projects-accent)) 9%, transparent);
+      color: var(--site-accent, var(--projects-accent));
+      font-size: 0.78rem;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
     .project-card h3,
     .site-card h3 {
       margin: 0;
@@ -315,7 +542,8 @@
       line-height: 1.46;
     }
 
-    .project-proof {
+    .project-proof,
+    .site-proof {
       margin: 0;
       padding: 0;
       list-style: none;
@@ -327,12 +555,14 @@
       opacity: 0.84;
     }
 
-    .project-proof li {
+    .project-proof li,
+    .site-proof li {
       position: relative;
       padding-left: 0.82rem;
     }
 
-    .project-proof li::before {
+    .project-proof li::before,
+    .site-proof li::before {
       content: "";
       position: absolute;
       left: 0;
@@ -340,6 +570,82 @@
       width: 0.34rem;
       height: 1px;
       background: var(--projects-accent);
+    }
+
+    .project-details {
+      border-top: 1px solid var(--projects-rule);
+      padding-top: 0.48rem;
+    }
+
+    .project-details summary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      width: fit-content;
+      color: var(--site-accent, var(--projects-accent));
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: bold;
+      line-height: 1.2;
+      list-style: none;
+    }
+
+    .project-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .project-details summary::after {
+      content: "+";
+      display: inline-grid;
+      place-items: center;
+      width: 1.1rem;
+      height: 1.1rem;
+      border: 1px solid color-mix(in srgb, var(--site-accent, var(--projects-accent)) 35%, var(--projects-rule));
+      border-radius: 999px;
+      font-size: 0.8rem;
+      line-height: 1;
+    }
+
+    .project-details[open] summary::after {
+      content: "-";
+    }
+
+    .project-details-body {
+      display: grid;
+      gap: 0.48rem;
+      padding-top: 0.58rem;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.45rem;
+    }
+
+    .detail-item {
+      padding: 0.48rem 0.55rem;
+      border: 1px solid var(--projects-rule);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.34);
+    }
+
+    html[data-theme="dark"] .detail-item {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .detail-item span {
+      display: block;
+      color: var(--projects-secondary);
+      font-size: 0.76rem;
+      line-height: 1.14;
+    }
+
+    .detail-item strong {
+      display: block;
+      margin-top: 0.14rem;
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.2;
     }
 
     .project-title,
@@ -495,8 +801,14 @@
     @media (max-width: 840px) {
       .projects-hero,
       .featured-grid,
+      .project-lanes,
+      .project-filter-panel,
       .site-grid {
         grid-template-columns: 1fr;
+      }
+
+      .project-filter-row {
+        justify-content: flex-start;
       }
 
       .project-card.featured-primary {
@@ -523,6 +835,10 @@
       }
 
       .project-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .detail-grid {
         grid-template-columns: 1fr;
       }
 
@@ -609,11 +925,11 @@
     <section class="projects-hero">
       <div>
         <p class="projects-kicker">Projects</p>
-        <h2>Tools, systems, maps, and public builds.</h2>
+        <h2>Engineering tools with hardware instincts.</h2>
         <p>
-          A focused index of software, hardware, and documentation work. The strongest thread is
-          practical engineering: local-first utilities, learning tools, embedded sensing, data work,
-          and interactive sites that are meant to be used.
+          A focused index of public builds across hardware learning, native utilities, embedded sensing,
+          interactive maps, and data systems. I care most about projects that make technical reasoning
+          clearer, faster, and more concrete.
         </p>
       </div>
       <div class="project-summary" aria-label="Project summary">
@@ -622,8 +938,8 @@
           <strong>10+</strong>
         </div>
         <div class="summary-tile">
-          <span>Core Areas</span>
-          <strong>Hardware / Apps / Maps</strong>
+          <span>Signal</span>
+          <strong>Hardware-minded UX</strong>
         </div>
         <div class="summary-tile">
           <span>Primary Stack</span>
@@ -632,28 +948,90 @@
       </div>
     </section>
 
-    <section data-reveal>
+    <section data-reveal aria-label="Project focus areas">
+      <div class="project-lanes">
+        <article class="project-lane">
+          <span>Hardware Learning</span>
+          <strong>Logic, CMOS, and interview prep</strong>
+          <p>Tools that turn architecture and circuit concepts into repeatable workflows.</p>
+        </article>
+        <article class="project-lane">
+          <span>Native Utilities</span>
+          <strong>Local-first macOS software</strong>
+          <p>Small focused apps for files, documents, coursework, and everyday productivity.</p>
+        </article>
+        <article class="project-lane">
+          <span>Embedded Systems</span>
+          <strong>Sensing and live status displays</strong>
+          <p>ESP32 and C-based monitoring work that connects hardware signals to usable feedback.</p>
+        </article>
+        <article class="project-lane">
+          <span>Interactive Data</span>
+          <strong>Maps, datasets, and visual tools</strong>
+          <p>Browser experiences for exploring places, landmarks, and model outputs.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="project-filter-shell" data-reveal aria-label="Project filters">
+      <div class="project-filter-panel">
+        <div class="project-filter-copy">
+          <span>Filter by signal</span>
+          <strong>Jump to the kind of engineering work you want to inspect.</strong>
+        </div>
+        <div class="project-filter-row" role="group" aria-label="Filter projects by category">
+          <button class="project-filter-button" type="button" data-project-filter="all" aria-pressed="true">All</button>
+          <button class="project-filter-button" type="button" data-project-filter="hardware" aria-pressed="false">Hardware</button>
+          <button class="project-filter-button" type="button" data-project-filter="macos" aria-pressed="false">macOS</button>
+          <button class="project-filter-button" type="button" data-project-filter="embedded" aria-pressed="false">Embedded</button>
+          <button class="project-filter-button" type="button" data-project-filter="maps" aria-pressed="false">Maps</button>
+          <button class="project-filter-button" type="button" data-project-filter="data" aria-pressed="false">Data</button>
+        </div>
+      </div>
+      <p class="project-filter-status" id="project-filter-status" aria-live="polite">Showing all projects.</p>
+    </section>
+
+    <section data-reveal data-project-section="featured">
       <h2 class="section-heading">Featured Builds</h2>
       <div class="featured-grid">
-        <article class="project-card featured-primary">
+        <article class="project-card featured-primary" data-project-card data-categories="hardware">
           <figure class="project-visual">
             <a href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
-              <img src="img/projects/previews/logic-cmos-studio.png" width="1365" height="768" alt="Logic and CMOS Studio interface screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio interface screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="project-body">
             <span class="project-meta">Educational EDA Tool / React / TypeScript</span>
+            <span class="project-outcome">Best signal for RTL + CMOS tooling</span>
             <h3><a class="project-title" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Logic &amp; CMOS Studio</a></h3>
-            <p>Browser tool for Boolean logic, truth tables, K-maps, simplified equations, Verilog, and static CMOS schematics.</p>
+            <p>Browser tool for Boolean logic, truth tables, K-maps, simplified equations, Verilog, and static CMOS pull-up / pull-down schematics.</p>
             <ul class="project-proof">
               <li>Connects Boolean simplification to implementation-level CMOS structure.</li>
-              <li>Packages classroom logic workflows into one browser-based engineering tool.</li>
+              <li>Generates adjacent representations so users can compare logic, code, and transistor structure in one place.</li>
+              <li>Packages classroom logic workflows into one browser-based engineering tool with no install step.</li>
             </ul>
             <div class="tag-row">
               <span>Digital Logic</span>
               <span>CMOS</span>
               <span>Verilog</span>
+              <span>K-map</span>
             </div>
+            <details class="project-details">
+              <summary>Implementation notes</summary>
+              <div class="project-details-body">
+                <div class="detail-grid">
+                  <div class="detail-item">
+                    <span>Built around</span>
+                    <strong>logic-to-layout reasoning</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>Interface goal</span>
+                    <strong>compare views quickly</strong>
+                  </div>
+                </div>
+                <p>The project emphasizes traceability between Boolean input, minimized logic, generated Verilog, and static CMOS structure.</p>
+              </div>
+            </details>
             <div class="project-links" aria-label="Logic and CMOS Studio links">
               <a href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Live app</a>
               <a href="https://github.com/marksui/logic-cmos-studio" target="_blank" rel="noopener">Source</a>
@@ -661,24 +1039,42 @@
           </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-project-card data-categories="hardware data">
           <figure class="project-visual">
             <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
-              <img src="img/projects/previews/hardware-interview-trainer.png" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="project-body">
             <span class="project-meta">Hardware Prep Tool / React / TypeScript</span>
+            <span class="project-outcome">Structured practice for hardware interviews</span>
             <h3><a class="project-title" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Hardware Interview Trainer</a></h3>
-            <p>Local-first interview practice app with mock rounds, review history, progress analytics, and JSON import / export.</p>
+            <p>Local-first interview practice app with a large question bank, mock rounds, review history, progress analytics, and JSON import / export.</p>
             <ul class="project-proof">
-              <li>Turns hardware concepts into repeatable practice loops.</li>
+              <li>Turns hardware concepts into repeatable practice loops with timed sessions and wrong-question review.</li>
+              <li>Keeps progress data in the browser so practice remains private and portable.</li>
             </ul>
             <div class="tag-row">
               <span>Hardware Prep</span>
               <span>Analytics</span>
               <span>Local-first</span>
             </div>
+            <details class="project-details">
+              <summary>Implementation notes</summary>
+              <div class="project-details-body">
+                <div class="detail-grid">
+                  <div class="detail-item">
+                    <span>Built around</span>
+                    <strong>repeatable practice loops</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>Data model</span>
+                    <strong>portable local progress</strong>
+                  </div>
+                </div>
+                <p>Question sessions, missed-question review, and analytics are designed to keep hardware interview prep structured over multiple sittings.</p>
+              </div>
+            </details>
             <div class="project-links" aria-label="Hardware Interview Trainer links">
               <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Live app</a>
               <a href="https://github.com/marksui/Hardware_Interview_Trainer" target="_blank" rel="noopener">Source</a>
@@ -686,24 +1082,42 @@
           </div>
         </article>
 
-        <article class="project-card">
+        <article class="project-card" data-project-card data-categories="macos">
           <figure class="project-visual">
             <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener" aria-label="Open MarkMacZip project page">
-              <img src="img/projects/previews/markmaczip.png" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/markmaczip.webp" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="project-body">
             <span class="project-meta">macOS Utility / Swift / C++</span>
+            <span class="project-outcome">Native utility with privacy-first file handling</span>
             <h3><a class="project-title" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">MarkMacZip</a></h3>
-            <p>Archive utility for macOS that compresses and extracts common formats while keeping files on device.</p>
+            <p>Archive utility for macOS that compresses and extracts common formats, supports password workflows, and keeps files on device.</p>
             <ul class="project-proof">
               <li>Balances native macOS UX with practical file handling.</li>
+              <li>Surfaces job history and release builds so the utility feels usable beyond a demo page.</li>
             </ul>
             <div class="tag-row">
               <span>macOS</span>
               <span>Compression</span>
               <span>Privacy</span>
             </div>
+            <details class="project-details">
+              <summary>Implementation notes</summary>
+              <div class="project-details-body">
+                <div class="detail-grid">
+                  <div class="detail-item">
+                    <span>Built around</span>
+                    <strong>native file workflows</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>Product focus</span>
+                    <strong>local-only archive handling</strong>
+                  </div>
+                </div>
+                <p>The app frames compression, extraction, password handling, and release delivery as a polished desktop utility rather than a script wrapper.</p>
+              </div>
+            </details>
             <div class="project-links" aria-label="MarkMacZip links">
               <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">Project page</a>
               <a href="https://github.com/marksui/MacZip" target="_blank" rel="noopener">Source</a>
@@ -712,22 +1126,33 @@
           </div>
         </article>
       </div>
+      <p class="project-section-empty" hidden>No featured projects match this filter.</p>
     </section>
 
-    <section data-reveal>
+    <section data-reveal data-project-section="sites">
       <h2 class="section-heading">Public Sites &amp; Tools</h2>
       <div class="site-grid">
-        <article class="site-card" style="--site-accent: #6b5d8f;">
+        <article class="site-card" style="--site-accent: #6b5d8f;" data-project-card data-categories="macos">
           <figure class="site-preview">
             <a href="https://marksui.github.io/CourseWatch/" target="_blank" rel="noopener" aria-label="Open CourseWatch">
-              <img src="img/projects/previews/coursewatch.png" width="1365" height="768" alt="CourseWatch project page screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/coursewatch.webp" width="1365" height="768" alt="CourseWatch project page screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">CW</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">macOS Utility / Swift</span>
+            <span class="site-outcome">Coursework workflow</span>
             <h3><a class="site-title" href="https://marksui.github.io/CourseWatch/" target="_blank" rel="noopener">CourseWatch</a></h3>
             <p>Canvas deadline tracker for the macOS menu bar, built as a local-first coursework companion.</p>
+            <ul class="site-proof">
+              <li>Keeps deadline checks close to the operating system instead of another browser tab.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Focused on compact status visibility, deadline scanning, and a native-feeling menu bar workflow.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/CourseWatch/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/CourseWatch" target="_blank" rel="noopener">Source</a>
@@ -735,17 +1160,27 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #8a5d54;">
+        <article class="site-card" style="--site-accent: #8a5d54;" data-project-card data-categories="macos">
           <figure class="site-preview">
             <a href="https://marksui.github.io/MarkPDFLock/" target="_blank" rel="noopener" aria-label="Open MarkPDFLock">
-              <img src="img/projects/previews/markpdflock.png" width="1365" height="768" alt="MarkPDFLock project page screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/markpdflock.webp" width="1365" height="768" alt="MarkPDFLock project page screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">PDF</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">macOS Utility / Swift</span>
+            <span class="site-outcome">Document privacy</span>
             <h3><a class="site-title" href="https://marksui.github.io/MarkPDFLock/" target="_blank" rel="noopener">MarkPDFLock</a></h3>
             <p>Password-protects PDFs on Mac with batch export and local-only document handling.</p>
+            <ul class="site-proof">
+              <li>Frames a common document-security task as a fast native utility.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Built around a narrow document workflow: select PDFs, apply protection, and export without sending files elsewhere.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/MarkPDFLock/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/MarkPDFLock" target="_blank" rel="noopener">Source</a>
@@ -753,17 +1188,27 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #4f6f7f;">
+        <article class="site-card" style="--site-accent: #4f6f7f;" data-project-card data-categories="macos data">
           <figure class="site-preview">
             <a href="https://marksui.github.io/JobAgent/" target="_blank" rel="noopener" aria-label="Open JobAgentMac">
-              <img src="img/projects/previews/jobagent.png" width="1365" height="768" alt="JobAgentMac project page screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/jobagent.webp" width="1365" height="768" alt="JobAgentMac project page screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">JA</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">Offline Agent / JavaScript</span>
+            <span class="site-outcome">Private workflow assistant</span>
             <h3><a class="site-title" href="https://marksui.github.io/JobAgent/" target="_blank" rel="noopener">JobAgentMac</a></h3>
             <p>Offline job-application assistant focused on keeping application workflow data on device.</p>
+            <ul class="site-proof">
+              <li>Prioritizes local storage for sensitive job-search notes and status tracking.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Organizes application state, notes, and follow-up context with an offline-first privacy posture.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/JobAgent/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/JobAgent" target="_blank" rel="noopener">Source</a>
@@ -771,17 +1216,27 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #5f7d5f;">
+        <article class="site-card" style="--site-accent: #5f7d5f;" data-project-card data-categories="embedded hardware">
           <figure class="site-preview">
             <a href="https://marksui.github.io/Indoor_Monitoring/" target="_blank" rel="noopener" aria-label="Open Indoor Monitoring">
-              <img src="img/projects/previews/indoor-monitoring.png" width="1365" height="768" alt="Indoor Monitoring project page screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/indoor-monitoring.webp" width="1365" height="768" alt="Indoor Monitoring project page screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">IM</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">Embedded Monitor / C</span>
+            <span class="site-outcome">Embedded sensing</span>
             <h3><a class="site-title" href="https://marksui.github.io/Indoor_Monitoring/" target="_blank" rel="noopener">Indoor Monitoring</a></h3>
             <p>ESP32 environmental monitor for CO2, comfort metrics, and live indoor status display.</p>
+            <ul class="site-proof">
+              <li>Connects sensor data to clear room-status feedback and practical thresholds.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Pairs embedded sensing with a simple status interface so readings are useful at a glance.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/Indoor_Monitoring/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/Indoor_Monitoring" target="_blank" rel="noopener">Source</a>
@@ -789,17 +1244,27 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #8b6b45;">
+        <article class="site-card" style="--site-accent: #8b6b45;" data-project-card data-categories="maps">
           <figure class="site-preview">
             <a href="https://marksui.github.io/China-Travel-Map/" target="_blank" rel="noopener" aria-label="Open China Travel Map">
-              <img src="img/projects/previews/china-travel-map.png" width="1365" height="768" alt="China Travel Map interface screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/china-travel-map.webp" width="1365" height="768" alt="China Travel Map interface screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">CN</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">Interactive Map / JavaScript</span>
+            <span class="site-outcome">Geographic exploration</span>
             <h3><a class="site-title" href="https://marksui.github.io/China-Travel-Map/" target="_blank" rel="noopener">China Travel Map</a></h3>
             <p>Scenic-area map with search, language switching, images, and region highlights.</p>
+            <ul class="site-proof">
+              <li>Combines location browsing, multilingual labels, and image-backed place context.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Uses map browsing and structured place metadata to make scenic-area exploration more visual and searchable.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/China-Travel-Map/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/China-Travel-Map" target="_blank" rel="noopener">Source</a>
@@ -807,17 +1272,27 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #546f9f;">
+        <article class="site-card" style="--site-accent: #546f9f;" data-project-card data-categories="maps data">
           <figure class="site-preview">
             <a href="https://marksui.github.io/Google-Maps-Landmark/" target="_blank" rel="noopener" aria-label="Open Google Maps Landmark">
-              <img src="img/projects/previews/google-maps-landmark.png" width="1365" height="768" alt="Google Maps Landmark interface screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/google-maps-landmark.webp" width="1365" height="768" alt="Google Maps Landmark interface screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">GM</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">Landmark Map / JavaScript</span>
+            <span class="site-outcome">Dataset browser</span>
             <h3><a class="site-title" href="https://marksui.github.io/Google-Maps-Landmark/" target="_blank" rel="noopener">Google Maps Landmark</a></h3>
             <p>Static landmark map for the Google Maps miniatures list, using Leaflet for browsing and filtering.</p>
+            <ul class="site-proof">
+              <li>Turns a landmark collection into a searchable, map-based browsing interface.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Transforms a static landmark list into an interface with geographic context, filtering, and fast inspection.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://marksui.github.io/Google-Maps-Landmark/" target="_blank" rel="noopener">Live site</a>
               <a href="https://github.com/marksui/Google-Maps-Landmark" target="_blank" rel="noopener">Source</a>
@@ -825,23 +1300,34 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #6b705c;">
+        <article class="site-card" style="--site-accent: #6b705c;" data-project-card data-categories="data">
           <figure class="site-preview">
             <a href="https://github.com/marksui/Kaggle-Climate-Emulation-Model-Competition" target="_blank" rel="noopener" aria-label="Open Climate Emulation Model source">
-              <img src="img/projects/previews/climate-emulation.png" width="1365" height="768" alt="Climate Emulation Model repository screenshot" loading="lazy" decoding="async">
+              <img src="img/projects/previews/climate-emulation.webp" width="1365" height="768" alt="Climate Emulation Model repository screenshot" loading="lazy" decoding="async">
             </a>
             <div class="site-mark" aria-hidden="true">CL</div>
           </figure>
           <div class="site-body">
             <span class="site-meta">Data Science / Jupyter Notebook</span>
+            <span class="site-outcome">Model experimentation</span>
             <h3><a class="site-title" href="https://github.com/marksui/Kaggle-Climate-Emulation-Model-Competition" target="_blank" rel="noopener">Climate Emulation Model</a></h3>
             <p>Kaggle competition work around climate emulation modeling and machine learning experimentation.</p>
+            <ul class="site-proof">
+              <li>Documents a model-development workflow around climate emulation data.</li>
+            </ul>
+            <details class="project-details">
+              <summary>Details</summary>
+              <div class="project-details-body">
+                <p>Captures experimentation around climate model emulation, data preparation, and notebook-based iteration.</p>
+              </div>
+            </details>
             <div class="site-links">
               <a href="https://github.com/marksui/Kaggle-Climate-Emulation-Model-Competition" target="_blank" rel="noopener">Source</a>
             </div>
           </div>
         </article>
       </div>
+      <p class="project-section-empty" hidden>No public tools match this filter.</p>
     </section>
   </main>
 
@@ -854,6 +1340,71 @@
         }
 
         var items = Array.prototype.slice.call(main.querySelectorAll("[data-reveal]"));
+        var filterButtons = Array.prototype.slice.call(main.querySelectorAll("[data-project-filter]"));
+        var projectCards = Array.prototype.slice.call(main.querySelectorAll("[data-project-card]"));
+        var projectSections = Array.prototype.slice.call(main.querySelectorAll("[data-project-section]"));
+        var filterStatus = document.getElementById("project-filter-status");
+
+        function labelForFilter(filter) {
+          var activeButton = filterButtons.filter(function(button) {
+            return button.getAttribute("data-project-filter") === filter;
+          })[0];
+          return activeButton ? activeButton.textContent.trim() : "All";
+        }
+
+        function cardMatches(card, filter) {
+          if (filter === "all") {
+            return true;
+          }
+
+          return (" " + (card.getAttribute("data-categories") || "") + " ").indexOf(" " + filter + " ") !== -1;
+        }
+
+        function updateSectionEmptyStates() {
+          projectSections.forEach(function(section) {
+            var cards = Array.prototype.slice.call(section.querySelectorAll("[data-project-card]"));
+            var visibleCards = cards.filter(function(card) {
+              return !card.hidden;
+            });
+            var empty = section.querySelector(".project-section-empty");
+            if (empty) {
+              empty.hidden = visibleCards.length > 0;
+            }
+          });
+        }
+
+        function setProjectFilter(filter) {
+          var visibleCount = 0;
+
+          filterButtons.forEach(function(button) {
+            button.setAttribute("aria-pressed", String(button.getAttribute("data-project-filter") === filter));
+          });
+
+          projectCards.forEach(function(card) {
+            var matches = cardMatches(card, filter);
+            card.hidden = !matches;
+            if (matches) {
+              visibleCount += 1;
+            }
+          });
+
+          updateSectionEmptyStates();
+
+          if (filterStatus) {
+            filterStatus.textContent = filter === "all"
+              ? "Showing all " + visibleCount + " projects."
+              : "Showing " + visibleCount + " " + labelForFilter(filter) + " project" + (visibleCount === 1 ? "." : "s.");
+          }
+        }
+
+        filterButtons.forEach(function(button) {
+          button.addEventListener("click", function() {
+            setProjectFilter(button.getAttribute("data-project-filter") || "all");
+          });
+        });
+
+        setProjectFilter("all");
+
         if (!items.length) {
           return;
         }

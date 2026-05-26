@@ -2,46 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - ECE Portfolio</title>
+  <title>Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Electrical and computer engineering portfolio for Mark Sui, featuring hardware, RTL, VLSI, embedded, AI systems, and public software projects.">
+  <meta name="description" content="Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#55645e">
   <link rel="canonical" href="https://marksui.github.io/">
   <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mark Sui">
-  <meta property="og:title" content="Mark Sui - ECE Portfolio">
-  <meta property="og:description" content="Electrical and computer engineering portfolio for Mark Sui, featuring hardware, RTL, VLSI, embedded, AI systems, and public software projects.">
+  <meta property="og:title" content="Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio">
+  <meta property="og:description" content="Electrical and computer engineering portfolio focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
   <meta property="og:url" content="https://marksui.github.io/">
   <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
-  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:secure_url" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Mark Sui electrical and computer engineering portfolio card">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mark Sui - ECE Portfolio">
-  <meta name="twitter:description" content="Electrical and computer engineering portfolio for Mark Sui, featuring hardware, RTL, VLSI, embedded, AI systems, and public software projects.">
+  <meta name="twitter:title" content="Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio">
+  <meta name="twitter:description" content="ECE portfolio focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
-  <link rel="preload" as="image" href="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" type="image/webp" fetchpriority="high">
+  <meta name="twitter:image:alt" content="Mark Sui electrical and computer engineering portfolio card">
+  <link rel="preload" as="image" href="img/projects/previews/logic-cmos-studio.webp" type="image/webp" fetchpriority="high">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Mark Sui",
-      "url": "https://marksui.github.io/",
-      "sameAs": [
-        "https://github.com/marksui",
-        "https://www.linkedin.com/in/marksui6"
-      ],
-      "jobTitle": "Electrical and Computer Engineering Student",
-      "alumniOf": "University of California, San Diego",
-      "knowsAbout": [
-        "Electrical and Computer Engineering",
-        "RTL Design",
-        "VLSI",
-        "Computer Architecture",
-        "Embedded Systems",
-        "AI Systems"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://marksui.github.io/#website",
+          "name": "Mark Sui",
+          "url": "https://marksui.github.io/",
+          "description": "Electrical and computer engineering portfolio for Mark Sui."
+        },
+        {
+          "@type": "Person",
+          "@id": "https://marksui.github.io/#person",
+          "name": "Mark Sui",
+          "url": "https://marksui.github.io/",
+          "sameAs": [
+            "https://github.com/marksui",
+            "https://www.linkedin.com/in/marksui6"
+          ],
+          "jobTitle": "Electrical and Computer Engineering Student",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "University of California, San Diego"
+          },
+          "knowsAbout": [
+            "Electrical and Computer Engineering",
+            "RTL Design",
+            "VLSI",
+            "Computer Architecture",
+            "Embedded Systems",
+            "AI Systems",
+            "Hardware-minded Software Tools"
+          ]
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": "https://marksui.github.io/#profile",
+          "name": "Mark Sui - Hardware, RTL, VLSI & Systems Portfolio",
+          "url": "https://marksui.github.io/",
+          "description": "Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.",
+          "isPartOf": {
+            "@id": "https://marksui.github.io/#website"
+          },
+          "about": {
+            "@id": "https://marksui.github.io/#person"
+          },
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://marksui.github.io/img/site-card.png",
+            "width": 1200,
+            "height": 630
+          }
+        }
       ]
     }
   </script>
@@ -756,7 +795,8 @@
   <main class="home-main">
     <section class="home-hero">
       <div class="home-copy">
-        <p class="home-kicker">About</p>
+        <p class="home-kicker">ECE Portfolio</p>
+        <h2>Hardware-minded systems, RTL, VLSI, and engineering tools.</h2>
         <p class="home-lede">
           I'm <strong>Mark Sui</strong>, an <strong>Electrical and Computer Engineering</strong>
           student at the University of California, San Diego, currently pursuing a
@@ -765,26 +805,26 @@
           <strong>Mathematics</strong>.
         </p>
         <p class="home-position">
-          My work sits around hardware, software, and applied mathematics. I am especially interested in
-          <strong>hardware</strong>, <strong>SoC performance</strong>, <strong>computer architecture</strong>,
-          <strong>RTL design</strong>, and <strong>VLSI-related engineering roles</strong>.
+          My strongest thread is turning hardware concepts into practical systems:
+          <strong>RTL design</strong>, <strong>VLSI workflows</strong>, <strong>computer architecture</strong>,
+          <strong>embedded sensing</strong>, and software tools that make engineering work easier to reason about.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
+          <a href="projects.html">Featured Projects</a>
           <a href="experience.html">Technical Work</a>
-          <a href="projects.html">Projects</a>
           <a href="education.html">Academic Path</a>
-          <a href="personal.html">Travel Archive</a>
+          <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
           <a href="contact.html">Get in Touch</a>
         </div>
       </div>
       <aside class="home-profile-card" aria-label="Profile snapshot">
         <figure class="home-profile-visual">
-          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" width="1067" height="1600" alt="Dana Point ocean terrace view" loading="eager" decoding="async" fetchpriority="high">
+          <img src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio hardware learning interface screenshot" loading="eager" decoding="async" fetchpriority="high">
         </figure>
         <div class="home-profile-body">
           <div class="home-profile-caption">
-            <strong>Mark Sui</strong>
-            <span>San Diego, California</span>
+            <strong>Representative Build</strong>
+            <span>Logic &amp; CMOS Studio</span>
           </div>
           <div class="home-facts">
             <div class="home-fact">
@@ -793,15 +833,15 @@
             </div>
             <div class="home-fact">
               <span>Focus</span>
-              <strong>VLSI / RTL</strong>
+              <strong>RTL / VLSI</strong>
             </div>
             <div class="home-fact">
-              <span>Background</span>
-              <strong>Computer Engineering</strong>
+              <span>Tooling</span>
+              <strong>React / Python / C++</strong>
             </div>
             <div class="home-fact">
-              <span>Second B.S.</span>
-              <strong>Mathematics</strong>
+              <span>Foundation</span>
+              <strong>CE + Mathematics</strong>
             </div>
           </div>
         </div>
@@ -810,8 +850,8 @@
 
     <section class="home-cta-panel" data-reveal aria-label="Primary calls to action">
       <div class="home-cta-copy">
-        <span>Open to hardware-focused software, RTL, and VLSI-adjacent engineering work.</span>
-        <strong>Start with the projects that best show my hardware-minded tool building and practical systems work.</strong>
+        <span>Open to hardware-focused software, RTL, VLSI-adjacent engineering, and systems tooling work.</span>
+        <strong>Start with the projects that show how I connect engineering concepts, implementation detail, and usable interfaces.</strong>
       </div>
       <div class="home-cta-actions">
         <a class="primary" href="projects.html">View Featured Projects</a>
@@ -872,7 +912,7 @@
         <article class="recent-project-card">
           <figure class="project-visual">
             <a class="project-visual-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
-              <img class="project-preview" src="img/projects/previews/logic-cmos-studio.png" width="1365" height="768" alt="Logic and CMOS Studio interface screenshot" loading="lazy" decoding="async">
+              <img class="project-preview" src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio interface screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="recent-project-body">
@@ -893,7 +933,7 @@
         <article class="recent-project-card">
           <figure class="project-visual">
             <a class="project-visual-link" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
-              <img class="project-preview" src="img/projects/previews/hardware-interview-trainer.png" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
+              <img class="project-preview" src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="recent-project-body">
@@ -914,7 +954,7 @@
         <article class="recent-project-card">
           <figure class="project-visual">
             <a class="project-visual-link" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener" aria-label="Open MarkMacZip project page">
-              <img class="project-preview" src="img/projects/previews/markmaczip.png" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
+              <img class="project-preview" src="img/projects/previews/markmaczip.webp" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="recent-project-body">
