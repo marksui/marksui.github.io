@@ -4,6 +4,24 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Experience</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Technical experience and selected engineering work by Mark Sui across AI evaluation, embedded sensing, RTL design, architecture, and applied ML.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#55645e">
+  <link rel="canonical" href="https://marksui.github.io/experience.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Experience">
+  <meta property="og:description" content="Technical experience and selected engineering work by Mark Sui across AI evaluation, embedded sensing, RTL design, architecture, and applied ML.">
+  <meta property="og:url" content="https://marksui.github.io/experience.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Experience">
+  <meta name="twitter:description" content="Technical experience and selected engineering work by Mark Sui across AI evaluation, embedded sensing, RTL design, architecture, and applied ML.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
   <style>
@@ -430,6 +448,7 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html" aria-current="page">Experience</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
@@ -584,9 +603,9 @@
         <article class="project-card">
           <span class="project-type">Embedded Hardware</span>
           <h3>Indoor Environmental Monitoring System</h3>
-          <p class="project-context">UC San Diego · Spring 2025 · La Jolla, California</p>
+          <p class="project-context">UC San Diego / Spring 2025 / La Jolla, California</p>
           <p>
-            Designed an ESP32-based monitoring system for CO₂, PM2.5, VOCs, temperature, humidity, and noise, integrating
+            Designed an ESP32-based monitoring system for CO2, PM2.5, VOCs, temperature, humidity, and noise, integrating
             BME680, SCD4x, PMSA003I, and ICS-43434 sensors on a custom PCB with TFT display, data logging, and power management.
           </p>
           <p>
@@ -595,7 +614,7 @@
           <div class="stack-row">
             <span>ESP32</span>
             <span>PCB Design</span>
-            <span>I²C / I²S / SPI</span>
+            <span>I2C / I2S / SPI</span>
             <span>Sensor Systems</span>
           </div>
         </article>
@@ -603,7 +622,7 @@
         <article class="project-card">
           <span class="project-type">Machine Learning</span>
           <h3>Deep Learning for Climate Emulation</h3>
-          <p class="project-context">UC San Diego · Spring 2025 · Kaggle Competition</p>
+          <p class="project-context">UC San Diego / Spring 2025 / Kaggle Competition</p>
           <p>
             Built CNN, Vision Transformer, and MLP models for climate-field emulation on CMIP6 SSP data and finished
             Top 10 in the competition at <strong>#9 / 83</strong> with a fast and accurate MLP approach.
@@ -622,7 +641,7 @@
         <article class="project-card">
           <span class="project-type">IoT + ML</span>
           <h3>IoT Smart Agriculture Project</h3>
-          <p class="project-context">National University of Singapore · Fall 2024</p>
+          <p class="project-context">National University of Singapore / Fall 2024</p>
           <p>
             Developed a fruit-quality assessment prototype using ESP32, camera, and audio input, then combined CNN and LSTM
             models to estimate sweetness through non-destructive sensing.
@@ -641,7 +660,7 @@
         <article class="project-card">
           <span class="project-type">Digital Design</span>
           <h3>FPGA-Based Viterbi Decoder</h3>
-          <p class="project-context">Advanced Digital Design · UC San Diego</p>
+          <p class="project-context">Advanced Digital Design / UC San Diego</p>
           <p>
             Designed a convolutional encoder and FPGA-based Viterbi decoder in SystemVerilog, implementing BMC, ACS,
             and Traceback Unit components for accurate signal reconstruction.
@@ -659,7 +678,7 @@
         <article class="project-card">
           <span class="project-type">Security Research</span>
           <h3>Cryptography Seminar and Research</h3>
-          <p class="project-context">UC San Diego · 2024 · La Jolla, California</p>
+          <p class="project-context">UC San Diego / 2024 / La Jolla, California</p>
           <p>
             Studied lattice-based cryptography, delivered a one-hour seminar on Babai's Algorithm for the Closest Vector Problem,
             and analyzed NTRU signature schemes against lattice-reduction attacks.
@@ -677,7 +696,7 @@
         <article class="project-card">
           <span class="project-type">Reinforcement Learning</span>
           <h3>Blackjack AI</h3>
-          <p class="project-context">UC San Diego · Spring 2025</p>
+          <p class="project-context">UC San Diego / Spring 2025</p>
           <p>
             Implemented Monte Carlo, temporal-difference, and Q-learning agents, simulated more than one million games,
             and built a custom visualization workflow to compare policy convergence.
@@ -696,13 +715,13 @@
         <article class="project-card">
           <span class="project-type">Search and Planning</span>
           <h3>Monte Carlo Tree Search Gomoku AI</h3>
-          <p class="project-context">UC San Diego · Spring 2025</p>
+          <p class="project-context">UC San Diego / Spring 2025</p>
           <p>
             Built a full MCTS pipeline with heuristic pruning, tuning search from 1000 to 6000 iterations and outperforming
             random-play baselines by a wide margin.
           </p>
           <p>
-            <strong>Bottleneck and resolution.</strong> The core difficulty was search explosion: naïve exploration wasted too much computation on obviously weak branches. I added heuristic pruning and tuned iteration budgets so the search spent more time on plausible continuations, which made the agent meaningfully stronger without requiring an impractical compute budget.
+            <strong>Bottleneck and resolution.</strong> The core difficulty was search explosion: naive exploration wasted too much computation on obviously weak branches. I added heuristic pruning and tuned iteration budgets so the search spent more time on plausible continuations, which made the agent meaningfully stronger without requiring an impractical compute budget.
           </p>
           <div class="stack-row">
             <span>Python</span>
@@ -714,10 +733,10 @@
         <article class="project-card">
           <span class="project-type">Applied Data Science</span>
           <h3>Weather Forecasting and Air Quality Prediction</h3>
-          <p class="project-context">Data Analysis and Inference · UC San Diego</p>
+          <p class="project-context">Data Analysis and Inference / UC San Diego</p>
           <p>
             Built Random Forest and Polynomial Regression models for precipitation and AQI prediction, reaching
-            <strong>R² = 93.2%</strong> and <strong>MSE = 1.41</strong> for AQI with the Random Forest model.
+            <strong>R2 = 93.2%</strong> and <strong>MSE = 1.41</strong> for AQI with the Random Forest model.
           </p>
           <p>
             <strong>Bottleneck and resolution.</strong> The main challenge was not model selection alone, but making heterogeneous environmental data trustworthy enough to learn from. I cleaned and integrated the datasets, compared model families under the same target definitions, and used feature-importance analysis to understand which variables were actually driving performance.

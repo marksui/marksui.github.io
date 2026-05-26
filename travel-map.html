@@ -4,6 +4,25 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Places Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#55645e">
+  <link rel="canonical" href="https://marksui.github.io/travel-map.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Places Map">
+  <meta property="og:description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
+  <meta property="og:url" content="https://marksui.github.io/travel-map.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Places Map">
+  <meta name="twitter:description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="theme.js"></script>
@@ -312,6 +331,59 @@
       border-color: var(--personal-accent);
       color: var(--personal-accent);
       background: var(--personal-wash);
+    }
+
+    .selected-more {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .selected-more summary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.32rem 0.7rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 999px;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      transition: transform 0.24s var(--personal-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
+    }
+
+    .selected-more summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .selected-more summary:hover,
+    .selected-more summary:focus-visible,
+    .selected-more[open] summary {
+      transform: translateY(-1px);
+      border-color: var(--personal-accent);
+      color: var(--personal-accent);
+      background: var(--personal-wash);
+    }
+
+    .selected-more-menu {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.42rem);
+      z-index: 60;
+      display: grid;
+      min-width: 8.6rem;
+      gap: 0.28rem;
+      padding: 0.36rem;
+      border: 1px solid var(--personal-rule);
+      border-radius: 8px;
+      background: var(--personal-panel);
+      box-shadow: var(--personal-shadow);
+    }
+
+    .selected-more-menu a {
+      justify-content: flex-start;
+      border-radius: 6px;
+      white-space: nowrap;
     }
 
     .photo-slots {
@@ -974,6 +1046,7 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
@@ -990,8 +1063,13 @@
             <a href="personal.html">Overview</a>
             <a href="travel-gallery.html">Gallery</a>
             <a href="travel-map.html" aria-current="page">Places Map</a>
-            <a href="travel-tree.html">Tree</a>
-            <a href="travel-collections.html">Collections</a>
+            <details class="nav-more">
+              <summary>More</summary>
+              <div class="nav-more-menu">
+                <a href="travel-tree.html">Tree</a>
+                <a href="travel-collections.html">Collections</a>
+              </div>
+            </details>
           </nav>
         </div>
 
@@ -1032,8 +1110,13 @@
           <p class="selected-photo-meta" id="selected-photo-meta"></p>
           <div class="selected-actions">
             <a id="selected-gallery-link" href="travel-gallery.html">Gallery</a>
-            <a id="selected-collection-link" href="travel-collections.html">Region</a>
-            <a id="selected-tree-link" href="travel-tree.html">Tree</a>
+            <details class="selected-more">
+              <summary>More</summary>
+              <div class="selected-more-menu">
+                <a id="selected-collection-link" href="travel-collections.html">Region</a>
+                <a id="selected-tree-link" href="travel-tree.html">Tree</a>
+              </div>
+            </details>
           </div>
           <div class="photo-slots" id="selected-photos"></div>
         </aside>
@@ -1074,10 +1157,6 @@
     var query = new URLSearchParams(window.location.search);
     var requestedRegion = query.get("region");
     var requestedPlace = query.get("place");
-    var defaultPlaceName = "Dana Point";
-    var defaultPlaceIndex = places.findIndex(function(place) {
-      return place.name === defaultPlaceName && place.photos && place.photos.length;
-    });
     var selectedIndex = places
       .map(function(place, index) {
         return { place: place, index: index };
@@ -1103,6 +1182,7 @@
     var map;
     var mapTileLayer;
     var photoOrientations = travelData.photoOrientations || {};
+    var allowUrlUpdates = Boolean(requestedRegion || requestedPlace);
 
     if (requestedRegion && places.some(function(place) { return place.region === requestedRegion; })) {
       currentRegion = requestedRegion;
@@ -1128,12 +1208,6 @@
         currentRegion = places[requestedPlaceIndex].region;
       }
     }
-
-    if (!requestedRegion && !requestedPlace && defaultPlaceIndex >= 0) {
-      selectedIndex = defaultPlaceIndex;
-      currentRegion = places[defaultPlaceIndex].region;
-    }
-
 
     function uniqueRegions() {
       var regions = [];
@@ -1400,6 +1474,10 @@
     }
 
     function updateUrl() {
+      if (!allowUrlUpdates) {
+        return;
+      }
+
       var next = new URLSearchParams();
       var selectedPlace = places[selectedIndex];
       if (selectedPlace && selectedPlace.name) {
@@ -1444,6 +1522,9 @@
         button.setAttribute("aria-pressed", String(active));
       });
 
+      if (moveMap) {
+        allowUrlUpdates = true;
+      }
       updateUrl();
 
       if (map && moveMap) {
@@ -1488,6 +1569,7 @@
       filterWrap.querySelectorAll(".region-filter").forEach(function(button) {
         button.addEventListener("click", function() {
           currentRegion = button.dataset.region;
+          allowUrlUpdates = true;
           var nextIndex = firstIndexForRegion(currentRegion);
           if (nextIndex >= 0) {
             selectedIndex = nextIndex;
@@ -1622,6 +1704,20 @@
       }
     }
 
+    function showWorldMap() {
+      if (!map) {
+        return;
+      }
+
+      document.getElementById("map-count").textContent = "World view / " + places.length + " places / " + totalPhotoCount() + " photos";
+      map.setView([20, 0], 2, { animate: false });
+      markers.forEach(function(marker) {
+        if (marker.closePopup) {
+          marker.closePopup();
+        }
+      });
+    }
+
     function initMap() {
       document.getElementById("map-count").textContent = "All places · " + places.length + " places · " + totalPhotoCount() + " photos";
       if (!window.L) {
@@ -1649,6 +1745,7 @@
         marker.on("click", function() {
           currentRegion = place.region;
           selectedIndex = index;
+          allowUrlUpdates = true;
           renderFilters();
           renderRegionList();
           updateSelected(index, true);
@@ -1657,10 +1754,12 @@
         return marker;
       });
 
-      if (requestedPlace || (!requestedRegion && !requestedPlace)) {
+      if (requestedPlace) {
         focusSelectedPlace(false);
-      } else {
+      } else if (requestedRegion) {
         fitMapToRegion(currentRegion);
+      } else {
+        showWorldMap();
       }
     }
 

@@ -2,8 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Tree</title>
+  <title>Mark Sui - Travel Tree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#55645e">
+  <link rel="canonical" href="https://marksui.github.io/travel-tree.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Travel Tree">
+  <meta property="og:description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <meta property="og:url" content="https://marksui.github.io/travel-tree.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Travel Tree">
+  <meta name="twitter:description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="theme.js"></script>
@@ -1331,6 +1350,7 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html" aria-current="page">Personal</a>
     </nav>
@@ -1346,8 +1366,13 @@
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
           <a href="travel-map.html">Places Map</a>
-          <a href="travel-tree.html" aria-current="page">Tree</a>
-          <a href="travel-collections.html">Collections</a>
+          <details class="nav-more">
+            <summary>More</summary>
+            <div class="nav-more-menu">
+              <a href="travel-tree.html" aria-current="page">Tree</a>
+              <a href="travel-collections.html">Collections</a>
+            </div>
+          </details>
         </nav>
       </div>
     </section>

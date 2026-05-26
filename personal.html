@@ -2,8 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Personal</title>
+  <title>Mark Sui - Personal Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#55645e">
+  <link rel="canonical" href="https://marksui.github.io/personal.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Personal Archive">
+  <meta property="og:description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
+  <meta property="og:url" content="https://marksui.github.io/personal.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Personal Archive">
+  <meta name="twitter:description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="preload" as="image" href="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" type="image/webp" fetchpriority="high">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
   <script src="travel-data.js"></script>
@@ -199,8 +218,7 @@
 
     .portal-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-      grid-auto-rows: minmax(0, auto);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.82rem;
       margin-top: 0.9rem;
     }
@@ -229,31 +247,16 @@
     .portal-card img {
       display: block;
       width: 100%;
-      aspect-ratio: 16 / 10;
+      height: clamp(220px, 26vw, 320px);
       border-radius: 6px;
       object-fit: cover;
       background: var(--hub-wash);
     }
 
-    .portal-card-primary {
-      grid-row: span 3;
-      align-content: start;
-      gap: 1rem;
-      padding: 1.12rem;
-    }
-
-    .portal-card-primary img {
-      aspect-ratio: 16 / 13;
-    }
-
+    .portal-card-primary,
     .portal-card-secondary {
-      grid-template-columns: minmax(116px, 0.42fr) minmax(0, 1fr);
-      align-items: center;
-      padding: 0.78rem;
-    }
-
-    .portal-card-secondary img {
-      aspect-ratio: 1.18 / 1;
+      align-content: start;
+      grid-template-columns: 1fr;
     }
 
     .portal-card strong {
@@ -282,6 +285,41 @@
       margin: 0.18rem 0 0;
       color: var(--text);
       opacity: 0.84;
+    }
+
+    .quiet-view-links {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.42rem;
+      flex-wrap: wrap;
+      margin-top: 0.72rem;
+      color: var(--hub-secondary);
+      font-size: 0.88rem;
+    }
+
+    .quiet-view-links span {
+      opacity: 0.76;
+    }
+
+    .quiet-view-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.16rem 0.5rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 999px;
+      color: var(--hub-secondary);
+      text-decoration: none;
+      transition: transform 0.24s var(--hub-ease), border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+
+    .quiet-view-links a:hover,
+    .quiet-view-links a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--hub-accent);
+      color: var(--hub-accent);
+      background: var(--hub-wash);
     }
 
     .portal-metrics {
@@ -451,7 +489,7 @@
       }
 
       .portal-card-secondary {
-        grid-template-columns: minmax(128px, 0.45fr) minmax(0, 1fr);
+        grid-template-columns: 1fr;
       }
 
       .hero-collage {
@@ -541,6 +579,10 @@
         padding: 0.9rem;
       }
 
+      .portal-card img {
+        height: clamp(190px, 58vw, 260px);
+      }
+
       .portal-card-secondary {
         grid-template-columns: 1fr;
       }
@@ -572,6 +614,7 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html" aria-current="page">Personal</a>
     </nav>
@@ -590,22 +633,27 @@
           <a href="personal.html" aria-current="page">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
           <a href="travel-map.html">Places Map</a>
-          <a href="travel-tree.html">Tree</a>
-          <a href="travel-collections.html">Collections</a>
+          <details class="nav-more">
+            <summary>More</summary>
+            <div class="nav-more-menu">
+              <a href="travel-tree.html">Tree</a>
+              <a href="travel-collections.html">Collections</a>
+            </div>
+          </details>
         </nav>
       </div>
 
       <div class="hero-collage" aria-label="Featured archive images">
         <figure class="hero-shot tall">
-          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" alt="Dana Point ocean terrace view" loading="eager" decoding="async">
+          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" width="1067" height="1600" alt="Dana Point ocean terrace view" loading="eager" decoding="sync" fetchpriority="high">
           <figcaption>Dana Point, United States</figcaption>
         </figure>
         <figure class="hero-shot">
-          <img src="img/thumbs/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-front-view.webp" alt="Bandar Seri Begawan Sultan Omar Ali Saifuddien Mosque front view" loading="eager" decoding="async">
+          <img src="img/thumbs/brunei/bandar-seri-begawan/bandar-seri-begawan-sultan-omar-ali-saifuddien-mosque-front-view.webp" width="1400" height="788" alt="Bandar Seri Begawan Sultan Omar Ali Saifuddien Mosque front view" loading="eager" decoding="sync" fetchpriority="high">
           <figcaption>Bandar Seri Begawan, Brunei</figcaption>
         </figure>
         <figure class="hero-shot">
-          <img src="img/thumbs/australia/sydney/sydney-dusk-skyline-overlook.webp" alt="Sydney dusk skyline overlook" loading="eager" decoding="async">
+          <img src="img/thumbs/australia/sydney/sydney-dusk-skyline-overlook.webp" width="1400" height="787" alt="Sydney dusk skyline overlook" loading="eager" decoding="sync" fetchpriority="high">
           <figcaption>Sydney, Australia</figcaption>
         </figure>
       </div>
@@ -629,8 +677,8 @@
     <section>
       <h2 class="section-heading">Main Views</h2>
       <div class="portal-grid">
-        <a class="portal-card portal-card-primary" href="travel-map.html?region=California&place=Dana%20Point">
-          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" alt="Dana Point ocean terrace view" loading="lazy" decoding="async">
+        <a class="portal-card portal-card-primary" href="travel-map.html">
+          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" width="1067" height="1600" alt="Dana Point ocean terrace view" loading="eager" decoding="sync">
           <div>
             <div class="portal-topline">
               <span>Main view</span>
@@ -644,7 +692,7 @@
           </div>
         </a>
         <a class="portal-card portal-card-secondary" href="travel-gallery.html">
-          <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-flowers.webp" alt="Hanoi Hoan Kiem Lake flowers" loading="lazy" decoding="async">
+          <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-flowers.webp" width="720" height="1280" alt="Hanoi Hoan Kiem Lake flowers" loading="eager" decoding="sync">
           <div>
             <div class="portal-topline">
               <span>Photo stream</span>
@@ -657,34 +705,11 @@
             <p>Everything in one stream.</p>
           </div>
         </a>
-        <a class="portal-card portal-card-secondary" href="travel-tree.html">
-          <img src="img/thumbs/singapore/singapore/singapore-marina-bay-sands-daylight.webp" alt="Singapore Marina Bay Sands daylight view" loading="lazy" decoding="async">
-          <div>
-            <div class="portal-topline">
-              <span>Branch view</span>
-              <ul class="portal-metrics">
-                <li id="tree-region-metric">0 regions</li>
-                <li id="tree-place-metric">0 places</li>
-              </ul>
-            </div>
-            <strong>Tree</strong>
-            <p>Start broad, then narrow down.</p>
-          </div>
-        </a>
-        <a class="portal-card portal-card-secondary" href="travel-collections.html">
-          <img src="img/thumbs/yunnan/lijiang/lijiang-jade-dragon-snow-mountain-glacier-view.webp" alt="Lijiang Jade Dragon Snow Mountain" loading="lazy" decoding="async">
-          <div>
-            <div class="portal-topline">
-              <span>By region</span>
-              <ul class="portal-metrics">
-                <li id="collections-region-metric">0 regions</li>
-                <li id="collections-place-metric">0 place sets</li>
-              </ul>
-            </div>
-            <strong>Collections</strong>
-            <p>A broader regional view.</p>
-          </div>
-        </a>
+      </div>
+      <div class="quiet-view-links" aria-label="Additional archive views">
+        <span>More views</span>
+        <a href="travel-tree.html">Tree</a>
+        <a href="travel-collections.html">Collections</a>
       </div>
     </section>
 
@@ -744,14 +769,17 @@
         });
       }
 
-      document.getElementById("gallery-photo-metric").textContent = shared.photoLabel(shared.totalPhotoCount());
-      document.getElementById("gallery-place-metric").textContent = placesWithPhotos.length + (placesWithPhotos.length === 1 ? " place" : " places");
-      document.getElementById("atlas-place-metric").textContent = places.length + (places.length === 1 ? " place" : " places");
-      document.getElementById("atlas-region-metric").textContent = photoRegions.length + (photoRegions.length === 1 ? " region" : " regions");
-      document.getElementById("collections-region-metric").textContent = photoRegions.length + (photoRegions.length === 1 ? " region" : " regions");
-      document.getElementById("collections-place-metric").textContent = placesWithPhotos.length + (placesWithPhotos.length === 1 ? " set" : " sets");
-      document.getElementById("tree-region-metric").textContent = photoRegions.length + (photoRegions.length === 1 ? " region" : " regions");
-      document.getElementById("tree-place-metric").textContent = placesWithPhotos.length + (placesWithPhotos.length === 1 ? " place" : " places");
+      function setMetric(id, value) {
+        var element = document.getElementById(id);
+        if (element) {
+          element.textContent = value;
+        }
+      }
+
+      setMetric("gallery-photo-metric", shared.photoLabel(shared.totalPhotoCount()));
+      setMetric("gallery-place-metric", placesWithPhotos.length + (placesWithPhotos.length === 1 ? " place" : " places"));
+      setMetric("atlas-place-metric", places.length + (places.length === 1 ? " place" : " places"));
+      setMetric("atlas-region-metric", photoRegions.length + (photoRegions.length === 1 ? " region" : " regions"));
 
       document.getElementById("featured-places").innerHTML = featuredPlaces.map(function(place) {
         var cover = place.photos && place.photos[0] ? place.photos[0] : null;
@@ -780,7 +808,7 @@
         return '' +
           '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">' +
             '<strong>' + shared.htmlLabel(region, shared.data.regionLocalNames[region]) + "</strong>" +
-            '<small>' + regionPlaceCount + (regionPlaceCount === 1 ? " place" : " places") + ' · ' + shared.escapeHtml(shared.photoLabel(shared.regionPhotoCount(region))) + "</small>" +
+            '<small>' + regionPlaceCount + (regionPlaceCount === 1 ? " place" : " places") + ' / ' + shared.escapeHtml(shared.photoLabel(shared.regionPhotoCount(region))) + "</small>" +
           "</a>";
       }).join("");
     })();

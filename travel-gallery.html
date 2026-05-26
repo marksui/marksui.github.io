@@ -4,6 +4,24 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Travel Gallery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Travel photo gallery from Mark Sui's personal archive, organized for browsing places, images, and trip memories.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#55645e">
+  <link rel="canonical" href="https://marksui.github.io/travel-gallery.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Travel Gallery">
+  <meta property="og:description" content="Travel photo gallery from Mark Sui's personal archive, organized for browsing places, images, and trip memories.">
+  <meta property="og:url" content="https://marksui.github.io/travel-gallery.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Travel Gallery">
+  <meta name="twitter:description" content="Travel photo gallery from Mark Sui's personal archive, organized for browsing places, images, and trip memories.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="stylesheet" href="style.css">
   <script src="theme.js"></script>
   <script src="travel-data.js"></script>
@@ -643,6 +661,7 @@
       <a href="index.html">About</a>
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html" aria-current="page">Personal</a>
     </nav>
@@ -658,8 +677,13 @@
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html" aria-current="page">Gallery</a>
           <a href="travel-map.html">Places Map</a>
-          <a href="travel-tree.html">Tree</a>
-          <a href="travel-collections.html">Collections</a>
+          <details class="nav-more">
+            <summary>More</summary>
+            <div class="nav-more-menu">
+              <a href="travel-tree.html">Tree</a>
+              <a href="travel-collections.html">Collections</a>
+            </div>
+          </details>
         </nav>
       </div>
 
@@ -824,7 +848,7 @@
         var fetchPriority = priority ? "high" : "low";
         return '' +
           '<article class="gallery-card ' + shared.escapeHtml(entry.orientation || "landscape") + '">' +
-            '<button class="gallery-hit" type="button" data-photo-src="' + shared.escapeHtml(entry.photo.src) + '" data-photo-caption="' + shared.escapeHtml(caption) + '">' +
+            '<button class="gallery-hit" type="button" data-photo-index="' + String(entry.galleryIndex) + '" data-photo-src="' + shared.escapeHtml(entry.photo.src) + '" data-photo-caption="' + shared.escapeHtml(caption) + '">' +
               '<img src="' + shared.escapeHtml(thumbnail) + '" data-full-src="' + shared.escapeHtml(entry.photo.src) + '" alt="' + shared.escapeHtml(caption) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
             '</button>' +
             '<div class="gallery-meta">' +
@@ -835,7 +859,14 @@
           '</article>';
       }
 
-      function attachViewer(root) {
+      function attachViewer(root, entries) {
+        var viewerItems = entries.map(function(entry) {
+          return {
+            src: entry.photo.src,
+            caption: entry.photo.caption || shared.placeLabel(entry.place)
+          };
+        });
+
         root.querySelectorAll(".gallery-hit").forEach(function(button) {
           var image = button.querySelector("img");
           if (!image) {
@@ -849,7 +880,10 @@
           }, { once: true });
 
           button.addEventListener("click", function() {
-            viewer.open(button.dataset.photoSrc, button.dataset.photoCaption);
+            viewer.open(button.dataset.photoSrc, button.dataset.photoCaption, {
+              items: viewerItems,
+              index: Number(button.dataset.photoIndex)
+            });
           });
         });
       }
@@ -971,6 +1005,10 @@
           return;
         }
 
+        entries.forEach(function(entry, index) {
+          entry.galleryIndex = index;
+        });
+
         var landscapes = entries.filter(function(entry) {
           return entry.orientation !== "portrait";
         });
@@ -985,8 +1023,8 @@
           ? portraits.map(function(entry, index) { return cardHtml(entry, !landscapes.length && index < 3); }).join("")
           : "";
         divider.hidden = !(landscapes.length && portraits.length);
-        attachViewer(wideWrap);
-        attachViewer(tallWrap);
+        attachViewer(wideWrap, entries);
+        attachViewer(tallWrap, entries);
       }
 
       function syncSearch() {

@@ -24,7 +24,7 @@
   function updateButton(button, theme) {
     var icon = button.querySelector(".theme-toggle-icon");
     var label = button.querySelector(".theme-toggle-label");
-    icon.textContent = theme === "dark" ? "☀" : "◐";
+    icon.textContent = theme === "dark" ? "\u2600" : "\u25d0";
     label.textContent = theme === "dark" ? "Light" : "Dark";
     button.setAttribute(
       "aria-label",
