@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Travel Gallery</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="description" content="Travel photo gallery from Mark Sui's personal archive, organized for browsing places, images, and trip memories.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#55645e">
+  <meta name="theme-color" content="#102A43">
   <link rel="canonical" href="https://marksui.github.io/travel-gallery.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mark Sui">
@@ -22,29 +25,29 @@
   <meta name="twitter:title" content="Mark Sui - Travel Gallery">
   <meta name="twitter:description" content="Travel photo gallery from Mark Sui's personal archive, organized for browsing places, images, and trip memories.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
-  <link rel="stylesheet" href="style.css">
-  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
+  <script src="theme.js?v=20260529-ops"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
     .gallery-main {
       max-width: 1260px;
-      --gallery-accent: #55645e;
-      --gallery-secondary: #7b7467;
-      --gallery-rule: #d9d5cc;
-      --gallery-wash: rgba(85, 100, 94, 0.065);
-      --gallery-panel: rgba(255, 255, 255, 0.8);
-      --gallery-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --gallery-accent: #102A43;
+      --gallery-secondary: #607086;
+      --gallery-rule: #D8DEE8;
+      --gallery-wash: rgba(16, 42, 67, 0.045);
+      --gallery-panel: var(--surface);
+      --gallery-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
       --gallery-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .gallery-main {
-      --gallery-accent: #a8b6ae;
-      --gallery-secondary: #b8b0a3;
-      --gallery-rule: #3f423f;
-      --gallery-wash: rgba(168, 182, 174, 0.08);
-      --gallery-panel: rgba(24, 24, 24, 0.76);
-      --gallery-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+      --gallery-accent: #9DB7D5;
+      --gallery-secondary: #B8C6D8;
+      --gallery-rule: #343E4A;
+      --gallery-wash: rgba(157, 183, 213, 0.08);
+      --gallery-panel: var(--surface);
+      --gallery-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
     }
 
     .travel-hero {
@@ -86,18 +89,14 @@
     .travel-local-nav {
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 0.32rem;
-      margin-top: 1.1rem;
-      padding: 0.28rem;
-      border: 1px solid var(--gallery-rule);
-      border-radius: 999px;
-      background: var(--gallery-panel);
-      box-shadow: var(--gallery-shadow);
+      gap: 0.42rem 1rem;
+      margin-top: 1.15rem;
+      padding-top: 0.72rem;
+      border-top: 1px solid var(--gallery-rule);
     }
 
     .travel-local-nav a {
-      padding: 0.3rem 0.74rem;
-      border-radius: 999px;
+      padding: 0.08rem 0;
       color: var(--text);
       text-decoration: none;
       transition: transform 0.24s var(--gallery-ease), background 0.24s ease, color 0.24s ease;
@@ -114,17 +113,19 @@
     .gallery-glance {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
+      gap: 0;
+      border-top: 1px solid var(--gallery-rule);
+      border-bottom: 1px solid var(--gallery-rule);
     }
 
     .gallery-glance article {
-      padding: 0.9rem 0.95rem;
-      border: 1px solid var(--gallery-rule);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, var(--gallery-wash), transparent 78%),
-        var(--gallery-panel);
-      box-shadow: var(--gallery-shadow);
+      padding: 0.86rem 0.95rem;
+      border-right: 1px solid var(--gallery-rule);
+      background: transparent;
+    }
+
+    .gallery-glance article:last-child {
+      border-right: 0;
     }
 
     .gallery-glance strong {
@@ -159,7 +160,7 @@
       border: 1px solid var(--gallery-rule);
       border-radius: 8px;
       background: var(--gallery-panel);
-      box-shadow: var(--gallery-shadow);
+      box-shadow: none;
     }
 
     .gallery-search-panel {
@@ -206,9 +207,8 @@
       display: grid;
       align-content: center;
       padding: 1rem;
-      background:
-        linear-gradient(180deg, var(--gallery-wash), transparent 72%),
-        var(--gallery-panel);
+      border-top: 2px solid var(--gallery-accent);
+      background: var(--gallery-panel);
     }
 
     .gallery-note-panel p {
@@ -299,8 +299,8 @@
       padding: 0.58rem;
       border: 1px solid var(--gallery-rule);
       border-radius: 8px;
-      background: color-mix(in srgb, var(--gallery-panel) 92%, var(--surface) 8%);
-      box-shadow: 0 12px 32px rgba(53, 55, 49, 0.075);
+      background: color-mix(in srgb, var(--gallery-panel) 96%, transparent);
+      box-shadow: 0 8px 22px rgba(16, 42, 67, 0.045);
       backdrop-filter: blur(10px);
     }
 
@@ -358,7 +358,7 @@
     .gallery-grid {
       display: grid;
       align-items: start;
-      gap: 0.72rem;
+      gap: 1rem;
     }
 
     .gallery-grid.wide-grid {
@@ -379,7 +379,7 @@
       border: 1px solid var(--gallery-rule);
       border-radius: 8px;
       background: var(--gallery-panel);
-      box-shadow: var(--gallery-shadow);
+      box-shadow: none;
       overflow: hidden;
       transition: transform 0.3s var(--gallery-ease), border-color 0.24s ease, box-shadow 0.24s ease;
     }
@@ -388,7 +388,7 @@
     .gallery-card:focus-within {
       transform: translateY(-3px);
       border-color: var(--gallery-accent);
-      box-shadow: 0 20px 42px rgba(53, 55, 49, 0.12);
+      box-shadow: 0 10px 26px rgba(16, 42, 67, 0.07);
     }
 
     .gallery-hit {
@@ -396,7 +396,7 @@
       width: 100%;
       padding: 0;
       border: 0;
-      background: linear-gradient(180deg, var(--gallery-wash), transparent 50%), var(--tag-bg);
+      background: var(--soft);
       cursor: zoom-in;
     }
 
@@ -420,16 +420,17 @@
       display: grid;
       gap: 0.34rem;
       padding: 0.6rem 0.72rem 0.72rem;
-      border-top: 1px solid rgba(85, 100, 94, 0.14);
+      border-top: 1px solid rgba(16, 42, 67, 0.14);
     }
 
     html[data-theme="dark"] .gallery-meta {
-      border-top-color: rgba(168, 182, 174, 0.14);
+      border-top-color: rgba(157, 183, 213, 0.14);
     }
 
     .gallery-place {
       color: var(--gallery-accent);
       font-size: 0.84rem;
+      font-style: italic;
       line-height: 1.2;
     }
 
@@ -452,89 +453,6 @@
       color: var(--gallery-secondary);
       text-align: center;
       background: var(--gallery-wash);
-    }
-
-    body.viewer-open {
-      overflow: hidden;
-    }
-
-    .photo-viewer {
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
-      display: none;
-      place-items: center;
-      padding: 2rem;
-      background: rgba(0, 0, 0, 0.88);
-      backdrop-filter: blur(10px);
-    }
-
-    .photo-viewer.open {
-      display: grid;
-    }
-
-    .photo-viewer-content {
-      width: min(96vw, 1400px);
-      text-align: center;
-    }
-
-    .photo-viewer img {
-      display: block;
-      max-width: 100%;
-      max-height: 84vh;
-      width: auto;
-      height: auto;
-      margin: 0 auto;
-      border-radius: 8px;
-      box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42);
-      object-fit: contain;
-    }
-
-    .photo-viewer-caption {
-      margin: 0.75rem 0 0;
-      color: #ffffff;
-      font-size: 0.95rem;
-      opacity: 0.88;
-    }
-
-    .photo-viewer-original {
-      display: inline-block;
-      margin-top: 0.45rem;
-      color: #ffffff;
-      font-size: 0.9rem;
-      opacity: 0.78;
-    }
-
-    .photo-viewer-original:hover {
-      opacity: 1;
-    }
-
-    .photo-viewer-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      border: 1px solid rgba(255, 255, 255, 0.42);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.14);
-      color: #ffffff;
-      cursor: pointer;
-      font: inherit;
-      font-weight: bold;
-    }
-
-    .photo-viewer-close:hover {
-      background: rgba(255, 255, 255, 0.24);
-    }
-
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
     }
 
     @keyframes galleryFadeUp {
@@ -662,6 +580,7 @@
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html" aria-current="page">Personal</a>
     </nav>
@@ -670,8 +589,8 @@
   <main class="gallery-main">
     <section class="travel-hero">
       <div class="travel-copy">
-        <p class="travel-kicker">Gallery</p>
-        <h2>All photos.</h2>
+        <p class="travel-kicker">Photo Archive</p>
+        <h2>Photographs by place.</h2>
         <p>Everything in one place.</p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
@@ -738,6 +657,27 @@
       </div>
     </section>
   </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
 
   <script>
     (function() {
@@ -863,7 +803,11 @@
         var viewerItems = entries.map(function(entry) {
           return {
             src: entry.photo.src,
-            caption: entry.photo.caption || shared.placeLabel(entry.place)
+            caption: entry.photo.caption || shared.placeLabel(entry.place),
+            thumbnail: entry.thumbnail,
+            place: shared.placeLabel(entry.place),
+            region: shared.regionLabel(entry.region),
+            mapUrl: "travel-map.html?region=" + encodeURIComponent(entry.region) + "&place=" + encodeURIComponent(entry.place.name)
           };
         });
 
@@ -993,7 +937,7 @@
           return shared.placeLabel(place);
         });
         summaryDetail.textContent = leadPlaces.length
-          ? "Leading sets: " + leadPlaces.join(" · ") + (places.length > 3 ? " ..." : "")
+          ? "Leading sets: " + leadPlaces.join(" / ") + (places.length > 3 ? " ..." : "")
           : "Region, place, and caption search.";
       }
 
@@ -1068,6 +1012,9 @@
         currentQuery = "";
         searchInput.value = "";
         updateAll();
+        if (window.siteToast) {
+          window.siteToast("Gallery filters cleared.");
+        }
       });
       updateAll();
     })();

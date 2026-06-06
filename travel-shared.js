@@ -202,16 +202,26 @@
       '<button class="photo-viewer-nav photo-viewer-next" type="button" aria-label="Next photo" hidden>&gt;</button>' +
       '<div class="photo-viewer-content">' +
         '<img alt="">' +
-        '<p class="photo-viewer-caption"></p>' +
-        '<p class="photo-viewer-counter" hidden></p>' +
-        '<a class="photo-viewer-original" href="" target="_blank" rel="noopener">Open original file</a>' +
+        '<div class="photo-viewer-details">' +
+          '<p class="photo-viewer-caption"></p>' +
+          '<p class="photo-viewer-meta" hidden></p>' +
+          '<p class="photo-viewer-counter" hidden></p>' +
+          '<div class="photo-viewer-actions">' +
+            '<a class="photo-viewer-original" href="" target="_blank" rel="noopener">Open original file</a>' +
+            '<a class="photo-viewer-map" href="" hidden>Open on map</a>' +
+          '</div>' +
+          '<div class="photo-viewer-thumbs" hidden></div>' +
+        '</div>' +
       "</div>";
     document.body.appendChild(viewer);
 
     var image = viewer.querySelector("img");
     var caption = viewer.querySelector(".photo-viewer-caption");
+    var meta = viewer.querySelector(".photo-viewer-meta");
     var counter = viewer.querySelector(".photo-viewer-counter");
     var original = viewer.querySelector(".photo-viewer-original");
+    var mapLink = viewer.querySelector(".photo-viewer-map");
+    var thumbs = viewer.querySelector(".photo-viewer-thumbs");
     var previousButton = viewer.querySelector(".photo-viewer-prev");
     var nextButton = viewer.querySelector(".photo-viewer-next");
     var items = [];
@@ -221,7 +231,11 @@
     function normalizeViewerItem(item) {
       return {
         src: item && item.src ? item.src : "",
-        caption: item && item.caption ? item.caption : ""
+        caption: item && item.caption ? item.caption : "",
+        thumbnail: item && item.thumbnail ? item.thumbnail : "",
+        place: item && item.place ? item.place : "",
+        region: item && item.region ? item.region : "",
+        mapUrl: item && item.mapUrl ? item.mapUrl : ""
       };
     }
 
@@ -231,6 +245,56 @@
       nextButton.hidden = !canNavigate;
       counter.hidden = !canNavigate;
       counter.textContent = canNavigate ? currentIndex + 1 + " / " + items.length : "";
+    }
+
+    function preloadNeighbor(index) {
+      if (!items.length) {
+        return;
+      }
+
+      var item = items[(index + items.length) % items.length];
+      if (item && item.src) {
+        var preload = new Image();
+        preload.src = item.src;
+      }
+    }
+
+    function renderThumbs() {
+      thumbs.innerHTML = "";
+      thumbs.hidden = items.length <= 1;
+      if (items.length <= 1) {
+        return;
+      }
+
+      var seen = {};
+      var offsets = [-3, -2, -1, 0, 1, 2, 3];
+      offsets.forEach(function(offset) {
+        var index = (currentIndex + offset + items.length) % items.length;
+        if (seen[index]) {
+          return;
+        }
+        seen[index] = true;
+
+        var item = items[index];
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "photo-viewer-thumb" + (index === currentIndex ? " is-active" : "");
+        button.setAttribute("aria-label", "Open photo " + (index + 1));
+        button.addEventListener("click", function() {
+          showIndex(index);
+        });
+
+        if (item.thumbnail) {
+          var thumb = document.createElement("img");
+          thumb.src = item.thumbnail;
+          thumb.alt = item.caption || "Photo thumbnail";
+          button.appendChild(thumb);
+        } else {
+          button.textContent = String(index + 1);
+        }
+
+        thumbs.appendChild(button);
+      });
     }
 
     function showIndex(index) {
@@ -244,7 +308,22 @@
       image.alt = item.caption || "";
       caption.textContent = item.caption || "";
       original.href = item.src;
+
+      var metaParts = [];
+      if (item.place) {
+        metaParts.push(item.place);
+      }
+      if (item.region) {
+        metaParts.push(item.region);
+      }
+      meta.textContent = metaParts.join(" / ");
+      meta.hidden = !metaParts.length;
+      mapLink.href = item.mapUrl || "";
+      mapLink.hidden = !item.mapUrl;
       updateNav();
+      renderThumbs();
+      preloadNeighbor(currentIndex - 1);
+      preloadNeighbor(currentIndex + 1);
     }
 
     function open(src, text, options) {
@@ -280,6 +359,12 @@
       document.body.classList.remove("viewer-open");
       image.src = "";
       original.href = "";
+      meta.textContent = "";
+      meta.hidden = true;
+      mapLink.href = "";
+      mapLink.hidden = true;
+      thumbs.innerHTML = "";
+      thumbs.hidden = true;
       items = [];
       currentIndex = -1;
       updateNav();

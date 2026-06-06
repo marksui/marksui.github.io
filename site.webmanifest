@@ -1,0 +1,29 @@
+{
+  "name": "Mark Sui Portfolio",
+  "short_name": "Mark Sui",
+  "description": "Electrical and computer engineering portfolio for Mark Sui.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fdfdfc",
+  "theme_color": "#55645e",
+  "icons": [
+    {
+      "src": "img/icons/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "img/icons/app-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icons/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

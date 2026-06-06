@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Places Map</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#55645e">
+  <meta name="theme-color" content="#102A43">
   <link rel="canonical" href="https://marksui.github.io/travel-map.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mark Sui">
@@ -23,30 +26,30 @@
   <meta name="twitter:description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="theme.js"></script>
+  <script src="theme.js?v=20260529-ops"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
     .personal-main {
       max-width: 1180px;
-      --personal-accent: #55645e;
-      --personal-secondary: #7b7467;
-      --personal-rule: #d9d5cc;
-      --personal-wash: rgba(85, 100, 94, 0.065);
+      --personal-accent: #102A43;
+      --personal-secondary: #607086;
+      --personal-rule: #D8DEE8;
+      --personal-wash: rgba(16, 42, 67, 0.045);
       --personal-panel: rgba(255, 255, 255, 0.78);
-      --personal-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --personal-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
       --personal-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .personal-main {
-      --personal-accent: #a8b6ae;
-      --personal-secondary: #b8b0a3;
-      --personal-rule: #3f423f;
-      --personal-wash: rgba(168, 182, 174, 0.08);
+      --personal-accent: #9DB7D5;
+      --personal-secondary: #B8C6D8;
+      --personal-rule: #343E4A;
+      --personal-wash: rgba(157, 183, 213, 0.08);
       --personal-panel: rgba(24, 24, 24, 0.76);
-      --personal-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+      --personal-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
     }
 
     .travel-hero {
@@ -423,7 +426,7 @@
       border-style: solid;
       background: var(--personal-panel);
       opacity: 1;
-      box-shadow: 0 10px 28px rgba(53, 55, 49, 0.045);
+      box-shadow: 0 10px 28px rgba(16, 42, 67, 0.045);
       transition: border-color 0.24s ease, transform 0.28s var(--personal-ease), background 0.24s ease, box-shadow 0.24s ease;
     }
 
@@ -431,7 +434,7 @@
       border-color: var(--personal-accent);
       background: var(--personal-wash);
       transform: translateY(-2px);
-      box-shadow: 0 14px 32px rgba(53, 55, 49, 0.075);
+      box-shadow: 0 14px 32px rgba(16, 42, 67, 0.075);
     }
 
     .photo-slot.landscape {
@@ -737,11 +740,11 @@
       align-items: start;
       margin: 0;
       padding: 1rem 0 1.25rem;
-      border-top: 1px solid rgba(85, 100, 94, 0.16);
+      border-top: 1px solid rgba(16, 42, 67, 0.16);
     }
 
     html[data-theme="dark"] .place-item {
-      border-top-color: rgba(168, 182, 174, 0.16);
+      border-top-color: rgba(157, 183, 213, 0.16);
     }
 
     .place-button {
@@ -1047,8 +1050,9 @@
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="contact.html">Contact</a>
-      <a href="personal.html">Personal</a>
+      <a href="personal.html" aria-current="page">Personal</a>
     </nav>
   </header>
 
@@ -1138,6 +1142,27 @@
       <ul class="region-list" id="region-list"></ul>
     </section>
   </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
 
   <div class="photo-viewer" id="photo-viewer" role="dialog" aria-modal="true" aria-hidden="true">
     <button class="photo-viewer-close" type="button" aria-label="Close photo">X</button>
@@ -1271,7 +1296,7 @@
         radius: active ? 9 : 6,
         color: active ? (themeMode() === "dark" ? "#f3eee6" : "#2f332f") : (themeMode() === "dark" ? "#2b2d2c" : "#fdfdfc"),
         weight: active ? 2 : 1,
-        fillColor: active ? (themeMode() === "dark" ? "#b8b0a3" : "#7b7467") : (themeMode() === "dark" ? "#a8b6ae" : "#55645e"),
+        fillColor: active ? (themeMode() === "dark" ? "#B8C6D8" : "#607086") : (themeMode() === "dark" ? "#9DB7D5" : "#102A43"),
         fillOpacity: active ? 1 : 0.86
       };
     }

@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="description" content="Contact Mark Sui for hardware, ECE, VLSI, RTL, embedded systems, AI systems, and software project opportunities.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#55645e">
+  <meta name="theme-color" content="#102A43">
   <link rel="canonical" href="https://marksui.github.io/contact.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mark Sui">
@@ -24,25 +27,25 @@
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
-  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
+  <script src="theme.js?v=20260529-ops"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     .contact-main {
-      max-width: 900px;
-      --contact-accent: #55645e;
-      --contact-secondary: #7b7467;
-      --contact-rule: #d9d5cc;
-      --contact-wash: rgba(85, 100, 94, 0.065);
+      max-width: 1040px;
+      --contact-accent: #102A43;
+      --contact-secondary: #607086;
+      --contact-rule: var(--line);
+      --contact-wash: rgba(16, 42, 67, 0.045);
       --contact-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .contact-main {
-      --contact-accent: #a8b6ae;
-      --contact-secondary: #b8b0a3;
-      --contact-rule: #3f423f;
-      --contact-wash: rgba(168, 182, 174, 0.08);
+      --contact-accent: #9DB7D5;
+      --contact-secondary: #B8C6D8;
+      --contact-rule: var(--line);
+      --contact-wash: rgba(157, 183, 213, 0.08);
     }
 
     .contact-hero {
@@ -66,8 +69,16 @@
     }
 
     .contact-note {
-      border-left: 1px solid var(--contact-rule);
-      padding: 0.1rem 0 0.1rem 0.85rem;
+      padding: 0.85rem 0.95rem;
+      border: 1px solid var(--contact-rule);
+      border-top: 2px solid var(--contact-accent);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
+    }
+
+    html[data-theme="dark"] .contact-note {
+      box-shadow: none;
     }
 
     .contact-note strong {
@@ -81,6 +92,90 @@
       margin-top: 0.25rem;
       opacity: 0.78;
       font-size: 0.92rem;
+    }
+
+    .contact-console {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .contact-action-grid,
+    .contact-fit-grid {
+      display: grid;
+      gap: 0.72rem;
+    }
+
+    .contact-action-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contact-card,
+    .contact-fit-card {
+      display: grid;
+      gap: 0.36rem;
+      padding: 0.82rem 0.88rem;
+      border: 1px solid var(--contact-rule);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform 0.28s var(--contact-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .contact-card:hover,
+    .contact-card:focus-visible,
+    .contact-fit-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--contact-accent);
+      background: var(--contact-wash);
+    }
+
+    .contact-card span,
+    .contact-fit-card span {
+      color: var(--contact-secondary);
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .contact-card strong,
+    .contact-fit-card strong {
+      color: var(--contact-accent);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .contact-card p,
+    .contact-fit-card p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+      font-size: 0.92rem;
+      line-height: 1.38;
+    }
+
+    .copy-contact-button {
+      justify-self: start;
+      min-height: 2rem;
+      padding: 0.2rem 0.62rem;
+      border: 1px solid var(--contact-rule);
+      border-radius: 999px;
+      background: var(--surface);
+      color: var(--contact-secondary);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.84rem;
+      transition: transform 0.24s var(--contact-ease), border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+
+    .copy-contact-button:hover,
+    .copy-contact-button:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--contact-accent);
+      color: var(--contact-accent);
+      background: var(--contact-wash);
     }
 
     .contact-heading {
@@ -179,9 +274,7 @@
       margin-top: 1rem;
       border: 1px solid var(--contact-rule);
       border-radius: 8px;
-      background:
-        linear-gradient(180deg, var(--contact-wash), transparent 68%),
-        var(--tag-bg);
+      background: var(--soft);
       filter: saturate(0.72) contrast(0.98);
       animation: contactFadeUp 0.65s var(--contact-ease) both;
       transition: filter 0.3s ease, border-color 0.25s ease;
@@ -212,7 +305,7 @@
     }
 
     .leaflet-control-attribution {
-      background: rgba(253, 253, 252, 0.84) !important;
+      background: color-mix(in srgb, var(--surface) 88%, transparent) !important;
       color: var(--contact-secondary) !important;
     }
 
@@ -224,16 +317,12 @@
     .leaflet-popup-tip {
       background: var(--surface) !important;
       color: var(--text) !important;
-      box-shadow: 0 14px 34px rgba(53, 55, 49, 0.14) !important;
+      box-shadow: 0 12px 28px rgba(16, 42, 67, 0.1) !important;
     }
 
     .leaflet-popup-content {
       margin: 0.75rem 0.85rem !important;
       line-height: 1.45;
-    }
-
-    html[data-theme="dark"] .leaflet-control-attribution {
-      background: rgba(24, 24, 24, 0.84) !important;
     }
 
     html[data-theme="dark"] .leaflet-popup-content-wrapper,
@@ -253,15 +342,15 @@
     }
 
     @media (max-width: 720px) {
-      .contact-hero {
+      .contact-hero,
+      .contact-console,
+      .contact-action-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
       }
 
       .contact-note {
-        border-left: 0;
-        border-top: 1px solid var(--contact-rule);
-        padding: 0.75rem 0 0;
+        padding: 0.85rem 0.95rem;
       }
 
       .contact-heading {
@@ -299,6 +388,7 @@
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="contact.html" aria-current="page">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
@@ -307,19 +397,72 @@
   <main class="contact-main">
     <section class="contact-hero">
       <div>
-        <h2>Contact</h2>
+        <h2>Contact Console</h2>
         <p>
-          Based in San Diego and studying at UC San Diego. Reach me through personal email,
-          school email, phone, GitHub, or LinkedIn.
+          Ready-to-contact endpoint for hardware-focused software, RTL/VLSI-adjacent engineering,
+          systems tooling, and technical collaboration.
         </p>
       </div>
       <aside class="contact-note" aria-label="Current location">
         <strong>San Diego, CA</strong>
-        <span>University of California, San Diego</span>
+        <span>UC San Diego ECE / open to engineering conversations</span>
       </aside>
     </section>
 
-    <section>
+    <section class="contact-console" data-reveal aria-label="Contact console">
+      <div class="contact-action-grid">
+        <a class="contact-card" href="mailto:tqsui619@gmail.com">
+          <span>Primary Email</span>
+          <strong>tqsui619@gmail.com</strong>
+          <p>Best path for project, resume, and engineering conversations.</p>
+        </a>
+        <div class="contact-card">
+          <span>Quick Action</span>
+          <strong>Copy email</strong>
+          <p>Copies the primary email address for later follow-up.</p>
+          <button class="copy-contact-button" type="button" data-copy="tqsui619@gmail.com" data-copy-message="Email copied.">Copy Email</button>
+        </div>
+        <a class="contact-card" href="resume.html">
+          <span>Resume</span>
+          <strong>Resume Console</strong>
+          <p>PDF preview, quick facts, and skill matrix.</p>
+        </a>
+        <a class="contact-card" href="projects.html">
+          <span>Work</span>
+          <strong>Project Case Studies</strong>
+          <p>Hardware learning tools, macOS utilities, embedded systems, and maps.</p>
+        </a>
+        <a class="contact-card" href="https://github.com/marksui" target="_blank" rel="noopener">
+          <span>Code</span>
+          <strong>GitHub</strong>
+          <p>Source repos and public project work.</p>
+        </a>
+        <a class="contact-card" href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">
+          <span>Profile</span>
+          <strong>LinkedIn</strong>
+          <p>Professional background and network context.</p>
+        </a>
+      </div>
+      <aside class="contact-fit-grid" aria-label="Good fit topics">
+        <article class="contact-fit-card">
+          <span>Good Fit</span>
+          <strong>Hardware-minded software</strong>
+          <p>Tools that make RTL, architecture, verification, or circuit concepts easier to inspect.</p>
+        </article>
+        <article class="contact-fit-card">
+          <span>Good Fit</span>
+          <strong>Systems and embedded work</strong>
+          <p>Sensor-driven systems, local-first utilities, and practical debugging workflows.</p>
+        </article>
+        <article class="contact-fit-card">
+          <span>Good Fit</span>
+          <strong>Portfolio/project review</strong>
+          <p>Feedback or collaboration around engineering tools, data interfaces, and public demos.</p>
+        </article>
+      </aside>
+    </section>
+
+    <section data-reveal>
       <h2 class="contact-heading">Direct</h2>
       <ul class="contact-list">
         <li>
@@ -345,12 +488,33 @@
       </ul>
     </section>
 
-    <section>
+    <section data-reveal>
       <h2 class="contact-heading">Location</h2>
       <p>Based in San Diego, studying at the University of California, San Diego.</p>
       <div id="map"></div>
     </section>
   </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
@@ -375,7 +539,7 @@
         radius: 8,
         color: theme === 'dark' ? '#101010' : '#fdfdfc',
         weight: 2,
-        fillColor: theme === 'dark' ? '#a8b6ae' : '#55645e',
+        fillColor: theme === 'dark' ? '#9DB7D5' : '#102A43',
         fillOpacity: 0.95
       };
     }

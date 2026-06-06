@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Personal Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#55645e">
+  <meta name="theme-color" content="#102A43">
   <link rel="canonical" href="https://marksui.github.io/personal.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mark Sui">
@@ -23,35 +26,35 @@
   <meta name="twitter:description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preload" as="image" href="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css">
-  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
+  <script src="theme.js?v=20260529-ops"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
     .personal-hub {
       max-width: 1180px;
-      --hub-accent: #55645e;
-      --hub-secondary: #7b7467;
-      --hub-rule: #d9d5cc;
-      --hub-wash: rgba(85, 100, 94, 0.065);
-      --hub-panel: rgba(255, 255, 255, 0.78);
-      --hub-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --hub-accent: #102A43;
+      --hub-secondary: #607086;
+      --hub-rule: #D8DEE8;
+      --hub-wash: rgba(16, 42, 67, 0.045);
+      --hub-panel: var(--surface);
+      --hub-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
       --hub-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .personal-hub {
-      --hub-accent: #a8b6ae;
-      --hub-secondary: #b8b0a3;
-      --hub-rule: #3f423f;
-      --hub-wash: rgba(168, 182, 174, 0.08);
-      --hub-panel: rgba(24, 24, 24, 0.76);
-      --hub-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+      --hub-accent: #9DB7D5;
+      --hub-secondary: #B8C6D8;
+      --hub-rule: #343E4A;
+      --hub-wash: rgba(157, 183, 213, 0.08);
+      --hub-panel: var(--surface);
+      --hub-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
     }
 
     .hub-hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
-      gap: 1.6rem;
+      grid-template-columns: minmax(0, 0.86fr) minmax(360px, 1.14fr);
+      gap: 1.85rem;
       align-items: start;
       padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--hub-rule);
@@ -88,18 +91,14 @@
     .travel-local-nav {
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 0.32rem;
-      margin-top: 1.2rem;
-      padding: 0.28rem;
-      border: 1px solid var(--hub-rule);
-      border-radius: 999px;
-      background: var(--hub-panel);
-      box-shadow: var(--hub-shadow);
+      gap: 0.42rem 1rem;
+      margin-top: 1.15rem;
+      padding-top: 0.72rem;
+      border-top: 1px solid var(--hub-rule);
     }
 
     .travel-local-nav a {
-      padding: 0.3rem 0.74rem;
-      border-radius: 999px;
+      padding: 0.08rem 0;
       color: var(--text);
       text-decoration: none;
       transition: transform 0.24s var(--hub-ease), background 0.24s ease, color 0.24s ease;
@@ -130,7 +129,7 @@
       border: 1px solid var(--hub-rule);
       border-radius: 8px;
       background: var(--hub-panel);
-      box-shadow: var(--hub-shadow);
+      box-shadow: none;
       min-height: 0;
       padding: 0.5rem 0.5rem 0.58rem;
       box-sizing: border-box;
@@ -147,7 +146,7 @@
       object-fit: contain;
       object-position: center;
       border-radius: 6px;
-      background: color-mix(in srgb, var(--hub-panel) 88%, var(--hub-wash) 12%);
+      background: var(--soft);
       transition: transform 0.35s var(--hub-ease), filter 0.28s ease;
     }
 
@@ -159,27 +158,63 @@
     .hero-shot figcaption {
       margin-top: 0.5rem;
       padding: 0 0.18rem;
-      color: var(--text);
-      font-size: 0.92rem;
+      color: var(--hub-secondary);
+      font-size: 0.84rem;
+      font-style: italic;
       line-height: 1.25;
+    }
+
+    .archive-dashboard {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.52fr);
+      gap: 1rem;
+      margin-top: 1.2rem;
+      animation: hubFadeUp 0.7s var(--hub-ease) both;
+    }
+
+    .archive-dashboard-panel {
+      border: 1px solid var(--hub-rule);
+      border-radius: 8px;
+      background: var(--hub-panel);
+      overflow: hidden;
+    }
+
+    .archive-dashboard-head {
+      padding: 0.78rem 0.9rem 0;
+    }
+
+    .archive-dashboard-head span,
+    .archive-picks span {
+      display: block;
+      color: var(--hub-accent);
+      font-size: 0.86rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .archive-dashboard-head strong {
+      display: block;
+      margin-top: 0.18rem;
+      font-size: 1.04rem;
+      line-height: 1.2;
     }
 
     .hub-stats {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      margin-top: 1.35rem;
-      animation: hubFadeUp 0.7s var(--hub-ease) both;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin-top: 0.8rem;
+      border-top: 1px solid var(--hub-rule);
     }
 
     .hub-stats article {
-      padding: 0.95rem 1rem;
-      border: 1px solid var(--hub-rule);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, var(--hub-wash), transparent 76%),
-        var(--hub-panel);
-      box-shadow: var(--hub-shadow);
+      padding: 0.86rem 1rem;
+      border-right: 1px solid var(--hub-rule);
+      background: transparent;
+    }
+
+    .hub-stats article:last-child {
+      border-right: 0;
     }
 
     .hub-stats strong {
@@ -195,6 +230,52 @@
       color: var(--hub-secondary);
       font-size: 0.9rem;
       line-height: 1.25;
+    }
+
+    .archive-picks {
+      display: grid;
+      align-content: start;
+      gap: 0.68rem;
+      padding: 0.9rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 8px;
+      background: var(--hub-panel);
+    }
+
+    .archive-pick-links {
+      display: grid;
+      gap: 0.48rem;
+    }
+
+    .archive-pick-links a {
+      display: grid;
+      gap: 0.1rem;
+      padding: 0.55rem 0.62rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      background: color-mix(in srgb, var(--hub-panel) 94%, var(--hub-wash) 6%);
+      transition: transform 0.24s var(--hub-ease), border-color 0.22s ease, background 0.22s ease;
+    }
+
+    .archive-pick-links a:hover,
+    .archive-pick-links a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--hub-accent);
+      background: var(--hub-wash);
+    }
+
+    .archive-pick-links strong {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .archive-pick-links small {
+      color: var(--hub-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
     }
 
     .section-heading {
@@ -231,7 +312,7 @@
       border: 1px solid var(--hub-rule);
       border-radius: 8px;
       background: var(--hub-panel);
-      box-shadow: var(--hub-shadow);
+      box-shadow: none;
       color: var(--text);
       text-decoration: none;
       transition: transform 0.3s var(--hub-ease), border-color 0.25s ease, background 0.25s ease;
@@ -241,7 +322,7 @@
     .portal-card:focus-visible {
       transform: translateY(-3px);
       border-color: var(--hub-accent);
-      background: linear-gradient(180deg, var(--hub-wash), transparent 90%), var(--hub-panel);
+      background: var(--hub-wash);
     }
 
     .portal-card img {
@@ -251,6 +332,15 @@
       border-radius: 6px;
       object-fit: cover;
       background: var(--hub-wash);
+    }
+
+    .portal-card.portrait-card img {
+      width: min(72%, 16rem);
+      height: auto;
+      aspect-ratio: 3 / 4;
+      margin: 0 auto;
+      object-fit: contain;
+      background: var(--soft);
     }
 
     .portal-card-primary,
@@ -348,6 +438,85 @@
       margin-top: 0.9rem;
     }
 
+    .photo-wall-grid {
+      gap: 1.08rem 1.18rem;
+      align-items: stretch;
+    }
+
+    .masonry-wall {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: 1fr;
+      gap: 0.86rem;
+      margin-top: 0.9rem;
+    }
+
+    .masonry-card {
+      position: relative;
+      display: block;
+      height: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0.46rem 0.46rem 0.54rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 8px;
+      background: var(--hub-panel);
+      color: var(--text);
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.28s var(--hub-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .masonry-card.cover-card {
+      grid-row: auto;
+    }
+
+    .masonry-card:hover,
+    .masonry-card:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--hub-accent);
+      background: var(--hub-wash);
+    }
+
+    .masonry-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      border-radius: 6px;
+      object-fit: cover;
+      background: var(--soft);
+      transition: filter 0.28s ease, transform 0.34s var(--hub-ease);
+    }
+
+    .masonry-card.cover-card img {
+      min-height: 0;
+      aspect-ratio: 3 / 4;
+    }
+
+    .masonry-card:hover img,
+    .masonry-card:focus-visible img {
+      filter: saturate(0.95) contrast(1.02);
+      transform: scale(1.006);
+    }
+
+    .masonry-card span {
+      display: block;
+      margin-top: 0.46rem;
+      color: var(--hub-accent);
+      font-size: 0.88rem;
+      font-style: italic;
+      line-height: 1.18;
+    }
+
+    .masonry-card small {
+      display: block;
+      margin-top: 0.14rem;
+      color: var(--hub-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
     .feature-card {
       display: grid;
       grid-template-columns: minmax(180px, 0.74fr) minmax(0, 1fr);
@@ -357,17 +526,26 @@
       border: 1px solid var(--hub-rule);
       border-radius: 8px;
       background: var(--hub-panel);
-      box-shadow: var(--hub-shadow);
+      box-shadow: none;
       color: var(--text);
       text-decoration: none;
-      transition: transform 0.28s var(--hub-ease), border-color 0.24s ease, background 0.24s ease;
+      transition: transform 0.28s var(--hub-ease), border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
     }
 
     .feature-card:hover,
     .feature-card:focus-visible {
       transform: translateY(-2px);
       border-color: var(--hub-accent);
-      background: linear-gradient(180deg, var(--hub-wash), transparent 90%), var(--hub-panel);
+      background: var(--hub-wash);
+    }
+
+    .feature-card:focus-visible {
+      outline: 3px solid rgba(16, 42, 67, 0.18);
+      outline-offset: 3px;
+    }
+
+    html[data-theme="dark"] .feature-card:focus-visible {
+      outline-color: rgba(157, 183, 213, 0.28);
     }
 
     .feature-card img {
@@ -379,7 +557,22 @@
       border-radius: 8px;
       object-fit: cover;
       background: var(--hub-wash);
-      transition: border-color 0.24s ease;
+      transition: border-color 0.24s ease, filter 0.28s ease, transform 0.34s var(--hub-ease);
+    }
+
+    .feature-card.portrait-card {
+      grid-template-columns: 1fr;
+      align-content: start;
+    }
+
+    .feature-card.portrait-card img {
+      width: min(68%, 14rem);
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 3 / 4;
+      margin: 0 auto;
+      object-fit: cover;
+      background: var(--soft);
     }
 
     .feature-card:hover img,
@@ -387,11 +580,32 @@
       border-color: var(--hub-accent);
     }
 
-    .feature-meta span {
+    .feature-meta > span {
       display: block;
       color: var(--hub-accent);
       font-size: 0.86rem;
       font-style: italic;
+    }
+
+    .feature-meta .local-name {
+      display: block;
+      margin-top: 0.08rem;
+      opacity: 0.74;
+      font-weight: 400;
+      font-style: normal;
+      unicode-bidi: isolate;
+    }
+
+    .feature-meta > span .local-name {
+      color: var(--hub-accent);
+      font-size: 0.86rem;
+      font-style: italic;
+    }
+
+    .feature-meta strong .local-name {
+      color: var(--text);
+      font-size: 0.96rem;
+      line-height: 1.15;
     }
 
     .feature-meta strong {
@@ -424,6 +638,89 @@
       color: var(--hub-secondary);
       font-size: 0.84rem;
       line-height: 1.2;
+    }
+
+    .photo-wall-card {
+      position: relative;
+      grid-template-columns: minmax(170px, 0.72fr) minmax(0, 1fr);
+      align-items: start;
+      min-height: 16.4rem;
+      padding: 0.72rem;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, var(--hub-panel), var(--hub-wash)),
+        var(--hub-panel);
+      box-shadow: 0 10px 26px rgba(16, 42, 67, 0.045);
+    }
+
+    html[data-theme="dark"] .photo-wall-card {
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .photo-wall-card:hover,
+    .photo-wall-card:focus-visible {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(16, 42, 67, 0.085);
+    }
+
+    .photo-wall-card img {
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 9 / 16;
+      border-radius: 6px;
+      box-shadow: 0 10px 24px rgba(16, 42, 67, 0.08);
+    }
+
+    .photo-wall-card:hover img,
+    .photo-wall-card:focus-visible img {
+      filter: saturate(1.04) contrast(1.02);
+      transform: scale(1.012);
+    }
+
+    .photo-wall-card .feature-meta {
+      display: flex;
+      min-width: 0;
+      height: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0.05rem 0.12rem 0.1rem;
+    }
+
+    .photo-wall-card .feature-meta > span {
+      font-size: 0.84rem;
+      line-height: 1.18;
+    }
+
+    .photo-wall-card .feature-meta strong {
+      margin-top: 0.34rem;
+      font-size: 1.24rem;
+      line-height: 1.08;
+    }
+
+    .photo-wall-card .feature-meta p {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 0.64rem;
+      padding: 0.2rem 0.52rem;
+      border: 1px solid var(--hub-rule);
+      border-radius: 999px;
+      background: var(--hub-panel);
+      color: var(--hub-secondary);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      opacity: 1;
+    }
+
+    .photo-wall-card .feature-meta ul {
+      gap: 0.34rem;
+      margin-top: 0.86rem;
+    }
+
+    .photo-wall-card .feature-meta li {
+      max-width: 100%;
+      background: var(--hub-panel);
+      color: var(--hub-secondary);
+      overflow-wrap: anywhere;
     }
 
     .region-strip {
@@ -479,6 +776,7 @@
 
     @media (max-width: 920px) {
       .hub-hero,
+      .archive-dashboard,
       .portal-grid,
       .feature-grid {
         grid-template-columns: 1fr;
@@ -500,12 +798,29 @@
         grid-template-columns: 1fr;
       }
 
+      .photo-wall-card {
+        grid-template-columns: minmax(170px, 0.72fr) minmax(0, 1fr);
+      }
+
       .feature-card img {
         min-height: 220px;
+      }
+
+      .photo-wall-card img {
+        min-height: 0;
+      }
+
+      .masonry-wall {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
     @media (max-width: 680px) {
+      .personal-hub {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+
       .travel-local-nav {
         display: flex;
         flex-wrap: nowrap;
@@ -528,17 +843,21 @@
       }
 
       .hub-copy h2 {
-        max-width: none;
-        font-size: 2.14rem;
+        max-width: 10.5em;
+        font-size: 1.9rem;
+        line-height: 1.06;
+        overflow-wrap: break-word;
       }
 
       .hub-copy p {
+        max-width: 20.5rem;
         font-size: 1rem;
+        overflow-wrap: break-word;
       }
 
       .hub-stats {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0.55rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0;
       }
 
       .hub-stats article {
@@ -554,23 +873,45 @@
       }
 
       .hero-collage {
-        grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-        grid-template-rows: repeat(2, minmax(0, 1fr));
-        min-height: 320px;
+        display: flex;
         gap: 0.7rem;
+        min-height: 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 0.2rem;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
       }
 
+      .hero-collage::-webkit-scrollbar {
+        display: none;
+      }
+
+      .hero-shot,
       .hero-shot.tall {
-        grid-row: 1 / span 2;
+        flex: 0 0 76%;
+        grid-row: auto;
+        min-height: 0;
       }
 
       .hero-shot {
         padding: 0.4rem 0.4rem 0.48rem;
       }
 
+      .hero-shot img {
+        height: 260px;
+        object-fit: cover;
+      }
+
+      .hero-shot.tall img {
+        height: 360px;
+        object-fit: contain;
+      }
+
       .hero-shot figcaption {
         margin-top: 0.42rem;
         font-size: 0.84rem;
+        overflow-wrap: anywhere;
       }
 
       .portal-card,
@@ -583,8 +924,49 @@
         height: clamp(190px, 58vw, 260px);
       }
 
+      .portal-card.portrait-card img {
+        width: min(70%, 14rem);
+        height: auto;
+      }
+
       .portal-card-secondary {
         grid-template-columns: 1fr;
+      }
+
+      .feature-card.portrait-card {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card.portrait-card img {
+        width: min(72%, 14rem);
+        margin: 0 auto;
+      }
+
+      .photo-wall-card {
+        grid-template-columns: minmax(136px, 0.68fr) minmax(0, 1fr);
+      }
+
+      .photo-wall-card img {
+        height: auto;
+        min-height: 0;
+      }
+
+      .photo-wall-card .feature-meta li {
+        max-width: 100%;
+        overflow-wrap: anywhere;
+      }
+
+      .masonry-wall {
+        grid-template-columns: 1fr;
+      }
+
+      .masonry-card.cover-card {
+        grid-row: auto;
+      }
+
+      .masonry-card.cover-card img {
+        min-height: 0;
+        aspect-ratio: 3 / 4;
       }
 
       .region-strip {
@@ -605,6 +987,16 @@
         min-width: 8.8rem;
       }
     }
+
+    @media (max-width: 520px) {
+      .photo-wall-card {
+        grid-template-columns: 1fr;
+      }
+
+      .photo-wall-card img {
+        aspect-ratio: 4 / 3;
+      }
+    }
   </style>
 </head>
 <body>
@@ -615,6 +1007,7 @@
       <a href="education.html">Education</a>
       <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
       <a href="contact.html">Contact</a>
       <a href="personal.html" aria-current="page">Personal</a>
     </nav>
@@ -623,11 +1016,10 @@
   <main class="personal-hub">
     <section class="hub-hero">
       <div class="hub-copy">
-        <p class="hub-kicker">Personal</p>
-        <h2>Life, travel, photos, and notes.</h2>
+        <p class="hub-kicker">Personal Archive</p>
+        <h2>Places, photographs, and field notes.</h2>
         <p>
-          This is my personal travel archive. I use it to organize photos from places I have visited,
-          including cities, landscapes, streets, buildings, and small moments from each trip.
+          A visual index of places, images, and notes.
         </p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html" aria-current="page">Overview</a>
@@ -659,26 +1051,42 @@
       </div>
     </section>
 
-    <section class="hub-stats" aria-label="Archive totals">
-      <article>
-        <strong id="stat-place-count">0</strong>
-        <span>Places</span>
-      </article>
-      <article>
-        <strong id="stat-photo-count">0</strong>
-        <span>Photos</span>
-      </article>
-      <article>
-        <strong id="stat-region-count">0</strong>
-        <span>Regions</span>
-      </article>
+    <section class="archive-dashboard" data-reveal aria-label="Archive dashboard">
+      <div class="archive-dashboard-panel">
+        <div class="archive-dashboard-head">
+          <span>Archive Dashboard</span>
+          <strong>Photo records, places, and regional views.</strong>
+        </div>
+        <div class="hub-stats" aria-label="Archive totals">
+          <article>
+            <strong id="stat-photo-count">0</strong>
+            <span>Photos</span>
+          </article>
+          <article>
+            <strong id="stat-place-count">0</strong>
+            <span>Places</span>
+          </article>
+          <article>
+            <strong id="stat-region-count">0</strong>
+            <span>Regions</span>
+          </article>
+          <article>
+            <strong id="stat-feature-count">0</strong>
+            <span>Featured Sets</span>
+          </article>
+        </div>
+      </div>
+      <aside class="archive-picks" aria-label="Recent selected places">
+        <span>Recent selected places</span>
+        <div class="archive-pick-links" id="archive-pick-links"></div>
+      </aside>
     </section>
 
     <section>
-      <h2 class="section-heading">Main Views</h2>
+      <h2 class="section-heading">Archive Index</h2>
       <div class="portal-grid">
         <a class="portal-card portal-card-primary" href="travel-map.html">
-          <img src="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" width="1067" height="1600" alt="Dana Point ocean terrace view" loading="eager" decoding="sync">
+          <img src="img/thumbs/california/la-jolla/la-jolla-art-and-ocean-window.webp" width="1600" height="900" alt="La Jolla art and ocean window" loading="eager" decoding="sync">
           <div>
             <div class="portal-topline">
               <span>Main view</span>
@@ -687,12 +1095,12 @@
                 <li id="atlas-region-metric">0 regions</li>
               </ul>
             </div>
-            <strong>Places Map</strong>
-            <p>The main way I move through this archive.</p>
+            <strong>Atlas</strong>
+            <p>Places, regions, and routes through the archive.</p>
           </div>
         </a>
         <a class="portal-card portal-card-secondary" href="travel-gallery.html">
-          <img src="img/thumbs/vietnam/hanoi/hanoi-hoan-kiem-lake-flowers.webp" width="720" height="1280" alt="Hanoi Hoan Kiem Lake flowers" loading="eager" decoding="sync">
+          <img src="img/thumbs/california/san-diego/san-diego-azalea-blooms.webp" width="1600" height="900" alt="San Diego azalea blooms" loading="eager" decoding="sync">
           <div>
             <div class="portal-topline">
               <span>Photo stream</span>
@@ -701,21 +1109,21 @@
                 <li id="gallery-place-metric">0 places</li>
               </ul>
             </div>
-            <strong>Gallery</strong>
-            <p>Everything in one stream.</p>
+            <strong>Photo Index</strong>
+            <p>Images arranged as a browsable visual record.</p>
           </div>
         </a>
       </div>
       <div class="quiet-view-links" aria-label="Additional archive views">
-        <span>More views</span>
+        <span>Secondary indexes</span>
         <a href="travel-tree.html">Tree</a>
         <a href="travel-collections.html">Collections</a>
       </div>
     </section>
 
     <section>
-      <h2 class="section-heading">Featured Places</h2>
-      <div class="feature-grid" id="featured-places"></div>
+      <h2 class="section-heading">Photo Wall</h2>
+      <div class="feature-grid photo-wall-grid" id="photo-wall" aria-label="Selected archive places"></div>
     </section>
 
     <section>
@@ -723,6 +1131,27 @@
       <div class="region-strip" id="region-strip"></div>
     </section>
   </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
 
   <script>
     (function() {
@@ -737,36 +1166,68 @@
       var placesWithPhotos = places.filter(function(place) {
         return shared.countPhotosForPlace(place) > 0;
       });
-      var featuredPlaces = [];
-      var usedRegions = [];
-      ["Dana Point"].forEach(function(name) {
-        var match = placesWithPhotos.find(function(place) {
-          return place.name === name;
+
+      var curatedWall = [
+        {
+          place: "Osaka",
+          photo: "img/japan/osaka/osaka-city-museum-city-view.jpg"
+        },
+        {
+          place: "Bandar Seri Begawan",
+          photo: "img/brunei/bandar-seri-begawan/bandar-seri-begawan-palm-sunset-silhouette.jpg"
+        },
+        {
+          place: "Qingdao",
+          photo: "img/shandong/qingdao/qingdao-park-lake-tower.jpg"
+        },
+        {
+          place: "Singapore",
+          photo: "img/singapore/singapore/singapore-national-gallery-corridor.jpg"
+        },
+        {
+          place: "La Jolla",
+          photo: "img/california/la-jolla/la-jolla-san-diego-california-temple.jpg"
+        },
+        {
+          place: "Sydney",
+          photo: "img/australia/sydney/sydney-park-geese-lawn.jpg"
+        }
+      ];
+
+      var wallItems = curatedWall.map(function(item) {
+        var place = placesWithPhotos.find(function(candidate) {
+          return candidate.name === item.place;
         });
-        if (match && featuredPlaces.indexOf(match) === -1) {
-          featuredPlaces.push(match);
-          usedRegions.push(match.region);
+        if (!place) {
+          return null;
         }
-      });
-      placesWithPhotos.slice().sort(shared.comparePlaces).forEach(function(place) {
-        if (featuredPlaces.length >= 4) {
-          return;
-        }
-        if (usedRegions.indexOf(place.region) >= 0) {
-          return;
-        }
-        featuredPlaces.push(place);
-        usedRegions.push(place.region);
-      });
-      if (featuredPlaces.length < 4) {
-        placesWithPhotos.forEach(function(place) {
-          if (featuredPlaces.length >= 4) {
-            return;
-          }
-          if (featuredPlaces.indexOf(place) === -1) {
-            featuredPlaces.push(place);
-          }
+
+        var photo = (place.photos || []).find(function(candidate) {
+          return candidate.src === item.photo;
         });
+        if (!photo) {
+          return null;
+        }
+
+        return {
+          place: place,
+          photo: photo
+        };
+      }).filter(Boolean);
+
+      setMetric("stat-feature-count", String(wallItems.length));
+
+      var pickLinks = document.getElementById("archive-pick-links");
+      if (pickLinks) {
+        pickLinks.innerHTML = wallItems.slice(0, 4).map(function(item) {
+          var place = item.place;
+          var href = "travel-gallery.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
+          return '' +
+            '<a href="' + href + '">' +
+              '<strong>' + shared.htmlLabel(place.name, place.localName) + "</strong>" +
+              '<small>' + shared.htmlLabel(place.region, shared.data.regionLocalNames[place.region]) + " / " + shared.escapeHtml(shared.photoLabel(shared.countPhotosForPlace(place))) + "</small>" +
+            "</a>";
+        }).join("");
       }
 
       function setMetric(id, value) {
@@ -781,21 +1242,27 @@
       setMetric("atlas-place-metric", places.length + (places.length === 1 ? " place" : " places"));
       setMetric("atlas-region-metric", photoRegions.length + (photoRegions.length === 1 ? " region" : " regions"));
 
-      document.getElementById("featured-places").innerHTML = featuredPlaces.map(function(place) {
-        var cover = place.photos && place.photos[0] ? place.photos[0] : null;
+      document.getElementById("photo-wall").innerHTML = wallItems.map(function(item, index) {
+        var place = item.place;
+        var photo = item.photo;
         var href = "travel-map.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
-        var spots = (place.spots || []).slice(0, 4).map(function(spot, index) {
-          var localSpot = place.spotsLocal ? place.spotsLocal[index] : "";
+        var loading = index < 6 ? "eager" : "lazy";
+        var decoding = index < 6 ? "sync" : "async";
+        var priority = index < 6 ? ' fetchpriority="high"' : "";
+        var photoCount = shared.photoLabel(shared.countPhotosForPlace(place));
+        var cardLabel = "Open " + shared.textLabel(place.name, place.localName) + " in the travel map, " + photoCount;
+        var spots = (place.spots || []).slice(0, 4).map(function(spot, spotIndex) {
+          var localSpot = place.spotsLocal ? place.spotsLocal[spotIndex] : "";
           return "<li>" + shared.escapeHtml(shared.textLabel(spot, localSpot)) + "</li>";
         }).join("");
 
         return '' +
-          '<a class="feature-card" href="' + href + '">' +
-            '<img src="' + shared.escapeHtml(shared.thumbnailSrc(cover.src)) + '" alt="' + shared.escapeHtml(cover.caption || place.name) + '" loading="lazy" decoding="async">' +
+          '<a class="feature-card photo-wall-card" href="' + href + '" aria-label="' + shared.escapeHtml(cardLabel) + '">' +
+            '<img src="' + shared.escapeHtml(shared.thumbnailSrc(photo.src)) + '" alt="' + shared.escapeHtml(photo.caption || place.name) + '" loading="' + loading + '" decoding="' + decoding + '"' + priority + '>' +
             '<div class="feature-meta">' +
               '<span>' + shared.htmlLabel(place.region, shared.data.regionLocalNames[place.region]) + "</span>" +
               '<strong>' + shared.htmlLabel(place.name, place.localName) + "</strong>" +
-              '<p>' + shared.escapeHtml(shared.photoLabel(shared.countPhotosForPlace(place))) + '</p>' +
+              '<p>' + shared.escapeHtml(photoCount) + "</p>" +
               '<ul>' + spots + "</ul>" +
             "</div>" +
           "</a>";

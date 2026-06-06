@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Sui - Resume</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="description" content="View and download Mark Sui's resume, focused on RTL, VLSI, hardware tools, embedded systems, and systems software.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#102A43">
+  <link rel="canonical" href="https://marksui.github.io/resume.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Resume">
+  <meta property="og:description" content="View and download Mark Sui's resume, focused on RTL, VLSI, hardware tools, embedded systems, and systems software.">
+  <meta property="og:url" content="https://marksui.github.io/resume.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Resume">
+  <meta name="twitter:description" content="View and download Mark Sui's resume, focused on RTL, VLSI, hardware tools, embedded systems, and systems software.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
+  <script src="theme.js?v=20260529-ops"></script>
+  <style>
+    .resume-main {
+      max-width: 1180px;
+      --resume-accent: #102A43;
+      --resume-secondary: #607086;
+      --resume-rule: var(--line);
+      --resume-wash: rgba(16, 42, 67, 0.045);
+      --resume-panel: var(--surface);
+      --resume-panel-soft: color-mix(in srgb, var(--surface) 84%, var(--soft) 16%);
+      --resume-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
+      --resume-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html[data-theme="dark"] .resume-main {
+      --resume-accent: #9DB7D5;
+      --resume-secondary: #B8C6D8;
+      --resume-rule: var(--line);
+      --resume-wash: rgba(157, 183, 213, 0.08);
+      --resume-panel: var(--surface);
+      --resume-panel-soft: color-mix(in srgb, var(--surface) 84%, var(--soft) 16%);
+      --resume-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+    }
+
+    .resume-console {
+      display: grid;
+      gap: 1rem;
+      animation: resumeFadeUp 0.62s var(--resume-ease) both;
+    }
+
+    .resume-console-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.9rem 1rem;
+      border: 1px solid var(--resume-rule);
+      border-top: 2px solid var(--resume-accent);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, var(--resume-wash), transparent 58%),
+        var(--resume-panel);
+      box-shadow: var(--resume-shadow);
+    }
+
+    .resume-console-title {
+      display: grid;
+      gap: 0.18rem;
+      min-width: 0;
+    }
+
+    .resume-kicker,
+    .resume-updated,
+    .quick-fact span,
+    .skill-group span {
+      color: var(--resume-secondary);
+      font-size: 0.84rem;
+      line-height: 1.2;
+    }
+
+    .resume-console-title h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.55rem;
+      line-height: 1.08;
+    }
+
+    .resume-console-title p {
+      margin: 0;
+      color: var(--resume-secondary);
+      font-size: 0.94rem;
+      line-height: 1.35;
+    }
+
+    .resume-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: flex-end;
+      margin-top: 0;
+    }
+
+    .resume-actions a,
+    .resume-actions span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.18rem;
+      padding: 0.28rem 0.72rem;
+      border: 1px solid var(--resume-rule);
+      border-radius: 999px;
+      color: var(--resume-secondary);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .resume-actions a {
+      color: var(--text);
+      transition: transform 0.24s var(--resume-ease), border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+    }
+
+    .resume-actions a.primary {
+      border-color: var(--resume-accent);
+      background: var(--resume-accent);
+      color: #fff;
+    }
+
+    html[data-theme="dark"] .resume-actions a.primary {
+      color: #101010;
+    }
+
+    .resume-actions a:hover,
+    .resume-actions a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--resume-accent);
+      color: var(--resume-accent);
+      background: var(--resume-wash);
+    }
+
+    .resume-updated {
+      background: var(--resume-panel-soft);
+      white-space: nowrap;
+    }
+
+    .resume-workspace {
+      display: grid;
+      grid-template-columns: minmax(17rem, 0.38fr) minmax(0, 1fr);
+      gap: 1rem;
+      align-items: stretch;
+      animation: resumeFadeUp 0.62s var(--resume-ease) 0.08s both;
+    }
+
+    .resume-sidebar,
+    .resume-document-frame {
+      overflow: hidden;
+      border: 1px solid var(--resume-rule);
+      border-radius: 8px;
+      background: var(--resume-panel);
+      box-shadow: var(--resume-shadow);
+    }
+
+    .resume-sidebar {
+      display: grid;
+      align-content: start;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .resume-panel {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .resume-panel + .resume-panel {
+      padding-top: 1rem;
+      border-top: 1px solid var(--resume-rule);
+    }
+
+    .resume-panel h3 {
+      margin: 0;
+      color: var(--resume-accent);
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
+
+    .quick-facts {
+      display: grid;
+      gap: 0.58rem;
+      margin: 0;
+    }
+
+    .quick-fact {
+      display: grid;
+      gap: 0.16rem;
+      padding: 0.68rem 0.72rem;
+      border: 1px solid var(--resume-rule);
+      border-radius: 8px;
+      background: var(--resume-panel-soft);
+    }
+
+    .quick-fact dt,
+    .quick-fact dd {
+      margin: 0;
+    }
+
+    .quick-fact dt {
+      color: var(--resume-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .quick-fact dd {
+      color: var(--text);
+      font-size: 0.98rem;
+      font-weight: bold;
+      line-height: 1.25;
+    }
+
+    .skill-groups {
+      display: grid;
+      gap: 0.72rem;
+    }
+
+    .skill-group {
+      display: grid;
+      gap: 0.42rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .skill-tags li {
+      display: inline-flex;
+      align-items: center;
+      margin: 0;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid var(--resume-rule);
+      border-radius: 999px;
+      background: var(--resume-panel-soft);
+      color: var(--text);
+      font-size: 0.82rem;
+      line-height: 1.25;
+      white-space: nowrap;
+    }
+
+    .resume-skill-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1rem;
+    }
+
+    .skill-matrix-card {
+      display: grid;
+      gap: 0.55rem;
+      padding: 0.9rem 0.95rem;
+      border: 1px solid var(--resume-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, var(--resume-wash), transparent 84%),
+        var(--resume-panel);
+      box-shadow: var(--resume-shadow);
+    }
+
+    .skill-matrix-card h3 {
+      margin: 0;
+      color: var(--resume-accent);
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .skill-matrix-card p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+      font-size: 0.92rem;
+      line-height: 1.42;
+    }
+
+    .skill-matrix-card ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .skill-matrix-card li {
+      margin: 0;
+      padding: 0.16rem 0.46rem;
+      border: 1px solid var(--resume-rule);
+      border-radius: 999px;
+      color: var(--resume-secondary);
+      font-size: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .resume-preview {
+      display: grid;
+      min-width: 0;
+    }
+
+    .resume-document-frame {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      min-height: min(82vh, 900px);
+    }
+
+    .resume-preview-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.64rem 0.78rem;
+      border-bottom: 1px solid var(--resume-rule);
+      background: var(--resume-panel-soft);
+    }
+
+    .resume-preview-bar strong {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.2;
+    }
+
+    .resume-preview-meta {
+      color: var(--resume-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
+      white-space: nowrap;
+    }
+
+    .resume-document-frame object {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: min(74vh, 820px);
+      border: 0;
+    }
+
+    .resume-document-fallback {
+      padding: 1rem;
+    }
+
+    .resume-document-fallback p {
+      margin: 0;
+    }
+
+    .resume-section-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 2.15rem 0 0.85rem;
+      color: var(--resume-accent);
+      font-size: 1.14rem;
+      font-style: italic;
+    }
+
+    .resume-section-heading::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--resume-rule), transparent);
+    }
+
+    @keyframes resumeFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .resume-console-top,
+      .resume-workspace,
+      .resume-skill-matrix {
+        grid-template-columns: 1fr;
+      }
+
+      .resume-console-top {
+        display: grid;
+      }
+
+      .resume-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .resume-console-title h2 {
+        font-size: 1.34rem;
+      }
+
+      .resume-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .resume-actions a,
+      .resume-actions span {
+        width: 100%;
+      }
+
+      .resume-document-frame object {
+        min-height: 62vh;
+      }
+
+      .resume-preview-bar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.24rem;
+      }
+
+      .skill-tags li {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mark Sui</h1>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="education.html">Education</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html" aria-current="page">Resume</a>
+      <a href="contact.html">Contact</a>
+      <a href="personal.html">Personal</a>
+    </nav>
+  </header>
+
+  <main class="resume-main">
+    <section class="resume-console" aria-label="Resume console">
+      <div class="resume-console-top">
+        <div class="resume-console-title">
+          <span class="resume-kicker">Resume Console</span>
+          <h2>Hardware, RTL, VLSI, and systems software snapshot.</h2>
+          <p>Primary resume file with fast facts, technical focus, and live PDF preview.</p>
+        </div>
+        <div class="resume-actions">
+          <a href="files/mark-sui-resume.pdf" download data-toast="Resume download started.">Download</a>
+          <a class="primary" href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Open PDF</a>
+          <span class="resume-updated">Updated 4/20/2026</span>
+        </div>
+      </div>
+
+      <div class="resume-workspace">
+        <aside class="resume-sidebar" aria-label="Resume quick facts and skills">
+          <section class="resume-panel">
+            <h3>Quick Facts</h3>
+            <dl class="quick-facts">
+              <div class="quick-fact">
+                <dt>Current</dt>
+                <dd>UC San Diego ECE</dd>
+              </div>
+              <div class="quick-fact">
+                <dt>Degree Path</dt>
+                <dd>MS ECE, CE + Mathematics</dd>
+              </div>
+              <div class="quick-fact">
+                <dt>Focus</dt>
+                <dd>RTL, VLSI, architecture</dd>
+              </div>
+              <div class="quick-fact">
+                <dt>Location</dt>
+                <dd>San Diego, California</dd>
+              </div>
+              <div class="quick-fact">
+                <dt>Portfolio</dt>
+                <dd>Engineering tools and systems</dd>
+              </div>
+            </dl>
+          </section>
+
+          <section class="resume-panel">
+            <h3>Skill Tags</h3>
+            <div class="skill-groups">
+              <div class="skill-group">
+                <span>Hardware</span>
+                <ul class="skill-tags">
+                  <li>RTL design</li>
+                  <li>Verilog</li>
+                  <li>Computer architecture</li>
+                  <li>Static CMOS</li>
+                  <li>VLSI workflows</li>
+                </ul>
+              </div>
+              <div class="skill-group">
+                <span>Systems</span>
+                <ul class="skill-tags">
+                  <li>Embedded systems</li>
+                  <li>Linux</li>
+                  <li>C/C++</li>
+                  <li>Python</li>
+                  <li>Automation</li>
+                </ul>
+              </div>
+              <div class="skill-group">
+                <span>Tools</span>
+                <ul class="skill-tags">
+                  <li>React</li>
+                  <li>EDA learning tools</li>
+                  <li>macOS utilities</li>
+                  <li>Data interfaces</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+        </aside>
+
+        <section class="resume-preview" aria-label="Resume PDF preview">
+          <div class="resume-document-frame">
+            <div class="resume-preview-bar">
+              <strong>mark-sui-resume.pdf</strong>
+              <span class="resume-preview-meta">PDF preview</span>
+            </div>
+            <object data="files/mark-sui-resume.pdf#view=FitH" type="application/pdf" aria-label="Mark Sui resume PDF preview">
+              <div class="resume-document-fallback">
+                <p>Your browser cannot display the embedded PDF. <a href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Open the resume PDF</a>.</p>
+              </div>
+            </object>
+          </div>
+        </section>
+      </div>
+
+      <section class="resume-skill-matrix" data-reveal aria-label="Skill matrix">
+        <article class="skill-matrix-card">
+          <h3>Hardware</h3>
+          <p>Digital design and circuit-adjacent work that ties architecture concepts to implementation detail.</p>
+          <ul>
+            <li>RTL</li>
+            <li>Verilog</li>
+            <li>FPGA</li>
+            <li>Static CMOS</li>
+            <li>Timing</li>
+          </ul>
+        </article>
+        <article class="skill-matrix-card">
+          <h3>Systems</h3>
+          <p>Low-level and embedded workflows that connect data, devices, and practical debugging loops.</p>
+          <ul>
+            <li>C/C++</li>
+            <li>Linux</li>
+            <li>ESP32</li>
+            <li>Python</li>
+            <li>Automation</li>
+          </ul>
+        </article>
+        <article class="skill-matrix-card">
+          <h3>Software Tools</h3>
+          <p>Product-minded engineering tools for learning, local-first utilities, and browsable technical interfaces.</p>
+          <ul>
+            <li>React</li>
+            <li>TypeScript</li>
+            <li>macOS</li>
+            <li>Data UI</li>
+            <li>Static sites</li>
+          </ul>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

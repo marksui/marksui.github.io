@@ -4,10 +4,13 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
+  <link rel="manifest" href="site.webmanifest">
   <meta name="description" content="Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
-  <meta name="theme-color" content="#55645e">
+  <meta name="theme-color" content="#102A43">
   <link rel="canonical" href="https://marksui.github.io/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
@@ -84,27 +87,27 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="style.css">
-  <script src="theme.js"></script>
+  <link rel="stylesheet" href="style.css?v=20260529-ops">
+  <script src="theme.js?v=20260529-ops"></script>
   <style>
     .home-main {
       max-width: 1120px;
-      --home-accent: #55645e;
-      --home-secondary: #7b7467;
-      --home-rule: #d9d5cc;
-      --home-wash: rgba(85, 100, 94, 0.065);
-      --home-panel: rgba(255, 255, 255, 0.78);
-      --home-shadow: 0 18px 46px rgba(53, 55, 49, 0.08);
+      --home-accent: #102A43;
+      --home-secondary: #607086;
+      --home-rule: #D8DEE8;
+      --home-wash: rgba(16, 42, 67, 0.045);
+      --home-panel: var(--surface);
+      --home-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
       --home-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .home-main {
-      --home-accent: #a8b6ae;
-      --home-secondary: #b8b0a3;
-      --home-rule: #3f423f;
-      --home-wash: rgba(168, 182, 174, 0.08);
-      --home-panel: rgba(24, 24, 24, 0.76);
-      --home-shadow: 0 18px 46px rgba(0, 0, 0, 0.28);
+      --home-accent: #9DB7D5;
+      --home-secondary: #B8C6D8;
+      --home-rule: #343E4A;
+      --home-wash: rgba(157, 183, 213, 0.08);
+      --home-panel: var(--surface);
+      --home-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
     }
 
     .home-hero {
@@ -176,7 +179,7 @@
       border: 1px solid var(--home-rule);
       border-radius: 999px;
       background: var(--home-panel);
-      box-shadow: var(--home-shadow);
+      box-shadow: none;
       color: var(--text);
       text-decoration: none;
       transition: transform 0.24s var(--home-ease), border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
@@ -188,18 +191,22 @@
       color: #f7f3ee;
     }
 
+    html[data-theme="dark"] .hero-actions a:first-child {
+      color: #0f1217;
+    }
+
     .hero-actions a:hover,
     .hero-actions a:focus-visible {
       transform: translateY(-1px);
       border-color: var(--home-accent);
       color: var(--home-accent);
-      background: linear-gradient(180deg, var(--home-wash), transparent 90%), var(--home-panel);
+      background: var(--home-wash);
     }
 
     .hero-actions a:first-child:hover,
     .hero-actions a:first-child:focus-visible {
       color: var(--home-accent);
-      background: linear-gradient(180deg, var(--home-wash), transparent 90%), var(--home-panel);
+      background: var(--home-panel);
     }
 
     .home-cta-panel {
@@ -257,6 +264,10 @@
       color: #f7f3ee;
     }
 
+    html[data-theme="dark"] .home-cta-actions a.primary {
+      color: #0f1217;
+    }
+
     .home-cta-actions a:hover,
     .home-cta-actions a:focus-visible {
       transform: translateY(-1px);
@@ -271,45 +282,88 @@
       background: var(--home-wash);
     }
 
-    .home-profile-card {
+    .home-showcase-card {
+      position: relative;
       display: grid;
-      grid-template-rows: auto auto;
+      grid-template-rows: auto auto 1fr;
       min-width: 0;
+      padding: 0.62rem;
       border: 1px solid var(--home-rule);
+      border-top: 2px solid var(--home-accent);
       border-radius: 8px;
-      background: var(--home-panel);
+      background:
+        linear-gradient(135deg, color-mix(in srgb, var(--home-panel) 86%, var(--home-wash) 14%), var(--home-panel)),
+        var(--home-panel);
       box-shadow: var(--home-shadow);
       overflow: hidden;
+      transition: transform 0.32s var(--home-ease), border-color 0.24s ease, box-shadow 0.24s ease;
     }
 
-    .home-profile-visual {
-      margin: 0;
-      border-bottom: 1px solid var(--home-rule);
+    .home-showcase-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--home-accent);
+      box-shadow: 0 18px 42px rgba(16, 42, 67, 0.1);
+    }
+
+    html[data-theme="dark"] .home-showcase-card:hover {
+      box-shadow: 0 20px 46px rgba(0, 0, 0, 0.34);
+    }
+
+    .home-showcase-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.18rem 0.22rem 0.58rem;
+      color: var(--home-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
+    .home-showcase-dots {
+      display: inline-flex;
+      gap: 0.28rem;
+    }
+
+    .home-showcase-dots span {
+      width: 0.42rem;
+      height: 0.42rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
       background: var(--home-wash);
-      aspect-ratio: 16 / 10;
     }
 
-    .home-profile-visual img {
+    .home-showcase-visual {
+      margin: 0;
+      padding: 0.5rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: var(--soft);
+    }
+
+    .home-showcase-visual img {
       display: block;
       width: 100%;
       height: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
       object-fit: cover;
       filter: saturate(0.92) contrast(1.02);
       transition: transform 0.5s var(--home-ease), filter 0.3s ease;
     }
 
-    .home-profile-card:hover .home-profile-visual img {
-      transform: scale(1.018);
+    .home-showcase-card:hover .home-showcase-visual img {
+      transform: scale(1.014);
       filter: saturate(1) contrast(1.03);
     }
 
-    .home-profile-body {
+    .home-showcase-body {
       display: grid;
-      gap: 0.85rem;
-      padding: 0.95rem;
+      gap: 0.86rem;
+      padding: 0.92rem 0.22rem 0.1rem;
     }
 
-    .home-profile-caption {
+    .home-showcase-title {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
@@ -320,41 +374,87 @@
       line-height: 1.25;
     }
 
-    .home-profile-caption strong {
+    .home-showcase-title strong {
       color: var(--home-accent);
       font-size: 1rem;
     }
 
-    .home-facts {
+    .home-showcase-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.55rem;
     }
 
-    .home-fact {
+    .home-showcase-metric {
       padding: 0.62rem 0.68rem;
       border: 1px solid var(--home-rule);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.38);
+      background: var(--home-panel);
     }
 
-    html[data-theme="dark"] .home-fact {
+    html[data-theme="dark"] .home-showcase-metric {
       background: rgba(255, 255, 255, 0.03);
     }
 
-    .home-fact span {
+    .home-showcase-metric span {
       display: block;
       color: var(--home-secondary);
       font-size: 0.78rem;
       line-height: 1.15;
     }
 
-    .home-fact strong {
+    .home-showcase-metric strong {
       display: block;
       margin-top: 0.18rem;
       color: var(--text);
       font-size: 0.94rem;
       line-height: 1.2;
+    }
+
+    .home-showcase-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .home-showcase-stack li {
+      margin: 0;
+      padding: 0.18rem 0.5rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
+      background: var(--home-panel);
+      color: var(--home-secondary);
+      font-size: 0.82rem;
+      line-height: 1.2;
+    }
+
+    .home-showcase-link {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 0.44rem;
+      color: var(--home-accent);
+      font-size: 0.92rem;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .home-showcase-link::after {
+      content: "";
+      width: 0.42rem;
+      height: 0.42rem;
+      border-top: 1px solid currentColor;
+      border-right: 1px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform 0.22s var(--home-ease);
+    }
+
+    .home-showcase-link:hover::after,
+    .home-showcase-link:focus-visible::after {
+      transform: translateX(2px) rotate(45deg);
     }
 
     .section-heading {
@@ -396,14 +496,14 @@
       border: 1px solid var(--home-rule);
       border-radius: 8px;
       background: var(--home-panel);
-      box-shadow: var(--home-shadow);
+      box-shadow: none;
       transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
     }
 
     .skills-band-card:hover {
       transform: translateY(-2px);
       border-color: var(--home-accent);
-      background: linear-gradient(180deg, var(--home-wash), transparent 90%), var(--home-panel);
+      background: var(--home-wash);
     }
 
     .skills-band-card h3 {
@@ -439,6 +539,82 @@
       white-space: nowrap;
     }
 
+    .engineering-signals {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.72rem;
+      margin-top: 1rem;
+      padding: 0.85rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, var(--home-wash), transparent 68%),
+        var(--home-panel);
+    }
+
+    .engineering-signal {
+      display: grid;
+      gap: 0.18rem;
+      min-width: 0;
+      padding: 0.7rem 0.72rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--home-panel) 94%, var(--home-wash) 6%);
+    }
+
+    .engineering-signal span,
+    .build-card span,
+    .project-evidence-list dt {
+      color: var(--home-secondary);
+      font-size: 0.78rem;
+      font-style: italic;
+      line-height: 1.2;
+    }
+
+    .engineering-signal strong {
+      color: var(--text);
+      font-size: 0.98rem;
+      line-height: 1.22;
+    }
+
+    .now-building-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 0.85rem;
+    }
+
+    .build-card {
+      display: grid;
+      gap: 0.5rem;
+      padding: 0.95rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: var(--home-panel);
+      transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
+    }
+
+    .build-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--home-accent);
+      background: var(--home-wash);
+    }
+
+    .build-card h3 {
+      margin: 0;
+      color: var(--home-accent);
+      font-size: 1.04rem;
+      line-height: 1.18;
+    }
+
+    .build-card p {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.84;
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+
     .recent-project-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -453,14 +629,14 @@
       border: 1px solid var(--home-rule);
       border-radius: 8px;
       background: var(--home-panel);
-      box-shadow: var(--home-shadow);
+      box-shadow: none;
       transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
     }
 
     .recent-project-card:hover {
       transform: translateY(-3px);
       border-color: var(--home-accent);
-      background: linear-gradient(180deg, var(--home-wash), transparent 92%), var(--home-panel);
+      background: var(--home-wash);
     }
 
     .project-visual {
@@ -469,9 +645,7 @@
       margin: 0;
       aspect-ratio: 16 / 10;
       border-bottom: 1px solid var(--home-rule);
-      background:
-        linear-gradient(135deg, var(--home-wash), transparent 72%),
-        color-mix(in srgb, var(--home-panel) 88%, var(--home-wash) 12%);
+      background: var(--soft);
     }
 
     .project-visual-link {
@@ -486,7 +660,7 @@
       width: 44%;
       height: 44%;
       object-fit: contain;
-      filter: drop-shadow(0 12px 24px rgba(53, 55, 49, 0.12));
+      filter: drop-shadow(0 12px 24px rgba(16, 42, 67, 0.12));
     }
 
     .project-visual img.project-preview {
@@ -559,6 +733,32 @@
       line-height: 1.46;
     }
 
+    .project-evidence-list {
+      display: grid;
+      gap: 0.36rem;
+      margin: 0;
+      padding: 0.6rem 0.64rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--home-panel) 94%, var(--home-wash) 6%);
+    }
+
+    .project-evidence-list div {
+      display: grid;
+      gap: 0.1rem;
+    }
+
+    .project-evidence-list dt,
+    .project-evidence-list dd {
+      margin: 0;
+    }
+
+    .project-evidence-list dd {
+      color: var(--text);
+      font-size: 0.88rem;
+      line-height: 1.28;
+    }
+
     .project-links {
       display: flex;
       flex-wrap: wrap;
@@ -624,7 +824,7 @@
       border: 1px solid var(--home-rule);
       border-radius: 8px;
       background: var(--home-panel);
-      box-shadow: var(--home-shadow);
+      box-shadow: none;
       animation: homeFadeUp 0.55s var(--home-ease) both;
       transition: background 0.25s ease, padding-left 0.28s var(--home-ease), border-color 0.24s ease, transform 0.28s var(--home-ease);
     }
@@ -702,12 +902,14 @@
         font-size: 1rem;
       }
 
-      .home-profile-visual,
-      .home-profile-visual img {
+      .home-showcase-visual,
+      .home-showcase-visual img {
         min-height: 0;
       }
 
       .skills-band,
+      .engineering-signals,
+      .now-building-grid,
       .recent-project-grid,
       .updates-list {
         grid-template-columns: 1fr;
@@ -725,8 +927,32 @@
     }
 
     @media (max-width: 520px) {
-      .home-facts {
+      .home-main,
+      .home-hero,
+      .home-copy {
+        max-width: 100%;
+        min-width: 0;
+      }
+
+      .home-hero h2 {
+        max-width: 11.8em;
+        font-size: 1.62rem;
+        line-height: 1.1;
+        overflow-wrap: break-word;
+      }
+
+      .home-lede,
+      .home-position {
+        max-width: 100%;
+        overflow-wrap: break-word;
+      }
+
+      .home-showcase-grid {
         grid-template-columns: 1fr;
+      }
+
+      .hero-actions {
+        width: 100%;
       }
 
       .hero-actions a {
@@ -779,15 +1005,16 @@
   </style>
 
 </head>
-<body> 
+<body>
   <header>
-    <h1>Mark Sui</h1> 
+    <h1>Mark Sui</h1>
     <nav>
       <a href="index.html" aria-current="page">About</a>
       <a href="education.html">Education</a>
-      <a href="experience.html">Experience</a> 
+      <a href="experience.html">Experience</a>
       <a href="projects.html">Projects</a>
-      <a href="contact.html">Contact</a> 
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
       <a href="personal.html">Personal</a>
     </nav>
   </header>
@@ -810,42 +1037,72 @@
           <strong>embedded sensing</strong>, and software tools that make engineering work easier to reason about.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
-          <a href="projects.html">Featured Projects</a>
+          <a href="resume.html">Resume</a>
           <a href="experience.html">Technical Work</a>
           <a href="education.html">Academic Path</a>
           <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
           <a href="contact.html">Get in Touch</a>
         </div>
       </div>
-      <aside class="home-profile-card" aria-label="Profile snapshot">
-        <figure class="home-profile-visual">
+      <aside class="home-showcase-card" aria-label="Representative engineering build">
+        <div class="home-showcase-bar">
+          <span>Representative build</span>
+          <span class="home-showcase-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+        </div>
+        <figure class="home-showcase-visual">
           <img src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio hardware learning interface screenshot" loading="eager" decoding="async" fetchpriority="high">
         </figure>
-        <div class="home-profile-body">
-          <div class="home-profile-caption">
-            <strong>Representative Build</strong>
-            <span>Logic &amp; CMOS Studio</span>
+        <div class="home-showcase-body">
+          <div class="home-showcase-title">
+            <strong>Logic &amp; CMOS Studio</strong>
+            <span>Educational EDA tool</span>
           </div>
-          <div class="home-facts">
-            <div class="home-fact">
+          <div class="home-showcase-grid" aria-label="Portfolio signal">
+            <div class="home-showcase-metric">
               <span>Current</span>
               <strong>UC San Diego ECE</strong>
             </div>
-            <div class="home-fact">
+            <div class="home-showcase-metric">
               <span>Focus</span>
               <strong>RTL / VLSI</strong>
             </div>
-            <div class="home-fact">
+            <div class="home-showcase-metric">
               <span>Tooling</span>
               <strong>React / Python / C++</strong>
             </div>
-            <div class="home-fact">
+            <div class="home-showcase-metric">
               <span>Foundation</span>
               <strong>CE + Mathematics</strong>
             </div>
           </div>
+          <ul class="home-showcase-stack" aria-label="Representative stack">
+            <li>Boolean logic</li>
+            <li>K-maps</li>
+            <li>Verilog</li>
+            <li>Static CMOS</li>
+          </ul>
+          <a class="home-showcase-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Open project</a>
         </div>
       </aside>
+    </section>
+
+    <section class="engineering-signals" data-reveal aria-label="Engineering signals">
+      <div class="engineering-signal">
+        <span>Current</span>
+        <strong>UC San Diego ECE</strong>
+      </div>
+      <div class="engineering-signal">
+        <span>Hardware Signal</span>
+        <strong>RTL / VLSI</strong>
+      </div>
+      <div class="engineering-signal">
+        <span>Tool Stack</span>
+        <strong>React / Python / C++</strong>
+      </div>
+      <div class="engineering-signal">
+        <span>Foundation</span>
+        <strong>CE + Mathematics</strong>
+      </div>
     </section>
 
     <section class="home-cta-panel" data-reveal aria-label="Primary calls to action">
@@ -855,13 +1112,35 @@
       </div>
       <div class="home-cta-actions">
         <a class="primary" href="projects.html">View Featured Projects</a>
+        <a href="resume.html">Resume</a>
         <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
         <a href="contact.html">Contact</a>
       </div>
     </section>
 
     <section data-reveal>
-      <h2 class="section-heading">Core Skills</h2>
+      <h2 class="section-heading">Now Building</h2>
+      <div class="now-building-grid">
+        <article class="build-card">
+          <span>EDA Learning Tools</span>
+          <h3>Logic interfaces that preserve engineering traceability.</h3>
+          <p>Turning Boolean expressions into connected views: truth tables, K-maps, Verilog, and CMOS-level reasoning.</p>
+        </article>
+        <article class="build-card">
+          <span>Hardware Practice Systems</span>
+          <h3>Preparation tools with repeatable feedback loops.</h3>
+          <p>Structured question banks, timed practice, missed-topic review, and local progress for hardware interviews.</p>
+        </article>
+        <article class="build-card">
+          <span>macOS Utilities</span>
+          <h3>Local-first tools for practical workflows.</h3>
+          <p>Focused desktop utilities for archives, documents, coursework, and privacy-sensitive everyday work.</p>
+        </article>
+      </div>
+    </section>
+
+    <section data-reveal>
+      <h2 class="section-heading">Technical Map</h2>
       <div class="skills-band">
         <article class="skills-band-card">
           <h3>Digital Design</h3>
@@ -923,6 +1202,20 @@
               Browser-based tool that turns Boolean logic into truth tables, K-maps,
               simplified equations, Verilog, and static CMOS pull-up / pull-down schematics.
             </p>
+            <dl class="project-evidence-list">
+              <div>
+                <dt>Role</dt>
+                <dd>Designed and built the browser workflow end to end.</dd>
+              </div>
+              <div>
+                <dt>Built With</dt>
+                <dd>React, TypeScript, Boolean logic, Verilog, static CMOS.</dd>
+              </div>
+              <div>
+                <dt>Why It Matters</dt>
+                <dd>Connects course abstractions instead of leaving each view in a separate tool.</dd>
+              </div>
+            </dl>
             <div class="project-links" aria-label="Logic and CMOS Studio links">
               <a href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Live app</a>
               <a href="https://github.com/marksui/logic-cmos-studio" target="_blank" rel="noopener">Source</a>
@@ -944,6 +1237,20 @@
               Local-first interview practice app with a 160-question bank, timed mock rounds,
               wrong-question review, progress analytics, and JSON import / export.
             </p>
+            <dl class="project-evidence-list">
+              <div>
+                <dt>Role</dt>
+                <dd>Built the practice flow, progress model, and review interface.</dd>
+              </div>
+              <div>
+                <dt>Built With</dt>
+                <dd>React, TypeScript, local storage, structured question data.</dd>
+              </div>
+              <div>
+                <dt>Why It Matters</dt>
+                <dd>Makes hardware prep measurable, repeatable, and portable.</dd>
+              </div>
+            </dl>
             <div class="project-links" aria-label="Hardware Interview Trainer links">
               <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Live app</a>
               <a href="https://github.com/marksui/Hardware_Interview_Trainer" target="_blank" rel="noopener">Source</a>
@@ -965,6 +1272,20 @@
               Local archive app for macOS that compresses and extracts common formats,
               supports password workflows, tracks job history, and keeps files on device.
             </p>
+            <dl class="project-evidence-list">
+              <div>
+                <dt>Role</dt>
+                <dd>Shaped the native utility workflow and release-facing project page.</dd>
+              </div>
+              <div>
+                <dt>Built With</dt>
+                <dd>Swift, C++, macOS file handling, local archive workflows.</dd>
+              </div>
+              <div>
+                <dt>Why It Matters</dt>
+                <dd>Turns a frequent file task into a private, focused desktop tool.</dd>
+              </div>
+            </dl>
             <div class="project-links" aria-label="MarkMacZip links">
               <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">Project page</a>
               <a href="https://github.com/marksui/MacZip" target="_blank" rel="noopener">Source</a>
@@ -1009,6 +1330,27 @@
     </section>
 
   </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Work</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
   <script>
     (function() {
       document.addEventListener("DOMContentLoaded", function() {
