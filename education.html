@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Education</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
   <meta name="description" content="Academic background for Mark Sui, including UC San Diego ECE graduate study, computer engineering, mathematics, and international coursework.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
@@ -25,8 +25,8 @@
   <meta name="twitter:title" content="Mark Sui - Education">
   <meta name="twitter:description" content="Academic background for Mark Sui, including UC San Diego ECE graduate study, computer engineering, mathematics, and international coursework.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <style>
     .education-main {
       max-width: 1040px;
@@ -414,6 +414,7 @@
       .education-entry {
         grid-template-columns: 1fr;
         gap: 0.55rem;
+        min-width: 0;
       }
 
       .education-entry::before {
@@ -422,7 +423,13 @@
 
       .education-date {
         padding-top: 0;
+        min-width: 0;
         text-align: left;
+      }
+
+      .education-card {
+        width: 100%;
+        min-width: 0;
       }
     }
 
@@ -456,14 +463,14 @@
           My education sits at the intersection of Electrical and Computer Engineering, Computer Engineering,
           and Mathematics. At UC San Diego, my master's work centers on Very Large Scale Integration (VLSI),
           while the broader path includes rigorous systems coursework, applied math training, study abroad,
-          and early leadership experience.
+          and report-backed quarter projects in physical design, CUDA acceleration, and RTL generation.
         </p>
       </div>
 
       <div class="education-summary" aria-label="Education highlights">
         <article class="summary-card">
           <strong>M.S. in Electrical and Computer Engineering</strong>
-          <span>Graduate focus in Very Large Scale Integration, digital IC design, and architecture.</span>
+          <span>Graduate focus in VLSI, digital IC design, OpenROAD physical design, and architecture.</span>
         </article>
         <article class="summary-card">
           <strong>Dual Bachelor of Science Degrees</strong>
@@ -471,7 +478,7 @@
         </article>
         <article class="summary-card">
           <strong>International + Leadership Range</strong>
-          <span>NUS study abroad, multi-campus summer coursework, and Chinese Association Club Vice President.</span>
+          <span>NUS study abroad, multi-campus summer coursework, and early student leadership.</span>
         </article>
       </div>
     </section>
@@ -483,14 +490,16 @@
           <span>Graduate Direction</span>
           <h3>Very Large Scale Integration</h3>
           <p>
-            Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, and computer architecture.
+            Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, computer architecture,
+            and physical-design workflows.
           </p>
         </article>
         <article class="study-card">
           <span>Interdisciplinary Base</span>
           <h3>Engineering + Mathematics</h3>
           <p>
-            Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, and cryptography.
+            Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, cryptography,
+            and performance-oriented implementation.
           </p>
         </article>
         <article class="study-card">
@@ -498,6 +507,33 @@
           <h3>Global Study and Leadership</h3>
           <p>
             Broadened perspective through UC study abroad at NUS, summer coursework across multiple campuses, and student leadership.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-heading">Quarter Coursework Signals</h2>
+      <div class="study-grid">
+        <article class="study-card">
+          <span>ECE 260C / Spring 2026</span>
+          <h3>OpenROAD Physical Design</h3>
+          <p>
+            Built report-backed work around MBFF clustering, CTS tuning, floorplanning, and timing / power / area tradeoffs.
+          </p>
+        </article>
+        <article class="study-card">
+          <span>ECE 268 / Spring 2026</span>
+          <h3>CUDA Cryptography</h3>
+          <p>
+            Implemented GPU-accelerated GGM tree construction with Keccak and Spongent backends for protocol-scale throughput.
+          </p>
+        </article>
+        <article class="study-card">
+          <span>RTL Generation Research</span>
+          <h3>VerilogEval + MAGE</h3>
+          <p>
+            Studied LLM-generated RTL failure modes through routing, repair prompts, edit guards, and task-local memory.
           </p>
         </article>
       </div>
@@ -524,6 +560,8 @@
               <div class="course-pills">
                 <span>Digital IC Design</span>
                 <span>VLSI</span>
+                <span>OpenROAD</span>
+                <span>Timing / Power / Area</span>
                 <span>Computer Architecture</span>
                 <span>FPGA / RTL Design</span>
               </div>
@@ -641,7 +679,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>

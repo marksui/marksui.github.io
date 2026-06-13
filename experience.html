@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Experience</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
   <meta name="description" content="Technical experience and selected engineering work by Mark Sui across AI evaluation, embedded sensing, RTL design, architecture, and applied ML.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
@@ -25,8 +25,8 @@
   <meta name="twitter:title" content="Mark Sui - Experience">
   <meta name="twitter:description" content="Technical experience and selected engineering work by Mark Sui across AI evaluation, embedded sensing, RTL design, architecture, and applied ML.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <style>
     .experience-main {
       max-width: 1100px;
@@ -392,6 +392,34 @@
       font-weight: 600;
     }
 
+    .project-link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.42rem;
+      margin-top: 0.72rem;
+    }
+
+    .project-link-row a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 1.9rem;
+      padding: 0.18rem 0.56rem;
+      border: 1px solid var(--exp-rule);
+      border-radius: 999px;
+      color: var(--exp-accent);
+      font-size: 0.88rem;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: transform 0.22s var(--exp-ease), border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .project-link-row a:hover,
+    .project-link-row a:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--exp-accent);
+      background: var(--exp-wash);
+    }
+
     .foundation-grid,
     .mini-grid {
       display: grid;
@@ -598,12 +626,54 @@
       </div>
     </section>
 
-    <section>
+    <section id="vlsi-coursework">
       <h2 class="section-heading">Selected Technical Work</h2>
       <p class="section-note">
         These projects matter less as course titles and more as evidence of how I work: identify the limiting factor, choose the right level of abstraction, and then build or test until the system becomes explainable.
       </p>
       <div class="project-grid">
+        <article class="project-card">
+          <span class="project-type">VLSI Physical Design Automation</span>
+          <h3>Post-Placement MBFF Clustering</h3>
+          <p class="project-context">ECE 260C / Spring 2026 / OpenROAD + OpenDB</p>
+          <p>
+            Built a Python/OpenDB post-placement flow that clusters compatible single-bit flip-flops into 2-bit and 4-bit MBFF cells.
+          </p>
+          <p>
+            <strong>Result.</strong> 7/7 benchmarks OK, about 83.3% MBFF conversion, strong sink-count reduction, and about 75.3% average power reduction.
+          </p>
+          <div class="stack-row">
+            <span>Python</span>
+            <span>OpenROAD</span>
+            <span>OpenDB</span>
+            <span>MBFF</span>
+          </div>
+          <div class="project-link-row">
+            <a href="https://github.com/ABKCourses/e260c-sp26-mp1-ma" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <span class="project-type">OpenROAD SoC Optimization</span>
+          <h3>Croc Chip Physical Design Optimization</h3>
+          <p class="project-context">ECE 260C / Spring 2026 / Tcl + Shell</p>
+          <p>
+            Tuned a Croc SoC OpenROAD flow across floorplan shape, utilization, SRAM macro placement, CTS buffers, hold margins, and routing repair.
+          </p>
+          <p>
+            <strong>Result.</strong> Timing clean at final CTS, clock power down 19.1%, total power down 2.8%, and area down about 0.60%.
+          </p>
+          <div class="stack-row">
+            <span>OpenROAD</span>
+            <span>CTS</span>
+            <span>DSE</span>
+            <span>Floorplanning</span>
+          </div>
+          <div class="project-link-row">
+            <a href="https://github.com/ABKCourses/e260c-sp26-mp2-ma2" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </article>
+
         <article class="project-card">
           <span class="project-type">Embedded Hardware</span>
           <h3>Indoor Environmental Monitoring System</h3>
@@ -838,7 +908,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>

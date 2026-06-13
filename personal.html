@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Personal Archive</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
   <meta name="description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
@@ -26,8 +26,8 @@
   <meta name="twitter:description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preload" as="image" href="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
@@ -89,27 +89,12 @@
     }
 
     .travel-local-nav {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.42rem 1rem;
-      margin-top: 1.15rem;
-      padding-top: 0.72rem;
-      border-top: 1px solid var(--hub-rule);
-    }
-
-    .travel-local-nav a {
-      padding: 0.08rem 0;
-      color: var(--text);
-      text-decoration: none;
-      transition: transform 0.24s var(--hub-ease), background 0.24s ease, color 0.24s ease;
-    }
-
-    .travel-local-nav a:hover,
-    .travel-local-nav a:focus-visible,
-    .travel-local-nav a[aria-current="page"] {
-      background: var(--hub-wash);
-      color: var(--hub-accent);
-      transform: translateY(-1px);
+      --local-nav-accent: var(--hub-accent);
+      --local-nav-rule: var(--hub-rule);
+      --local-nav-surface: var(--hub-panel);
+      --local-nav-wash: var(--hub-wash);
+      --local-nav-shadow: var(--hub-shadow);
+      --local-nav-ease: var(--hub-ease);
     }
 
     .hero-collage {
@@ -821,27 +806,6 @@
         overflow-x: hidden;
       }
 
-      .travel-local-nav {
-        display: flex;
-        flex-wrap: nowrap;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 0.26rem;
-        box-sizing: border-box;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-
-      .travel-local-nav::-webkit-scrollbar {
-        display: none;
-      }
-
-      .travel-local-nav a {
-        flex: 0 0 auto;
-      }
-
       .hub-copy h2 {
         max-width: 10.5em;
         font-size: 1.9rem;
@@ -1024,7 +988,7 @@
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html" aria-current="page">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
-          <a href="travel-map.html">Places Map</a>
+          <a href="travel-map.html">Map</a>
           <details class="nav-more">
             <summary>More</summary>
             <div class="nav-more-menu">
@@ -1143,7 +1107,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>
@@ -1170,7 +1134,7 @@
       var curatedWall = [
         {
           place: "Osaka",
-          photo: "img/japan/osaka/osaka-city-museum-city-view.jpg"
+          photo: "img/japan/osaka/osaka-dotonbori-vertical-street-view.jpg"
         },
         {
           place: "Bandar Seri Begawan",
@@ -1219,7 +1183,7 @@
 
       var pickLinks = document.getElementById("archive-pick-links");
       if (pickLinks) {
-        pickLinks.innerHTML = wallItems.slice(0, 4).map(function(item) {
+        pickLinks.innerHTML = wallItems.slice(0, 1).map(function(item) {
           var place = item.place;
           var href = "travel-gallery.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
           return '' +

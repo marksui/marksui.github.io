@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Travel Tree</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
-  <meta name="description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
+  <meta name="description" content="A stable tree view of Mark Sui's travel archive, organized by continent, country or region, place, and photos.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#102A43">
@@ -15,7 +15,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Mark Sui">
   <meta property="og:title" content="Mark Sui - Travel Tree">
-  <meta property="og:description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <meta property="og:description" content="A stable tree view of Mark Sui's travel archive, organized by continent, country or region, place, and photos.">
   <meta property="og:url" content="https://marksui.github.io/travel-tree.html">
   <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
   <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
@@ -23,1324 +23,652 @@
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Mark Sui - Travel Tree">
-  <meta name="twitter:description" content="A branching tree view of Mark Sui's travel archive, organized from continents to countries, regions, places, and photos.">
+  <meta name="twitter:description" content="A stable tree view of Mark Sui's travel archive, organized by continent, country or region, place, and photos.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
     .tree-main {
       max-width: 1160px;
-      --tree-accent: #5d6b66;
-      --tree-accent-soft: rgba(93, 107, 102, 0.14);
-      --tree-accent-strong: rgba(93, 107, 102, 0.22);
-      --tree-rule: #d8d1c6;
-      --tree-surface: rgba(255, 255, 255, 0.76);
-      --tree-surface-strong: rgba(255, 255, 255, 0.9);
-      --tree-grid: rgba(93, 107, 102, 0.05);
-      --tree-shadow: 0 18px 42px rgba(26, 28, 29, 0.08);
-      --tree-shadow-hover: 0 22px 56px rgba(26, 28, 29, 0.12);
+      --tree-accent: #536878;
+      --tree-secondary: #6d7b88;
+      --tree-rule: var(--line);
+      --tree-panel: var(--surface);
+      --tree-soft: rgba(83, 104, 120, 0.07);
+      --tree-soft-strong: rgba(83, 104, 120, 0.12);
+      --tree-shadow: 0 14px 34px rgba(16, 42, 67, 0.07);
       --tree-ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     html[data-theme="dark"] .tree-main {
-      --tree-accent: #b7c2bd;
-      --tree-accent-soft: rgba(183, 194, 189, 0.14);
-      --tree-accent-strong: rgba(183, 194, 189, 0.2);
-      --tree-rule: #3d403d;
-      --tree-surface: rgba(20, 20, 20, 0.72);
-      --tree-surface-strong: rgba(24, 24, 24, 0.9);
-      --tree-grid: rgba(183, 194, 189, 0.05);
-      --tree-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
-      --tree-shadow-hover: 0 22px 56px rgba(0, 0, 0, 0.36);
+      --tree-accent: #aebed0;
+      --tree-secondary: #aab6c4;
+      --tree-soft: rgba(174, 190, 208, 0.08);
+      --tree-soft-strong: rgba(174, 190, 208, 0.14);
+      --tree-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
     }
 
     .tree-hero {
-      display: block;
+      display: grid;
+      gap: 1rem;
     }
 
     .tree-copy p:last-of-type {
-      max-width: 38rem;
+      max-width: 42rem;
     }
 
     .travel-local-nav {
-      display: inline-flex;
-      flex-wrap: wrap;
-      gap: 0.32rem;
-      margin-top: 1.2rem;
-      padding: 0.28rem;
+      --local-nav-accent: var(--tree-accent);
+      --local-nav-rule: var(--tree-rule);
+      --local-nav-surface: var(--tree-panel);
+      --local-nav-wash: var(--tree-soft);
+      --local-nav-shadow: var(--tree-shadow);
+      --local-nav-ease: var(--tree-ease);
+    }
+
+    .tree-glance {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.72rem;
+      margin: 1rem 0 0;
+    }
+
+    .tree-glance-card,
+    .tree-panel,
+    .tree-inspector {
       border: 1px solid var(--tree-rule);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.48);
+      border-radius: 8px;
+      background: var(--tree-panel);
       box-shadow: var(--tree-shadow);
     }
 
-    html[data-theme="dark"] .travel-local-nav {
-      background: rgba(255, 255, 255, 0.03);
+    .tree-glance-card {
+      display: grid;
+      gap: 0.18rem;
+      padding: 0.82rem 0.9rem;
+      min-width: 0;
     }
 
-    .travel-local-nav a {
-      padding: 0.3rem 0.74rem;
-      border-radius: 999px;
-      color: var(--text);
-      text-decoration: none;
-      transition: transform 0.24s var(--tree-ease), background 0.24s ease, color 0.24s ease;
+    .tree-glance-card span {
+      color: var(--tree-secondary);
+      font-size: 0.82rem;
+      font-style: italic;
+      line-height: 1.2;
     }
 
-    .travel-local-nav a:hover,
-    .travel-local-nav a:focus-visible,
-    .travel-local-nav a[aria-current="page"] {
-      background: var(--tree-accent-soft);
+    .tree-glance-card strong {
       color: var(--tree-accent);
-      transform: translateY(-1px);
-      outline: none;
+      font-size: 1.34rem;
+      line-height: 1.05;
     }
 
     .tree-shell {
       display: grid;
-      grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.84fr);
-      gap: 1.25rem;
-      margin-top: 0.72rem;
+      grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.72fr);
+      gap: 1rem;
       align-items: start;
+      margin-top: 1rem;
     }
 
     .tree-panel,
-    .tree-preview {
-      position: relative;
-      border: 1px solid var(--tree-rule);
-      border-radius: 28px;
-      background: var(--tree-surface-strong);
-      box-shadow: var(--tree-shadow);
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-    }
-
-    .tree-panel::before,
-    .tree-preview::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      background:
-        linear-gradient(var(--tree-grid) 1px, transparent 1px),
-        linear-gradient(90deg, var(--tree-grid) 1px, transparent 1px);
-      background-size: 18px 18px;
-      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 92%);
-      opacity: 0.8;
+    .tree-inspector {
+      min-width: 0;
+      padding: 1rem;
     }
 
     .tree-panel {
-      padding: 1.2rem 1.15rem 1.25rem;
+      overflow: visible;
     }
 
-    .tree-preview {
-      padding: 1.15rem 1.15rem 1.2rem;
+    .tree-inspector {
       position: sticky;
       top: 1rem;
-      min-height: 520px;
+      display: grid;
+      gap: 1rem;
     }
 
     .tree-toolbar {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1rem;
+      display: grid;
+      gap: 0.85rem;
       padding-bottom: 0.95rem;
       border-bottom: 1px solid var(--tree-rule);
     }
 
+    .tree-toolbar-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+
     .tree-toolbar-copy strong {
       display: block;
-      font-size: 1.1rem;
+      color: var(--tree-accent);
+      font-size: 1.12rem;
       line-height: 1.1;
     }
 
     .tree-toolbar-copy span {
       display: block;
-      margin-top: 0.28rem;
-      color: var(--muted);
-      font-size: 0.92rem;
+      margin-top: 0.24rem;
+      color: var(--tree-secondary);
+      font-size: 0.9rem;
+      line-height: 1.35;
     }
 
-    .tree-context {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 0.7rem;
-      margin-bottom: 0.95rem;
-      padding: 0.82rem 0.9rem 0.88rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.38);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24);
-    }
-
-    html[data-theme="dark"] .tree-context {
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-
-    .tree-context-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 0.85rem;
-      flex-wrap: wrap;
-    }
-
-    .tree-context-track {
+    .tree-mode,
+    .tree-action-row {
       display: flex;
       align-items: center;
       gap: 0.42rem;
       flex-wrap: wrap;
-      min-width: 0;
-    }
-
-    .tree-context-chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 2rem;
-      padding: 0.34rem 0.72rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--text);
-      font: inherit;
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.22s var(--tree-ease), border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
-    }
-
-    .tree-context-chip:hover,
-    .tree-context-chip:focus-visible {
-      transform: translateY(-1px);
-      border-color: var(--tree-accent);
-      background: var(--tree-accent-soft);
-      color: var(--tree-accent);
-      outline: none;
-    }
-
-    .tree-context-chip.is-current {
-      border-color: var(--tree-accent);
-      background: var(--tree-accent-soft);
-      color: var(--tree-accent);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
-    }
-
-    .tree-context-separator {
-      color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1;
-    }
-
-    .tree-context-meta {
-      color: var(--muted);
-      font-size: 0.84rem;
-      line-height: 1.35;
-      white-space: nowrap;
-    }
-
-    .tree-context-actions {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-
-    .tree-context-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-
-    .tree-context-action {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2rem;
-      padding: 0.34rem 0.76rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--text);
-      font: inherit;
-      cursor: pointer;
-      transition: transform 0.22s var(--tree-ease), border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
-    }
-
-    .tree-context-action:hover,
-    .tree-context-action:focus-visible {
-      transform: translateY(-1px);
-      border-color: var(--tree-accent);
-      background: var(--tree-accent-soft);
-      color: var(--tree-accent);
-      outline: none;
-    }
-
-    .tree-context-note {
-      color: var(--text);
-      font-size: 0.92rem;
-      line-height: 1.42;
-    }
-
-    .tree-list-head {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.9rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.72rem;
-      padding-bottom: 0.72rem;
-      border-bottom: 1px solid rgba(93, 107, 102, 0.14);
-    }
-
-    .tree-list-head strong {
-      font-size: 1rem;
-      line-height: 1.1;
-    }
-
-    .tree-list-head span {
-      color: var(--muted);
-      font-size: 0.84rem;
-      line-height: 1.35;
-    }
-
-    .mindmap-board {
-      position: relative;
-      z-index: 1;
-      margin-bottom: 1rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 28px;
-      background:
-        radial-gradient(circle at 50% 48%, rgba(93, 107, 102, 0.08), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.16));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
-      overflow: auto;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-      overscroll-behavior: contain;
-    }
-
-    .mindmap-board::-webkit-scrollbar {
-      display: none;
-    }
-
-    html[data-theme="dark"] .mindmap-board {
-      background:
-        radial-gradient(circle at 50% 48%, rgba(183, 194, 189, 0.08), transparent 42%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-    }
-
-    .mindmap-canvas {
-      position: relative;
-      min-width: 700px;
-      min-height: 420px;
-      padding: 1.1rem;
-    }
-
-    .mindmap-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      overflow: visible;
-    }
-
-    .mindmap-path {
-      fill: none;
-      stroke: rgba(93, 107, 102, 0.72);
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-dasharray: var(--path-length, 1);
-      stroke-dashoffset: var(--path-length, 1);
-      animation: pathDraw 0.75s var(--tree-ease) forwards;
-    }
-
-    html[data-theme="dark"] .mindmap-path {
-      stroke: rgba(183, 194, 189, 0.72);
-    }
-
-    .mindmap-path.is-secondary {
-      stroke-width: 2.2;
-      opacity: 0.7;
-    }
-
-    .mindmap-stage {
-      position: relative;
-      min-height: 420px;
-    }
-
-    .mindmap-node-shell {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      display: grid;
-      gap: 0.28rem;
-      text-align: center;
-      animation: nodePulseIn 0.46s var(--tree-ease) both;
-    }
-
-    .mindmap-center {
-      position: relative;
-      min-width: 216px;
-      max-width: 286px;
-      padding: 0.9rem 1.18rem 0.88rem;
-      border: 0;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #7c56f4, #5c3de4);
-      color: #fbf8f4;
-      font: inherit;
-      cursor: pointer;
-      box-shadow: 0 22px 52px rgba(92, 61, 228, 0.24);
-      transition: transform 0.24s var(--tree-ease), box-shadow 0.24s ease;
-    }
-
-    .mindmap-center::before {
-      content: "";
-      position: absolute;
-      inset: -12px;
-      border-radius: 999px;
-      border: 1px solid rgba(124, 86, 244, 0.2);
-      animation: centerHalo 3.8s ease-in-out infinite;
-    }
-
-    .mindmap-center:hover,
-    .mindmap-center:focus-visible {
-      transform: scale(1.03);
-      box-shadow: 0 26px 58px rgba(92, 61, 228, 0.3);
-      outline: none;
-    }
-
-    .mindmap-center[data-kind="branch"] {
-      background: linear-gradient(135deg, #4fcfc8, #3daea7);
-      box-shadow: 0 22px 52px rgba(61, 174, 167, 0.22);
-    }
-
-    .mindmap-center[data-kind="region"] {
-      background: linear-gradient(135deg, #f1c545, #e6a622);
-      box-shadow: 0 22px 52px rgba(230, 166, 34, 0.22);
-      color: #fffdf8;
-    }
-
-    .mindmap-center[data-kind="place"] {
-      background: linear-gradient(135deg, #f57c67, #eb5f7c);
-      box-shadow: 0 22px 52px rgba(235, 95, 124, 0.22);
-    }
-
-    .mindmap-center small {
-      display: block;
-      margin-bottom: 0.28rem;
-      font-size: 0.72rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      opacity: 0.88;
-    }
-
-    .mindmap-center strong {
-      display: block;
-      font-size: 1.34rem;
-      line-height: 1.05;
-      letter-spacing: 0;
-      font-weight: 600;
-      overflow-wrap: anywhere;
-    }
-
-    .mindmap-center span {
-      display: block;
-      margin-top: 0.3rem;
-      font-size: 0.79rem;
-      opacity: 0.92;
-    }
-
-    .mindmap-child {
-      position: absolute;
-      left: var(--node-x, 50%);
-      top: var(--node-y, 50%);
-      transform: translate(-50%, -50%);
-      min-width: 132px;
-      max-width: 188px;
-      padding: 0.66rem 0.84rem 0.62rem;
-      border: 1px solid var(--node-border, rgba(93, 107, 102, 0.26));
-      border-radius: 999px;
-      background: var(--node-soft, rgba(255, 255, 255, 0.72));
-      color: var(--text);
-      font: inherit;
-      text-align: center;
-      cursor: pointer;
-      box-shadow: 0 14px 34px rgba(26, 28, 29, 0.08);
-      transition: transform 0.24s var(--tree-ease), box-shadow 0.24s ease, border-color 0.24s ease;
-      animation: nodeBloom 0.48s var(--tree-ease) both;
-      animation-delay: calc(var(--node-order, 0) * 55ms);
-    }
-
-    .mindmap-child:hover,
-    .mindmap-child:focus-visible {
-      transform: translate(-50%, -50%) scale(1.04);
-      border-color: var(--node-color, var(--tree-accent));
-      box-shadow: 0 18px 42px rgba(26, 28, 29, 0.12);
-      outline: none;
-    }
-
-    .mindmap-child.is-selected {
-      transform: translate(-50%, -50%) scale(1.05);
-      border-color: var(--node-color, var(--tree-accent));
-      box-shadow: 0 18px 42px rgba(26, 28, 29, 0.14), 0 0 0 8px rgba(93, 107, 102, 0.08);
-    }
-
-    .mindmap-child.is-leaf {
-      min-width: 110px;
-      max-width: 160px;
-      padding: 0.52rem 0.7rem 0.5rem;
-      cursor: default;
-      border-style: dashed;
-    }
-
-    .mindmap-child strong {
-      display: block;
-      font-size: 0.96rem;
-      line-height: 1.08;
-      font-weight: 600;
-      letter-spacing: 0;
-      overflow-wrap: anywhere;
-    }
-
-    .mindmap-child small {
-      display: block;
-      margin-top: 0.22rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      line-height: 1.22;
-    }
-
-    .mindmap-child.is-leaf small {
-      color: rgba(35, 35, 35, 0.58);
-    }
-
-    html[data-theme="dark"] .mindmap-child.is-leaf small {
-      color: rgba(240, 236, 229, 0.58);
     }
 
     .tree-mode {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.22rem;
+      padding: 0.2rem;
       border: 1px solid var(--tree-rule);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--tree-soft);
     }
 
-    html[data-theme="dark"] .tree-mode {
-      background: rgba(255, 255, 255, 0.04);
+    .tree-mode button,
+    .tree-action-button,
+    .tree-clear-button,
+    .tree-link-button {
+      min-height: 2rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 999px;
+      background: var(--tree-panel);
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.22s var(--tree-ease), border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
     }
 
     .tree-mode button {
-      border: 0;
-      border-radius: 999px;
-      padding: 0.5rem 0.8rem;
+      border-color: transparent;
+      padding: 0.34rem 0.72rem;
       background: transparent;
-      color: var(--muted);
-      font: inherit;
-      cursor: pointer;
-      transition: background 0.22s ease, color 0.22s ease, transform 0.24s var(--tree-ease);
+      color: var(--tree-secondary);
+    }
+
+    .tree-action-button,
+    .tree-clear-button,
+    .tree-link-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.34rem 0.76rem;
     }
 
     .tree-mode button:hover,
-    .tree-mode button:focus-visible {
-      color: var(--text);
-      outline: none;
+    .tree-mode button:focus-visible,
+    .tree-action-button:hover,
+    .tree-action-button:focus-visible,
+    .tree-clear-button:hover,
+    .tree-clear-button:focus-visible,
+    .tree-link-button:hover,
+    .tree-link-button:focus-visible {
       transform: translateY(-1px);
+      border-color: var(--tree-accent);
+      background: var(--tree-soft);
+      color: var(--tree-accent);
+      outline: none;
     }
 
     .tree-mode button.is-active {
       background: var(--tree-accent);
-      color: #f6f3ee;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+      color: var(--background);
+      border-color: var(--tree-accent);
     }
 
-    .tree-root {
-      position: relative;
-      z-index: 1;
+    .tree-search-row {
       display: grid;
-      gap: 0.7rem;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.55rem;
+      align-items: center;
     }
 
-    .tree-block {
-      position: relative;
+    .tree-search {
+      width: 100%;
+      min-width: 0;
+      min-height: 2.55rem;
+      padding: 0.56rem 0.78rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 8px;
+      background: var(--tree-panel);
+      color: var(--text);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .tree-children {
-      position: relative;
-      margin: 0.48rem 0 0.1rem 1.15rem;
-      padding-left: 1rem;
-      display: grid;
-      gap: 0.52rem;
-      animation: branchReveal 0.42s var(--tree-ease) both;
+    .tree-search:focus {
+      border-color: var(--tree-accent);
+      background: var(--tree-soft);
+      box-shadow: 0 0 0 3px var(--tree-soft-strong);
     }
 
-    .tree-children::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0.1rem;
-      bottom: 0.55rem;
-      width: 1px;
-      background: linear-gradient(180deg, var(--tree-accent-strong), transparent 88%);
-      transform-origin: top;
-      animation: trunkGrow 0.45s var(--tree-ease) both;
+    .tree-status {
+      margin: 0.78rem 0 0;
+      color: var(--tree-secondary);
+      font-size: 0.9rem;
+      line-height: 1.35;
     }
 
-    .tree-branch {
-      position: relative;
-      display: grid;
-      gap: 0.5rem;
-    }
-
-    .tree-branch::before {
-      content: "";
-      position: absolute;
-      top: 1.05rem;
-      left: -1rem;
-      width: 0.82rem;
-      height: 1px;
-      background: linear-gradient(90deg, var(--tree-accent), rgba(93, 107, 102, 0.22));
-      transform-origin: left center;
-      animation: branchLine 0.34s var(--tree-ease) both;
-    }
-
-    .tree-node {
-      position: relative;
+    .tree-breadcrumbs {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      width: 100%;
+      gap: 0.38rem;
+      flex-wrap: wrap;
+      margin: 0.9rem 0 0;
+      padding: 0.72rem;
       border: 1px solid var(--tree-rule);
-      border-radius: 22px;
-      padding: 0.88rem 0.95rem;
-      background: rgba(255, 255, 255, 0.52);
-      box-shadow: 0 12px 30px rgba(26, 28, 29, 0.05);
-      text-align: left;
+      border-radius: 8px;
+      background: var(--tree-soft);
+    }
+
+    .tree-breadcrumbs button {
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: transparent;
       color: var(--text);
+      font: inherit;
       cursor: pointer;
-      transition: transform 0.26s var(--tree-ease), border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+      padding: 0.24rem 0.48rem;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
     }
 
-    html[data-theme="dark"] .tree-node {
-      background: rgba(255, 255, 255, 0.03);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16);
-    }
-
-    .tree-node:hover,
-    .tree-node:focus-visible {
-      transform: translateX(4px);
+    .tree-breadcrumbs button:hover,
+    .tree-breadcrumbs button:focus-visible,
+    .tree-breadcrumbs button.is-current {
       border-color: var(--tree-accent);
-      box-shadow: 0 16px 36px rgba(26, 28, 29, 0.11);
+      background: var(--tree-panel);
+      color: var(--tree-accent);
       outline: none;
     }
 
-    .tree-node.is-active {
-      background: linear-gradient(135deg, var(--tree-accent-soft), rgba(255, 255, 255, 0.4));
+    .tree-separator {
+      color: var(--tree-secondary);
+      font-size: 0.82rem;
+    }
+
+    .tree-list {
+      display: grid;
+      gap: 0.64rem;
+      margin-top: 0.95rem;
+    }
+
+    .tree-empty {
+      padding: 1rem;
+      border: 1px dashed var(--tree-rule);
+      border-radius: 8px;
+      color: var(--tree-secondary);
+      background: var(--tree-soft);
+    }
+
+    .tree-group {
+      position: relative;
+      min-width: 0;
+    }
+
+    .tree-group summary {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 0.74rem;
+      align-items: center;
+      min-width: 0;
+      padding: 0.72rem 0.78rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 8px;
+      background: var(--tree-panel);
+      cursor: pointer;
+      list-style: none;
+      transition: transform 0.22s var(--tree-ease), border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .tree-group summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tree-group summary:hover,
+    .tree-group summary:focus-visible,
+    .tree-group.is-active > summary {
+      transform: translateX(2px);
       border-color: var(--tree-accent);
-      transform: translateX(4px);
-      box-shadow: 0 18px 42px rgba(26, 28, 29, 0.12);
+      background: var(--tree-soft);
+      outline: none;
     }
 
-    .tree-node.is-on-path {
-      border-color: rgba(93, 107, 102, 0.34);
-    }
-
-    .tree-node-mark {
-      flex: 0 0 auto;
-      width: 0.82rem;
-      height: 0.82rem;
+    .tree-dot {
+      width: 0.74rem;
+      height: 0.74rem;
+      border: 1px solid color-mix(in srgb, var(--tree-accent) 44%, var(--tree-rule));
       border-radius: 999px;
-      background: rgba(93, 107, 102, 0.16);
-      border: 1px solid rgba(93, 107, 102, 0.26);
-      box-shadow: inset 0 0 0 0 rgba(93, 107, 102, 0.2);
-      transition: transform 0.24s var(--tree-ease), background 0.24s ease, box-shadow 0.24s ease;
+      background: var(--tree-soft);
     }
 
-    .tree-node-group .tree-node-mark {
-      width: 0.95rem;
-      height: 0.95rem;
-    }
-
-    .tree-node-region .tree-node-mark {
+    .tree-branch .tree-dot {
       border-radius: 4px;
       transform: rotate(45deg);
     }
 
-    .tree-node-place .tree-node-mark {
-      width: 0.68rem;
-      height: 0.68rem;
+    .tree-region .tree-dot {
+      width: 0.66rem;
+      height: 0.66rem;
+      border-radius: 4px;
     }
 
-    .tree-node.is-active .tree-node-mark {
-      background: var(--tree-accent);
-      box-shadow: 0 0 0 5px rgba(93, 107, 102, 0.12);
-    }
-
-    .tree-node-copy {
-      flex: 1 1 auto;
+    .tree-label {
       min-width: 0;
     }
 
-    .tree-node-copy strong {
+    .tree-label strong {
       display: block;
-      font-size: 1.12rem;
-      line-height: 1.1;
-      letter-spacing: 0;
-      font-weight: 600;
-    }
-
-    .tree-node-copy small {
-      display: block;
-      margin-top: 0.22rem;
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.3;
-    }
-
-    .tree-node-caret {
-      flex: 0 0 auto;
-      color: var(--tree-accent);
-      font-size: 0.88rem;
-      transition: transform 0.28s var(--tree-ease), opacity 0.2s ease;
-      opacity: 0.72;
-    }
-
-    .tree-node.is-open .tree-node-caret {
-      transform: rotate(90deg);
-      opacity: 1;
-    }
-
-    .tree-preview-stack {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      gap: 1rem;
-      animation: previewFade 0.34s var(--tree-ease) both;
-    }
-
-    .preview-header {
-      display: grid;
-      gap: 0.45rem;
-      padding-bottom: 0.95rem;
-      border-bottom: 1px solid var(--tree-rule);
-    }
-
-    .preview-kicker {
-      margin: 0;
-      color: var(--tree-accent);
-      font-size: 0.82rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .preview-path {
-      margin: 0;
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.35;
-    }
-
-    .preview-title {
-      margin: 0;
-      font-size: clamp(2rem, 3.2vw, 2.7rem);
-      line-height: 0.95;
-      font-weight: 600;
-      letter-spacing: 0;
-    }
-
-    .preview-meta,
-    .preview-note {
-      margin: 0;
       color: var(--text);
-      max-width: 42rem;
-    }
-
-    .preview-stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.72rem;
-    }
-
-    .preview-stats article {
-      padding: 0.9rem 0.88rem 0.84rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.46);
-    }
-
-    html[data-theme="dark"] .preview-stats article {
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .preview-stats strong {
-      display: block;
-      font-size: 1.35rem;
-      line-height: 1;
-      color: var(--tree-accent);
-    }
-
-    .preview-stats span {
-      display: block;
-      margin-top: 0.28rem;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .preview-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-    }
-
-    .preview-map-shell {
-      display: grid;
-      gap: 0.72rem;
-    }
-
-    .preview-map-copy {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .preview-map-copy strong {
       font-size: 1rem;
-      line-height: 1.1;
+      line-height: 1.16;
+      overflow-wrap: anywhere;
     }
 
-    .preview-map-copy span {
-      color: var(--muted);
-      font-size: 0.84rem;
+    .tree-label small {
+      display: block;
+      margin-top: 0.18rem;
+      color: var(--tree-secondary);
+      font-size: 0.8rem;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
     }
 
-    #tree-preview-map {
-      width: 100%;
-      height: 260px;
-      border: 1px solid var(--tree-rule);
-      border-radius: 22px;
-      overflow: hidden;
-      background: rgba(255, 255, 255, 0.26);
-    }
-
-    html[data-theme="dark"] #tree-preview-map {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .tree-preview .leaflet-control-zoom a,
-    .tree-preview .leaflet-popup-content-wrapper,
-    .tree-preview .leaflet-popup-tip {
-      background: rgba(255, 255, 255, 0.92);
-      color: var(--text);
-      border-color: var(--tree-rule);
-    }
-
-    html[data-theme="dark"] .tree-preview .leaflet-control-zoom a,
-    html[data-theme="dark"] .tree-preview .leaflet-popup-content-wrapper,
-    html[data-theme="dark"] .tree-preview .leaflet-popup-tip {
-      background: rgba(26, 26, 26, 0.94);
-      color: var(--text);
-      border-color: var(--tree-rule);
-    }
-
-    .tree-preview .leaflet-control-zoom a {
-      width: 28px;
-      height: 28px;
-      line-height: 28px;
-    }
-
-    .tree-preview .leaflet-control-attribution {
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--muted);
-    }
-
-    html[data-theme="dark"] .tree-preview .leaflet-control-attribution {
-      background: rgba(12, 12, 12, 0.76);
-    }
-
-    .preview-actions a,
-    .preview-actions button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 2.6rem;
-      padding: 0.7rem 1rem;
-      border: 1px solid var(--tree-rule);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--text);
-      text-decoration: none;
-      font: inherit;
-      cursor: pointer;
-      transition: transform 0.22s var(--tree-ease), border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
-    }
-
-    .preview-actions a:hover,
-    .preview-actions a:focus-visible,
-    .preview-actions button:hover,
-    .preview-actions button:focus-visible {
-      transform: translateY(-2px);
-      border-color: var(--tree-accent);
-      background: var(--tree-accent-soft);
+    .tree-caret {
       color: var(--tree-accent);
+      font-size: 0.9rem;
+      transition: transform 0.22s var(--tree-ease);
+    }
+
+    details[open] > summary .tree-caret {
+      transform: rotate(90deg);
+    }
+
+    .tree-children {
+      position: relative;
+      display: grid;
+      gap: 0.52rem;
+      margin: 0.52rem 0 0.1rem 1.1rem;
+      padding-left: 0.82rem;
+      border-left: 1px solid color-mix(in srgb, var(--tree-accent) 32%, transparent);
+    }
+
+    .tree-place-list {
+      display: grid;
+      gap: 0.44rem;
+      margin-top: 0.52rem;
+      padding-left: 1rem;
+      border-left: 1px solid color-mix(in srgb, var(--tree-accent) 22%, transparent);
+    }
+
+    .tree-place {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.62rem;
+      width: 100%;
+      min-width: 0;
+      padding: 0.58rem 0.7rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 8px;
+      background: color-mix(in srgb, var(--tree-panel) 88%, var(--tree-soft) 12%);
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.22s var(--tree-ease), border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .tree-place:hover,
+    .tree-place:focus-visible,
+    .tree-place.is-active {
+      transform: translateX(2px);
+      border-color: var(--tree-accent);
+      background: var(--tree-soft);
       outline: none;
     }
 
-    .preview-mosaic {
+    .tree-place strong {
+      overflow-wrap: anywhere;
+      line-height: 1.18;
+    }
+
+    .tree-pill {
+      justify-self: end;
+      white-space: nowrap;
+      color: var(--tree-secondary);
+      font-size: 0.8rem;
+    }
+
+    .inspector-header {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-      gap: 0.72rem;
+      gap: 0.42rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--tree-rule);
     }
 
-    .preview-mosaic button {
-      border: 0;
+    .inspector-kicker,
+    .inspector-path {
       margin: 0;
-      padding: 0;
-      background: transparent;
-      cursor: pointer;
+      color: var(--tree-secondary);
+      font-size: 0.84rem;
+      line-height: 1.3;
     }
 
-    .preview-mosaic figure {
-      position: relative;
+    .inspector-kicker {
+      color: var(--tree-accent);
+      font-style: italic;
+    }
+
+    .inspector-title {
       margin: 0;
-      border-radius: 22px;
-      overflow: hidden;
+      color: var(--text);
+      font-size: clamp(1.55rem, 2.4vw, 2.2rem);
+      line-height: 1;
+      overflow-wrap: anywhere;
+    }
+
+    .inspector-note {
+      margin: 0;
+      color: var(--text);
+      opacity: 0.82;
+      line-height: 1.45;
+    }
+
+    .inspector-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.52rem;
+    }
+
+    .inspector-stats article {
+      min-width: 0;
+      padding: 0.68rem;
       border: 1px solid var(--tree-rule);
-      background: rgba(255, 255, 255, 0.42);
-      min-height: 0;
+      border-radius: 8px;
+      background: var(--tree-soft);
     }
 
-    html[data-theme="dark"] .preview-mosaic figure {
-      background: rgba(255, 255, 255, 0.03);
+    .inspector-stats strong {
+      display: block;
+      color: var(--tree-accent);
+      font-size: 1.15rem;
+      line-height: 1.05;
     }
 
-    .preview-mosaic .mosaic-primary {
-      aspect-ratio: 1.08 / 1;
+    .inspector-stats span {
+      display: block;
+      margin-top: 0.22rem;
+      color: var(--tree-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
     }
 
-    .preview-mosaic .mosaic-stack {
+    .inspector-actions,
+    .child-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .child-grid {
       display: grid;
-      gap: 0.72rem;
+      grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
     }
 
-    .preview-mosaic .mosaic-stack figure {
-      aspect-ratio: 1.1 / 0.74;
+    .child-card {
+      display: grid;
+      gap: 0.18rem;
+      min-width: 0;
+      padding: 0.66rem 0.7rem;
+      border: 1px solid var(--tree-rule);
+      border-radius: 8px;
+      background: var(--tree-panel);
+      color: var(--text);
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.22s var(--tree-ease), border-color 0.2s ease, background 0.2s ease;
     }
 
-    .preview-mosaic img {
+    .child-card:hover,
+    .child-card:focus-visible {
+      transform: translateY(-1px);
+      border-color: var(--tree-accent);
+      background: var(--tree-soft);
+      outline: none;
+    }
+
+    .child-card strong {
+      overflow-wrap: anywhere;
+      line-height: 1.15;
+    }
+
+    .child-card span {
+      color: var(--tree-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .photo-mosaic {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.42rem;
+    }
+
+    .photo-hit {
+      position: relative;
+      display: block;
+      min-width: 0;
+      aspect-ratio: 1;
+      padding: 0;
+      border: 1px solid var(--tree-rule);
+      border-radius: 8px;
+      background: var(--tree-soft);
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .photo-hit img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.42s var(--tree-ease);
+      transition: transform 0.24s var(--tree-ease), filter 0.24s ease;
     }
 
-    .preview-mosaic button:hover img,
-    .preview-mosaic button:focus-visible img {
+    .photo-hit:hover img,
+    .photo-hit:focus-visible img {
       transform: scale(1.04);
+      filter: saturate(1.06);
     }
 
-    .preview-grid {
-      display: grid;
-      gap: 0.72rem;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .preview-branch-card {
-      border: 1px solid var(--tree-rule);
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.42);
-      padding: 0.75rem;
-      display: grid;
-      gap: 0.72rem;
-      text-align: left;
-      color: var(--text);
-      cursor: pointer;
-      transition: transform 0.24s var(--tree-ease), border-color 0.22s ease, box-shadow 0.24s ease;
-    }
-
-    html[data-theme="dark"] .preview-branch-card {
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .preview-branch-card:hover,
-    .preview-branch-card:focus-visible {
-      transform: translateY(-3px);
-      border-color: var(--tree-accent);
-      box-shadow: 0 14px 34px rgba(26, 28, 29, 0.08);
-      outline: none;
-    }
-
-    .preview-branch-card img {
-      width: 100%;
-      aspect-ratio: 1.16 / 0.82;
-      border-radius: 16px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .preview-branch-card strong {
-      display: block;
-      font-size: 1.02rem;
-      line-height: 1.14;
-    }
-
-    .preview-branch-card small {
-      display: block;
-      margin-top: 0.22rem;
-      color: var(--muted);
-      font-size: 0.84rem;
-    }
-
-    .preview-spot-list {
+    .spot-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.52rem;
+      gap: 0.36rem;
     }
 
-    .preview-spot-list span {
+    .spot-list span {
       display: inline-flex;
+      min-height: 1.7rem;
       align-items: center;
-      min-height: 2.15rem;
-      padding: 0.35rem 0.75rem;
+      padding: 0.18rem 0.5rem;
       border: 1px solid var(--tree-rule);
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.45);
-      color: var(--text);
-      font-size: 0.88rem;
+      color: var(--tree-secondary);
+      font-size: 0.78rem;
+      line-height: 1.2;
+      background: var(--tree-soft);
     }
 
-    html[data-theme="dark"] .preview-spot-list span {
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .preview-photo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.68rem;
-    }
-
-    .preview-photo {
-      border: 0;
-      background: transparent;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-      cursor: pointer;
-      color: var(--text);
-      display: grid;
-      gap: 0.42rem;
-    }
-
-    .preview-photo-frame {
-      border: 1px solid var(--tree-rule);
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.42);
-      overflow: hidden;
-      padding: 0.4rem;
-      transition: transform 0.24s var(--tree-ease), border-color 0.22s ease, box-shadow 0.24s ease;
-    }
-
-    html[data-theme="dark"] .preview-photo-frame {
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .preview-photo:hover .preview-photo-frame,
-    .preview-photo:focus-visible .preview-photo-frame {
-      transform: translateY(-3px);
-      border-color: var(--tree-accent);
-      box-shadow: 0 14px 34px rgba(26, 28, 29, 0.08);
-    }
-
-    .preview-photo img {
-      width: 100%;
-      display: block;
-      border-radius: 14px;
-      background: rgba(0, 0, 0, 0.04);
-      object-fit: contain;
-    }
-
-    .preview-photo.landscape img {
-      aspect-ratio: 1.36 / 0.9;
-    }
-
-    .preview-photo.portrait img {
-      aspect-ratio: 0.84 / 1.1;
-    }
-
-    .preview-photo p {
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.3;
-      padding: 0 0.1rem;
-      margin: 0;
-    }
-
-    .preview-empty {
-      border: 1px dashed var(--tree-rule);
-      border-radius: 22px;
-      padding: 1.4rem 1rem;
-      color: var(--muted);
-      background: rgba(255, 255, 255, 0.24);
-    }
-
-    html[data-theme="dark"] .preview-empty {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    @keyframes treeFadeLift {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes branchReveal {
-      from {
-        opacity: 0;
-        transform: translateY(-6px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes trunkGrow {
-      from {
-        transform: scaleY(0.05);
-        opacity: 0.3;
-      }
-      to {
-        transform: scaleY(1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes branchLine {
-      from {
-        transform: scaleX(0.15);
-        opacity: 0.35;
-      }
-      to {
-        transform: scaleX(1);
-        opacity: 1;
-      }
-    }
-
-    @keyframes previewFade {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes pathDraw {
-      from {
-        stroke-dashoffset: var(--path-length, 1);
-        opacity: 0.2;
-      }
-      to {
-        stroke-dashoffset: 0;
-        opacity: 1;
-      }
-    }
-
-    @keyframes nodeBloom {
-      from {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.72);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-
-    @keyframes nodePulseIn {
-      from {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.88);
-      }
-      to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-      }
-    }
-
-    @keyframes centerHalo {
-      0%, 100% {
-        transform: scale(0.96);
-        opacity: 0.42;
-      }
-      50% {
-        transform: scale(1.02);
-        opacity: 0.82;
-      }
-    }
-
-    @media (max-width: 1080px) {
+    @media (max-width: 900px) {
       .tree-shell {
         grid-template-columns: 1fr;
       }
 
-      .mindmap-canvas,
-      .mindmap-stage {
-        min-height: 380px;
+      .tree-inspector {
+        position: static;
       }
 
-      .tree-preview {
-        position: relative;
-        top: auto;
-        min-height: 0;
+      .tree-glance {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 720px) {
-      .preview-stats,
-      .preview-grid,
-      .preview-photo-grid {
+    @media (max-width: 620px) {
+      .tree-panel,
+      .tree-inspector {
+        padding: 0.8rem;
+      }
+
+      .tree-glance,
+      .tree-search-row,
+      .inspector-stats,
+      .photo-mosaic {
         grid-template-columns: 1fr;
       }
 
-      .tree-context-top {
-        flex-direction: column;
-        align-items: stretch;
+      .photo-mosaic {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .tree-context-bottom {
-        flex-direction: column;
-        align-items: stretch;
+      .tree-group summary,
+      .tree-place {
+        grid-template-columns: auto minmax(0, 1fr);
       }
 
-      .tree-context-meta {
-        white-space: normal;
-      }
-
-      .tree-toolbar {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .tree-mode {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .tree-mode button {
-        flex: 1 1 0;
-      }
-
-      .travel-local-nav {
-        display: flex;
-        flex-wrap: nowrap;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        padding: 0.26rem;
-        box-sizing: border-box;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-
-      .travel-local-nav::-webkit-scrollbar {
+      .tree-caret,
+      .tree-pill {
         display: none;
       }
 
-      .travel-local-nav a {
-        flex: 0 0 auto;
-      }
-
-      .preview-mosaic {
-        grid-template-columns: 1fr;
-      }
-
-      .preview-mosaic .mosaic-primary,
-      .preview-mosaic .mosaic-stack figure {
-        aspect-ratio: 1.08 / 0.82;
-      }
-
-      .mindmap-canvas {
-        min-width: 620px;
-        min-height: 360px;
-      }
-
-      .mindmap-stage {
-        min-height: 360px;
-      }
-
-      .mindmap-center {
-        min-width: 188px;
-        max-width: 236px;
-      }
-
-      .mindmap-child {
-        min-width: 114px;
-        max-width: 156px;
-        padding: 0.56rem 0.7rem 0.52rem;
-      }
-
-      .mindmap-child strong {
-        font-size: 0.94rem;
-      }
-
-      #tree-preview-map {
-        height: 224px;
+      .tree-children,
+      .tree-place-list {
+        margin-left: 0.72rem;
+        padding-left: 0.72rem;
       }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .tree-children,
-      .tree-children::before,
-      .tree-branch::before,
-      .tree-preview-stack,
-      .mindmap-path,
-      .mindmap-child,
-      .mindmap-node-shell,
-      .mindmap-center::before {
-        animation: none;
-      }
-
-      .tree-node,
-      .tree-node-mark,
-      .tree-node-caret,
       .tree-mode button,
-      .preview-actions a,
-      .preview-actions button,
-      .preview-mosaic img,
-      .preview-branch-card,
-      .preview-photo-frame,
-      #tree-preview-map,
-      .mindmap-center,
-      .mindmap-child {
+      .tree-action-button,
+      .tree-clear-button,
+      .tree-link-button,
+      .tree-group summary,
+      .tree-place,
+      .child-card,
+      .photo-hit img {
         transition: none;
       }
     }
@@ -1364,12 +692,12 @@
     <section class="travel-hero tree-hero">
       <div class="tree-copy">
         <p class="travel-kicker">Tree</p>
-        <h2>A branching view of the archive.</h2>
-        <p>Sometimes I just want to start from a continent, then a country, then a city.</p>
+        <h2>Archive tree.</h2>
+        <p>A complete, scroll-stable hierarchy for continents, regions, places, and photo sets.</p>
         <nav class="travel-local-nav" aria-label="Personal pages">
           <a href="personal.html">Overview</a>
           <a href="travel-gallery.html">Gallery</a>
-          <a href="travel-map.html">Places Map</a>
+          <a href="travel-map.html">Map</a>
           <details class="nav-more">
             <summary>More</summary>
             <div class="nav-more-menu">
@@ -1379,35 +707,57 @@
           </details>
         </nav>
       </div>
+
+      <div class="tree-glance" aria-label="Archive totals">
+        <article class="tree-glance-card">
+          <span>Photos</span>
+          <strong id="tree-total-photos">0</strong>
+        </article>
+        <article class="tree-glance-card">
+          <span>Places</span>
+          <strong id="tree-total-places">0</strong>
+        </article>
+        <article class="tree-glance-card">
+          <span>Regions</span>
+          <strong id="tree-total-regions">0</strong>
+        </article>
+        <article class="tree-glance-card">
+          <span>View</span>
+          <strong id="tree-current-view">Photos</strong>
+        </article>
+      </div>
     </section>
 
-    <section class="tree-shell">
+    <section class="tree-shell" aria-label="Travel archive tree">
       <div class="tree-panel">
         <div class="tree-toolbar">
-          <div class="tree-toolbar-copy">
-            <strong id="tree-toolbar-title">Branch Board</strong>
-            <span id="tree-toolbar-note">Start from continents, then go narrower from there.</span>
+          <div class="tree-toolbar-top">
+            <div class="tree-toolbar-copy">
+              <strong>Browse the hierarchy</strong>
+              <span>No fixed canvas, no clipped branches. The full tree stays in normal page flow.</span>
+            </div>
+            <div class="tree-mode" role="tablist" aria-label="Tree data mode">
+              <button class="is-active" id="tree-mode-photos" type="button" data-mode="photos" role="tab" aria-selected="true">Photos</button>
+              <button id="tree-mode-all" type="button" data-mode="all" role="tab" aria-selected="false">All places</button>
+            </div>
           </div>
-          <div class="tree-mode" role="tablist" aria-label="Tree view mode">
-            <button class="is-active" id="tree-mode-photos" type="button" data-mode="photos" role="tab" aria-selected="true">Photos</button>
-            <button id="tree-mode-all" type="button" data-mode="all" role="tab" aria-selected="false">Places</button>
+          <div class="tree-search-row">
+            <input class="tree-search" id="tree-search" type="search" placeholder="Search region, place, caption, or spot..." autocomplete="off">
+            <button class="tree-clear-button" id="tree-clear" type="button">Clear</button>
+          </div>
+          <div class="tree-action-row" aria-label="Tree actions">
+            <button class="tree-action-button" type="button" data-tree-action="expand">Expand all</button>
+            <button class="tree-action-button" type="button" data-tree-action="collapse">Collapse</button>
+            <button class="tree-action-button" type="button" data-tree-action="overview">Overview</button>
           </div>
         </div>
-        <div class="tree-context" id="tree-context"></div>
-        <div class="mindmap-board" id="mindmap-board">
-          <div class="mindmap-canvas" id="mindmap-canvas">
-            <svg class="mindmap-svg" id="mindmap-svg" aria-hidden="true"></svg>
-            <div class="mindmap-stage" id="mindmap-stage"></div>
-          </div>
-        </div>
-        <div class="tree-list-head">
-          <strong id="tree-list-title">Tree List</strong>
-          <span id="tree-list-meta">Pick the next branch from the list below.</span>
-        </div>
-        <div class="tree-root" id="tree-root"></div>
+
+        <p class="tree-status" id="tree-status">Loading archive tree.</p>
+        <div class="tree-breadcrumbs" id="tree-breadcrumbs" aria-label="Current tree path"></div>
+        <div class="tree-list" id="tree-list"></div>
       </div>
 
-      <aside class="tree-preview" id="tree-preview"></aside>
+      <aside class="tree-inspector" id="tree-inspector" aria-live="polite"></aside>
     </section>
   </main>
 
@@ -1422,7 +772,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>
@@ -1432,16 +782,20 @@
     </div>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
     (function() {
       var shared = window.travelShared;
+      if (!shared) {
+        return;
+      }
+
       var viewer = shared.createPhotoViewer();
       var params = new URLSearchParams(window.location.search);
-      var previewMap = null;
-      var previewTileLayer = null;
-      var previewMarkerLayer = null;
-      var previewFocusLayer = null;
+      var treeList = document.getElementById("tree-list");
+      var inspector = document.getElementById("tree-inspector");
+      var breadcrumbs = document.getElementById("tree-breadcrumbs");
+      var searchInput = document.getElementById("tree-search");
+      var activePreviewItems = [];
 
       var rootDefinitions = [
         {
@@ -1462,7 +816,6 @@
               type: "group",
               key: "China",
               label: "China",
-              localLabel: "中国",
               regions: ["Taiwan", "Yunnan", "Guizhou", "Shandong", "Fujian", "Hubei", "Jilin", "Liaoning"]
             }
           ]
@@ -1495,59 +848,28 @@
       ];
 
       var allPlaces = shared.data.places.slice().sort(shared.comparePlaces);
-      var validRegions = shared.uniqueRegions({ onlyWithPhotos: false });
-      var validRootKeys = rootDefinitions.map(function(item) { return item.key; });
-      var photoRegionCount = shared.uniqueRegions({ onlyWithPhotos: true }).length;
+      var allRegions = shared.uniqueRegions({ onlyWithPhotos: false });
+      var validRootKeys = rootDefinitions.map(function(root) { return root.key; });
       var state = {
         mode: params.get("mode") === "all" ? "all" : "photos",
+        query: (params.get("q") || params.get("query") || "").trim(),
+        expanded: params.get("expand") === "1",
         root: validRootKeys.indexOf(params.get("root")) >= 0 ? params.get("root") : "",
         branch: params.get("branch") || "",
-        region: "",
-        place: ""
+        region: allRegions.indexOf(params.get("region")) >= 0 ? params.get("region") : "",
+        place: params.get("place") || ""
       };
 
-      function rootForRegion(region) {
-        for (var i = 0; i < rootDefinitions.length; i += 1) {
-          var definition = rootDefinitions[i];
-          if (definition.type === "region" && definition.key === region) {
-            return definition.key;
-          }
-          if (definition.type === "group" && definition.regions && definition.regions.indexOf(region) >= 0) {
-            return definition.key;
-          }
-          if (definition.type === "group" && definition.items) {
-            for (var j = 0; j < definition.items.length; j += 1) {
-              var item = definition.items[j];
-              if (item.type === "region" && item.key === region) {
-                return definition.key;
-              }
-              if (item.type === "group" && item.regions && item.regions.indexOf(region) >= 0) {
-                return definition.key;
-              }
-            }
-          }
-        }
-        return "";
+      function esc(value) {
+        return shared.escapeHtml(value == null ? "" : value);
       }
 
-      function branchForRegion(rootKey, region) {
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === rootKey;
-        });
-        if (!root || !root.items) {
-          return "";
-        }
-        var match = root.items.find(function(item) {
-          return item.type === "group" && item.regions && item.regions.indexOf(region) >= 0;
-        });
-        return match ? match.key : "";
+      function compact(value) {
+        return String(value || "").toLowerCase().replace(/\s+/g, " ").trim();
       }
 
       function regionPrimaryLabel(region) {
-        if (region === "Taiwan") {
-          return "Taiwan (Republic of China)";
-        }
-        return region;
+        return region === "Taiwan" ? "Taiwan (Republic of China)" : region;
       }
 
       function regionTextLabel(region) {
@@ -1558,121 +880,72 @@
         return shared.htmlLabel(regionPrimaryLabel(region), shared.data.regionLocalNames[region]);
       }
 
-      function branchTextLabel(branch) {
-        var item = findBranchItem(state.root, branch);
-        if (!item) {
-          return branch;
+      function branchTextLabel(rootKey, branchKey) {
+        var branch = findBranchItem(rootKey, branchKey);
+        return branch ? shared.textLabel(branch.label, branch.localLabel || "") : branchKey;
+      }
+
+      function branchHtmlLabel(rootKey, branchKey) {
+        var branch = findBranchItem(rootKey, branchKey);
+        return branch ? shared.htmlLabel(branch.label, branch.localLabel || "") : esc(branchKey);
+      }
+
+      function photoCountForPlaces(places) {
+        return places.reduce(function(total, place) {
+          return total + shared.countPhotosForPlace(place);
+        }, 0);
+      }
+
+      function photoLabel(count) {
+        return shared.photoLabel(count);
+      }
+
+      function placeMatchesQuery(place) {
+        var query = compact(state.query);
+        if (!query) {
+          return true;
         }
-        return shared.textLabel(item.label, item.localLabel || "");
+
+        var fields = [
+          place.name,
+          place.localName,
+          place.region,
+          regionTextLabel(place.region),
+          (place.spots || []).join(" "),
+          (place.spotsLocal || []).join(" "),
+          (place.photos || []).map(function(photo) { return photo.caption || ""; }).join(" ")
+        ].join(" ");
+        return compact(fields).indexOf(query) >= 0;
       }
 
-      function branchHtmlLabel(branch) {
-        var item = findBranchItem(state.root, branch);
-        if (!item) {
-          return shared.escapeHtml(branch);
-        }
-        return shared.htmlLabel(item.label, item.localLabel || "");
-      }
-
-      function branchUnitLabel(branch, count) {
-        var singular = "region";
-        var plural = "regions";
-        if (branch === "China") {
-          singular = "region";
-          plural = "regions";
-        } else if (branch === "United States") {
-          singular = "state";
-          plural = "states";
-        } else if (branch === "Canada") {
-          singular = "province";
-          plural = "provinces";
-        }
-        return count + " " + (count === 1 ? singular : plural);
-      }
-
-      function branchPreviewNote(branch) {
-        if (branch === "China") {
-          return "This branch opens into regions first, then cities.";
-        }
-        if (branch === "United States") {
-          return "This branch opens into states first, then cities.";
-        }
-        if (branch === "Canada") {
-          return "This branch opens into provinces first, then cities.";
-        }
-        return "This branch opens one level deeper, then into cities.";
-      }
-
-      function themeMode() {
-        return document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-      }
-
-      function previewTileUrl() {
-        return themeMode() === "dark"
-          ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-          : "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-      }
-
-      function markerStyle(active) {
-        return active
-          ? {
-              radius: 7,
-              weight: 2,
-              color: themeMode() === "dark" ? "#f3eee6" : "#ffffff",
-              fillColor: themeMode() === "dark" ? "#b7c2bd" : "#5d6b66",
-              fillOpacity: 0.95
-            }
-          : {
-              radius: 4.2,
-              weight: 1.2,
-              color: themeMode() === "dark" ? "rgba(245, 242, 236, 0.52)" : "rgba(93, 107, 102, 0.46)",
-              fillColor: themeMode() === "dark" ? "rgba(183, 194, 189, 0.26)" : "rgba(93, 107, 102, 0.18)",
-              fillOpacity: 0.9
-            };
-      }
-
-      function filteredPlacesForRegion(region) {
+      function basePlacesForRegion(region) {
         return allPlaces.filter(function(place) {
           if (place.region !== region) {
             return false;
           }
-          if (state.mode === "photos") {
-            return shared.countPhotosForPlace(place) > 0;
+          if (state.mode === "photos" && !shared.countPhotosForPlace(place)) {
+            return false;
           }
           return true;
         });
       }
 
-      function topLevelChildren(definition) {
-        if (definition.items && definition.items.length) {
-          return definition.items.filter(function(item) {
-            if (item.type === "region") {
-              return filteredPlacesForRegion(item.key).length > 0;
-            }
-            if (item.type === "group") {
-              return item.regions && item.regions.some(function(region) {
-                return filteredPlacesForRegion(region).length > 0;
-              });
-            }
-            return false;
-          });
-        }
-
-        if (!definition.regions || !definition.regions.length) {
-          return [];
-        }
-
-        return definition.regions.filter(function(region) {
-          return filteredPlacesForRegion(region).length > 0;
-        }).map(function(region) {
-          return { type: "region", key: region };
+      function placesForRegion(region) {
+        var query = compact(state.query);
+        var regionMatches = query && compact(regionTextLabel(region)).indexOf(query) >= 0;
+        return basePlacesForRegion(region).filter(function(place) {
+          return regionMatches || placeMatchesQuery(place);
         });
       }
 
+      function findRoot(rootKey) {
+        return rootDefinitions.find(function(root) {
+          return root.key === rootKey;
+        }) || null;
+      }
+
       function findBranchItem(rootKey, branchKey) {
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === rootKey;
-        });
+        var root = findRoot(rootKey);
         if (!root || !root.items) {
           return null;
         }
@@ -1681,1615 +954,716 @@
         }) || null;
       }
 
-      function groupRegions(definition) {
-        if (definition.items && definition.items.length) {
-          return topLevelChildren(definition).reduce(function(list, item) {
-            if (item.type === "region") {
-              list.push(item.key);
-            } else if (item.type === "group" && item.regions) {
-              item.regions.forEach(function(region) {
-                if (filteredPlacesForRegion(region).length > 0) {
-                  list.push(region);
-                }
-              });
-            }
-            return list;
-          }, []);
-        }
-        if (!definition.regions || !definition.regions.length) {
-          return [];
-        }
-        return definition.regions.filter(function(region) {
-          return filteredPlacesForRegion(region).length > 0;
-        });
-      }
-
-      function groupPlaces(definition) {
-        return groupRegions(definition).reduce(function(list, region) {
-          return list.concat(filteredPlacesForRegion(region));
-        }, []);
-      }
-
-      function photoTotalForPlaces(places) {
-        return places.reduce(function(total, place) {
-          return total + shared.countPhotosForPlace(place);
-        }, 0);
-      }
-
-      function groupStats(definition) {
-        var places = groupPlaces(definition);
-        var directChildren = topLevelChildren(definition);
-        return {
-          regionCount: directChildren.length,
-          placeCount: places.length,
-          photoCount: photoTotalForPlaces(places)
-        };
-      }
-
-      function regionStats(region) {
-        var places = filteredPlacesForRegion(region);
-        return {
-          placeCount: places.length,
-          photoCount: photoTotalForPlaces(places)
-        };
-      }
-
-      function placeByName(region, name) {
-        return filteredPlacesForRegion(region).find(function(place) {
-          return place.name === name;
-        }) || null;
-      }
-
-      function previewPhotosForPlaces(places, limit) {
-        var entries = [];
-        places.forEach(function(place) {
-          (place.photos || []).forEach(function(photo) {
-            if (entries.length < limit) {
-              entries.push({
-                place: place,
-                photo: photo,
-                orientation: shared.data.photoOrientations[photo.src] || ""
-              });
-            }
-          });
-        });
-        return entries;
-      }
-
-      function branchPlaces(branchKey) {
-        var branch = findBranchItem(state.root, branchKey);
-        if (!branch || !branch.regions) {
-          return [];
-        }
-        return branch.regions.reduce(function(list, region) {
-          return list.concat(filteredPlacesForRegion(region));
-        }, []);
-      }
-
-      function currentScope() {
-        if (state.place && state.region) {
-          var selectedPlace = placeByName(state.region, state.place);
-          if (selectedPlace) {
-            return {
-              type: "place",
-              title: shared.placeLabel(selectedPlace),
-              subtitle: regionTextLabel(selectedPlace.region),
-              places: [selectedPlace]
-            };
+      function rootForRegion(region) {
+        for (var i = 0; i < rootDefinitions.length; i += 1) {
+          if (regionsForRoot(rootDefinitions[i], false).indexOf(region) >= 0) {
+            return rootDefinitions[i].key;
           }
         }
-
-        if (state.region) {
-          return {
-            type: "region",
-            title: regionTextLabel(state.region),
-            subtitle: state.branch ? branchTextLabel(state.branch) : state.root,
-            places: filteredPlacesForRegion(state.region)
-          };
-        }
-
-        if (state.branch) {
-          return {
-            type: "branch",
-            title: branchTextLabel(state.branch),
-            subtitle: state.root,
-            places: branchPlaces(state.branch)
-          };
-        }
-
-        if (!state.root) {
-          return {
-            type: "overview",
-            title: "Continents",
-            subtitle: "Travel archive",
-            places: rootDefinitions.reduce(function(list, definition) {
-              return list.concat(groupPlaces(definition));
-            }, [])
-          };
-        }
-
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === state.root;
-        }) || rootDefinitions[0];
-        return {
-          type: "root",
-          title: root.label,
-          subtitle: "Travel archive",
-          places: groupPlaces(root)
-        };
+        return "";
       }
 
-      function coverForPlace(place) {
-        return place && place.photos && place.photos[0] ? place.photos[0] : null;
+      function branchForRegion(rootKey, region) {
+        var root = findRoot(rootKey);
+        if (!root || !root.items) {
+          return "";
+        }
+        var branch = root.items.find(function(item) {
+          return item.type === "group" && item.regions && item.regions.indexOf(region) >= 0;
+        });
+        return branch ? branch.key : "";
       }
 
-      function pathText(parts) {
-        return parts.filter(Boolean).filter(function(part, index, list) {
-          return index === 0 || list[index - 1] !== part;
-        }).join(" / ");
+      function childItemsForRoot(root) {
+        if (root.items && root.items.length) {
+          return root.items.filter(function(item) {
+            if (item.type === "region") {
+              return placesForRegion(item.key).length > 0;
+            }
+            if (item.type === "group") {
+              return (item.regions || []).some(function(region) {
+                return placesForRegion(region).length > 0;
+              });
+            }
+            return false;
+          });
+        }
+        return (root.regions || []).filter(function(region) {
+          return placesForRegion(region).length > 0;
+        }).map(function(region) {
+          return { type: "region", key: region };
+        });
       }
 
-      function rootDefinitionByKey(rootKey) {
-        return rootDefinitions.find(function(definition) {
-          return definition.key === rootKey;
+      function regionsForRoot(root, filtered) {
+        var list = [];
+        if (root.items && root.items.length) {
+          root.items.forEach(function(item) {
+            if (item.type === "region") {
+              list.push(item.key);
+            } else if (item.type === "group") {
+              list = list.concat(item.regions || []);
+            }
+          });
+        } else {
+          list = list.concat(root.regions || []);
+        }
+        return filtered ? list.filter(function(region) { return placesForRegion(region).length > 0; }) : list;
+      }
+
+      function placesForRoot(root) {
+        return regionsForRoot(root, true).reduce(function(list, region) {
+          return list.concat(placesForRegion(region));
+        }, []);
+      }
+
+      function placesForBranch(rootKey, branchKey) {
+        var branch = findBranchItem(rootKey, branchKey);
+        if (!branch) {
+          return [];
+        }
+        return (branch.regions || []).reduce(function(list, region) {
+          return list.concat(placesForRegion(region));
+        }, []);
+      }
+
+      function placeByName(region, placeName) {
+        return placesForRegion(region).find(function(place) {
+          return place.name === placeName;
         }) || null;
       }
 
-      function resetToOverview() {
+      function statsForPlaces(places) {
+        var regions = [];
+        places.forEach(function(place) {
+          if (regions.indexOf(place.region) === -1) {
+            regions.push(place.region);
+          }
+        });
+        return {
+          regions: regions.length,
+          places: places.length,
+          photos: photoCountForPlaces(places)
+        };
+      }
+
+      function statCards(stats) {
+        return '' +
+          '<div class="inspector-stats">' +
+            '<article><strong>' + esc(stats.regions) + '</strong><span>Regions</span></article>' +
+            '<article><strong>' + esc(stats.places) + '</strong><span>Places</span></article>' +
+            '<article><strong>' + esc(stats.photos) + '</strong><span>Photos</span></article>' +
+          '</div>';
+      }
+
+      function placeMeta(place) {
+        return photoLabel(shared.countPhotosForPlace(place));
+      }
+
+      function regionMeta(region) {
+        var places = placesForRegion(region);
+        return places.length + (places.length === 1 ? " place" : " places") + " / " + photoLabel(photoCountForPlaces(places));
+      }
+
+      function rootMeta(root) {
+        var children = childItemsForRoot(root);
+        var places = placesForRoot(root);
+        return children.length + (children.length === 1 ? " branch" : " branches") + " / " + photoLabel(photoCountForPlaces(places));
+      }
+
+      function branchMeta(rootKey, branchKey) {
+        var places = placesForBranch(rootKey, branchKey);
+        var branch = findBranchItem(rootKey, branchKey);
+        var regions = branch ? (branch.regions || []).filter(function(region) {
+          return placesForRegion(region).length > 0;
+        }) : [];
+        return regions.length + (regions.length === 1 ? " region" : " regions") + " / " + photoLabel(photoCountForPlaces(places));
+      }
+
+      function selectRoot(rootKey) {
+        state.root = rootKey;
+        state.branch = "";
+        state.region = "";
+        state.place = "";
+        state.expanded = false;
+        render();
+      }
+
+      function selectBranch(rootKey, branchKey) {
+        state.root = rootKey;
+        state.branch = branchKey;
+        state.region = "";
+        state.place = "";
+        state.expanded = false;
+        render();
+      }
+
+      function selectRegion(rootKey, branchKey, region) {
+        state.root = rootKey || rootForRegion(region);
+        state.branch = branchKey || branchForRegion(state.root, region);
+        state.region = region;
+        state.place = "";
+        state.expanded = false;
+        render();
+      }
+
+      function selectPlace(rootKey, branchKey, region, placeName) {
+        state.root = rootKey || rootForRegion(region);
+        state.branch = branchKey || branchForRegion(state.root, region);
+        state.region = region;
+        state.place = placeName;
+        state.expanded = false;
+        render();
+      }
+
+      function resetOverview() {
         state.root = "";
         state.branch = "";
         state.region = "";
         state.place = "";
-        rerender();
-      }
-
-      function scopeMetaText() {
-        var scope = currentScope();
-        if (scope.type === "overview") {
-          return rootDefinitions.length + " continents · " + photoRegionCount + " regions · " + shared.totalPhotoCount() + " photos";
-        }
-        if (scope.type === "place" && scope.places.length) {
-          var place = scope.places[0];
-          var spots = (place.spots || []).length;
-          return shared.photoLabel(shared.countPhotosForPlace(place)) + (spots ? " · " + spots + (spots === 1 ? " spot" : " spots") : "");
-        }
-        return scope.places.length + (scope.places.length === 1 ? " city" : " cities") + " · " + shared.photoLabel(photoTotalForPlaces(scope.places));
-      }
-
-      function toolbarNoteText() {
-        if (!state.root) {
-          return "Start from continents, then go narrower from there.";
-        }
-        if (state.place) {
-          return "This city is selected. Open photos here or step back up the tree.";
-        }
-        if (state.region) {
-          return "This region is open. Pick a city next.";
-        }
-        if (state.branch) {
-          return "This branch is open. Pick the next region.";
-        }
-        return "This continent is open. Pick the next branch.";
-      }
-
-      function renderToolbarMeta() {
-        var note = document.getElementById("tree-toolbar-note");
-        if (note) {
-          note.textContent = toolbarNoteText();
-        }
-      }
-
-      function contextTrailItems() {
-        var items = [{
-          labelHtml: "Continents",
-          attrs: 'data-tree-jump="overview"',
-          current: !state.root
-        }];
-
-        if (!state.root) {
-          return items;
-        }
-
-        var root = rootDefinitionByKey(state.root);
-        if (root) {
-          items.push({
-            labelHtml: shared.escapeHtml(root.label),
-            attrs: 'data-tree-jump="root" data-root="' + shared.escapeHtml(root.key) + '"',
-            current: !!state.root && !state.branch && !state.region && !state.place
-          });
-        }
-
-        if (state.branch) {
-          items.push({
-            labelHtml: branchHtmlLabel(state.branch),
-            attrs: 'data-tree-jump="branch" data-branch="' + shared.escapeHtml(state.branch) + '"',
-            current: !state.region && !state.place
-          });
-        }
-
-        if (state.region) {
-          items.push({
-            labelHtml: regionHtmlLabel(state.region),
-            attrs: 'data-tree-jump="region" data-region="' + shared.escapeHtml(state.region) + '"' + (state.branch ? ' data-branch="' + shared.escapeHtml(state.branch) + '"' : ""),
-            current: !state.place
-          });
-        }
-
-        if (state.place && state.region) {
-          var place = placeByName(state.region, state.place);
-          if (place) {
-            items.push({
-              labelHtml: shared.htmlLabel(place.name, place.localName),
-              attrs: 'data-tree-jump="place" data-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(place.region) + '"' + (state.branch ? ' data-branch="' + shared.escapeHtml(state.branch) + '"' : ""),
-              current: true
-            });
-          }
-        }
-
-        return items;
-      }
-
-      function renderContextBar() {
-        var wrap = document.getElementById("tree-context");
-        if (!wrap) {
-          return;
-        }
-
-        var trail = contextTrailItems();
-        var canStepBack = !!(state.root || state.branch || state.region || state.place);
-        wrap.innerHTML = '' +
-          '<div class="tree-context-top">' +
-            '<div class="tree-context-track">' +
-              trail.map(function(item, index) {
-                return '' +
-                  (index ? '<span class="tree-context-separator" aria-hidden="true">/</span>' : "") +
-                  '<button class="tree-context-chip' + (item.current ? ' is-current' : '') + '" type="button" ' + item.attrs + (item.current ? ' aria-current="true"' : '') + '>' +
-                    item.labelHtml +
-                  "</button>";
-              }).join("") +
-            "</div>" +
-            '<span class="tree-context-meta">' + shared.escapeHtml(scopeMetaText()) + "</span>" +
-          "</div>" +
-          '<div class="tree-context-bottom">' +
-            '<div class="tree-context-note">' + shared.escapeHtml(toolbarNoteText()) + "</div>" +
-            '<div class="tree-context-actions">' +
-              (canStepBack ? '<button class="tree-context-action" type="button" data-tree-action="back">Back</button>' : "") +
-              (canStepBack ? '<button class="tree-context-action" type="button" data-tree-action="reset">Reset</button>' : "") +
-            "</div>" +
-          "</div>";
-      }
-
-      function renderListMeta() {
-        var title = document.getElementById("tree-list-title");
-        var meta = document.getElementById("tree-list-meta");
-        if (!title || !meta) {
-          return;
-        }
-
-        if (!state.root) {
-          title.textContent = "Tree List";
-          meta.textContent = "All top-level continents are listed below.";
-          return;
-        }
-
-        if (state.place) {
-          title.textContent = "Nearby Branches";
-          meta.textContent = "Step back to the region or use the list to move sideways.";
-          return;
-        }
-
-        if (state.region) {
-          title.textContent = "Cities";
-          meta.textContent = "Cities inside this region.";
-          return;
-        }
-
-        if (state.branch) {
-          title.textContent = "Regions";
-          meta.textContent = "Regions inside this branch.";
-          return;
-        }
-
-        title.textContent = "Branches";
-        meta.textContent = "Branches inside this continent.";
+        state.expanded = false;
+        render();
       }
 
       function sanitizeState() {
-        if (!state.root) {
-          state.branch = "";
+        if (state.region && allRegions.indexOf(state.region) < 0) {
           state.region = "";
           state.place = "";
-          return;
         }
-
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === state.root;
-        });
-
-        if (!root) {
-          state.root = "";
-          state.branch = "";
+        if (state.region && !placesForRegion(state.region).length) {
           state.region = "";
           state.place = "";
-          return;
         }
-
-        if (root.type === "group") {
-          var children = topLevelChildren(root);
-          var directRegions = children.filter(function(item) { return item.type === "region"; }).map(function(item) { return item.key; });
-          var currentBranchItem = state.branch ? findBranchItem(root.key, state.branch) : null;
-
-          if (state.branch && !currentBranchItem) {
+        if (state.region && state.place && !placeByName(state.region, state.place)) {
+          state.place = "";
+        }
+        if (state.region && !state.root) {
+          state.root = rootForRegion(state.region);
+        }
+        if (state.region && !state.branch) {
+          state.branch = branchForRegion(state.root, state.region);
+        }
+        if (state.branch && !placesForBranch(state.root, state.branch).length) {
+          state.branch = "";
+        }
+        if (state.root) {
+          var root = findRoot(state.root);
+          if (!root || !placesForRoot(root).length) {
+            state.root = "";
             state.branch = "";
             state.region = "";
             state.place = "";
           }
-
-          if (state.region) {
-            var regionAllowed = false;
-            if (currentBranchItem && currentBranchItem.regions) {
-              regionAllowed = currentBranchItem.regions.indexOf(state.region) >= 0;
-            } else {
-              regionAllowed = directRegions.indexOf(state.region) >= 0;
-            }
-            if (!regionAllowed) {
-              state.region = "";
-              state.place = "";
-            }
-          }
-
-          if (!state.branch && state.region && directRegions.indexOf(state.region) === -1) {
-            state.region = "";
-            state.place = "";
-          }
-
-          if (state.place && (!state.region || !placeByName(state.region, state.place))) {
-            state.place = "";
-          }
-        } else {
-          state.branch = "";
-          state.region = root.key;
-          if (state.place && !placeByName(state.region, state.place)) {
-            state.place = "";
-          }
         }
       }
 
-      function initFromQuery() {
-        var queryPlace = params.get("place");
-        var queryRegion = params.get("region");
-
-        if (queryPlace) {
-          var matchedPlace = allPlaces.find(function(place) {
-            return place.name === queryPlace;
-          });
-          if (matchedPlace) {
-            state.root = rootForRegion(matchedPlace.region) || state.root;
-            state.branch = branchForRegion(state.root, matchedPlace.region);
-            state.region = matchedPlace.region;
-            state.place = matchedPlace.name;
-            return;
-          }
-        }
-
-        if (queryRegion && validRegions.indexOf(queryRegion) >= 0) {
-          state.root = rootForRegion(queryRegion) || state.root;
-          state.branch = branchForRegion(state.root, queryRegion);
-          state.region = queryRegion;
-        }
+      function isActiveRoot(rootKey) {
+        return state.root === rootKey && !state.branch && !state.region && !state.place;
       }
 
-      function updateUrl() {
-        var next = new URLSearchParams();
-        if (state.mode !== "photos") {
-          next.set("mode", state.mode);
-        }
-        if (state.root) {
-          next.set("root", state.root);
-        }
-        if (state.branch) {
-          next.set("branch", state.branch);
-        }
-        if (state.region) {
-          next.set("region", state.region);
-        }
-        if (state.place) {
-          next.set("place", state.place);
-        }
-        var query = next.toString();
-        var url = query ? window.location.pathname + "?" + query : window.location.pathname;
-        window.history.replaceState({}, "", url);
+      function isActiveBranch(rootKey, branchKey) {
+        return state.root === rootKey && state.branch === branchKey && !state.region && !state.place;
       }
 
-      function setModeButtons() {
-        ["photos", "all"].forEach(function(mode) {
-          var button = document.querySelector('[data-mode="' + mode + '"]');
-          if (!button) {
-            return;
-          }
-          var active = state.mode === mode;
-          button.classList.toggle("is-active", active);
-          button.setAttribute("aria-selected", active ? "true" : "false");
-        });
+      function isActiveRegion(region) {
+        return state.region === region && !state.place;
       }
 
-      function nodeButtonHtml(options) {
-        var classes = [
-          "tree-node",
-          options.kind ? "tree-node-" + options.kind : "",
-          options.active ? "is-active" : "",
-          options.onPath ? "is-on-path" : "",
-          options.open ? "is-open" : ""
-        ].filter(Boolean).join(" ");
+      function isActivePlace(region, placeName) {
+        return state.region === region && state.place === placeName;
+      }
 
+      function rootShouldOpen(rootKey) {
+        return state.expanded || Boolean(state.query) || state.root === rootKey;
+      }
+
+      function branchShouldOpen(branchKey) {
+        return state.expanded || Boolean(state.query) || state.branch === branchKey;
+      }
+
+      function regionShouldOpen(region) {
+        return state.expanded || Boolean(state.query) || state.region === region;
+      }
+
+      function rootHtml(root) {
+        var children = childItemsForRoot(root);
+        if (!children.length) {
+          return "";
+        }
+        var active = isActiveRoot(root.key);
         return '' +
-          '<button class="' + classes + '" type="button" ' + options.attrs + '>' +
-            '<span class="tree-node-mark" aria-hidden="true"></span>' +
-            '<span class="tree-node-copy">' +
-              '<strong>' + options.label + "</strong>" +
-              '<small>' + shared.escapeHtml(options.meta) + "</small>" +
-            "</span>" +
-            '<span class="tree-node-caret" aria-hidden="true">' + (options.hasChildren ? ">" : "o") + "</span>" +
-          "</button>";
+          '<details class="tree-group tree-root-group' + (active ? ' is-active' : '') + '"' + (rootShouldOpen(root.key) ? ' open' : '') + '>' +
+            '<summary data-tree-select="root" data-root="' + esc(root.key) + '">' +
+              '<span class="tree-dot"></span>' +
+              '<span class="tree-label"><strong>' + esc(root.label) + '</strong><small>' + esc(rootMeta(root)) + '</small></span>' +
+              '<span class="tree-caret">&gt;</span>' +
+            '</summary>' +
+            '<div class="tree-children">' +
+              children.map(function(item) {
+                return item.type === "group" ? branchHtml(root.key, item) : regionHtml(root.key, "", item.key);
+              }).join("") +
+            '</div>' +
+          '</details>';
       }
 
-      function mindmapPalette(index) {
-        var palette = [
-          { color: "#54ced8", soft: "rgba(84, 206, 216, 0.18)", border: "rgba(84, 206, 216, 0.34)" },
-          { color: "#8560f2", soft: "rgba(133, 96, 242, 0.18)", border: "rgba(133, 96, 242, 0.34)" },
-          { color: "#f0c33e", soft: "rgba(240, 195, 62, 0.18)", border: "rgba(240, 195, 62, 0.34)" },
-          { color: "#f57268", soft: "rgba(245, 114, 104, 0.18)", border: "rgba(245, 114, 104, 0.34)" },
-          { color: "#46c29d", soft: "rgba(70, 194, 157, 0.18)", border: "rgba(70, 194, 157, 0.34)" },
-          { color: "#6ca4ff", soft: "rgba(108, 164, 255, 0.18)", border: "rgba(108, 164, 255, 0.34)" },
-          { color: "#a8d93b", soft: "rgba(168, 217, 59, 0.18)", border: "rgba(168, 217, 59, 0.34)" },
-          { color: "#ff6fa3", soft: "rgba(255, 111, 163, 0.18)", border: "rgba(255, 111, 163, 0.34)" }
-        ];
-        return palette[index % palette.length];
-      }
-
-      function mindmapFocus() {
-        if (!state.root) {
-          return {
-            kind: "root",
-            kicker: "Root",
-            titleHtml: "Continents",
-            meta: rootDefinitions.length + (rootDefinitions.length === 1 ? " branch" : " branches"),
-            canGoUp: false,
-            children: rootDefinitions.map(function(definition) {
-              var definitionPlaces = groupPlaces(definition);
-              return {
-                kind: "branch",
-                labelHtml: shared.escapeHtml(definition.label),
-                meta: topLevelChildren(definition).length + (topLevelChildren(definition).length === 1 ? " branch" : " branches"),
-                selected: false,
-                attrs: 'data-select-root="' + shared.escapeHtml(definition.key) + '"'
-              };
-            })
-          };
-        }
-
-        if (state.place && state.region) {
-          var place = placeByName(state.region, state.place);
-          if (!place) {
-            return null;
-          }
-          var leafChildren = (place.spots || []).length
-            ? (place.spots || []).map(function(spot, index) {
-                return {
-                  kind: "leaf",
-                  labelHtml: shared.escapeHtml(shared.textLabel(spot, place.spotsLocal ? place.spotsLocal[index] : "")),
-                  meta: "Spot",
-                  selected: false,
-                  attrs: 'data-static-leaf="true"'
-                };
-              })
-            : (place.photos || []).slice(0, 5).map(function(photo) {
-                return {
-                  kind: "leaf",
-                  labelHtml: shared.escapeHtml((photo.caption || place.name).replace(/^.*? - /, "")),
-                  meta: "Photo",
-                  selected: false,
-                  attrs: 'data-static-leaf="true"'
-                };
-              });
-
-          return {
-            kind: "place",
-            kicker: "City",
-            titleHtml: shared.htmlLabel(place.name, place.localName),
-            meta: regionTextLabel(place.region) + " · " + shared.photoLabel(shared.countPhotosForPlace(place)),
-            canGoUp: true,
-            children: leafChildren
-          };
-        }
-
-        if (state.region) {
-          var regionPlaces = filteredPlacesForRegion(state.region);
-          return {
-            kind: "region",
-            kicker: "Region",
-            titleHtml: regionHtmlLabel(state.region),
-            meta: regionPlaces.length + (regionPlaces.length === 1 ? " city" : " cities") + " · " + shared.photoLabel(photoTotalForPlaces(regionPlaces)),
-            canGoUp: true,
-            children: regionPlaces.map(function(place) {
-              return {
-                kind: "place",
-                labelHtml: shared.htmlLabel(place.name, place.localName),
-                meta: shared.photoLabel(shared.countPhotosForPlace(place)),
-                selected: state.place === place.name,
-                attrs: 'data-select-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(place.region) + '"' +
-                  (state.branch ? ' data-branch="' + shared.escapeHtml(state.branch) + '"' : "")
-              };
-            })
-          };
-        }
-
-        if (state.branch) {
-          var branch = findBranchItem(state.root, state.branch);
-          if (!branch) {
-            return null;
-          }
-          var branchRegions = branch.regions.filter(function(region) {
-            return filteredPlacesForRegion(region).length > 0;
-          });
-          var branchPlaceList = branchRegions.reduce(function(list, region) {
-            return list.concat(filteredPlacesForRegion(region));
-          }, []);
-          return {
-            kind: "branch",
-            kicker: "Branch",
-            titleHtml: branchHtmlLabel(branch.key),
-            meta: branchUnitLabel(branch.key, branchRegions.length) + " · " + shared.photoLabel(photoTotalForPlaces(branchPlaceList)),
-            canGoUp: true,
-            children: branchRegions.map(function(region) {
-              var info = regionStats(region);
-              return {
-                kind: "region",
-                labelHtml: regionHtmlLabel(region),
-                meta: info.placeCount + (info.placeCount === 1 ? " city" : " cities"),
-                selected: state.region === region,
-                attrs: 'data-select-region="' + shared.escapeHtml(region) + '" data-branch="' + shared.escapeHtml(branch.key) + '"'
-              };
-            })
-          };
-        }
-
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === state.root;
-        }) || rootDefinitions[0];
-        var children = topLevelChildren(root).map(function(child) {
-          if (child.type === "group") {
-            var branchRegions = child.regions.filter(function(region) {
-              return filteredPlacesForRegion(region).length > 0;
-            });
-            var branchPlaceList = branchRegions.reduce(function(list, region) {
-              return list.concat(filteredPlacesForRegion(region));
-            }, []);
-            return {
-              kind: "branch",
-              labelHtml: shared.htmlLabel(child.label, child.localLabel || ""),
-              meta: branchUnitLabel(child.key, branchRegions.length) + " · " + shared.photoLabel(photoTotalForPlaces(branchPlaceList)),
-              selected: state.branch === child.key,
-              attrs: 'data-select-branch="' + shared.escapeHtml(child.key) + '"'
-            };
-          }
-          var regionInfo = regionStats(child.key);
-          return {
-            kind: "region",
-            labelHtml: regionHtmlLabel(child.key),
-            meta: regionInfo.placeCount + (regionInfo.placeCount === 1 ? " city" : " cities"),
-            selected: state.region === child.key,
-            attrs: 'data-select-region="' + shared.escapeHtml(child.key) + '"'
-          };
+      function branchHtml(rootKey, branch) {
+        var regions = (branch.regions || []).filter(function(region) {
+          return placesForRegion(region).length > 0;
         });
-
-        return {
-          kind: "root",
-          kicker: "Root",
-          titleHtml: shared.escapeHtml(root.label),
-          meta: children.length + (children.length === 1 ? " branch" : " branches"),
-          canGoUp: true,
-          children: children
-        };
+        if (!regions.length) {
+          return "";
+        }
+        var active = isActiveBranch(rootKey, branch.key);
+        return '' +
+          '<details class="tree-group tree-branch' + (active ? ' is-active' : '') + '"' + (branchShouldOpen(branch.key) ? ' open' : '') + '>' +
+            '<summary data-tree-select="branch" data-root="' + esc(rootKey) + '" data-branch="' + esc(branch.key) + '">' +
+              '<span class="tree-dot"></span>' +
+              '<span class="tree-label"><strong>' + branchHtmlLabel(rootKey, branch.key) + '</strong><small>' + esc(branchMeta(rootKey, branch.key)) + '</small></span>' +
+              '<span class="tree-caret">&gt;</span>' +
+            '</summary>' +
+            '<div class="tree-children">' +
+              regions.map(function(region) {
+                return regionHtml(rootKey, branch.key, region);
+              }).join("") +
+            '</div>' +
+          '</details>';
       }
 
-      function renderMindmap() {
-        var board = document.getElementById("mindmap-board");
-        var canvas = document.getElementById("mindmap-canvas");
-        var stage = document.getElementById("mindmap-stage");
-        var svg = document.getElementById("mindmap-svg");
-        var focus = mindmapFocus();
-
-        if (!board || !canvas || !stage || !svg || !focus) {
-          return;
+      function regionHtml(rootKey, branchKey, region) {
+        var places = placesForRegion(region);
+        if (!places.length) {
+          return "";
         }
-
-        var count = focus.children.length;
-        var boardWidth = Math.max(board.clientWidth || 0, 720);
-        var boardHeight = Math.max(board.clientHeight || 0, 420);
-        var canvasWidth = Math.max(boardWidth, count > 9 ? 1040 : count > 6 ? 940 : count > 3 ? 820 : boardWidth);
-        var canvasHeight = Math.max(boardHeight, count > 9 ? 520 : count > 5 ? 460 : 410);
-        var centerX = canvasWidth / 2;
-        var centerY = canvasHeight / 2;
-        var radiusX = Math.max(120, Math.min((canvasWidth / 2) - 132, count > 9 ? 360 : 300));
-        var radiusY = Math.max(92, Math.min((canvasHeight / 2) - 108, count > 9 ? 188 : 162));
-
-        canvas.style.width = canvasWidth + "px";
-        canvas.style.height = canvasHeight + "px";
-        stage.style.minHeight = canvasHeight + "px";
-        svg.setAttribute("viewBox", "0 0 " + canvasWidth + " " + canvasHeight);
-
-        var centerHtml = '' +
-          '<div class="mindmap-node-shell">' +
-            '<button class="mindmap-center" type="button" data-kind="' + shared.escapeHtml(focus.kind) + '"' + (focus.canGoUp ? ' data-go-up="true"' : "") + '>' +
-              "<small>" + shared.escapeHtml(focus.kicker) + "</small>" +
-              "<strong>" + focus.titleHtml + "</strong>" +
-              "<span>" + shared.escapeHtml(focus.meta) + "</span>" +
-            "</button>" +
-          "</div>";
-
-        var childHtml = focus.children.map(function(child, index) {
-          var palette = mindmapPalette(index);
-          var angle = count <= 1 ? -Math.PI / 2 : (-Math.PI / 2) + ((Math.PI * 2) / count) * index;
-          var childX = centerX + Math.cos(angle) * radiusX;
-          var childY = centerY + Math.sin(angle) * radiusY;
-          var classes = ["mindmap-child", child.kind === "leaf" ? "is-leaf" : "", child.selected ? "is-selected" : ""].filter(Boolean).join(" ");
-          var style = "--node-x:" + childX + "px; --node-y:" + childY + "px; --node-order:" + index + "; --node-color:" + palette.color + "; --node-soft:" + palette.soft + "; --node-border:" + palette.border + ";";
-          return '' +
-            '<button class="' + classes + '" type="button" style="' + style + '" ' + child.attrs + '>' +
-              "<strong>" + child.labelHtml + "</strong>" +
-              "<small>" + shared.escapeHtml(child.meta) + "</small>" +
-            "</button>";
-        }).join("");
-
-        stage.innerHTML = centerHtml + childHtml;
-        svg.innerHTML = "";
-
-        var centerEl = stage.querySelector(".mindmap-center");
-        var childEls = stage.querySelectorAll(".mindmap-child");
-        if (!centerEl || !childEls.length) {
-          return;
-        }
-
-        var centerRect = centerEl.getBoundingClientRect();
-        var canvasRect = canvas.getBoundingClientRect();
-        var centerPoint = {
-          x: centerRect.left - canvasRect.left + centerRect.width / 2,
-          y: centerRect.top - canvasRect.top + centerRect.height / 2
-        };
-
-        childEls.forEach(function(node, index) {
-          var nodeRect = node.getBoundingClientRect();
-          var nodePoint = {
-            x: nodeRect.left - canvasRect.left + nodeRect.width / 2,
-            y: nodeRect.top - canvasRect.top + nodeRect.height / 2
-          };
-          var dx = nodePoint.x - centerPoint.x;
-          var dy = nodePoint.y - centerPoint.y;
-          var path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-          var c1x = centerPoint.x + dx * 0.28;
-          var c1y = centerPoint.y + dy * 0.08;
-          var c2x = centerPoint.x + dx * 0.76;
-          var c2y = centerPoint.y + dy * 0.92;
-          var d = "M " + centerPoint.x + " " + centerPoint.y + " C " + c1x + " " + c1y + ", " + c2x + " " + c2y + ", " + nodePoint.x + " " + nodePoint.y;
-          path.setAttribute("d", d);
-          path.setAttribute("class", "mindmap-path" + (node.classList.contains("is-leaf") ? " is-secondary" : ""));
-          svg.appendChild(path);
-          var length = path.getTotalLength();
-          path.style.setProperty("--path-length", String(length));
-          path.style.animationDelay = (index * 55) + "ms";
-        });
-
-        var selectedNode = stage.querySelector(".mindmap-child.is-selected");
-        var focusNode = selectedNode || centerEl;
-        var focusRect = focusNode.getBoundingClientRect();
-        var boardRect = board.getBoundingClientRect();
-        var focusCenterX = board.scrollLeft + (focusRect.left - boardRect.left) + (focusRect.width / 2);
-        var focusCenterY = board.scrollTop + (focusRect.top - boardRect.top) + (focusRect.height / 2);
-        var nextLeft = Math.max(0, focusCenterX - (board.clientWidth / 2));
-        var nextTop = Math.max(0, focusCenterY - (board.clientHeight / 2));
-        var maxLeft = Math.max(0, canvasWidth - board.clientWidth);
-        var maxTop = Math.max(0, canvasHeight - board.clientHeight);
-        board.scrollLeft = Math.min(nextLeft, maxLeft);
-        board.scrollTop = Math.min(nextTop, maxTop);
+        var active = isActiveRegion(region);
+        return '' +
+          '<details class="tree-group tree-region' + (active ? ' is-active' : '') + '"' + (regionShouldOpen(region) ? ' open' : '') + '>' +
+            '<summary data-tree-select="region" data-root="' + esc(rootKey) + '" data-branch="' + esc(branchKey) + '" data-region="' + esc(region) + '">' +
+              '<span class="tree-dot"></span>' +
+              '<span class="tree-label"><strong>' + regionHtmlLabel(region) + '</strong><small>' + esc(regionMeta(region)) + '</small></span>' +
+              '<span class="tree-caret">&gt;</span>' +
+            '</summary>' +
+            '<div class="tree-place-list">' +
+              places.map(function(place) {
+                var activePlace = isActivePlace(region, place.name);
+                return '' +
+                  '<button class="tree-place' + (activePlace ? ' is-active' : '') + '" type="button" data-tree-select="place" data-root="' + esc(rootKey) + '" data-branch="' + esc(branchKey) + '" data-region="' + esc(region) + '" data-place="' + esc(place.name) + '">' +
+                    '<strong>' + shared.htmlLabel(place.name, place.localName) + '</strong>' +
+                    '<span class="tree-pill">' + esc(placeMeta(place)) + '</span>' +
+                  '</button>';
+              }).join("") +
+            '</div>' +
+          '</details>';
       }
 
       function renderTree() {
-        var wrap = document.getElementById("tree-root");
-        wrap.innerHTML = rootDefinitions.map(function(definition) {
-          if (definition.type === "group") {
-            var children = topLevelChildren(definition);
-            if (!children.length) {
-              return "";
-            }
+        var html = rootDefinitions.map(rootHtml).join("");
+        treeList.innerHTML = html || '<div class="tree-empty">No matching branches. Clear search or switch to All places.</div>';
+      }
 
-            var stats = groupStats(definition);
-            var isActiveRoot = state.root === definition.key && !state.branch && !state.region;
-            var onPath = state.root === definition.key;
-            var hasRegions = children.length > 0;
-            var hasChildren = children.length > 0;
-
-            return '' +
-              '<div class="tree-block">' +
-                nodeButtonHtml({
-                  kind: "group",
-                  active: isActiveRoot,
-                  onPath: onPath && !isActiveRoot,
-                  open: onPath,
-                  hasChildren: hasRegions,
-                  attrs: 'data-select-root="' + shared.escapeHtml(definition.key) + '"',
-                  label: shared.escapeHtml(definition.label),
-                  meta: hasRegions
-                    ? stats.regionCount + (stats.regionCount === 1 ? " region" : " regions") + " · " + shared.photoLabel(stats.photoCount)
-                    : "No places added yet"
-                }) +
-                (onPath && hasChildren ? (
-                  '<div class="tree-children">' +
-                    children.map(function(child) {
-                      if (child.type === "group") {
-                        var nestedRegions = child.regions.filter(function(region) {
-                          return filteredPlacesForRegion(region).length > 0;
-                        });
-                        var nestedStats = {
-                          regionCount: nestedRegions.length,
-                          placeCount: nestedRegions.reduce(function(total, region) {
-                            return total + regionStats(region).placeCount;
-                          }, 0),
-                          photoCount: nestedRegions.reduce(function(total, region) {
-                            return total + regionStats(region).photoCount;
-                          }, 0)
-                        };
-                        var groupActive = state.branch === child.key && !state.region;
-                        var groupOpen = state.branch === child.key;
-                        var branchHtml = '' +
-                          '<div class="tree-branch">' +
-                            nodeButtonHtml({
-                              kind: "group",
-                              active: groupActive,
-                              onPath: state.branch === child.key && !groupActive,
-                              open: groupOpen,
-                              hasChildren: nestedRegions.length > 0,
-                              attrs: 'data-select-branch="' + shared.escapeHtml(child.key) + '"',
-                              label: shared.htmlLabel(child.label, child.localLabel || ""),
-                              meta: branchUnitLabel(child.key, nestedStats.regionCount) + " · " + shared.photoLabel(nestedStats.photoCount)
-                            });
-
-                        if (groupOpen) {
-                          branchHtml += '<div class="tree-children">' + nestedRegions.map(function(region) {
-                            var regionMeta = regionStats(region);
-                            var places = filteredPlacesForRegion(region);
-                            return '<div class="tree-branch">' +
-                              nodeButtonHtml({
-                                kind: "region",
-                                active: state.region === region && !state.place,
-                                onPath: state.region === region && !!state.place,
-                                open: state.region === region,
-                                hasChildren: places.length > 0,
-                                attrs: 'data-select-region="' + shared.escapeHtml(region) + '" data-branch="' + shared.escapeHtml(child.key) + '"',
-                                label: regionHtmlLabel(region),
-                                meta: regionMeta.placeCount + (regionMeta.placeCount === 1 ? " city" : " cities") + " · " + shared.photoLabel(regionMeta.photoCount)
-                              }) +
-                              (state.region === region ? (
-                                '<div class="tree-children">' + places.map(function(place) {
-                                  return '<div class="tree-branch">' + nodeButtonHtml({
-                                    kind: "place",
-                                    active: state.place === place.name,
-                                    onPath: state.place === place.name,
-                                    open: false,
-                                    hasChildren: false,
-                                    attrs: 'data-select-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(region) + '" data-branch="' + shared.escapeHtml(child.key) + '"',
-                                    label: shared.htmlLabel(place.name, place.localName),
-                                    meta: shared.photoLabel(shared.countPhotosForPlace(place))
-                                  }) + "</div>";
-                                }).join("") + "</div>"
-                              ) : "") +
-                            "</div>";
-                          }).join("") + "</div>";
-                        }
-
-                        branchHtml += "</div>";
-                        return branchHtml;
-                      }
-
-                      var region = child.key;
-                      var regionMeta = regionStats(region);
-                      var places = filteredPlacesForRegion(region);
-                      var directBranchHtml = '' +
-                        '<div class="tree-branch">' +
-                          nodeButtonHtml({
-                            kind: "region",
-                            active: state.region === region && !state.place,
-                            onPath: state.region === region && !!state.place,
-                            open: state.region === region,
-                            hasChildren: places.length > 0,
-                            attrs: 'data-select-region="' + shared.escapeHtml(region) + '"',
-                            label: regionHtmlLabel(region),
-                            meta: regionMeta.placeCount + (regionMeta.placeCount === 1 ? " city" : " cities") + " · " + shared.photoLabel(regionMeta.photoCount)
-                          });
-
-                      if (state.region === region) {
-                        directBranchHtml += '<div class="tree-children">' + places.map(function(place) {
-                          return '<div class="tree-branch">' + nodeButtonHtml({
-                            kind: "place",
-                            active: state.place === place.name,
-                            onPath: state.place === place.name,
-                            open: false,
-                            hasChildren: false,
-                            attrs: 'data-select-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(region) + '"',
-                            label: shared.htmlLabel(place.name, place.localName),
-                            meta: shared.photoLabel(shared.countPhotosForPlace(place))
-                          }) + "</div>";
-                        }).join("") + "</div>";
-                      }
-
-                      directBranchHtml += "</div>";
-                      return directBranchHtml;
-                    }).join("") +
-                  "</div>"
-                ) : "") +
-              "</div>";
-          }
-
-          var topRegionStats = regionStats(definition.key);
-          if (!topRegionStats.placeCount) {
-            return "";
-          }
-
-          var rootActive = state.region === definition.key && !state.place;
-          var rootOpen = state.root === definition.key;
-          return '' +
-            '<div class="tree-block">' +
-              nodeButtonHtml({
-                kind: "region",
-                active: rootActive,
-                onPath: rootOpen && !rootActive,
-                open: rootOpen,
-                hasChildren: true,
-                attrs: 'data-select-root-region="' + shared.escapeHtml(definition.key) + '"',
-                label: regionHtmlLabel(definition.key),
-                meta: topRegionStats.placeCount + (topRegionStats.placeCount === 1 ? " city" : " cities") + " · " + shared.photoLabel(topRegionStats.photoCount)
-              }) +
-              (rootOpen ? (
-                '<div class="tree-children">' +
-                  filteredPlacesForRegion(definition.key).map(function(place) {
-                    return '<div class="tree-branch">' + nodeButtonHtml({
-                      kind: "place",
-                      active: state.place === place.name,
-                      onPath: state.place === place.name,
-                      open: false,
-                      hasChildren: false,
-                      attrs: 'data-select-place="' + shared.escapeHtml(place.name) + '" data-region="' + shared.escapeHtml(definition.key) + '"',
-                      label: shared.htmlLabel(place.name, place.localName),
-                      meta: shared.photoLabel(shared.countPhotosForPlace(place))
-                    }) + "</div>";
-                  }).join("") +
-                "</div>"
-              ) : "") +
-            "</div>";
+      function breadcrumbButton(label, attrs, current) {
+        var attrHtml = Object.keys(attrs || {}).map(function(key) {
+          return ' data-' + key + '="' + esc(attrs[key]) + '"';
         }).join("");
+        return '<button type="button" class="' + (current ? 'is-current' : '') + '" data-breadcrumb="true"' + attrHtml + '>' + label + '</button>';
       }
 
-      function statsHtml(items) {
-        return items.map(function(item) {
-          return '' +
-            "<article>" +
-              "<strong>" + shared.escapeHtml(String(item.value)) + "</strong>" +
-              "<span>" + shared.escapeHtml(item.label) + "</span>" +
-            "</article>";
-        }).join("");
-      }
-
-      function mosaicHtml(entries) {
-        if (!entries.length) {
-          return "";
+      function renderBreadcrumbs() {
+        var parts = [breadcrumbButton("Archive", { scope: "overview" }, !state.root)];
+        if (state.root) {
+          parts.push('<span class="tree-separator">/</span>');
+          parts.push(breadcrumbButton(esc(findRoot(state.root).label), { scope: "root", root: state.root }, state.root && !state.branch && !state.region));
         }
-
-        var primary = entries[0];
-        var secondary = entries.slice(1, 3);
-        var renderImage = function(entry, extraClass) {
-          var caption = entry.photo.caption || (entry.place ? entry.place.name : "");
-          return '' +
-            '<button type="button" class="' + shared.escapeHtml(extraClass) + '" data-open-photo="' + shared.escapeHtml(entry.photo.src) + '" data-photo-caption="' + shared.escapeHtml(caption) + '">' +
-              '<figure>' +
-                '<img src="' + shared.escapeHtml(shared.thumbnailSrc(entry.photo.src)) + '" alt="' + shared.escapeHtml(caption) + '" loading="lazy" decoding="async">' +
-              "</figure>" +
-            "</button>";
-        };
-
-        return '' +
-          '<div class="preview-mosaic">' +
-            renderImage(primary, "mosaic-primary") +
-            '<div class="mosaic-stack">' +
-              secondary.map(function(entry) {
-                return renderImage(entry, "mosaic-secondary");
-              }).join("") +
-            "</div>" +
-          "</div>";
-      }
-
-      function previewMapHtml(scope) {
-        return '' +
-          '<div class="preview-map-shell">' +
-            '<div class="preview-map-copy">' +
-              "<strong>Map focus</strong>" +
-              "<span>" + shared.escapeHtml(scope.title + " · " + scope.places.length + (scope.places.length === 1 ? " place" : " places")) + "</span>" +
-            "</div>" +
-            '<div id="tree-preview-map" aria-label="Map preview"></div>' +
-          "</div>";
-      }
-
-      function renderPreviewMap() {
-        var container = document.getElementById("tree-preview-map");
-        if (!container || !window.L) {
-          return;
-        }
-
-        if (previewMap) {
-          previewMap.remove();
-          previewMap = null;
-          previewTileLayer = null;
-          previewMarkerLayer = null;
-          previewFocusLayer = null;
-        }
-
-        var scope = currentScope();
-        previewMap = L.map("tree-preview-map", {
-          scrollWheelZoom: false,
-          zoomControl: true
-        });
-
-        previewTileLayer = L.tileLayer(previewTileUrl(), {
-          attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
-        }).addTo(previewMap);
-
-        previewMarkerLayer = L.layerGroup().addTo(previewMap);
-        previewFocusLayer = L.layerGroup().addTo(previewMap);
-
-        var scopeKey = {};
-        scope.places.forEach(function(place) {
-          scopeKey[place.region + "::" + place.name] = true;
-        });
-
-        allPlaces.forEach(function(place) {
-          if (!place.coords || !Array.isArray(place.coords) || place.coords.length < 2) {
-            return;
-          }
-
-          var active = !!scopeKey[place.region + "::" + place.name];
-          var marker = L.circleMarker(place.coords, markerStyle(active))
-            .bindTooltip(shared.placeLabel(place), { direction: "top", opacity: 0.9 })
-            .bindPopup(
-              '<strong>' + shared.htmlLabel(place.name, place.localName) + '</strong><br><span>' + regionHtmlLabel(place.region) + ' · ' + shared.escapeHtml(shared.photoLabel(shared.countPhotosForPlace(place))) + "</span>",
-              { closeButton: false, autoClose: false, offset: [0, -6] }
-            );
-
-          marker.on("click", function() {
-            state.root = rootForRegion(place.region) || state.root;
-            state.branch = branchForRegion(state.root, place.region);
-            state.region = place.region;
-            state.place = place.name;
-            rerender();
-          });
-
-          marker.addTo(previewMarkerLayer);
-        });
-
-        if (!scope.places.length) {
-          previewMap.setView([20, 0], 2);
-          return;
-        }
-
-        var activeLatLngs = scope.places.map(function(place) {
-          return L.latLng(place.coords[0], place.coords[1]);
-        });
-
-        if (scope.places.length === 1) {
-          var onlyPlace = scope.places[0];
-          previewMap.setView(onlyPlace.coords, 9, { animate: false });
-          L.circleMarker(onlyPlace.coords, markerStyle(true)).addTo(previewFocusLayer).bringToFront();
-          var popupMarker = previewMarkerLayer.getLayers().find(function(layer) {
-            return layer.getLatLng && layer.getLatLng().lat === onlyPlace.coords[0] && layer.getLatLng().lng === onlyPlace.coords[1];
-          });
-          if (popupMarker) {
-            popupMarker.openPopup();
-          }
-          return;
-        }
-
-        var bounds = L.latLngBounds(activeLatLngs);
-        previewMap.fitBounds(bounds, { padding: [28, 28], maxZoom: scope.type === "region" ? 8 : 6, animate: false });
-        if (bounds.isValid()) {
-          L.rectangle(bounds.pad(0.12), {
-            color: themeMode() === "dark" ? "#b7c2bd" : "#5d6b66",
-            weight: 1.2,
-            opacity: 0.9,
-            fillColor: themeMode() === "dark" ? "rgba(183, 194, 189, 0.16)" : "rgba(93, 107, 102, 0.1)",
-            fillOpacity: 0.12,
-            interactive: false
-          }).addTo(previewFocusLayer);
-        }
-      }
-
-      function branchCardsHtml(items, type) {
-        if (!items.length) {
-          return '<div class="preview-empty">Nothing to show here yet.</div>';
-        }
-
-        return '<div class="preview-grid">' + items.map(function(item) {
-          var image = item.cover ? shared.thumbnailSrc(item.cover.src) : "";
-          var attrs = "";
-          if (type === "region") {
-            attrs = 'data-select-region="' + shared.escapeHtml(item.region) + '"';
-          } else if (type === "place") {
-            attrs = 'data-select-place="' + shared.escapeHtml(item.place.name) + '" data-region="' + shared.escapeHtml(item.place.region) + '"';
-          } else if (type === "root") {
-            attrs = 'data-select-root="' + shared.escapeHtml(item.root) + '"';
-          } else if (type === "mixed") {
-            if (item.branch) {
-              attrs = 'data-select-branch="' + shared.escapeHtml(item.branch) + '"';
-            } else {
-              attrs = 'data-select-region="' + shared.escapeHtml(item.region) + '"';
-            }
-          }
-          return '' +
-            '<button class="preview-branch-card" type="button" ' + attrs + '>' +
-              (image ? '<img src="' + shared.escapeHtml(image) + '" alt="' + shared.escapeHtml(item.alt) + '" loading="lazy" decoding="async">' : "") +
-              "<div>" +
-                "<strong>" + item.title + "</strong>" +
-                "<small>" + shared.escapeHtml(item.meta) + "</small>" +
-              "</div>" +
-            "</button>";
-        }).join("") + "</div>";
-      }
-
-      function photoGridHtml(place) {
-        var photos = place.photos || [];
-        if (!photos.length) {
-          return '<div class="preview-empty">No photos in this branch yet.</div>';
-        }
-
-        return '<div class="preview-photo-grid">' + photos.map(function(photo) {
-          var orientation = shared.data.photoOrientations[photo.src] || "";
-          var previewClass = ["preview-photo", orientation].filter(Boolean).join(" ");
-          return '' +
-            '<button class="' + previewClass + '" type="button" data-open-photo="' + shared.escapeHtml(photo.src) + '" data-photo-caption="' + shared.escapeHtml(photo.caption || place.name) + '">' +
-              '<figure class="preview-photo-frame">' +
-                '<img src="' + shared.escapeHtml(shared.thumbnailSrc(photo.src)) + '" alt="' + shared.escapeHtml(photo.caption || place.name) + '" loading="lazy" decoding="async">' +
-              "</figure>" +
-              "<p>" + shared.escapeHtml(photo.caption || place.name) + "</p>" +
-            "</button>";
-        }).join("") + "</div>";
-      }
-
-      function renderPreview() {
-        var panel = document.getElementById("tree-preview");
-        var html = "";
-
-        if (state.place && state.region) {
-          var place = placeByName(state.region, state.place);
-          if (!place) {
-            state.place = "";
-            renderPreview();
-            return;
-          }
-
-          html = '' +
-            '<div class="tree-preview-stack">' +
-              '<div class="preview-header">' +
-                '<p class="preview-kicker">City</p>' +
-                '<p class="preview-path">' + shared.escapeHtml(pathText([state.root, state.branch ? branchTextLabel(state.branch) : "", regionTextLabel(state.region)])) + "</p>" +
-                '<h3 class="preview-title">' + shared.htmlLabel(place.name, place.localName) + "</h3>" +
-                '<p class="preview-meta">' + regionHtmlLabel(place.region) + " · " + shared.escapeHtml(shared.photoLabel(shared.countPhotosForPlace(place))) + "</p>" +
-              "</div>" +
-              '<div class="preview-stats">' +
-              statsHtml([
-                { value: shared.countPhotosForPlace(place), label: "Photos" },
-                { value: (place.spots || []).length, label: "Spots" },
-                { value: place.region, label: "Region" }
-              ]) +
-              "</div>" +
-              '<div class="preview-actions">' +
-                '<a href="travel-map.html?region=' + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name) + '">Places Map</a>' +
-                '<a href="travel-gallery.html?region=' + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name) + '">Gallery</a>' +
-              "</div>" +
-              previewMapHtml(currentScope()) +
-              ((place.spots || []).length ? (
-                '<div class="preview-spot-list">' +
-                  (place.spots || []).map(function(spot, index) {
-                    return "<span>" + shared.escapeHtml(shared.textLabel(spot, place.spotsLocal ? place.spotsLocal[index] : "")) + "</span>";
-                  }).join("") +
-                "</div>"
-              ) : "") +
-              photoGridHtml(place) +
-            "</div>";
-          panel.innerHTML = html;
-          return;
-        }
-
         if (state.branch) {
-          var branch = findBranchItem(state.root, state.branch);
-          if (branch) {
-            var branchRegions = branch.regions.filter(function(region) {
-              return filteredPlacesForRegion(region).length > 0;
-            });
-            var branchPlaces = branchRegions.reduce(function(list, region) {
-              return list.concat(filteredPlacesForRegion(region));
-            }, []);
-            var branchPhotoCount = photoTotalForPlaces(branchPlaces);
-            html = '' +
-              '<div class="tree-preview-stack">' +
-                '<div class="preview-header">' +
-                  '<p class="preview-kicker">Branch</p>' +
-                  '<p class="preview-path">' + shared.escapeHtml(pathText([state.root])) + "</p>" +
-                  '<h3 class="preview-title">' + branchHtmlLabel(branch.key) + "</h3>" +
-                  '<p class="preview-note">' + shared.escapeHtml(branchPreviewNote(branch.key)) + "</p>" +
-                "</div>" +
-                '<div class="preview-stats">' +
-                statsHtml([
-                  { value: branchRegions.length, label: branch.key === "United States" ? "States" : branch.key === "Canada" ? "Provinces" : "Regions" },
-                  { value: branchPlaces.length, label: "Cities" },
-                  { value: branchPhotoCount, label: "Photos" }
-                ]) +
-                "</div>" +
-                previewMapHtml(currentScope()) +
-                mosaicHtml(previewPhotosForPlaces(branchPlaces, 3)) +
-                branchCardsHtml(branchRegions.map(function(region) {
-                  var coverPlace = filteredPlacesForRegion(region)[0];
-                  var cover = coverForPlace(coverPlace);
-                  var info = regionStats(region);
-                  return {
-                    region: region,
-                    cover: cover,
-                    alt: cover ? (cover.caption || region) : region,
-                    title: regionHtmlLabel(region),
-                    meta: info.placeCount + (info.placeCount === 1 ? " city" : " cities") + " · " + shared.photoLabel(info.photoCount)
-                  };
-                }), "region") +
-              "</div>";
-            panel.innerHTML = html;
-            return;
-          }
+          parts.push('<span class="tree-separator">/</span>');
+          parts.push(breadcrumbButton(branchHtmlLabel(state.root, state.branch), { scope: "branch", root: state.root, branch: state.branch }, state.branch && !state.region));
         }
-
         if (state.region) {
-          var regionPlaces = filteredPlacesForRegion(state.region);
-          var regionPhotoCount = photoTotalForPlaces(regionPlaces);
-          html = '' +
-            '<div class="tree-preview-stack">' +
-              '<div class="preview-header">' +
-                '<p class="preview-kicker">Region</p>' +
-                '<p class="preview-path">' + shared.escapeHtml(pathText([state.root, state.branch ? branchTextLabel(state.branch) : ""])) + "</p>" +
-                '<h3 class="preview-title">' + regionHtmlLabel(state.region) + "</h3>" +
-                '<p class="preview-meta">' + regionPlaces.length + (regionPlaces.length === 1 ? " city" : " cities") + " · " + shared.escapeHtml(shared.photoLabel(regionPhotoCount)) + "</p>" +
-              "</div>" +
-              '<div class="preview-stats">' +
-              statsHtml([
-                { value: regionPlaces.length, label: "Cities" },
-                { value: regionPhotoCount, label: "Photos" },
-                { value: state.mode === "photos" ? "Photo sets" : "All places", label: "View" }
-              ]) +
-              "</div>" +
-              '<div class="preview-actions">' +
-                '<a href="travel-map.html?region=' + encodeURIComponent(state.region) + '">Places Map</a>' +
-                '<a href="travel-gallery.html?region=' + encodeURIComponent(state.region) + '">Gallery</a>' +
-              "</div>" +
-              previewMapHtml(currentScope()) +
-              mosaicHtml(previewPhotosForPlaces(regionPlaces, 3)) +
-              branchCardsHtml(regionPlaces.map(function(place) {
-                var cover = coverForPlace(place);
-                return {
-                  place: place,
-                  cover: cover,
-                  alt: cover ? (cover.caption || place.name) : place.name,
-                  title: shared.htmlLabel(place.name, place.localName),
-                  meta: shared.photoLabel(shared.countPhotosForPlace(place))
-                };
-              }), "place") +
-            "</div>";
-          panel.innerHTML = html;
-          return;
+          parts.push('<span class="tree-separator">/</span>');
+          parts.push(breadcrumbButton(regionHtmlLabel(state.region), { scope: "region", root: state.root, branch: state.branch, region: state.region }, state.region && !state.place));
         }
-
-        if (!state.root) {
-          var overviewPlaces = rootDefinitions.reduce(function(list, definition) {
-            return list.concat(groupPlaces(definition));
-          }, []);
-          html = '' +
-            '<div class="tree-preview-stack">' +
-              '<div class="preview-header">' +
-                '<p class="preview-kicker">Root</p>' +
-                '<p class="preview-path">Travel archive</p>' +
-                '<h3 class="preview-title">Continents</h3>' +
-                '<p class="preview-note">Start from a continent, then open the next branch.</p>' +
-              "</div>" +
-              '<div class="preview-stats">' +
-              statsHtml([
-                { value: rootDefinitions.length, label: "Continents" },
-                { value: photoRegionCount, label: "Regions" },
-                { value: shared.totalPhotoCount(), label: "Photos" }
-              ]) +
-              "</div>" +
-              previewMapHtml(currentScope()) +
-              mosaicHtml(previewPhotosForPlaces(overviewPlaces, 3)) +
-              branchCardsHtml(rootDefinitions.map(function(definition) {
-                var definitionPlaces = groupPlaces(definition);
-                var coverPlace = definitionPlaces[0];
-                var cover = coverForPlace(coverPlace);
-                return {
-                  root: definition.key,
-                  cover: cover,
-                  alt: cover ? (cover.caption || definition.label) : definition.label,
-                  title: shared.escapeHtml(definition.label),
-                  meta: topLevelChildren(definition).length + (topLevelChildren(definition).length === 1 ? " branch" : " branches") + " · " + shared.photoLabel(photoTotalForPlaces(definitionPlaces))
-                };
-              }), "root") +
-            "</div>";
-          panel.innerHTML = html;
-          return;
-        }
-
-        var root = rootDefinitions.find(function(definition) {
-          return definition.key === state.root;
-        }) || rootDefinitions[0];
-
-        if (root.type === "group") {
-          var children = topLevelChildren(root);
-          var stats = groupStats(root);
-          html = '' +
-            '<div class="tree-preview-stack">' +
-              '<div class="preview-header">' +
-                '<p class="preview-kicker">Branch</p>' +
-                '<p class="preview-path">Travel archive</p>' +
-                '<h3 class="preview-title">' + shared.escapeHtml(root.label) + "</h3>" +
-                '<p class="preview-note">This branch opens into countries first, then cities.</p>' +
-              "</div>" +
-              '<div class="preview-stats">' +
-              statsHtml([
-                { value: stats.regionCount, label: "Branches" },
-                { value: stats.placeCount, label: "Cities" },
-                { value: stats.photoCount, label: "Photos" }
-              ]) +
-              "</div>" +
-              previewMapHtml(currentScope()) +
-              mosaicHtml(previewPhotosForPlaces(groupPlaces(root), 3)) +
-              branchCardsHtml(children.map(function(child) {
-                if (child.type === "group") {
-                  var branchRegions = child.regions.filter(function(region) {
-                    return filteredPlacesForRegion(region).length > 0;
-                  });
-                  var branchPlaces = branchRegions.reduce(function(list, region) {
-                    return list.concat(filteredPlacesForRegion(region));
-                  }, []);
-                  var coverPlace = branchPlaces[0];
-                  var cover = coverForPlace(coverPlace);
-                  return {
-                    branch: child.key,
-                    cover: cover,
-                    alt: cover ? (cover.caption || child.label) : child.label,
-                    title: shared.htmlLabel(child.label, child.localLabel || ""),
-                    meta: branchUnitLabel(child.key, branchRegions.length) + " · " + shared.photoLabel(photoTotalForPlaces(branchPlaces))
-                  };
-                }
-                var region = child.key;
-                var coverPlace = filteredPlacesForRegion(region)[0];
-                var cover = coverForPlace(coverPlace);
-                var info = regionStats(region);
-                return {
-                  region: region,
-                  cover: cover,
-                  alt: cover ? (cover.caption || region) : region,
-                  title: regionHtmlLabel(region),
-                  meta: info.placeCount + (info.placeCount === 1 ? " city" : " cities") + " · " + shared.photoLabel(info.photoCount)
-                };
-              }), "mixed") +
-            "</div>";
-          panel.innerHTML = html;
-          return;
-        }
-
-        state.region = root.key;
-        renderPreview();
-      }
-
-      function setRoot(rootKey) {
-        if (state.root === rootKey && !state.branch && !state.region && !state.place) {
-          state.root = "";
-        } else {
-          state.root = rootKey;
-          state.branch = "";
-          state.region = "";
-          state.place = "";
-        }
-        rerender();
-      }
-
-      function setRootRegion(rootRegion) {
-        if (state.root === rootRegion && state.region === rootRegion && !state.place) {
-          state.region = "";
-        } else {
-          state.root = rootRegion;
-          state.region = rootRegion;
-          state.place = "";
-        }
-        rerender();
-      }
-
-      function setBranch(nextBranch) {
-        if (state.branch === nextBranch && !state.region && !state.place) {
-          state.branch = "";
-        } else {
-          state.branch = nextBranch;
-          state.region = "";
-          state.place = "";
-        }
-        rerender();
-      }
-
-      function setRegion(nextRegion, nextBranchForRegion) {
-        var branchKey = nextBranchForRegion || "";
-        if (state.region === nextRegion && !state.place) {
-          state.region = "";
-          if (branchKey) {
-            state.branch = branchKey;
-          }
-        } else {
-          state.branch = branchKey;
-          state.region = nextRegion;
-          state.place = "";
-        }
-        rerender();
-      }
-
-      function setPlace(nextPlaceRegion, nextPlace, nextPlaceBranch) {
-        var branchKey = nextPlaceBranch || "";
-        if (state.region === nextPlaceRegion && state.place === nextPlace) {
-          state.place = "";
-          state.branch = branchKey;
-        } else {
-          state.branch = branchKey;
-          state.region = nextPlaceRegion;
-          state.place = nextPlace;
-        }
-        rerender();
-      }
-
-      function goUpOneLevel() {
         if (state.place) {
-          state.place = "";
-        } else if (state.region) {
-          state.region = "";
-        } else if (state.branch) {
-          state.branch = "";
-        } else if (state.root) {
-          state.root = "";
+          parts.push('<span class="tree-separator">/</span>');
+          parts.push(breadcrumbButton(esc(state.place), { scope: "place", root: state.root, branch: state.branch, region: state.region, place: state.place }, true));
         }
-        rerender();
+        breadcrumbs.innerHTML = parts.join("");
       }
 
-      function rerender() {
+      function collectPhotos(places, limit) {
+        var items = [];
+        places.forEach(function(place) {
+          (place.photos || []).forEach(function(photo) {
+            if (!limit || items.length < limit) {
+              items.push({
+                src: photo.src,
+                caption: photo.caption || shared.placeLabel(place),
+                thumbnail: shared.thumbnailSrc(photo.src),
+                place: shared.placeLabel(place),
+                region: regionTextLabel(place.region),
+                mapUrl: "travel-map.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name)
+              });
+            }
+          });
+        });
+        return items;
+      }
+
+      function photoMosaicHtml(places, limit) {
+        activePreviewItems = collectPhotos(places, limit);
+        if (!activePreviewItems.length) {
+          return '<div class="tree-empty">No photos attached to this branch yet.</div>';
+        }
+        return '<div class="photo-mosaic">' + activePreviewItems.map(function(item, index) {
+          return '' +
+            '<button class="photo-hit" type="button" data-photo-index="' + String(index) + '" aria-label="Open ' + esc(item.caption) + '">' +
+              '<img src="' + esc(item.thumbnail) + '" alt="' + esc(item.caption) + '" loading="lazy" decoding="async">' +
+            '</button>';
+        }).join("") + '</div>';
+      }
+
+      function actionLinks(region, placeName) {
+        var gallery = "travel-gallery.html";
+        var map = "travel-map.html";
+        if (region) {
+          gallery += "?region=" + encodeURIComponent(region);
+          map += "?region=" + encodeURIComponent(region);
+          if (placeName) {
+            gallery += "&place=" + encodeURIComponent(placeName);
+            map += "&place=" + encodeURIComponent(placeName);
+          }
+        }
+        return '' +
+          '<div class="inspector-actions">' +
+            '<a class="tree-link-button" href="' + esc(gallery) + '">Gallery</a>' +
+            '<a class="tree-link-button" href="' + esc(map) + '">Map</a>' +
+          '</div>';
+      }
+
+      function childCard(attrs, titleHtml, meta) {
+        var attrHtml = Object.keys(attrs).map(function(key) {
+          return ' data-' + key + '="' + esc(attrs[key]) + '"';
+        }).join("");
+        return '' +
+          '<button class="child-card" type="button" data-tree-select="' + esc(attrs.select) + '"' + attrHtml + '>' +
+            '<strong>' + titleHtml + '</strong>' +
+            '<span>' + esc(meta) + '</span>' +
+          '</button>';
+      }
+
+      function rootChildCards(root) {
+        return '<div class="child-grid">' + childItemsForRoot(root).map(function(item) {
+          if (item.type === "group") {
+            return childCard({
+              select: "branch",
+              root: root.key,
+              branch: item.key
+            }, branchHtmlLabel(root.key, item.key), branchMeta(root.key, item.key));
+          }
+          return childCard({
+            select: "region",
+            root: root.key,
+            branch: "",
+            region: item.key
+          }, regionHtmlLabel(item.key), regionMeta(item.key));
+        }).join("") + '</div>';
+      }
+
+      function branchChildCards(rootKey, branchKey) {
+        var branch = findBranchItem(rootKey, branchKey);
+        var regions = branch ? (branch.regions || []).filter(function(region) {
+          return placesForRegion(region).length > 0;
+        }) : [];
+        return '<div class="child-grid">' + regions.map(function(region) {
+          return childCard({
+            select: "region",
+            root: rootKey,
+            branch: branchKey,
+            region: region
+          }, regionHtmlLabel(region), regionMeta(region));
+        }).join("") + '</div>';
+      }
+
+      function regionChildCards(rootKey, branchKey, region) {
+        return '<div class="child-grid">' + placesForRegion(region).map(function(place) {
+          return childCard({
+            select: "place",
+            root: rootKey,
+            branch: branchKey,
+            region: region,
+            place: place.name
+          }, shared.htmlLabel(place.name, place.localName), placeMeta(place));
+        }).join("") + '</div>';
+      }
+
+      function overviewPreview() {
+        var places = rootDefinitions.reduce(function(list, root) {
+          return list.concat(placesForRoot(root));
+        }, []);
+        var stats = statsForPlaces(places);
+        return '' +
+          '<div class="inspector-header">' +
+            '<p class="inspector-kicker">Overview</p>' +
+            '<h3 class="inspector-title">Travel archive</h3>' +
+            '<p class="inspector-note">Start from a continent or search directly. Every branch is rendered in normal document flow so it can scroll completely.</p>' +
+          '</div>' +
+          statCards(stats) +
+          '<div class="child-grid">' + rootDefinitions.filter(function(root) {
+            return placesForRoot(root).length > 0;
+          }).map(function(root) {
+            return childCard({ select: "root", root: root.key }, esc(root.label), rootMeta(root));
+          }).join("") + '</div>' +
+          photoMosaicHtml(places, 8);
+      }
+
+      function rootPreview(root) {
+        var places = placesForRoot(root);
+        return '' +
+          '<div class="inspector-header">' +
+            '<p class="inspector-kicker">Continent</p>' +
+            '<p class="inspector-path">Travel archive / ' + esc(root.label) + '</p>' +
+            '<h3 class="inspector-title">' + esc(root.label) + '</h3>' +
+            '<p class="inspector-note">Open the next layer to inspect countries, regions, and cities.</p>' +
+          '</div>' +
+          statCards(statsForPlaces(places)) +
+          rootChildCards(root) +
+          photoMosaicHtml(places, 8);
+      }
+
+      function branchPreview(rootKey, branchKey) {
+        var places = placesForBranch(rootKey, branchKey);
+        return '' +
+          '<div class="inspector-header">' +
+            '<p class="inspector-kicker">Branch</p>' +
+            '<p class="inspector-path">' + esc(findRoot(rootKey).label) + '</p>' +
+            '<h3 class="inspector-title">' + branchHtmlLabel(rootKey, branchKey) + '</h3>' +
+            '<p class="inspector-note">This branch opens into regions first, then places.</p>' +
+          '</div>' +
+          statCards(statsForPlaces(places)) +
+          branchChildCards(rootKey, branchKey) +
+          photoMosaicHtml(places, 8);
+      }
+
+      function regionPreview(rootKey, branchKey, region) {
+        var places = placesForRegion(region);
+        return '' +
+          '<div class="inspector-header">' +
+            '<p class="inspector-kicker">Region</p>' +
+            '<p class="inspector-path">' + esc(findRoot(rootKey).label) + (branchKey ? " / " + branchTextLabel(rootKey, branchKey) : "") + '</p>' +
+            '<h3 class="inspector-title">' + regionHtmlLabel(region) + '</h3>' +
+            '<p class="inspector-note">' + esc(regionMeta(region)) + '</p>' +
+          '</div>' +
+          statCards(statsForPlaces(places)) +
+          actionLinks(region, "") +
+          regionChildCards(rootKey, branchKey, region) +
+          photoMosaicHtml(places, 10);
+      }
+
+      function placePreview(rootKey, branchKey, region, placeName) {
+        var place = placeByName(region, placeName);
+        if (!place) {
+          return overviewPreview();
+        }
+        var spots = (place.spots || []).map(function(spot, index) {
+          return shared.textLabel(spot, place.spotsLocal ? place.spotsLocal[index] : "");
+        });
+        return '' +
+          '<div class="inspector-header">' +
+            '<p class="inspector-kicker">Place</p>' +
+            '<p class="inspector-path">' + esc(regionTextLabel(region)) + '</p>' +
+            '<h3 class="inspector-title">' + shared.htmlLabel(place.name, place.localName) + '</h3>' +
+            '<p class="inspector-note">' + esc(placeMeta(place)) + ' in this place.</p>' +
+          '</div>' +
+          statCards({ regions: 1, places: 1, photos: shared.countPhotosForPlace(place) }) +
+          actionLinks(region, place.name) +
+          (spots.length ? '<div class="spot-list">' + spots.map(function(spot) { return '<span>' + esc(spot) + '</span>'; }).join("") + '</div>' : '') +
+          photoMosaicHtml([place], 16);
+      }
+
+      function renderInspector() {
+        if (state.place && state.region) {
+          inspector.innerHTML = placePreview(state.root, state.branch, state.region, state.place);
+          return;
+        }
+        if (state.region) {
+          inspector.innerHTML = regionPreview(state.root, state.branch, state.region);
+          return;
+        }
+        if (state.branch) {
+          inspector.innerHTML = branchPreview(state.root, state.branch);
+          return;
+        }
+        if (state.root) {
+          inspector.innerHTML = rootPreview(findRoot(state.root));
+          return;
+        }
+        inspector.innerHTML = overviewPreview();
+      }
+
+      function renderStats() {
+        var visiblePlaces = rootDefinitions.reduce(function(list, root) {
+          return list.concat(placesForRoot(root));
+        }, []);
+        var stats = statsForPlaces(visiblePlaces);
+        document.getElementById("tree-total-photos").textContent = stats.photos;
+        document.getElementById("tree-total-places").textContent = stats.places;
+        document.getElementById("tree-total-regions").textContent = stats.regions;
+        document.getElementById("tree-current-view").textContent = state.mode === "photos" ? "Photos" : "All";
+        document.getElementById("tree-status").textContent = (state.query ? 'Search "' + state.query + '" / ' : "") + stats.places + (stats.places === 1 ? " place" : " places") + " / " + photoLabel(stats.photos) + ".";
+      }
+
+      function renderMode() {
+        document.querySelectorAll("[data-mode]").forEach(function(button) {
+          var active = button.getAttribute("data-mode") === state.mode;
+          button.classList.toggle("is-active", active);
+          button.setAttribute("aria-selected", String(active));
+        });
+      }
+
+      function updateUrl() {
+        var next = new URL(window.location.href);
+        next.search = "";
+        if (state.mode === "all") {
+          next.searchParams.set("mode", "all");
+        }
+        if (state.query) {
+          next.searchParams.set("q", state.query);
+        }
+        if (state.root) {
+          next.searchParams.set("root", state.root);
+        }
+        if (state.branch) {
+          next.searchParams.set("branch", state.branch);
+        }
+        if (state.region) {
+          next.searchParams.set("region", state.region);
+        }
+        if (state.place) {
+          next.searchParams.set("place", state.place);
+        }
+        window.history.replaceState(null, "", next.pathname + next.search);
+      }
+
+      function render() {
         sanitizeState();
-        setModeButtons();
-        renderToolbarMeta();
-        renderContextBar();
-        renderListMeta();
-        renderMindmap();
+        renderMode();
+        renderStats();
+        renderBreadcrumbs();
         renderTree();
-        renderPreview();
-        renderPreviewMap();
+        renderInspector();
         updateUrl();
       }
 
-      document.getElementById("tree-root").addEventListener("click", function(event) {
-        var rootButton = event.target.closest("[data-select-root]");
-        var rootRegionButton = event.target.closest("[data-select-root-region]");
-        var branchButton = event.target.closest("[data-select-branch]");
-        var regionButton = event.target.closest("[data-select-region]");
-        var placeButton = event.target.closest("[data-select-place]");
+      function selectFromElement(target) {
+        var kind = target.getAttribute("data-tree-select") || target.getAttribute("data-select");
+        var root = target.getAttribute("data-root") || "";
+        var branch = target.getAttribute("data-branch") || "";
+        var region = target.getAttribute("data-region") || "";
+        var place = target.getAttribute("data-place") || "";
 
-        if (rootButton) {
-          setRoot(rootButton.getAttribute("data-select-root"));
+        if (kind === "root") {
+          selectRoot(root);
+        } else if (kind === "branch") {
+          selectBranch(root, branch);
+        } else if (kind === "region") {
+          selectRegion(root, branch, region);
+        } else if (kind === "place") {
+          selectPlace(root, branch, region, place);
+        }
+      }
+
+      treeList.addEventListener("click", function(event) {
+        var target = event.target.closest("[data-tree-select]");
+        if (!target) {
           return;
         }
-
-        if (rootRegionButton) {
-          setRootRegion(rootRegionButton.getAttribute("data-select-root-region"));
-          return;
-        }
-
-        if (branchButton) {
-          setBranch(branchButton.getAttribute("data-select-branch"));
-          return;
-        }
-
-        if (regionButton) {
-          setRegion(
-            regionButton.getAttribute("data-select-region"),
-            regionButton.getAttribute("data-branch") || ""
-          );
-          return;
-        }
-
-        if (placeButton) {
-          setPlace(
-            placeButton.getAttribute("data-region"),
-            placeButton.getAttribute("data-select-place"),
-            placeButton.getAttribute("data-branch") || ""
-          );
-        }
+        event.preventDefault();
+        selectFromElement(target);
       });
 
-      document.getElementById("tree-preview").addEventListener("click", function(event) {
-        var photoButton = event.target.closest("[data-open-photo]");
-        var rootButton = event.target.closest("[data-select-root]");
-        var branchButton = event.target.closest("[data-select-branch]");
-        var regionButton = event.target.closest("[data-select-region]");
-        var placeButton = event.target.closest("[data-select-place]");
+      inspector.addEventListener("click", function(event) {
+        var photoButton = event.target.closest("[data-photo-index]");
+        var selector = event.target.closest("[data-tree-select]");
 
         if (photoButton) {
-          viewer.open(photoButton.getAttribute("data-open-photo"), photoButton.getAttribute("data-photo-caption") || "");
-          return;
-        }
-
-        if (rootButton) {
-          setRoot(rootButton.getAttribute("data-select-root"));
-          return;
-        }
-
-        if (branchButton) {
-          setBranch(branchButton.getAttribute("data-select-branch"));
-          return;
-        }
-
-        if (regionButton) {
-          setRegion(
-            regionButton.getAttribute("data-select-region"),
-            regionButton.getAttribute("data-branch") || ""
-          );
-          return;
-        }
-
-        if (placeButton) {
-          setPlace(
-            placeButton.getAttribute("data-region"),
-            placeButton.getAttribute("data-select-place"),
-            placeButton.getAttribute("data-branch") || state.branch || ""
-          );
-        }
-      });
-
-      document.getElementById("tree-context").addEventListener("click", function(event) {
-        var actionButton = event.target.closest("[data-tree-action]");
-        var jumpButton = event.target.closest("[data-tree-jump]");
-
-        if (actionButton) {
-          if (actionButton.getAttribute("data-tree-action") === "back") {
-            goUpOneLevel();
-            return;
-          }
-          if (actionButton.getAttribute("data-tree-action") === "reset") {
-            resetToOverview();
+          var index = Number(photoButton.getAttribute("data-photo-index"));
+          var item = activePreviewItems[index];
+          if (item) {
+            viewer.open(item.src, item.caption, {
+              items: activePreviewItems,
+              index: index
+            });
           }
           return;
         }
 
-        if (!jumpButton) {
-          return;
-        }
-
-        var jump = jumpButton.getAttribute("data-tree-jump");
-        if (jump === "overview") {
-          resetToOverview();
-          return;
-        }
-
-        if (jump === "root") {
-          state.root = jumpButton.getAttribute("data-root") || "";
-          state.branch = "";
-          state.region = "";
-          state.place = "";
-          rerender();
-          return;
-        }
-
-        if (jump === "branch") {
-          state.branch = jumpButton.getAttribute("data-branch") || "";
-          state.region = "";
-          state.place = "";
-          rerender();
-          return;
-        }
-
-        if (jump === "region") {
-          state.branch = jumpButton.getAttribute("data-branch") || "";
-          state.region = jumpButton.getAttribute("data-region") || "";
-          state.place = "";
-          rerender();
-          return;
-        }
-
-        if (jump === "place") {
-          state.branch = jumpButton.getAttribute("data-branch") || "";
-          state.region = jumpButton.getAttribute("data-region") || "";
-          state.place = jumpButton.getAttribute("data-place") || "";
-          rerender();
+        if (selector) {
+          selectFromElement(selector);
         }
       });
 
-      document.getElementById("mindmap-stage").addEventListener("click", function(event) {
-        var upButton = event.target.closest("[data-go-up]");
-        var rootButton = event.target.closest("[data-select-root]");
-        var branchButton = event.target.closest("[data-select-branch]");
-        var regionButton = event.target.closest("[data-select-region]");
-        var placeButton = event.target.closest("[data-select-place]");
-        var staticLeaf = event.target.closest("[data-static-leaf]");
-
-        if (staticLeaf) {
+      breadcrumbs.addEventListener("click", function(event) {
+        var button = event.target.closest("[data-breadcrumb]");
+        if (!button) {
           return;
         }
-
-        if (upButton) {
-          goUpOneLevel();
-          return;
-        }
-
-        if (rootButton) {
-          setRoot(rootButton.getAttribute("data-select-root"));
-          return;
-        }
-
-        if (branchButton) {
-          setBranch(branchButton.getAttribute("data-select-branch"));
-          return;
-        }
-
-        if (regionButton) {
-          setRegion(
-            regionButton.getAttribute("data-select-region"),
-            regionButton.getAttribute("data-branch") || ""
-          );
-          return;
-        }
-
-        if (placeButton) {
-          setPlace(
-            placeButton.getAttribute("data-region"),
-            placeButton.getAttribute("data-select-place"),
-            placeButton.getAttribute("data-branch") || state.branch || ""
-          );
+        var scope = button.getAttribute("data-scope");
+        if (scope === "overview") {
+          resetOverview();
+        } else if (scope === "root") {
+          selectRoot(button.getAttribute("data-root"));
+        } else if (scope === "branch") {
+          selectBranch(button.getAttribute("data-root"), button.getAttribute("data-branch"));
+        } else if (scope === "region") {
+          selectRegion(button.getAttribute("data-root"), button.getAttribute("data-branch") || "", button.getAttribute("data-region"));
+        } else if (scope === "place") {
+          selectPlace(button.getAttribute("data-root"), button.getAttribute("data-branch") || "", button.getAttribute("data-region"), button.getAttribute("data-place"));
         }
       });
 
-      document.querySelectorAll(".tree-mode button").forEach(function(button) {
+      document.querySelectorAll("[data-mode]").forEach(function(button) {
         button.addEventListener("click", function() {
-          var nextMode = button.getAttribute("data-mode");
-          if (nextMode === state.mode) {
-            return;
-          }
-          state.mode = nextMode;
+          state.mode = button.getAttribute("data-mode");
           state.place = "";
-          if (state.region && filteredPlacesForRegion(state.region).length === 0) {
-            state.region = "";
+          render();
+        });
+      });
+
+      document.querySelectorAll("[data-tree-action]").forEach(function(button) {
+        button.addEventListener("click", function() {
+          var action = button.getAttribute("data-tree-action");
+          if (action === "expand") {
+            state.expanded = true;
+            render();
+          } else if (action === "collapse") {
+            state.expanded = false;
+            render();
+          } else if (action === "overview") {
+            resetOverview();
           }
-          rerender();
         });
       });
 
-      new MutationObserver(function(mutations) {
-        var changedTheme = mutations.some(function(mutation) {
-          return mutation.attributeName === "data-theme";
-        });
-        if (changedTheme && document.getElementById("tree-preview-map")) {
-          renderMindmap();
-          renderPreviewMap();
-        }
-      }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-
-      window.addEventListener("resize", function() {
-        renderMindmap();
+      searchInput.value = state.query;
+      searchInput.addEventListener("input", function() {
+        state.query = searchInput.value.trim();
+        state.expanded = Boolean(state.query);
+        state.place = "";
+        render();
       });
 
-      initFromQuery();
-      rerender();
+      document.getElementById("tree-clear").addEventListener("click", function() {
+        searchInput.value = "";
+        state.query = "";
+        state.expanded = false;
+        render();
+        searchInput.focus();
+      });
+
+      if (state.region && !state.root) {
+        state.root = rootForRegion(state.region);
+        state.branch = branchForRegion(state.root, state.region);
+      }
+
+      render();
     })();
   </script>
 </body>

@@ -19,7 +19,10 @@ html {
   --nav-accent: var(--ink);
   --nav-rule: var(--line);
   --shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
+  --shadow-hover: 0 18px 46px rgba(16, 42, 67, 0.105);
   --focus-ring: 0 0 0 3px rgba(16, 42, 67, 0.16);
+  --radius-card: 8px;
+  --radius-chip: 999px;
   --header-bg: rgba(255, 255, 255, 0.86);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   scroll-behavior: smooth;
@@ -47,6 +50,7 @@ html[data-theme="dark"] {
   --nav-accent: var(--ink);
   --nav-rule: var(--line);
   --shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+  --shadow-hover: 0 20px 52px rgba(0, 0, 0, 0.38);
   --focus-ring: 0 0 0 3px rgba(157, 183, 213, 0.26);
   --header-bg: rgba(21, 25, 31, 0.86);
 }
@@ -241,16 +245,7 @@ button:focus-visible {
 }
 
 header nav a::after {
-  content: "";
-  position: absolute;
-  left: 0.56rem;
-  right: 0.56rem;
-  bottom: 0.24rem;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.32s var(--ease);
+  content: none;
 }
 
 header nav a:hover,
@@ -259,14 +254,52 @@ header nav a[aria-current="page"] {
   color: var(--nav-accent);
   opacity: 1;
   transform: translateY(-1px);
-  border-color: var(--nav-rule);
-  background: var(--wash);
+  border-color: var(--nav-accent);
+  background: color-mix(in srgb, var(--nav-accent) 9%, transparent);
 }
 
-header nav a:hover::after,
-header nav a:focus-visible::after,
-header nav a[aria-current="page"]::after {
-  transform: scaleX(1);
+.travel-local-nav {
+  --local-nav-accent: var(--page-accent, var(--accent));
+  --local-nav-rule: var(--nav-rule);
+  --local-nav-surface: color-mix(in srgb, var(--surface) 88%, transparent);
+  --local-nav-wash: var(--wash);
+  --local-nav-shadow: var(--shadow);
+  --local-nav-ease: var(--ease);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.32rem;
+  max-width: 100%;
+  margin-top: 1.15rem;
+  padding: 0.28rem;
+  border: 1px solid var(--local-nav-rule);
+  border-radius: var(--radius-chip);
+  background: var(--local-nav-surface);
+  box-shadow: var(--local-nav-shadow);
+}
+
+.travel-local-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.28rem 0.74rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-chip);
+  color: var(--text);
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.24s var(--local-nav-ease), background 0.24s ease, border-color 0.24s ease, color 0.24s ease;
+}
+
+.travel-local-nav a:hover,
+.travel-local-nav a:focus-visible,
+.travel-local-nav a[aria-current="page"] {
+  border-color: color-mix(in srgb, var(--local-nav-accent) 36%, var(--local-nav-rule));
+  background: var(--local-nav-wash);
+  color: var(--local-nav-accent);
+  transform: translateY(-1px);
 }
 
 .travel-local-nav .nav-more {
@@ -279,13 +312,15 @@ header nav a[aria-current="page"]::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.08rem 0;
-  border-radius: 0;
+  min-height: 2rem;
+  padding: 0.28rem 0.68rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-chip);
   color: var(--text);
   cursor: pointer;
-  line-height: 1.62;
+  line-height: 1.2;
   list-style: none;
-  transition: transform 0.24s var(--ease), background 0.24s ease, color 0.24s ease;
+  transition: transform 0.24s var(--local-nav-ease), background 0.24s ease, border-color 0.24s ease, color 0.24s ease;
 }
 
 .travel-local-nav .nav-more summary::-webkit-details-marker {
@@ -310,21 +345,22 @@ header nav a[aria-current="page"]::after {
 .travel-local-nav .nav-more summary:hover,
 .travel-local-nav .nav-more summary:focus-visible,
 .travel-local-nav .nav-more[open] summary {
-  background: transparent;
-  color: var(--nav-accent);
+  border-color: color-mix(in srgb, var(--local-nav-accent) 36%, var(--local-nav-rule));
+  background: var(--local-nav-wash);
+  color: var(--local-nav-accent);
   transform: translateY(-1px);
 }
 
 .travel-local-nav .nav-more-menu {
   position: absolute;
   right: 0;
-  top: calc(100% + 0.42rem);
+  top: calc(100% + 0.55rem);
   z-index: 50;
   display: grid;
-  min-width: 9.4rem;
-  padding: 0.35rem;
-  border: 1px solid var(--nav-rule);
-  border-radius: 8px;
+  min-width: 10rem;
+  padding: 0.42rem;
+  border: 1px solid var(--local-nav-rule);
+  border-radius: var(--radius-card);
   background: var(--surface);
   box-shadow: 0 14px 34px rgba(16, 42, 67, 0.14);
 }
@@ -334,7 +370,11 @@ html[data-theme="dark"] .travel-local-nav .nav-more-menu {
 }
 
 .travel-local-nav .nav-more-menu a {
-  display: block;
+  display: flex;
+  width: 100%;
+  min-height: 2rem;
+  padding: 0.34rem 0.58rem;
+  border-radius: 6px;
   white-space: nowrap;
 }
 
@@ -609,8 +649,21 @@ body main[class] section:hover .contact-heading::after {
   transform: scaleX(1);
 }
 
-:is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .capability-card, .portal-card, .feature-card, .contact-list li, .resume-status, .region-strip a) {
+body main[class] :is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .build-card, .capability-card, .portal-card, .feature-card, .contact-card, .contact-fit-card, .contact-list li, .resume-status, .quick-fact, .skill-matrix-card, .gallery-card, .collection-card, .photo-wall-card, .archive-pick-links a, .region-strip a) {
   will-change: transform;
+  transition-property: transform, border-color, box-shadow, background, color, opacity;
+  transition-duration: 0.24s, 0.24s, 0.24s, 0.24s, 0.2s, 0.2s;
+  transition-timing-function: var(--ease), ease, ease, ease, ease, ease;
+}
+
+body main[class] :is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .build-card, .capability-card, .portal-card, .feature-card, .contact-card, .contact-fit-card, .contact-list li, .resume-status, .quick-fact, .skill-matrix-card, .gallery-card, .collection-card, .photo-wall-card, .archive-pick-links a, .region-strip a):where(:hover, :focus-visible, :focus-within) {
+  border-color: color-mix(in srgb, var(--page-accent, var(--accent)) 42%, var(--line));
+  box-shadow: var(--shadow-hover);
+}
+
+body main[class] :is(.contact-card, .portal-card, .feature-card, .photo-wall-card, .archive-pick-links a, .region-strip a):focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring), var(--shadow-hover);
 }
 
 .command-palette {
@@ -1086,6 +1139,34 @@ body.viewer-open {
     justify-content: flex-start;
   }
 
+  .travel-local-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.26rem;
+    border-radius: var(--radius-card);
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .travel-local-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .travel-local-nav a,
+  .travel-local-nav .nav-more,
+  .travel-local-nav .nav-more summary {
+    flex: 0 0 auto;
+  }
+
+  .travel-local-nav .nav-more-menu {
+    right: auto;
+    left: 0;
+  }
+
   .photo-viewer {
     padding: 1rem;
   }
@@ -1158,6 +1239,9 @@ body.viewer-open {
   .command-palette-result,
   .site-toast,
   body.reveal-ready [data-reveal],
+  body main[class] :is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .build-card, .capability-card, .portal-card, .feature-card, .contact-card, .contact-fit-card, .contact-list li, .resume-status, .quick-fact, .skill-matrix-card, .gallery-card, .collection-card, .photo-wall-card, .archive-pick-links a, .region-strip a),
+  .travel-local-nav,
+  .travel-local-nav a,
   .photo-viewer-close,
   .photo-viewer-nav,
   .travel-local-nav .nav-more summary,

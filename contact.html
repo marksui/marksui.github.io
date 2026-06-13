@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Contact</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
   <meta name="description" content="Contact Mark Sui for hardware, ECE, VLSI, RTL, embedded systems, AI systems, and software project opportunities.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
@@ -27,8 +27,8 @@
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
@@ -94,11 +94,79 @@
       font-size: 0.92rem;
     }
 
+    .contact-details {
+      margin-top: 1rem;
+      border: 1px solid var(--contact-rule);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 10px 28px rgba(16, 42, 67, 0.045);
+      overflow: hidden;
+    }
+
+    html[data-theme="dark"] .contact-details {
+      box-shadow: none;
+    }
+
+    .contact-details summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 3.15rem;
+      padding: 0.8rem 0.95rem;
+      color: var(--contact-accent);
+      cursor: pointer;
+      font-weight: bold;
+      list-style: none;
+      outline: none;
+      transition: background 0.24s ease, color 0.24s ease;
+    }
+
+    .contact-details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .contact-details summary::after {
+      content: "+";
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 1.35rem;
+      height: 1.35rem;
+      border: 1px solid color-mix(in srgb, var(--contact-accent) 35%, var(--contact-rule));
+      border-radius: 999px;
+      color: var(--contact-accent);
+      font-size: 0.9rem;
+      line-height: 1;
+      transition: transform 0.22s var(--contact-ease), background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .contact-details summary:hover,
+    .contact-details summary:focus-visible {
+      background: var(--contact-wash);
+    }
+
+    .contact-details summary:hover::after,
+    .contact-details summary:focus-visible::after {
+      transform: translateY(-1px);
+      border-color: var(--contact-accent);
+      background: var(--contact-wash);
+    }
+
+    .contact-details[open] summary {
+      border-bottom: 1px solid var(--contact-rule);
+    }
+
+    .contact-details[open] summary::after {
+      content: "-";
+    }
+
     .contact-console {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
       gap: 1rem;
-      margin-top: 1rem;
+      padding: 1rem;
+      animation: contactDetailsIn 0.22s var(--contact-ease) both;
     }
 
     .contact-action-grid,
@@ -341,6 +409,17 @@
       }
     }
 
+    @keyframes contactDetailsIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 720px) {
       .contact-hero,
       .contact-console,
@@ -351,6 +430,10 @@
 
       .contact-note {
         padding: 0.85rem 0.95rem;
+      }
+
+      .contact-details summary {
+        align-items: flex-start;
       }
 
       .contact-heading {
@@ -367,10 +450,13 @@
     @media (prefers-reduced-motion: reduce) {
       .contact-hero,
       .contact-list li,
+      .contact-console,
       #map {
         animation: none;
       }
 
+      .contact-details summary,
+      .contact-details summary::after,
       .contact-heading::after,
       .contact-list li,
       .contact-link,
@@ -409,58 +495,61 @@
       </aside>
     </section>
 
-    <section class="contact-console" data-reveal aria-label="Contact console">
-      <div class="contact-action-grid">
-        <a class="contact-card" href="mailto:tqsui619@gmail.com">
-          <span>Primary Email</span>
-          <strong>tqsui619@gmail.com</strong>
-          <p>Best path for project, resume, and engineering conversations.</p>
-        </a>
-        <div class="contact-card">
-          <span>Quick Action</span>
-          <strong>Copy email</strong>
-          <p>Copies the primary email address for later follow-up.</p>
-          <button class="copy-contact-button" type="button" data-copy="tqsui619@gmail.com" data-copy-message="Email copied.">Copy Email</button>
+    <details class="contact-details" data-reveal>
+      <summary>More contact paths and good-fit topics</summary>
+      <section class="contact-console" aria-label="Contact console">
+        <div class="contact-action-grid">
+          <a class="contact-card" href="mailto:tqsui619@gmail.com">
+            <span>Primary Email</span>
+            <strong>tqsui619@gmail.com</strong>
+            <p>Best path for project, resume, and engineering conversations.</p>
+          </a>
+          <div class="contact-card">
+            <span>Quick Action</span>
+            <strong>Copy email</strong>
+            <p>Copies the primary email address for later follow-up.</p>
+            <button class="copy-contact-button" type="button" data-copy="tqsui619@gmail.com" data-copy-message="Email copied.">Copy Email</button>
+          </div>
+          <a class="contact-card" href="resume.html">
+            <span>Resume</span>
+            <strong>Resume Console</strong>
+            <p>PDF preview, quick facts, and skill matrix.</p>
+          </a>
+          <a class="contact-card" href="projects.html">
+            <span>Work</span>
+            <strong>Project Case Studies</strong>
+            <p>Hardware learning tools, macOS utilities, embedded systems, and maps.</p>
+          </a>
+          <a class="contact-card" href="https://github.com/marksui" target="_blank" rel="noopener">
+            <span>Code</span>
+            <strong>GitHub</strong>
+            <p>Source repos and public project work.</p>
+          </a>
+          <a class="contact-card" href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">
+            <span>Profile</span>
+            <strong>LinkedIn</strong>
+            <p>Professional background and network context.</p>
+          </a>
         </div>
-        <a class="contact-card" href="resume.html">
-          <span>Resume</span>
-          <strong>Resume Console</strong>
-          <p>PDF preview, quick facts, and skill matrix.</p>
-        </a>
-        <a class="contact-card" href="projects.html">
-          <span>Work</span>
-          <strong>Project Case Studies</strong>
-          <p>Hardware learning tools, macOS utilities, embedded systems, and maps.</p>
-        </a>
-        <a class="contact-card" href="https://github.com/marksui" target="_blank" rel="noopener">
-          <span>Code</span>
-          <strong>GitHub</strong>
-          <p>Source repos and public project work.</p>
-        </a>
-        <a class="contact-card" href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">
-          <span>Profile</span>
-          <strong>LinkedIn</strong>
-          <p>Professional background and network context.</p>
-        </a>
-      </div>
-      <aside class="contact-fit-grid" aria-label="Good fit topics">
-        <article class="contact-fit-card">
-          <span>Good Fit</span>
-          <strong>Hardware-minded software</strong>
-          <p>Tools that make RTL, architecture, verification, or circuit concepts easier to inspect.</p>
-        </article>
-        <article class="contact-fit-card">
-          <span>Good Fit</span>
-          <strong>Systems and embedded work</strong>
-          <p>Sensor-driven systems, local-first utilities, and practical debugging workflows.</p>
-        </article>
-        <article class="contact-fit-card">
-          <span>Good Fit</span>
-          <strong>Portfolio/project review</strong>
-          <p>Feedback or collaboration around engineering tools, data interfaces, and public demos.</p>
-        </article>
-      </aside>
-    </section>
+        <aside class="contact-fit-grid" aria-label="Good fit topics">
+          <article class="contact-fit-card">
+            <span>Good Fit</span>
+            <strong>Hardware-minded software</strong>
+            <p>Tools that make RTL, architecture, verification, or circuit concepts easier to inspect.</p>
+          </article>
+          <article class="contact-fit-card">
+            <span>Good Fit</span>
+            <strong>Systems and embedded work</strong>
+            <p>Sensor-driven systems, local-first utilities, and practical debugging workflows.</p>
+          </article>
+          <article class="contact-fit-card">
+            <span>Good Fit</span>
+            <strong>Portfolio/project review</strong>
+            <p>Feedback or collaboration around engineering tools, data interfaces, and public demos.</p>
+          </article>
+        </aside>
+      </section>
+    </details>
 
     <section data-reveal>
       <h2 class="contact-heading">Direct</h2>
@@ -506,7 +595,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>
@@ -518,50 +607,57 @@
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script>
-    var map = L.map('map', {
-      scrollWheelZoom: false
-    }).setView([32.8801, -117.2340], 14);
+    (function() {
+      var mapElement = document.getElementById("map");
+      if (!mapElement || typeof L === "undefined") {
+        return;
+      }
 
-    var tileUrls = {
-      light: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
-      dark: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    };
+      var map = L.map("map", {
+        scrollWheelZoom: false
+      }).setView([32.8801, -117.2340], 14);
 
-    var tileOptions = {
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
-    };
-
-    var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-    var tiles = L.tileLayer(tileUrls[currentTheme] || tileUrls.light, tileOptions).addTo(map);
-
-    function markerStyle(theme) {
-      return {
-        radius: 8,
-        color: theme === 'dark' ? '#101010' : '#fdfdfc',
-        weight: 2,
-        fillColor: theme === 'dark' ? '#9DB7D5' : '#102A43',
-        fillOpacity: 0.95
+      var tileUrls = {
+        light: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
       };
-    }
 
-    var marker = L.circleMarker([32.8801, -117.2340], markerStyle(currentTheme)).addTo(map)
-      .bindPopup("<b>University of California, San Diego</b><br>My current location.")
-      .openPopup();
+      var tileOptions = {
+        attribution: "&copy; OpenStreetMap contributors &copy; CARTO"
+      };
 
-    function applyMapTheme(theme) {
-      var resolved = theme === 'dark' ? 'dark' : 'light';
-      tiles.setUrl(tileUrls[resolved]);
-      marker.setStyle(markerStyle(resolved));
-    }
+      var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+      var tiles = L.tileLayer(tileUrls[currentTheme] || tileUrls.light, tileOptions).addTo(map);
 
-    var observer = new MutationObserver(function() {
-      applyMapTheme(document.documentElement.getAttribute('data-theme'));
-    });
+      function markerStyle(theme) {
+        return {
+          radius: 8,
+          color: theme === "dark" ? "#101010" : "#fdfdfc",
+          weight: 2,
+          fillColor: theme === "dark" ? "#9DB7D5" : "#102A43",
+          fillOpacity: 0.95
+        };
+      }
 
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
+      var marker = L.circleMarker([32.8801, -117.2340], markerStyle(currentTheme)).addTo(map)
+        .bindPopup("<b>University of California, San Diego</b><br>My current location.")
+        .openPopup();
+
+      function applyMapTheme(theme) {
+        var resolved = theme === "dark" ? "dark" : "light";
+        tiles.setUrl(tileUrls[resolved]);
+        marker.setStyle(markerStyle(resolved));
+      }
+
+      var observer = new MutationObserver(function() {
+        applyMapTheme(document.documentElement.getAttribute("data-theme"));
+      });
+
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-theme"]
+      });
+    })();
   </script>
 </body>
 </html>

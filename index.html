@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="img/icons/favicon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png">
-  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
   <meta name="description" content="Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
@@ -87,8 +87,8 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260529-ops">
-  <script src="theme.js?v=20260529-ops"></script>
+  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <script src="theme.js?v=20260612-projects"></script>
   <style>
     .home-main {
       max-width: 1120px;
@@ -797,18 +797,6 @@
       transition: transform 0.34s var(--home-ease), filter 0.3s ease;
     }
 
-    .home-main.has-reveal [data-reveal] {
-      opacity: 0;
-      transform: translateY(14px);
-      transition: opacity 0.54s ease, transform 0.62s var(--home-ease);
-      transition-delay: var(--reveal-delay, 0ms);
-    }
-
-    .home-main.has-reveal [data-reveal].is-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .updates-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -986,15 +974,9 @@
       .project-title-link,
       .project-links a,
       .skills-band-card,
-      .home-main.has-reveal [data-reveal],
       .updates-list li,
       .updates-list li::before {
         transition: none;
-      }
-
-      .home-main.has-reveal [data-reveal] {
-        opacity: 1;
-        transform: none;
       }
 
       .recent-project-card:hover .project-visual img,
@@ -1321,6 +1303,13 @@
         </li>
 
         <li>
+          <strong>Quarter Project Reports</strong><br>
+          <em>RTL generation, CUDA cryptography, MBFF clustering, and OpenROAD physical design</em><br>
+          Added report-backed case studies from this quarter, including VerilogEval/MAGE work,
+          GPU GGM tree construction, and ECE 260C physical-design optimization projects.
+        </li>
+
+        <li>
           <strong>Technical Skills</strong><br>
           <em>Architecture, hardware design, performance, and tools</em><br>
           Verilog/SystemVerilog, RTL design and verification, FPGA, Quartus, ModelSim, Cadence Virtuoso,
@@ -1342,7 +1331,7 @@
         <a href="index.html">About</a>
         <a href="education.html">Education</a>
         <a href="experience.html">Experience</a>
-        <a href="projects.html">Work</a>
+        <a href="projects.html">Projects</a>
         <a href="personal.html">Archive</a>
         <a href="resume.html">Resume</a>
         <a href="contact.html">Contact</a>
@@ -1351,57 +1340,5 @@
       </nav>
     </div>
   </footer>
-  <script>
-    (function() {
-      document.addEventListener("DOMContentLoaded", function() {
-        var main = document.querySelector(".home-main");
-        if (!main) {
-          return;
-        }
-
-        var items = Array.prototype.slice.call(main.querySelectorAll("[data-reveal]"));
-        if (!items.length) {
-          return;
-        }
-
-        main.classList.add("has-reveal");
-
-        function show(item) {
-          item.classList.add("is-visible");
-        }
-
-        items.forEach(function(item, index) {
-          item.style.setProperty("--reveal-delay", Math.min(index * 70, 360) + "ms");
-        });
-
-        if (!("IntersectionObserver" in window)) {
-          items.forEach(show);
-          return;
-        }
-
-        window.setTimeout(function() {
-          items.forEach(show);
-        }, 900);
-
-        var observer = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (!entry.isIntersecting) {
-              return;
-            }
-
-            show(entry.target);
-            observer.unobserve(entry.target);
-          });
-        }, {
-          rootMargin: "0px 0px -8% 0px",
-          threshold: 0.14
-        });
-
-        items.forEach(function(item) {
-          observer.observe(item);
-        });
-      });
-    })();
-  </script>
 </body>
 </html>

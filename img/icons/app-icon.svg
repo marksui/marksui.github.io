@@ -1,7 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Mark Sui portfolio icon">
-  <rect width="512" height="512" rx="104" fill="#fdfdfc"/>
-  <rect x="34" y="34" width="444" height="444" rx="92" fill="#55645e"/>
-  <path d="M108 352V132h54l94 136 94-136h54v220h-58V230L274 336h-36l-72-106v122h-58z" fill="#fdfdfc"/>
-  <path d="M142 390h228" stroke="#d9d5cc" stroke-width="22" stroke-linecap="round"/>
-  <path d="M142 94h228" stroke="#a8b6ae" stroke-width="10" stroke-linecap="round" opacity=".72"/>
+  <rect width="512" height="512" rx="108" fill="#102A43"/>
+  <rect x="36" y="36" width="440" height="440" rx="86" fill="none" stroke="#D8E2EC" stroke-width="18" opacity=".9"/>
+  <text x="256" y="328" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="216" font-weight="700" letter-spacing="-10" fill="#FDFDFC">MS</text>
+  <path d="M148 386h216" stroke="#9FB3C8" stroke-width="24" stroke-linecap="round"/>
 </svg>

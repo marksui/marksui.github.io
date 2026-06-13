@@ -1,5 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Mark Sui">
-  <rect width="64" height="64" rx="14" fill="#55645e"/>
-  <path d="M12 48V16h8l12 18 12-18h8v32h-8V30L34 45h-4L20 30v18h-8z" fill="#fdfdfc"/>
-  <path d="M18 53h28" stroke="#d9d5cc" stroke-width="3" stroke-linecap="round"/>
+  <rect width="64" height="64" rx="13" fill="#102A43"/>
+  <rect x="4.5" y="4.5" width="55" height="55" rx="10" fill="none" stroke="#D8E2EC" stroke-width="2.25" opacity=".9"/>
+  <text x="32" y="41" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" letter-spacing="-1" fill="#FDFDFC">MS</text>
+  <path d="M19 48h26" stroke="#9FB3C8" stroke-width="3" stroke-linecap="round"/>
 </svg>
