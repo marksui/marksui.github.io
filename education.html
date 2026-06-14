@@ -153,11 +153,11 @@
     }
 
     .study-card {
-      padding: 1rem 1rem 1.05rem;
       border: 1px solid var(--edu-rule);
       border-radius: 8px;
       background: var(--edu-panel);
       box-shadow: var(--edu-shadow);
+      overflow: hidden;
       transition: transform 0.3s var(--edu-ease), border-color 0.24s ease, background 0.24s ease;
       animation: educationFadeUp 0.66s var(--edu-ease) both;
     }
@@ -176,6 +176,53 @@
       background: linear-gradient(180deg, var(--edu-wash), transparent 86%), var(--edu-panel);
     }
 
+    .study-card summary {
+      position: relative;
+      display: grid;
+      gap: 0.3rem;
+      min-height: 7rem;
+      padding: 1rem 3.1rem 1.05rem 1rem;
+      cursor: pointer;
+      list-style: none;
+      outline: none;
+    }
+
+    .study-card summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .study-card summary::after {
+      content: "+";
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      display: inline-grid;
+      place-items: center;
+      width: 1.35rem;
+      height: 1.35rem;
+      border: 1px solid color-mix(in srgb, var(--edu-accent) 36%, var(--edu-rule));
+      border-radius: 999px;
+      color: var(--edu-accent);
+      font-size: 0.9rem;
+      line-height: 1;
+      transition: transform 0.22s var(--edu-ease), background 0.22s ease, border-color 0.22s ease;
+    }
+
+    .study-card summary:hover::after,
+    .study-card summary:focus-visible::after {
+      transform: translateY(-1px);
+      border-color: var(--edu-accent);
+      background: var(--edu-wash);
+    }
+
+    .study-card[open] summary {
+      border-bottom: 1px solid var(--edu-rule);
+    }
+
+    .study-card[open] summary::after {
+      content: "-";
+    }
+
     .study-card span {
       display: block;
       color: var(--edu-accent);
@@ -184,12 +231,24 @@
       line-height: 1.2;
     }
 
-    .study-card h3 {
-      margin: 0.3rem 0 0.45rem;
+    .study-card h3,
+    .study-title {
+      display: block;
+      margin: 0;
+      color: var(--text);
       font-size: 1.16rem;
       line-height: 1.15;
       font-weight: 600;
       letter-spacing: 0.01em;
+    }
+
+    .study-card-body {
+      padding: 0.9rem 1rem 1.05rem;
+      animation: studyDetailsIn 0.22s var(--edu-ease) both;
+    }
+
+    .study-card:not([open]) .study-card-body {
+      display: none;
     }
 
     .study-card p {
@@ -397,6 +456,17 @@
       }
     }
 
+    @keyframes studyDetailsIn {
+      from {
+        opacity: 0;
+        transform: translateY(-4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     @media (max-width: 900px) {
       .education-hero,
       .study-grid {
@@ -436,6 +506,24 @@
     @media (max-width: 640px) {
       .education-copy h2 {
         font-size: 2.28rem;
+      }
+
+      .study-card summary {
+        min-height: 6.2rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .education-hero,
+      .study-card,
+      .education-entry,
+      .study-card-body {
+        animation: none;
+      }
+
+      .study-card,
+      .study-card summary::after {
+        transition: none;
       }
     }
   </style>
@@ -486,56 +574,80 @@
     <section>
       <h2 class="section-heading">Study Themes</h2>
       <div class="study-grid">
-        <article class="study-card">
-          <span>Graduate Direction</span>
-          <h3>Very Large Scale Integration</h3>
-          <p>
-            Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, computer architecture,
-            and physical-design workflows.
-          </p>
-        </article>
-        <article class="study-card">
-          <span>Interdisciplinary Base</span>
-          <h3>Engineering + Mathematics</h3>
-          <p>
-            Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, cryptography,
-            and performance-oriented implementation.
-          </p>
-        </article>
-        <article class="study-card">
-          <span>Academic Breadth</span>
-          <h3>Global Study and Leadership</h3>
-          <p>
-            Broadened perspective through UC study abroad at NUS, summer coursework across multiple campuses, and student leadership.
-          </p>
-        </article>
+        <details class="study-card">
+          <summary>
+            <span>Graduate Direction</span>
+            <strong class="study-title">Very Large Scale Integration</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, computer architecture,
+              and physical-design workflows.
+            </p>
+          </div>
+        </details>
+        <details class="study-card">
+          <summary>
+            <span>Interdisciplinary Base</span>
+            <strong class="study-title">Engineering + Mathematics</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, cryptography,
+              and performance-oriented implementation.
+            </p>
+          </div>
+        </details>
+        <details class="study-card">
+          <summary>
+            <span>Academic Breadth</span>
+            <strong class="study-title">Global Study and Leadership</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Broadened perspective through UC study abroad at NUS, summer coursework across multiple campuses, and student leadership.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 
     <section>
       <h2 class="section-heading">Quarter Coursework Signals</h2>
       <div class="study-grid">
-        <article class="study-card">
-          <span>ECE 260C / Spring 2026</span>
-          <h3>OpenROAD Physical Design</h3>
-          <p>
-            Built report-backed work around MBFF clustering, CTS tuning, floorplanning, and timing / power / area tradeoffs.
-          </p>
-        </article>
-        <article class="study-card">
-          <span>ECE 268 / Spring 2026</span>
-          <h3>CUDA Cryptography</h3>
-          <p>
-            Implemented GPU-accelerated GGM tree construction with Keccak and Spongent backends for protocol-scale throughput.
-          </p>
-        </article>
-        <article class="study-card">
-          <span>RTL Generation Research</span>
-          <h3>VerilogEval + MAGE</h3>
-          <p>
-            Studied LLM-generated RTL failure modes through routing, repair prompts, edit guards, and task-local memory.
-          </p>
-        </article>
+        <details class="study-card">
+          <summary>
+            <span>ECE 260C / Spring 2026</span>
+            <strong class="study-title">OpenROAD Physical Design</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Built report-backed work around MBFF clustering, CTS tuning, floorplanning, and timing / power / area tradeoffs.
+            </p>
+          </div>
+        </details>
+        <details class="study-card">
+          <summary>
+            <span>ECE 268 / Spring 2026</span>
+            <strong class="study-title">CUDA Cryptography</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Implemented GPU-accelerated GGM tree construction with Keccak and Spongent backends for protocol-scale throughput.
+            </p>
+          </div>
+        </details>
+        <details class="study-card">
+          <summary>
+            <span>RTL Generation Research</span>
+            <strong class="study-title">VerilogEval + MAGE</strong>
+          </summary>
+          <div class="study-card-body">
+            <p>
+              Studied LLM-generated RTL failure modes through routing, repair prompts, edit guards, and task-local memory.
+            </p>
+          </div>
+        </details>
       </div>
     </section>
 

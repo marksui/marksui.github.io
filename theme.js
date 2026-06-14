@@ -144,6 +144,12 @@
   }
 
   function initGlobalReveal() {
+    Array.prototype.slice.call(document.querySelectorAll("main > :not(script):not(style):not([data-no-reveal])")).forEach(function(item) {
+      if (!item.hasAttribute("data-reveal")) {
+        item.setAttribute("data-reveal", "auto");
+      }
+    });
+
     var items = Array.prototype.slice.call(document.querySelectorAll("[data-reveal]"));
     if (!items.length) {
       return;
@@ -152,22 +158,38 @@
     document.body.classList.add("reveal-ready");
     items.forEach(function(item, index) {
       if (!item.style.getPropertyValue("--reveal-delay")) {
-        item.style.setProperty("--reveal-delay", Math.min(index * 70, 280) + "ms");
+        item.style.setProperty("--reveal-delay", Math.min(index * 55, 220) + "ms");
       }
     });
 
+    function finish(item) {
+      item.classList.add("reveal-finished");
+    }
+
     function show(item) {
+      if (item.classList.contains("is-visible")) {
+        return;
+      }
+
       item.classList.add("is-visible");
+      item.addEventListener("transitionend", function(event) {
+        if (event.propertyName === "transform" || event.propertyName === "opacity") {
+          finish(item);
+        }
+      }, { once: true });
+
+      window.setTimeout(function() {
+        finish(item);
+      }, 900);
     }
 
     if (prefersReducedMotion() || !("IntersectionObserver" in window)) {
-      items.forEach(show);
+      items.forEach(function(item) {
+        item.classList.add("is-visible");
+        finish(item);
+      });
       return;
     }
-
-    window.setTimeout(function() {
-      items.forEach(show);
-    }, 1000);
 
     var observer = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -176,7 +198,7 @@
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.16, rootMargin: "0px 0px -8% 0px" });
+    }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
 
     items.forEach(function(item) {
       observer.observe(item);

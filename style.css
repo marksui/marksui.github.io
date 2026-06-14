@@ -25,6 +25,11 @@ html {
   --radius-chip: 999px;
   --header-bg: rgba(255, 255, 255, 0.86);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-fast: 160ms;
+  --motion-medium: 320ms;
+  --motion-slow: 560ms;
   scroll-behavior: smooth;
   scroll-padding-top: 7rem;
   scrollbar-gutter: stable;
@@ -86,18 +91,18 @@ body {
 
 body.site-ready main,
 body.site-ready .site-footer {
-  animation: sitePageIn 0.42s var(--ease) both;
+  animation: sitePageIn var(--motion-slow) var(--ease-out) both;
 }
 
 body.site-ready .site-footer {
-  animation-delay: 0.06s;
+  animation-delay: 80ms;
 }
 
 body.site-exiting main,
 body.site-exiting .site-footer {
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.18s ease, transform 0.18s var(--ease);
+  transform: translate3d(0, 6px, 0);
+  transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-soft);
 }
 
 img,
@@ -131,8 +136,8 @@ header {
   padding: 1.18rem 1rem 0.82rem;
   border-bottom: 1px solid var(--nav-rule);
   background: var(--surface);
-  animation: headerIn 0.58s var(--ease) both;
-  transition: padding 0.24s var(--ease), box-shadow 0.24s ease, border-color 0.24s ease, background 0.24s ease;
+  animation: headerIn var(--motion-slow) var(--ease-out) both;
+  transition: padding var(--motion-medium) var(--ease-out), box-shadow var(--motion-medium) ease, border-color var(--motion-medium) ease, background var(--motion-medium) ease;
 }
 
 @supports (backdrop-filter: blur(14px)) {
@@ -166,7 +171,7 @@ header h1 {
   display: inline-block;
   color: var(--text);
   letter-spacing: 0.01em;
-  transition: color 0.25s ease, transform 0.3s var(--ease);
+  transition: color var(--motion-medium) ease, transform var(--motion-medium) var(--ease-out);
   transform-origin: center;
 }
 
@@ -200,7 +205,7 @@ header h1::after {
   background: var(--nav-rule);
   transform: translateX(-50%) scaleX(0.72);
   transform-origin: center;
-  transition: background 0.25s ease, transform 0.32s var(--ease);
+  transition: background var(--motion-medium) ease, transform var(--motion-medium) var(--ease-out);
 }
 
 header h1:hover {
@@ -234,7 +239,7 @@ header nav a {
   color: var(--text);
   font-size: 0.96rem;
   opacity: 0.76;
-  transition: color 0.24s ease, opacity 0.24s ease, transform 0.28s var(--ease), border-color 0.24s ease, background 0.24s ease;
+  transition: color var(--motion-fast) ease, opacity var(--motion-fast) ease, transform var(--motion-medium) var(--ease-out), border-color var(--motion-fast) ease, background var(--motion-fast) ease;
 }
 
 header nav a:focus-visible,
@@ -245,7 +250,17 @@ button:focus-visible {
 }
 
 header nav a::after {
-  content: none;
+  content: "";
+  position: absolute;
+  left: 0.62rem;
+  right: 0.62rem;
+  bottom: 0.24rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.65;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--motion-medium) var(--ease-out), opacity var(--motion-fast) ease;
 }
 
 header nav a:hover,
@@ -256,6 +271,13 @@ header nav a[aria-current="page"] {
   transform: translateY(-1px);
   border-color: var(--nav-accent);
   background: color-mix(in srgb, var(--nav-accent) 9%, transparent);
+}
+
+header nav a:hover::after,
+header nav a:focus-visible::after,
+header nav a[aria-current="page"]::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .travel-local-nav {
@@ -650,10 +672,9 @@ body main[class] section:hover .contact-heading::after {
 }
 
 body main[class] :is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .build-card, .capability-card, .portal-card, .feature-card, .contact-card, .contact-fit-card, .contact-list li, .resume-status, .quick-fact, .skill-matrix-card, .gallery-card, .collection-card, .photo-wall-card, .archive-pick-links a, .region-strip a) {
-  will-change: transform;
   transition-property: transform, border-color, box-shadow, background, color, opacity;
-  transition-duration: 0.24s, 0.24s, 0.24s, 0.24s, 0.2s, 0.2s;
-  transition-timing-function: var(--ease), ease, ease, ease, ease, ease;
+  transition-duration: var(--motion-medium), var(--motion-fast), var(--motion-medium), var(--motion-fast), var(--motion-fast), var(--motion-fast);
+  transition-timing-function: var(--ease-out), ease, ease, ease, ease, ease;
 }
 
 body main[class] :is(.summary-card, .study-card, .role-card, .project-card, .site-card, .skills-band-card, .recent-project-card, .build-card, .capability-card, .portal-card, .feature-card, .contact-card, .contact-fit-card, .contact-list li, .resume-status, .quick-fact, .skill-matrix-card, .gallery-card, .collection-card, .photo-wall-card, .archive-pick-links a, .region-strip a):where(:hover, :focus-visible, :focus-within) {
@@ -673,12 +694,15 @@ body main[class] :is(.contact-card, .portal-card, .feature-card, .photo-wall-car
   display: none;
   place-items: start center;
   padding: clamp(5rem, 12vh, 8rem) 1rem 1rem;
-  background: rgba(15, 18, 23, 0.34);
-  backdrop-filter: blur(12px);
+  background: rgba(15, 18, 23, 0);
+  backdrop-filter: blur(0);
+  transition: background var(--motion-medium) ease, backdrop-filter var(--motion-medium) ease;
 }
 
 .command-palette.open {
   display: grid;
+  background: rgba(15, 18, 23, 0.34);
+  backdrop-filter: blur(12px);
 }
 
 .command-palette-panel {
@@ -688,7 +712,7 @@ body main[class] :is(.contact-card, .portal-card, .feature-card, .photo-wall-car
   border-radius: 8px;
   background: var(--surface);
   box-shadow: 0 24px 70px rgba(16, 42, 67, 0.2);
-  animation: commandIn 0.2s var(--ease) both;
+  animation: commandIn var(--motion-medium) var(--ease-out) both;
 }
 
 html[data-theme="dark"] .command-palette-panel {
@@ -735,7 +759,7 @@ html[data-theme="dark"] .command-palette-panel {
   color: var(--text);
   cursor: pointer;
   text-align: left;
-  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s var(--ease);
+  transition: background var(--motion-fast) ease, border-color var(--motion-fast) ease, color var(--motion-fast) ease, transform var(--motion-fast) var(--ease-out);
 }
 
 .command-palette-result:hover,
@@ -798,8 +822,8 @@ html[data-theme="dark"] .command-palette-panel {
   color: var(--text);
   box-shadow: 0 18px 50px rgba(16, 42, 67, 0.18);
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.18s ease, transform 0.22s var(--ease);
+  transform: translate3d(0, 8px, 0) scale(0.98);
+  transition: opacity var(--motion-fast) ease, transform var(--motion-medium) var(--ease-out);
 }
 
 html[data-theme="dark"] .site-toast {
@@ -808,40 +832,45 @@ html[data-theme="dark"] .site-toast {
 
 .site-toast.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 body.reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.54s ease, transform 0.62s var(--ease);
+  transform: translate3d(0, var(--reveal-distance, 16px), 0) scale(var(--reveal-scale, 0.992));
+  transition: opacity var(--motion-slow) ease, transform 680ms var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 body.reveal-ready [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+body.reveal-ready [data-reveal].reveal-finished {
+  will-change: auto;
 }
 
 @keyframes sitePageIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translate3d(0, 8px, 0) scale(0.997);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes commandIn {
   from {
     opacity: 0;
-    transform: translateY(8px) scale(0.98);
+    transform: translate3d(0, 10px, 0) scale(0.985);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
@@ -1043,11 +1072,11 @@ body.viewer-open {
 @keyframes headerIn {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translate3d(0, -8px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 

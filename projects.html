@@ -1158,6 +1158,143 @@
       background: color-mix(in srgb, var(--site-accent, var(--projects-accent)) 18%, transparent);
     }
 
+    /* Calm project motion: keep status feedback, remove sweeping/zooming movement. */
+    .projects-hero,
+    .project-details[open] .project-details-body {
+      animation: none;
+    }
+
+    .section-heading::after,
+    .project-lane,
+    .project-search-input,
+    .project-filter-clear,
+    .project-filter-button,
+    .spotlight-tab,
+    .spotlight-media img,
+    .spotlight-links a,
+    .project-card,
+    .site-card,
+    .project-details summary::after,
+    .project-title,
+    .site-title,
+    .project-links a,
+    .site-links a,
+    .project-visual img,
+    .site-preview img,
+    .site-mark {
+      transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        box-shadow 0.18s ease,
+        filter 0.18s ease;
+    }
+
+    .project-card::after,
+    .site-card::after,
+    .project-visual::after,
+    .site-preview::after {
+      content: none;
+    }
+
+    .section-heading::after,
+    section:hover .section-heading::after,
+    .project-lane:hover,
+    .project-lane:focus-visible,
+    .project-filter-clear:hover,
+    .project-filter-clear:focus-visible,
+    .project-filter-button:hover,
+    .project-filter-button:focus-visible,
+    .project-filter-button[aria-pressed="true"],
+    .spotlight-tab:hover,
+    .spotlight-tab:focus-visible,
+    .spotlight-tab[aria-selected="true"],
+    .spotlight-panel:hover .spotlight-media img,
+    .spotlight-panel:focus-within .spotlight-media img,
+    .spotlight-links a:hover,
+    .spotlight-links a:focus-visible,
+    .project-card:hover,
+    .project-card:focus-within,
+    .site-card:hover,
+    .site-card:focus-within,
+    .project-card:hover .project-visual img,
+    .project-card:focus-within .project-visual img,
+    .site-card:hover .site-preview img,
+    .site-card:focus-within .site-preview img,
+    .project-details summary:hover::after,
+    .project-details summary:focus-visible::after,
+    .project-links a:hover,
+    .project-links a:focus-visible,
+    .site-links a:hover,
+    .site-links a:focus-visible,
+    .site-card:hover .site-mark,
+    .site-card:focus-within .site-mark {
+      transform: none;
+    }
+
+    section:hover .section-heading::after {
+      background: linear-gradient(90deg, var(--projects-accent), transparent);
+    }
+
+    body main.projects-main .section-heading::after,
+    body main.projects-main section:hover .section-heading::after {
+      transform: none;
+      transition: background 0.18s ease, opacity 0.18s ease;
+    }
+
+    body main.projects-main :is(
+      .project-lane,
+      .project-search-input,
+      .project-filter-clear,
+      .project-filter-button,
+      .spotlight-tab,
+      .spotlight-media img,
+      .spotlight-links a,
+      .project-card,
+      .site-card,
+      .project-details summary::after,
+      .project-title,
+      .site-title,
+      .project-links a,
+      .site-links a,
+      .project-visual img,
+      .site-preview img,
+      .site-mark
+    ) {
+      transition-property: border-color, background, color, box-shadow, filter;
+      transition-duration: 0.18s;
+      transition-timing-function: ease;
+    }
+
+    body main.projects-main :is(.project-card, .site-card)::after,
+    body main.projects-main :is(.project-visual, .site-preview)::after {
+      content: none;
+    }
+
+    body main.projects-main :is(
+      .project-lane,
+      .project-filter-clear,
+      .project-filter-button,
+      .spotlight-tab,
+      .spotlight-links a,
+      .project-card,
+      .site-card,
+      .project-details summary::after,
+      .project-links a,
+      .site-links a,
+      .site-mark
+    ):where(:hover, :focus-visible, :focus-within),
+    body main.projects-main .project-filter-button[aria-pressed="true"],
+    body main.projects-main .spotlight-tab[aria-selected="true"],
+    body main.projects-main .spotlight-panel:hover .spotlight-media img,
+    body main.projects-main .spotlight-panel:focus-within .spotlight-media img,
+    body main.projects-main .project-card:hover .project-visual img,
+    body main.projects-main .project-card:focus-within .project-visual img,
+    body main.projects-main .site-card:hover .site-preview img,
+    body main.projects-main .site-card:focus-within .site-preview img {
+      transform: none;
+    }
+
     @media (max-width: 840px) {
       .projects-hero,
       .featured-grid,
