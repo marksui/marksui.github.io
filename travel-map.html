@@ -26,9 +26,9 @@
   <meta name="twitter:description" content="Interactive travel map from Mark Sui's personal archive, connecting places, photos, regions, and visited locations.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css?v=20260613-nav">
+  <link rel="stylesheet" href="style.css?v=20260622-perf">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <script src="theme.js?v=20260612-projects"></script>
+  <script src="theme.js?v=20260622-perf"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
   <style>
@@ -1620,7 +1620,7 @@
           var placePhotoCount = countPhotosForPlace(item.place);
           var active = item.index === selectedIndex;
           var photoGrid = placePhotoCount
-            ? '<div class="photo-slots">' + makePhotoSlots(item.place, null, false) + '</div>'
+            ? '<div class="photo-slots">' + makePhotoSlots(item.place, 4, false) + '</div>'
             : '';
           return '' +
             '<li class="place-item">' +

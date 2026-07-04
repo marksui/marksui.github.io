@@ -91,7 +91,7 @@ body {
 
 body.site-ready main,
 body.site-ready .site-footer {
-  animation: sitePageIn var(--motion-slow) var(--ease-out) both;
+  animation: sitePageIn 220ms var(--ease-out) both;
 }
 
 body.site-ready .site-footer {
@@ -101,8 +101,8 @@ body.site-ready .site-footer {
 body.site-exiting main,
 body.site-exiting .site-footer {
   opacity: 0;
-  transform: translate3d(0, 6px, 0);
-  transition: opacity var(--motion-fast) ease, transform var(--motion-fast) var(--ease-soft);
+  transform: none;
+  transition: opacity 90ms ease;
 }
 
 img,
@@ -850,6 +850,31 @@ body.reveal-ready [data-reveal].is-visible {
 
 body.reveal-ready [data-reveal].reveal-finished {
   will-change: auto;
+}
+
+@supports (content-visibility: auto) {
+  main > section:not(:first-child),
+  .site-footer,
+  .project-card,
+  .site-card,
+  .gallery-card,
+  .collection-card,
+  .photo-wall-card,
+  .place-item,
+  .tree-node,
+  .tree-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 360px;
+  }
+
+  .gallery-card,
+  .photo-wall-card {
+    contain-intrinsic-size: auto 430px;
+  }
+
+  .site-footer {
+    contain-intrinsic-size: auto 220px;
+  }
 }
 
 @keyframes sitePageIn {
