@@ -182,6 +182,46 @@
       font-size: 1.05rem;
     }
 
+    .projects-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.85rem;
+    }
+
+    .projects-hero-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 2.28rem;
+      padding: 0.34rem 0.78rem;
+      border: 1px solid var(--projects-rule);
+      border-radius: 999px;
+      background: var(--projects-panel);
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .projects-hero-actions a:first-child {
+      border-color: var(--projects-accent);
+      background: var(--projects-accent);
+      color: #f7f3ee;
+    }
+
+    html[data-theme="dark"] .projects-hero-actions a:first-child {
+      color: #0f1217;
+    }
+
+    .projects-hero-actions a:hover,
+    .projects-hero-actions a:focus-visible {
+      border-color: var(--projects-accent);
+      background: var(--projects-wash);
+      color: var(--projects-accent);
+    }
+
     .project-summary {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -527,13 +567,16 @@
 
     .spotlight-media a {
       display: block;
+      min-width: 0;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
 
     .spotlight-media img {
       display: block;
       width: 100%;
+      max-width: 100%;
       height: 100%;
       min-height: 22rem;
       object-fit: cover;
@@ -748,6 +791,7 @@
       position: relative;
       display: grid;
       place-items: center;
+      margin: 0;
       aspect-ratio: 16 / 10;
       overflow: hidden;
       border-bottom: 1px solid var(--projects-rule);
@@ -772,13 +816,16 @@
     .project-visual a {
       display: grid;
       place-items: center;
+      min-width: 0;
       width: 100%;
       height: 100%;
+      overflow: hidden;
     }
 
     .project-visual img {
       display: block;
       width: 100%;
+      max-width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.34s var(--projects-ease), filter 0.3s ease;
@@ -1341,6 +1388,8 @@
 
       .project-card.featured-primary .project-visual {
         min-height: 0;
+        height: auto;
+        width: 100%;
         border-right: 0;
         border-bottom: 1px solid var(--projects-rule);
         aspect-ratio: 16 / 10;
@@ -1411,6 +1460,10 @@
       .spotlight-tabs,
       .spotlight-signal-grid {
         grid-template-columns: 1fr;
+      }
+
+      .projects-hero-actions a {
+        flex: 1 1 10rem;
       }
 
       .case-study-points {
@@ -1522,26 +1575,32 @@
   <main class="projects-main">
     <section class="projects-hero">
       <div>
-        <p class="projects-kicker">Projects</p>
-        <h2>Engineering tools with hardware instincts.</h2>
+        <p class="projects-kicker">Project Index / Hiring Signal</p>
+        <h2>Engineering tools that expose hardware reasoning.</h2>
         <p>
-          A focused index of public builds across hardware learning, native utilities, embedded sensing,
-          interactive maps, and data systems. I care most about projects that make technical reasoning
-          clearer, faster, and more concrete.
+          A focused index of public builds across hardware learning, RTL/VLSI coursework,
+          embedded sensing, native utilities, and data systems. Start with the spotlight if
+          you want the quickest read on my strongest implementation signal.
         </p>
+        <div class="projects-hero-actions" aria-label="Primary project paths">
+          <a href="#project-spotlight-heading">View Spotlight</a>
+          <a href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
+          <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+          <a href="contact.html">Contact</a>
+        </div>
       </div>
       <div class="project-summary" aria-label="Project summary">
         <div class="summary-tile">
-          <span>Projects + Reports</span>
-          <strong>13+</strong>
+          <span>Best Signal</span>
+          <strong>RTL / VLSI tooling</strong>
         </div>
         <div class="summary-tile">
-          <span>Signal</span>
-          <strong>Hardware-minded UX</strong>
+          <span>Evidence</span>
+          <strong>Live apps + reports</strong>
         </div>
         <div class="summary-tile">
-          <span>Primary Stack</span>
-          <strong>Swift / JS / C / RTL</strong>
+          <span>Range</span>
+          <strong>JS / Python / C++ / RTL</strong>
         </div>
       </div>
     </section>
@@ -1672,7 +1731,7 @@
           <article class="spotlight-panel" id="spotlight-trainer" role="tabpanel" aria-labelledby="spotlight-tab-trainer" style="--site-accent: #5b6f8f;" data-spotlight-panel hidden>
             <figure class="spotlight-media">
               <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
-                <img src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="eager" decoding="async">
+                <img data-src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
               </a>
             </figure>
             <div class="spotlight-body">
@@ -1710,7 +1769,7 @@
           <article class="spotlight-panel" id="spotlight-mage" role="tabpanel" aria-labelledby="spotlight-tab-mage" style="--site-accent: #536878;" data-spotlight-panel hidden>
             <figure class="spotlight-media">
               <a href="files/project-reports/mage-rtl-generation-routing-memory.pdf" target="_blank" rel="noopener" aria-label="Open MAGE RTL generation report PDF">
-                <img class="spotlight-report" src="img/projects/reports/mage-rtl-generation-routing-memory.webp" width="1365" height="768" alt="MAGE RTL generation report cover" loading="eager" decoding="async">
+                <img class="spotlight-report" data-src="img/projects/reports/mage-rtl-generation-routing-memory.webp" width="1365" height="768" alt="MAGE RTL generation report cover" loading="lazy" decoding="async">
               </a>
             </figure>
             <div class="spotlight-body">
@@ -1748,7 +1807,7 @@
           <article class="spotlight-panel" id="spotlight-cuda" role="tabpanel" aria-labelledby="spotlight-tab-cuda" style="--site-accent: #5b6f8f;" data-spotlight-panel hidden>
             <figure class="spotlight-media">
               <a href="files/project-reports/ece268-ggm-tree-cuda-report.pdf" target="_blank" rel="noopener" aria-label="Open GPU-accelerated GGM tree report PDF">
-                <img class="spotlight-report" src="img/projects/reports/ece268-ggm-tree-cuda-report.webp" width="1365" height="768" alt="GPU-accelerated GGM tree report cover" loading="eager" decoding="async">
+                <img class="spotlight-report" data-src="img/projects/reports/ece268-ggm-tree-cuda-report.webp" width="1365" height="768" alt="GPU-accelerated GGM tree report cover" loading="lazy" decoding="async">
               </a>
             </figure>
             <div class="spotlight-body">
@@ -1786,7 +1845,7 @@
           <article class="spotlight-panel" id="spotlight-xr" role="tabpanel" aria-labelledby="spotlight-tab-xr" style="--site-accent: #7a5f87;" data-spotlight-panel hidden>
             <figure class="spotlight-media">
               <a href="https://www.youtube.com/watch?v=en_fDR_AWmM" target="_blank" rel="noopener" aria-label="Open CloserXR demo video">
-                <img src="img/projects/previews/closerxr-sales-negotiator.jpg" width="1280" height="720" alt="CloserXR Sales Negotiator demo title card" loading="eager" decoding="async">
+                <img data-src="img/projects/previews/closerxr-sales-negotiator.jpg" width="1280" height="720" alt="CloserXR Sales Negotiator demo title card" loading="lazy" decoding="async">
               </a>
             </figure>
             <div class="spotlight-body">
@@ -2586,11 +2645,26 @@
           return document.getElementById(tab.getAttribute("aria-controls"));
         }
 
+        function hydrateSpotlightPanel(panel) {
+          if (!panel) {
+            return;
+          }
+
+          Array.prototype.slice.call(panel.querySelectorAll("img[data-src]")).forEach(function(image) {
+            image.src = image.getAttribute("data-src");
+            image.removeAttribute("data-src");
+            image.setAttribute("loading", "eager");
+            image.setAttribute("fetchpriority", "high");
+          });
+        }
+
         function activateSpotlight(tab, shouldFocus, shouldUpdateHash) {
           var panel = panelForTab(tab);
           if (!tab || !panel) {
             return;
           }
+
+          hydrateSpotlightPanel(panel);
 
           spotlightTabs.forEach(function(item) {
             var selected = item === tab;

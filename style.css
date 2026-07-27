@@ -244,7 +244,10 @@ header nav a {
 
 header nav a:focus-visible,
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+summary:focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
 }
@@ -1217,8 +1220,9 @@ body.viewer-open {
   }
 
   .travel-local-nav .nav-more-menu {
-    right: auto;
-    left: 0;
+    right: 0;
+    left: auto;
+    max-width: min(14rem, calc(100vw - 2rem));
   }
 
   .photo-viewer {
