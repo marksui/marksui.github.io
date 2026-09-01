@@ -22,6 +22,7 @@
     "Indonesia",
     "Singapore",
     "Australia",
+    "Canada",
     "Shandong",
     "Yunnan",
     "Guizhou",

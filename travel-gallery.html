@@ -385,11 +385,18 @@
       cursor: zoom-in;
     }
 
+    .gallery-card.landscape .gallery-hit {
+      aspect-ratio: 16 / 9;
+    }
+
+    .gallery-card.portrait .gallery-hit {
+      aspect-ratio: 9 / 16;
+    }
+
     .gallery-hit img {
       display: block;
       width: 100%;
-      height: auto;
-      max-height: 620px;
+      height: 100%;
       margin: 0 auto;
       object-fit: contain;
       transition: transform 0.34s var(--gallery-ease), filter 0.28s ease;
@@ -826,10 +833,13 @@
         var thumbnail = entry.thumbnail;
         var loading = priority ? "eager" : "lazy";
         var fetchPriority = priority ? "high" : "low";
+        var portrait = entry.orientation === "portrait";
+        var imageWidth = portrait ? 9 : 16;
+        var imageHeight = portrait ? 16 : 9;
         return '' +
           '<article class="gallery-card ' + shared.escapeHtml(entry.orientation || "landscape") + '">' +
             '<button class="gallery-hit" type="button" data-photo-index="' + String(entry.galleryIndex) + '" data-photo-src="' + shared.escapeHtml(entry.photo.src) + '" data-photo-caption="' + shared.escapeHtml(caption) + '">' +
-              '<img src="' + shared.escapeHtml(thumbnail) + '" data-full-src="' + shared.escapeHtml(entry.photo.src) + '" alt="' + shared.escapeHtml(caption) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
+              '<img src="' + shared.escapeHtml(thumbnail) + '" data-full-src="' + shared.escapeHtml(entry.photo.src) + '" width="' + imageWidth + '" height="' + imageHeight + '" alt="' + shared.escapeHtml(caption) + '" loading="' + loading + '" decoding="async" fetchpriority="' + fetchPriority + '">' +
             '</button>' +
             '<div class="gallery-meta">' +
               '<div class="gallery-place">' + shared.htmlLabel(entry.place.name, entry.place.localName) + '</div>' +

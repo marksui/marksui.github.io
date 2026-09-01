@@ -45,6 +45,18 @@
         {
           "src": "img/california/san-diego/san-diego-garden-window-blossoms.jpg",
           "caption": "San Diego - Garden Window Blossoms"
+        },
+        {
+          "src": "img/california/san-diego/san-diego-balboa-park-cormorant-pond.jpg",
+          "caption": "San Diego - Balboa Park Cormorant by the Pond"
+        },
+        {
+          "src": "img/california/san-diego/san-diego-balboa-park-poppy-garden.jpg",
+          "caption": "San Diego - Balboa Park Poppy Garden"
+        },
+        {
+          "src": "img/california/san-diego/san-diego-balboa-park-historic-house-reflection.jpg",
+          "caption": "San Diego - Balboa Park Historic House Reflection"
         }
       ]
     },
@@ -523,6 +535,14 @@
         {
           "src": "img/california/la-jolla/la-jolla-san-diego-california-temple.jpg",
           "caption": "La Jolla - San Diego California Temple"
+        },
+        {
+          "src": "img/california/la-jolla/la-jolla-pelicans-over-ocean-cliff.jpg",
+          "caption": "La Jolla - Pelicans over the Ocean Cliff"
+        },
+        {
+          "src": "img/california/la-jolla/la-jolla-california-temple-blooms.jpg",
+          "caption": "La Jolla - California Temple and Red Blooms"
         }
       ]
     },
@@ -3215,6 +3235,214 @@
           "caption": "Shenyang / 沈阳 - Palace Plaque Detail"
         }
       ]
+    },
+    {
+      "region": "California",
+      "name": "San Marino",
+      "coords": [
+        34.1214,
+        -118.1065
+      ],
+      "spots": [
+        "The Huntington",
+        "Rose Garden",
+        "Botanical Gardens"
+      ],
+      "photos": [
+        {
+          "src": "img/california/san-marino/san-marino-rose-garden-arbor.jpg",
+          "caption": "San Marino - Rose Garden Arbor"
+        },
+        {
+          "src": "img/california/san-marino/san-marino-rose-garden-pink-blooms.jpg",
+          "caption": "San Marino - Rose Garden Pink Blooms"
+        },
+        {
+          "src": "img/california/san-marino/san-marino-huntington-rose-garden-temple.jpg",
+          "caption": "San Marino - Huntington Rose Garden Temple"
+        },
+        {
+          "src": "img/california/san-marino/san-marino-huntington-garden-mountain-view.jpg",
+          "caption": "San Marino - Huntington Garden Mountain View"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Banff & Yoho National Parks",
+      "coords": [
+        51.328,
+        -116.182
+      ],
+      "spots": [
+        "Moraine Lake",
+        "Emerald Lake",
+        "Kicking Horse River"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/banff-yoho/banff-yoho-emerald-lake-tree-frame.jpg",
+          "caption": "Banff & Yoho - Emerald Lake through the Trees"
+        },
+        {
+          "src": "img/canada/banff-yoho/banff-yoho-emerald-lake-canoes.jpg",
+          "caption": "Banff & Yoho - Canoes on Emerald Lake"
+        },
+        {
+          "src": "img/canada/banff-yoho/banff-yoho-kicking-horse-river.jpg",
+          "caption": "Banff & Yoho - Kicking Horse River in Monochrome"
+        },
+        {
+          "src": "img/canada/banff-yoho/banff-moraine-lake-ten-peaks.jpg",
+          "caption": "Banff & Yoho - Moraine Lake and the Valley of the Ten Peaks"
+        },
+        {
+          "src": "img/canada/banff-yoho/banff-moraine-lake-canoes.jpg",
+          "caption": "Banff & Yoho - Canoes across Moraine Lake"
+        },
+        {
+          "src": "img/canada/banff-yoho/banff-moraine-lake-forest-frame.jpg",
+          "caption": "Banff & Yoho - Moraine Lake Forest Frame"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Toronto",
+      "coords": [
+        43.6532,
+        -79.3832
+      ],
+      "spots": [
+        "University of Toronto",
+        "Art Gallery of Ontario",
+        "Toronto Harbour"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/toronto/toronto-university-of-toronto-gothic-building.jpg",
+          "caption": "Toronto - University of Toronto Gothic Building"
+        },
+        {
+          "src": "img/canada/toronto/toronto-university-college-lawn.jpg",
+          "caption": "Toronto - University College Lawn"
+        },
+        {
+          "src": "img/canada/toronto/toronto-art-gallery-projection-room.jpg",
+          "caption": "Toronto - Art Gallery Projection Room"
+        },
+        {
+          "src": "img/canada/toronto/toronto-art-gallery-sculpture-hall.jpg",
+          "caption": "Toronto - Art Gallery Sculpture Hall"
+        },
+        {
+          "src": "img/canada/toronto/toronto-art-gallery-reflective-installation.jpg",
+          "caption": "Toronto - Art Gallery Reflective Installation"
+        },
+        {
+          "src": "img/canada/toronto/toronto-cn-tower-city-view.jpg",
+          "caption": "Toronto - CN Tower City View"
+        },
+        {
+          "src": "img/canada/toronto/toronto-harbour-islands-view.jpg",
+          "caption": "Toronto - Harbour and Islands View"
+        },
+        {
+          "src": "img/canada/toronto/toronto-harbour-sailboat-and-plane.jpg",
+          "caption": "Toronto - Harbour Sailboat and Plane"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Niagara Falls",
+      "coords": [
+        43.0896,
+        -79.0849
+      ],
+      "spots": [
+        "Niagara River",
+        "American Falls",
+        "Falls Overlook"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/niagara-falls/niagara-falls-falls-and-gull.jpg",
+          "caption": "Niagara Falls - Falls and Gull"
+        },
+        {
+          "src": "img/canada/niagara-falls/niagara-falls-american-falls-overlook.jpg",
+          "caption": "Niagara Falls - American Falls Overlook"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Southern Ontario",
+      "coords": [
+        44.2312,
+        -76.486
+      ],
+      "spots": [
+        "Ontario Countryside",
+        "Lake Ontario",
+        "Waterfront"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/southern-ontario/southern-ontario-countryside-storm-clouds.jpg",
+          "caption": "Southern Ontario - Countryside Storm Clouds"
+        },
+        {
+          "src": "img/canada/southern-ontario/southern-ontario-lakeside-dock.jpg",
+          "caption": "Southern Ontario - Lakeside Dock before the Storm"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Ottawa",
+      "coords": [
+        45.4215,
+        -75.6972
+      ],
+      "spots": [
+        "National Gallery of Canada",
+        "Glass Hall",
+        "Contemporary Art"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/ottawa/ottawa-national-gallery-glass-hall.jpg",
+          "caption": "Ottawa - National Gallery Glass Hall"
+        },
+        {
+          "src": "img/canada/ottawa/ottawa-national-gallery-window-installation.jpg",
+          "caption": "Ottawa - National Gallery Window Installation"
+        }
+      ]
+    },
+    {
+      "region": "Canada",
+      "name": "Montreal",
+      "coords": [
+        45.5019,
+        -73.5674
+      ],
+      "spots": [
+        "Notre-Dame Basilica",
+        "Old Montreal"
+      ],
+      "photos": [
+        {
+          "src": "img/canada/montreal/montreal-notre-dame-basilica-altar-detail.jpg",
+          "caption": "Montreal - Notre-Dame Basilica Altar Detail"
+        },
+        {
+          "src": "img/canada/montreal/montreal-notre-dame-basilica-nave.jpg",
+          "caption": "Montreal - Notre-Dame Basilica Nave"
+        }
+      ]
     }
   ],
   "regionLocalNames": {
@@ -3237,6 +3465,37 @@
     "Liaoning": "辽宁"
   },
   "photoOrientations": {
+    "img/california/san-diego/san-diego-balboa-park-cormorant-pond.jpg": "portrait",
+    "img/california/san-diego/san-diego-balboa-park-poppy-garden.jpg": "landscape",
+    "img/california/san-diego/san-diego-balboa-park-historic-house-reflection.jpg": "portrait",
+    "img/california/la-jolla/la-jolla-pelicans-over-ocean-cliff.jpg": "portrait",
+    "img/california/la-jolla/la-jolla-california-temple-blooms.jpg": "portrait",
+    "img/california/san-marino/san-marino-rose-garden-arbor.jpg": "portrait",
+    "img/california/san-marino/san-marino-rose-garden-pink-blooms.jpg": "landscape",
+    "img/california/san-marino/san-marino-huntington-rose-garden-temple.jpg": "portrait",
+    "img/california/san-marino/san-marino-huntington-garden-mountain-view.jpg": "portrait",
+    "img/canada/banff-yoho/banff-yoho-emerald-lake-tree-frame.jpg": "portrait",
+    "img/canada/banff-yoho/banff-yoho-emerald-lake-canoes.jpg": "portrait",
+    "img/canada/banff-yoho/banff-yoho-kicking-horse-river.jpg": "portrait",
+    "img/canada/banff-yoho/banff-moraine-lake-ten-peaks.jpg": "landscape",
+    "img/canada/banff-yoho/banff-moraine-lake-canoes.jpg": "portrait",
+    "img/canada/banff-yoho/banff-moraine-lake-forest-frame.jpg": "portrait",
+    "img/canada/toronto/toronto-university-of-toronto-gothic-building.jpg": "landscape",
+    "img/canada/toronto/toronto-university-college-lawn.jpg": "landscape",
+    "img/canada/toronto/toronto-art-gallery-projection-room.jpg": "landscape",
+    "img/canada/toronto/toronto-art-gallery-sculpture-hall.jpg": "portrait",
+    "img/canada/toronto/toronto-art-gallery-reflective-installation.jpg": "portrait",
+    "img/canada/toronto/toronto-cn-tower-city-view.jpg": "portrait",
+    "img/canada/toronto/toronto-harbour-islands-view.jpg": "landscape",
+    "img/canada/toronto/toronto-harbour-sailboat-and-plane.jpg": "portrait",
+    "img/canada/niagara-falls/niagara-falls-falls-and-gull.jpg": "portrait",
+    "img/canada/niagara-falls/niagara-falls-american-falls-overlook.jpg": "landscape",
+    "img/canada/southern-ontario/southern-ontario-countryside-storm-clouds.jpg": "landscape",
+    "img/canada/southern-ontario/southern-ontario-lakeside-dock.jpg": "landscape",
+    "img/canada/ottawa/ottawa-national-gallery-glass-hall.jpg": "landscape",
+    "img/canada/ottawa/ottawa-national-gallery-window-installation.jpg": "portrait",
+    "img/canada/montreal/montreal-notre-dame-basilica-altar-detail.jpg": "landscape",
+    "img/canada/montreal/montreal-notre-dame-basilica-nave.jpg": "landscape",
     "img/australia/sydney/sydney-city-skyline-cluster.jpg": "portrait",
     "img/australia/sydney/sydney-dusk-skyline-overlook.jpg": "landscape",
     "img/australia/sydney/sydney-harbour-bridge-framed-view.jpg": "portrait",

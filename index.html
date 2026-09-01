@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio</title>
+  <title>Mark Sui - RTL Design Engineer Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
   <link rel="manifest" href="site.webmanifest?v=20260613-ms">
-  <meta name="description" content="Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
+  <meta name="description" content="Mark Sui's RTL design portfolio, featuring SystemVerilog, FPGA, digital microarchitecture, verification, VLSI, and hardware implementation projects.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#102A43">
@@ -15,8 +15,8 @@
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mark Sui">
-  <meta property="og:title" content="Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio">
-  <meta property="og:description" content="Electrical and computer engineering portfolio focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
+  <meta property="og:title" content="Mark Sui - RTL Design Engineer Portfolio">
+  <meta property="og:description" content="RTL design portfolio focused on SystemVerilog, FPGA, digital microarchitecture, verification, and VLSI implementation.">
   <meta property="og:url" content="https://marksui.github.io/">
   <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
   <meta property="og:image:secure_url" content="https://marksui.github.io/img/site-card.png">
@@ -25,11 +25,10 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Mark Sui - Hardware, RTL, VLSI &amp; Systems Portfolio">
-  <meta name="twitter:description" content="ECE portfolio focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.">
+  <meta name="twitter:title" content="Mark Sui - RTL Design Engineer Portfolio">
+  <meta name="twitter:description" content="SystemVerilog, FPGA, digital microarchitecture, verification, and VLSI implementation projects.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <meta name="twitter:image:alt" content="Mark Sui electrical and computer engineering portfolio card">
-  <link rel="preload" as="image" href="img/projects/previews/logic-cmos-studio.webp" type="image/webp" fetchpriority="high">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -50,7 +49,7 @@
             "https://github.com/marksui",
             "https://www.linkedin.com/in/marksui6"
           ],
-          "jobTitle": "Electrical and Computer Engineering Student",
+          "jobTitle": "RTL Design Engineer",
           "alumniOf": {
             "@type": "CollegeOrUniversity",
             "name": "University of California, San Diego"
@@ -68,9 +67,9 @@
         {
           "@type": "ProfilePage",
           "@id": "https://marksui.github.io/#profile",
-          "name": "Mark Sui - Hardware, RTL, VLSI & Systems Portfolio",
+          "name": "Mark Sui - RTL Design Engineer Portfolio",
           "url": "https://marksui.github.io/",
-          "description": "Mark Sui's electrical and computer engineering portfolio, focused on hardware-minded software, RTL, VLSI, computer architecture, embedded systems, and public engineering tools.",
+          "description": "Mark Sui's RTL design portfolio, featuring SystemVerilog, FPGA, digital microarchitecture, verification, VLSI, and hardware implementation projects.",
           "isPartOf": {
             "@id": "https://marksui.github.io/#website"
           },
@@ -350,6 +349,50 @@
       object-fit: cover;
       filter: saturate(0.92) contrast(1.02);
       transition: transform 0.5s var(--home-ease), filter 0.3s ease;
+    }
+
+    .rtl-pipeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.55rem;
+      align-items: center;
+      min-height: 12.5rem;
+      padding: 1rem;
+      border-radius: 6px;
+      background:
+        linear-gradient(var(--home-rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px),
+        var(--home-panel);
+      background-size: 22px 22px;
+    }
+
+    .rtl-pipeline span {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 4.8rem;
+      padding: 0.55rem;
+      border: 1px solid var(--home-accent);
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--home-panel) 90%, var(--home-wash) 10%);
+      color: var(--home-accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    .rtl-pipeline span:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: calc(100% + 0.12rem);
+      top: 50%;
+      width: 0.32rem;
+      height: 0.32rem;
+      border-top: 1px solid var(--home-accent);
+      border-right: 1px solid var(--home-accent);
+      transform: translateY(-50%) rotate(45deg);
     }
 
     .home-showcase-card:hover .home-showcase-visual img {
@@ -670,6 +713,38 @@
       filter: none;
     }
 
+    .project-visual-link.rtl-visual {
+      padding: 1rem;
+      background:
+        linear-gradient(var(--home-rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px),
+        var(--soft);
+      background-size: 24px 24px;
+      text-decoration: none;
+    }
+
+    .rtl-module-map {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.38rem;
+      width: 100%;
+      color: var(--home-accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .rtl-module-map span {
+      display: grid;
+      place-items: center;
+      min-height: 3.6rem;
+      padding: 0.35rem;
+      border: 1px solid var(--home-accent);
+      border-radius: 5px;
+      background: color-mix(in srgb, var(--home-panel) 92%, var(--home-wash) 8%);
+    }
+
     html[data-theme="dark"] .project-visual img {
       filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.32));
     }
@@ -939,6 +1014,11 @@
         grid-template-columns: 1fr;
       }
 
+      .rtl-pipeline {
+        min-height: 10.5rem;
+        padding: 0.65rem;
+      }
+
       .hero-actions {
         width: 100%;
       }
@@ -1004,21 +1084,19 @@
   <main class="home-main">
     <section class="home-hero">
       <div class="home-copy">
-        <p class="home-kicker">ECE Portfolio / Hardware-minded Software</p>
-        <h2>RTL, VLSI, embedded systems, and tools that make hardware ideas easier to inspect.</h2>
+        <p class="home-kicker">RTL Design Engineer / Digital Hardware</p>
+        <h2>Designing reliable RTL from microarchitecture through verification and implementation.</h2>
         <p class="home-lede">
-          I'm <strong>Mark Sui</strong>, an <strong>Electrical and Computer Engineering</strong>
-          master's student at UC San Diego with Computer Engineering and Mathematics
-          foundations. I build at the boundary between digital hardware, systems,
-          and practical engineering interfaces.
+          I'm <strong>Mark Sui</strong>, an Electrical and Computer Engineering master's student at
+          <strong>UC San Diego</strong>. My work centers on SystemVerilog RTL, FPGA design,
+          digital microarchitecture, verification, and the VLSI implementation flow around them.
         </p>
         <p class="home-position">
-          Best fit: teams working on <strong>RTL design</strong>, <strong>VLSI workflows</strong>,
-          <strong>computer architecture</strong>, <strong>embedded sensing</strong>, or developer tools
-          where correctness, usability, and traceability all matter.
+          Seeking <strong>RTL design</strong> and <strong>digital design</strong> roles where cycle-level
+          correctness, clear module boundaries, verification, and implementation trade-offs matter.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
-          <a href="projects.html">Featured Projects</a>
+          <a href="#featured-rtl-projects">View RTL Projects</a>
           <a href="resume.html">Resume</a>
           <a href="experience.html">Technical Work</a>
           <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
@@ -1027,72 +1105,76 @@
       </div>
       <aside class="home-showcase-card" aria-label="Representative engineering build">
         <div class="home-showcase-bar">
-          <span>Representative build</span>
+          <span>Representative RTL design</span>
           <span class="home-showcase-dots" aria-hidden="true"><span></span><span></span><span></span></span>
         </div>
-        <figure class="home-showcase-visual">
-          <img src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio hardware learning interface screenshot" loading="eager" decoding="async" fetchpriority="high">
-        </figure>
+        <div class="home-showcase-visual" role="img" aria-label="Viterbi decoder pipeline showing branch metric, add compare select, and traceback modules">
+          <div class="rtl-pipeline" aria-hidden="true">
+            <span>Branch Metric<br>BMC</span>
+            <span>Add Compare Select<br>ACS</span>
+            <span>Traceback<br>TBU</span>
+          </div>
+        </div>
         <div class="home-showcase-body">
           <div class="home-showcase-title">
-            <strong>Logic &amp; CMOS Studio</strong>
-            <span>Educational EDA tool</span>
+            <strong>FPGA-Based Viterbi Decoder</strong>
+            <span>SystemVerilog RTL</span>
           </div>
           <div class="home-showcase-grid" aria-label="Portfolio signal">
             <div class="home-showcase-metric">
-              <span>Signal</span>
-              <strong>Logic to CMOS</strong>
+              <span>Architecture</span>
+              <strong>BMC / ACS / TBU</strong>
             </div>
             <div class="home-showcase-metric">
-              <span>Output</span>
-              <strong>Truth tables + Verilog</strong>
+              <span>Language</span>
+              <strong>SystemVerilog</strong>
             </div>
             <div class="home-showcase-metric">
-              <span>Tooling</span>
-              <strong>React / TypeScript</strong>
+              <span>Target</span>
+              <strong>FPGA</strong>
             </div>
             <div class="home-showcase-metric">
-              <span>Fit</span>
-              <strong>RTL / VLSI workflows</strong>
+              <span>Verification</span>
+              <strong>Controlled error cases</strong>
             </div>
           </div>
           <ul class="home-showcase-stack" aria-label="Representative stack">
-            <li>Boolean logic</li>
-            <li>K-maps</li>
-            <li>Verilog</li>
-            <li>Static CMOS</li>
+            <li>RTL design</li>
+            <li>Datapath</li>
+            <li>Cycle alignment</li>
+            <li>Waveform debug</li>
           </ul>
-          <a class="home-showcase-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Open project</a>
+          <a class="home-showcase-link" href="experience.html#vlsi-coursework">Read project summary</a>
         </div>
       </aside>
     </section>
 
     <section class="engineering-signals" data-reveal aria-label="Engineering signals">
       <div class="engineering-signal">
-        <span>Current</span>
-        <strong>UC San Diego ECE</strong>
+        <span>Target Role</span>
+        <strong>RTL Design</strong>
       </div>
       <div class="engineering-signal">
-        <span>Hardware Signal</span>
-        <strong>RTL / VLSI</strong>
+        <span>HDL</span>
+        <strong>SystemVerilog / Verilog</strong>
       </div>
       <div class="engineering-signal">
-        <span>Tool Stack</span>
-        <strong>React / Python / C++</strong>
+        <span>Design Flow</span>
+        <strong>Simulation / FPGA</strong>
       </div>
       <div class="engineering-signal">
-        <span>Foundation</span>
-        <strong>CE + Mathematics</strong>
+        <span>Implementation</span>
+        <strong>VLSI / Physical Design</strong>
       </div>
     </section>
 
     <section class="home-cta-panel" data-reveal aria-label="Primary calls to action">
       <div class="home-cta-copy">
-        <span>Open to hardware-focused software, RTL, VLSI-adjacent engineering, embedded systems, and systems tooling work.</span>
-        <strong>Start with the project spotlight for the fastest read on my strongest engineering signal.</strong>
+        <span>Open to RTL design, digital design, and FPGA engineering opportunities.</span>
+        <strong>Start with the Viterbi decoder for direct RTL evidence, then review the public tools and report-backed work.</strong>
       </div>
       <div class="home-cta-actions">
-        <a class="primary" href="projects.html">View Featured Projects</a>
+        <a class="primary" href="#featured-rtl-projects">View RTL Projects</a>
         <a href="resume.html">Resume</a>
         <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
         <a href="contact.html">Contact</a>
@@ -1100,22 +1182,22 @@
     </section>
 
     <section data-reveal>
-      <h2 class="section-heading">Now Building</h2>
+      <h2 class="section-heading">RTL Design Focus</h2>
       <div class="now-building-grid">
         <article class="build-card">
-          <span>EDA Learning Tools</span>
-          <h3>Logic interfaces that preserve engineering traceability.</h3>
-          <p>Turning Boolean expressions into connected views: truth tables, K-maps, Verilog, and CMOS-level reasoning.</p>
+          <span>Microarchitecture</span>
+          <h3>Clear datapaths, control logic, and cycle-level behavior.</h3>
+          <p>Breaking complex designs into traceable modules with explicit interfaces, state, and timing relationships.</p>
         </article>
         <article class="build-card">
-          <span>Hardware Practice Systems</span>
-          <h3>Preparation tools with repeatable feedback loops.</h3>
-          <p>Structured question banks, timed practice, missed-topic review, and local progress for hardware interviews.</p>
+          <span>Verification + Debug</span>
+          <h3>Designs that can be tested, explained, and repaired.</h3>
+          <p>Using controlled cases, simulation results, and waveform reasoning to isolate behavioral and timing errors.</p>
         </article>
         <article class="build-card">
-          <span>macOS Utilities</span>
-          <h3>Local-first tools for practical workflows.</h3>
-          <p>Focused desktop utilities for archives, documents, coursework, and privacy-sensitive everyday work.</p>
+          <span>Implementation Awareness</span>
+          <h3>RTL decisions informed by the downstream VLSI flow.</h3>
+          <p>Connecting front-end design choices to synthesis, timing, power, area, and physical-design constraints.</p>
         </article>
       </div>
     </section>
@@ -1166,27 +1248,64 @@
       </div>
     </section>
 
-    <section data-reveal>
-      <h2 class="section-heading">Featured Projects</h2>
+    <section data-reveal id="featured-rtl-projects">
+      <h2 class="section-heading">Selected RTL Projects</h2>
       <div class="recent-project-grid">
         <article class="recent-project-card">
           <figure class="project-visual">
-            <a class="project-visual-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
-              <img class="project-preview" src="img/projects/previews/logic-cmos-studio.webp" width="1365" height="768" alt="Logic and CMOS Studio interface screenshot" loading="lazy" decoding="async">
+            <a class="project-visual-link rtl-visual" href="experience.html#vlsi-coursework" aria-label="Read the FPGA-Based Viterbi Decoder project summary">
+              <span class="rtl-module-map" aria-hidden="true">
+                <span>BMC</span><span>ACS</span><span>TBU</span>
+              </span>
             </a>
           </figure>
           <div class="recent-project-body">
-            <span class="featured-label">Featured</span>
-            <span class="project-meta">Educational EDA Tool / React / TypeScript</span>
+            <span class="featured-label">Direct RTL Evidence</span>
+            <span class="project-meta">Digital Design / SystemVerilog / FPGA</span>
+            <h3><a class="project-title-link" href="experience.html#vlsi-coursework">FPGA-Based Viterbi Decoder</a></h3>
+            <p>
+              Designed a convolutional encoder and modular Viterbi decoder with branch-metric,
+              add-compare-select, and traceback units aligned cycle by cycle.
+            </p>
+            <dl class="project-evidence-list">
+              <div>
+                <dt>Architecture</dt>
+                <dd>Decomposed the decoder into BMC, ACS, and Traceback modules.</dd>
+              </div>
+              <div>
+                <dt>Built With</dt>
+                <dd>SystemVerilog, FPGA-oriented RTL, simulation, waveform debugging.</dd>
+              </div>
+              <div>
+                <dt>Verification</dt>
+                <dd>Used controlled error cases to keep path metrics and traceback behavior traceable.</dd>
+              </div>
+            </dl>
+            <div class="project-links" aria-label="Viterbi decoder links">
+              <a href="experience.html#vlsi-coursework">Project summary</a>
+              <a href="resume.html">Resume context</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="recent-project-card">
+          <figure class="project-visual">
+            <a class="project-visual-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
+              <img class="project-preview" src="img/projects/previews/logic-cmos-studio.webp?v=20260901" width="1280" height="720" alt="Logic and CMOS Studio interface showing the Boolean formula workspace and gate-level circuit diagram" loading="lazy" decoding="async">
+            </a>
+          </figure>
+          <div class="recent-project-body">
+            <span class="featured-label">Public Design Tool</span>
+            <span class="project-meta">Logic + CMOS / Verilog / React</span>
             <h3><a class="project-title-link" href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener">Logic &amp; CMOS Studio</a></h3>
             <p>
-              Browser-based tool that turns Boolean logic into truth tables, K-maps,
-              simplified equations, Verilog, and static CMOS pull-up / pull-down schematics.
+              Browser-based tool connecting Boolean expressions to truth tables, K-maps,
+              simplified logic, generated Verilog, and static CMOS schematics.
             </p>
             <dl class="project-evidence-list">
               <div>
                 <dt>Role</dt>
-                <dd>Designed and built the browser workflow end to end.</dd>
+                <dd>Designed and built the end-to-end logic exploration workflow.</dd>
               </div>
               <div>
                 <dt>Built With</dt>
@@ -1194,7 +1313,7 @@
               </div>
               <div>
                 <dt>Why It Matters</dt>
-                <dd>Connects course abstractions instead of leaving each view in a separate tool.</dd>
+                <dd>Makes the transformation from logic specification to implementation inspectable.</dd>
               </div>
             </dl>
             <div class="project-links" aria-label="Logic and CMOS Studio links">
@@ -1206,71 +1325,35 @@
 
         <article class="recent-project-card">
           <figure class="project-visual">
-            <a class="project-visual-link" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
-              <img class="project-preview" src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
+            <a class="project-visual-link" href="files/project-reports/mage-rtl-generation-routing-memory.pdf" target="_blank" rel="noopener" aria-label="Open MAGE RTL generation report">
+              <img class="project-preview" src="img/projects/reports/mage-rtl-generation-routing-memory.webp" width="1365" height="768" alt="MAGE RTL generation routing and memory report cover" loading="lazy" decoding="async">
             </a>
           </figure>
           <div class="recent-project-body">
-            <span class="featured-label">Featured</span>
-            <span class="project-meta">Hardware Prep Tool / React / TypeScript</span>
-            <h3><a class="project-title-link" href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Hardware Interview Trainer</a></h3>
+            <span class="featured-label">Report-Backed RTL Research</span>
+            <span class="project-meta">VerilogEval / Python / RTL Debugging</span>
+            <h3><a class="project-title-link" href="files/project-reports/mage-rtl-generation-routing-memory.pdf" target="_blank" rel="noopener">MAGE RTL Generation</a></h3>
             <p>
-              Local-first interview practice app with a 160-question bank, timed mock rounds,
-              wrong-question review, progress analytics, and JSON import / export.
+              Extended a multi-agent Verilog generation flow with failure routing,
+              route-specific repair prompts, edit guards, and task-local debugging memory.
             </p>
             <dl class="project-evidence-list">
               <div>
-                <dt>Role</dt>
-                <dd>Built the practice flow, progress model, and review interface.</dd>
+                <dt>Problem</dt>
+                <dd>Generated RTL can compile yet still fail from interface, timing, or behavioral mismatches.</dd>
               </div>
               <div>
                 <dt>Built With</dt>
-                <dd>React, TypeScript, local storage, structured question data.</dd>
+                <dd>Python, VerilogEval-V2, Icarus Verilog, routed repair workflows.</dd>
               </div>
               <div>
-                <dt>Why It Matters</dt>
-                <dd>Makes hardware prep measurable, repeatable, and portable.</dd>
+                <dt>Evidence</dt>
+                <dd>Public source and a report documenting the routing and memory experiments.</dd>
               </div>
             </dl>
-            <div class="project-links" aria-label="Hardware Interview Trainer links">
-              <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener">Live app</a>
-              <a href="https://github.com/marksui/Hardware_Interview_Trainer" target="_blank" rel="noopener">Source</a>
-            </div>
-          </div>
-        </article>
-
-        <article class="recent-project-card">
-          <figure class="project-visual">
-            <a class="project-visual-link" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener" aria-label="Open MarkMacZip project page">
-              <img class="project-preview" src="img/projects/previews/markmaczip.webp" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
-            </a>
-          </figure>
-          <div class="recent-project-body">
-            <span class="featured-label">Featured</span>
-            <span class="project-meta">macOS Utility / Swift / C++</span>
-            <h3><a class="project-title-link" href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">MarkMacZip</a></h3>
-            <p>
-              Local archive app for macOS that compresses and extracts common formats,
-              supports password workflows, tracks job history, and keeps files on device.
-            </p>
-            <dl class="project-evidence-list">
-              <div>
-                <dt>Role</dt>
-                <dd>Shaped the native utility workflow and release-facing project page.</dd>
-              </div>
-              <div>
-                <dt>Built With</dt>
-                <dd>Swift, C++, macOS file handling, local archive workflows.</dd>
-              </div>
-              <div>
-                <dt>Why It Matters</dt>
-                <dd>Turns a frequent file task into a private, focused desktop tool.</dd>
-              </div>
-            </dl>
-            <div class="project-links" aria-label="MarkMacZip links">
-              <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener">Project page</a>
-              <a href="https://github.com/marksui/MacZip" target="_blank" rel="noopener">Source</a>
-              <a href="https://github.com/marksui/MacZip/releases" target="_blank" rel="noopener">Releases</a>
+            <div class="project-links" aria-label="MAGE RTL generation links">
+              <a href="files/project-reports/mage-rtl-generation-routing-memory.pdf" target="_blank" rel="noopener">Report PDF</a>
+              <a href="https://github.com/marksui/MAGE/" target="_blank" rel="noopener">Source</a>
             </div>
           </div>
         </article>
