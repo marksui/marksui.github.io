@@ -91,6 +91,7 @@
   <style>
     .home-main {
       max-width: 1120px;
+      --home-sans: "Avenir Next", Avenir, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       --home-accent: #102A43;
       --home-secondary: #607086;
       --home-rule: #D8DEE8;
@@ -98,6 +99,8 @@
       --home-panel: var(--surface);
       --home-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
       --home-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      font-family: var(--home-sans);
+      font-feature-settings: "kern", "liga";
     }
 
     html[data-theme="dark"] .home-main {
@@ -138,9 +141,10 @@
       margin: 0;
       max-width: 12em;
       font-size: 2.54rem;
+      font-family: var(--home-sans);
       line-height: 1.02;
-      font-weight: 600;
-      letter-spacing: 0;
+      font-weight: 700;
+      letter-spacing: -0.025em;
     }
 
     .home-hero p {
@@ -506,8 +510,11 @@
       gap: 0.8rem;
       margin: 2.15rem 0 0.75rem;
       color: var(--home-accent);
+      font-family: var(--home-sans);
       font-size: 1.14rem;
-      font-style: italic;
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
     .section-heading::after {
