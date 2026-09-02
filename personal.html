@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="Personal travel archive for Mark Sui, with maps, galleries, collections, and photo notes from cities and landscapes around the world.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preload" as="image" href="img/thumbs/california/dana-point/dana-point-ocean-terrace-view.webp" type="image/webp" fetchpriority="high">
-  <link rel="stylesheet" href="style.css?v=20260622-perf">
+  <link rel="stylesheet" href="style.css?v=20260901-type">
   <script src="theme.js?v=20260622-perf"></script>
   <script src="travel-data.js"></script>
   <script src="travel-shared.js"></script>
@@ -1050,7 +1050,7 @@
       <h2 class="section-heading">Archive Index</h2>
       <div class="portal-grid">
         <a class="portal-card portal-card-primary" href="travel-map.html">
-          <img src="img/thumbs/california/la-jolla/la-jolla-art-and-ocean-window.webp" width="1600" height="900" alt="La Jolla art and ocean window" loading="eager" decoding="sync">
+          <img src="img/canada/niagara-falls/niagara-falls-american-falls-overlook.jpg" width="1600" height="900" alt="American Falls overlook at Niagara Falls" loading="eager" decoding="sync">
           <div>
             <div class="portal-topline">
               <span>Main view</span>
@@ -1149,8 +1149,8 @@
           photo: "img/singapore/singapore/singapore-national-gallery-corridor.jpg"
         },
         {
-          place: "La Jolla",
-          photo: "img/california/la-jolla/la-jolla-san-diego-california-temple.jpg"
+          place: "Banff & Yoho National Parks",
+          photo: "img/canada/banff-yoho/banff-yoho-emerald-lake-canoes.jpg"
         },
         {
           place: "Sydney",
@@ -1209,12 +1209,12 @@
       document.getElementById("photo-wall").innerHTML = wallItems.map(function(item, index) {
         var place = item.place;
         var photo = item.photo;
-        var href = "travel-map.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
+        var href = "travel-gallery.html?region=" + encodeURIComponent(place.region) + "&place=" + encodeURIComponent(place.name);
         var loading = index < 6 ? "eager" : "lazy";
         var decoding = index < 6 ? "sync" : "async";
         var priority = index < 6 ? ' fetchpriority="high"' : "";
         var photoCount = shared.photoLabel(shared.countPhotosForPlace(place));
-        var cardLabel = "Open " + shared.textLabel(place.name, place.localName) + " in the travel map, " + photoCount;
+        var cardLabel = "Open all " + photoCount + " from " + shared.textLabel(place.name, place.localName) + " in the gallery";
         var spots = (place.spots || []).slice(0, 4).map(function(spot, spotIndex) {
           var localSpot = place.spotsLocal ? place.spotsLocal[spotIndex] : "";
           return "<li>" + shared.escapeHtml(shared.textLabel(spot, localSpot)) + "</li>";
@@ -1237,7 +1237,7 @@
           return place.region === region && shared.countPhotosForPlace(place) > 0;
         }).length;
         return '' +
-          '<a href="travel-map.html?region=' + encodeURIComponent(region) + '">' +
+          '<a href="travel-gallery.html?region=' + encodeURIComponent(region) + '">' +
             '<strong>' + shared.htmlLabel(region, shared.data.regionLocalNames[region]) + "</strong>" +
             '<small>' + regionPlaceCount + (regionPlaceCount === 1 ? " place" : " places") + ' / ' + shared.escapeHtml(shared.photoLabel(shared.regionPhotoCount(region))) + "</small>" +
           "</a>";

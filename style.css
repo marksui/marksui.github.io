@@ -1,7 +1,7 @@
 html {
   color-scheme: light;
   --formal-serif: "Times New Roman", "Songti SC", "Songti TC", "STSong", "Noto Serif CJK SC", serif;
-  --display-serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Songti SC", "STSong", serif;
+  --display-serif: var(--formal-serif);
   --ink: #102A43;
   --ink-hover: #0B1F33;
   --muted: #607086;
