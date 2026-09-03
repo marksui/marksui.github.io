@@ -112,13 +112,27 @@
     }
 
     .home-hero {
+      position: relative;
       display: grid;
       grid-template-columns: minmax(0, 1.18fr) minmax(300px, 0.82fr);
-      gap: 1.2rem;
+      gap: clamp(1.2rem, 3vw, 2.4rem);
       align-items: start;
-      padding-bottom: 1.45rem;
+      padding: 0.55rem 0 1.65rem;
       border-bottom: 1px solid var(--home-rule);
       animation: homeFadeUp 0.7s var(--home-ease) both;
+    }
+
+    .home-hero::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      inset: -1rem 52% 0 -4rem;
+      background:
+        linear-gradient(var(--home-rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.22;
+      mask-image: linear-gradient(90deg, #000, transparent 92%);
     }
 
     .home-copy {
@@ -129,21 +143,36 @@
     }
 
     .home-kicker {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
       margin: 0;
       color: var(--home-accent);
-      font-size: 0.92rem;
-      font-weight: bold;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 700;
       line-height: 1.2;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .home-kicker::before {
+      content: "";
+      width: 0.52rem;
+      height: 0.52rem;
+      border-radius: 50%;
+      background: var(--home-accent);
+      box-shadow: 0 0 0 0.28rem var(--home-wash);
     }
 
     .home-hero h2 {
       margin: 0;
-      max-width: 12em;
-      font-size: 2.54rem;
+      max-width: 9.6em;
+      font-size: clamp(2.45rem, 5vw, 4.35rem);
       font-family: var(--display-serif);
-      line-height: 1.02;
+      line-height: 0.98;
       font-weight: 600;
-      letter-spacing: 0;
+      letter-spacing: -0.025em;
     }
 
     .home-hero p {
@@ -151,19 +180,25 @@
     }
 
     .home-lede {
-      max-width: 45rem;
+      max-width: 38rem;
       color: var(--text);
-      font-size: 1.04rem;
-      line-height: 1.58;
-      opacity: 0.9;
+      font-size: 1.02rem;
+      line-height: 1.55;
+      opacity: 0.86;
     }
 
     .home-position {
-      max-width: 45rem;
-      padding-left: 0.9rem;
-      border-left: 2px solid var(--home-accent);
-      color: var(--text);
-      opacity: 0.86;
+      display: flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 100%;
+      padding: 0.34rem 0.7rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
+      color: var(--home-secondary);
+      background: var(--home-panel);
+      font-size: 0.88rem;
+      line-height: 1.3;
     }
 
     .hero-actions {
@@ -531,63 +566,6 @@
       background: linear-gradient(90deg, var(--home-accent), transparent);
     }
 
-    .skills-band {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.8rem;
-      margin-top: 0.85rem;
-    }
-
-    .skills-band-card {
-      display: grid;
-      gap: 0.52rem;
-      padding: 0.92rem 0.95rem;
-      border: 1px solid var(--home-rule);
-      border-radius: 8px;
-      background: var(--home-panel);
-      box-shadow: none;
-      transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
-    }
-
-    .skills-band-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--home-accent);
-      background: var(--home-wash);
-    }
-
-    .skills-band-card h3 {
-      margin: 0;
-      color: var(--home-accent);
-      font-size: 1.02rem;
-      line-height: 1.2;
-    }
-
-    .skills-band-card p {
-      margin: 0;
-      color: var(--text);
-      opacity: 0.82;
-      font-size: 0.94rem;
-      line-height: 1.45;
-    }
-
-    .skills-band-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.38rem;
-    }
-
-    .skills-band-tags span {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.16rem 0.44rem;
-      border: 1px solid var(--home-rule);
-      border-radius: 999px;
-      color: var(--home-secondary);
-      font-size: 0.82rem;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
     .engineering-signals {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -612,7 +590,6 @@
     }
 
     .engineering-signal span,
-    .build-card span,
     .project-evidence-list dt {
       color: var(--home-secondary);
       font-size: 0.78rem;
@@ -626,42 +603,127 @@
       line-height: 1.22;
     }
 
-    .now-building-grid {
+    .rtl-flow-shell {
+      position: relative;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.85rem;
-      margin-top: 0.85rem;
-    }
-
-    .build-card {
-      display: grid;
-      gap: 0.5rem;
-      padding: 0.95rem;
+      grid-template-columns: minmax(0, 1.65fr) minmax(15rem, 0.58fr);
+      gap: 1rem;
+      margin-top: 0.9rem;
+      padding: 1rem;
       border: 1px solid var(--home-rule);
       border-radius: 8px;
-      background: var(--home-panel);
-      transition: transform 0.28s var(--home-ease), border-color 0.24s ease, background 0.24s ease;
+      background:
+        linear-gradient(var(--home-rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px),
+        var(--home-panel);
+      background-size: 24px 24px;
+      overflow: hidden;
     }
 
-    .build-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--home-accent);
-      background: var(--home-wash);
+    .rtl-flow-scroll {
+      min-width: 0;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--home-rule) transparent;
     }
 
-    .build-card h3 {
-      margin: 0;
+    .rtl-flow-rail {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(6.5rem, 1fr));
+      gap: 0.5rem;
+      min-width: 39rem;
+      padding: 1.3rem 0.2rem;
+    }
+
+    .rtl-flow-rail::before {
+      content: "";
+      position: absolute;
+      left: 3.5rem;
+      right: 3.5rem;
+      top: 50%;
+      height: 1px;
+      background: var(--home-accent);
+      opacity: 0.4;
+    }
+
+    .rtl-flow-rail::after {
+      content: "";
+      position: absolute;
+      z-index: 3;
+      top: calc(50% - 0.24rem);
+      left: 3.3rem;
+      width: 0.48rem;
+      height: 0.48rem;
+      border-radius: 50%;
+      background: var(--home-accent);
+      box-shadow: 0 0 0 0.28rem var(--home-wash);
+      animation: signalTravel 4.8s linear infinite;
+      pointer-events: none;
+    }
+
+    .rtl-flow-stage {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 0.28rem;
+      min-height: 5.5rem;
+      padding: 0.7rem 0.62rem;
+      border: 1px solid var(--home-accent);
+      border-radius: 6px;
       color: var(--home-accent);
-      font-size: 1.04rem;
-      line-height: 1.18;
+      background: var(--home-panel);
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.24s var(--home-ease), color 0.2s ease, background 0.2s ease;
     }
 
-    .build-card p {
-      margin: 0;
-      color: var(--text);
-      opacity: 0.84;
-      font-size: 0.94rem;
+    .rtl-flow-stage:hover,
+    .rtl-flow-stage:focus-visible {
+      transform: translateY(-3px);
+    }
+
+    .rtl-flow-stage[aria-pressed="true"] {
+      color: var(--home-panel);
+      background: var(--home-accent);
+    }
+
+    .rtl-flow-stage span {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.67rem;
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    .rtl-flow-stage strong {
+      align-self: end;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.78rem;
+      line-height: 1.2;
+    }
+
+    .rtl-flow-readout {
+      display: grid;
+      align-content: center;
+      gap: 0.55rem;
+      min-height: 9rem;
+      padding: 1rem;
+      border-left: 2px solid var(--home-accent);
+      background: color-mix(in srgb, var(--home-panel) 92%, var(--home-wash) 8%);
+    }
+
+    .rtl-flow-readout span {
+      color: var(--home-secondary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
       line-height: 1.45;
+    }
+
+    .rtl-flow-readout strong {
+      color: var(--text);
+      font-size: 1.04rem;
+      line-height: 1.35;
     }
 
     .recent-project-grid {
@@ -878,79 +940,89 @@
       transition: transform 0.34s var(--home-ease), filter 0.3s ease;
     }
 
-    .updates-list {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.9rem;
-      margin: 0;
-      border-top: 0;
-    }
-
-    .updates-list li {
+    .compact-experience {
       position: relative;
-      margin: 0;
-      padding: 1rem 1rem 1rem 1.1rem;
-      border: 1px solid var(--home-rule);
-      border-radius: 8px;
-      background: var(--home-panel);
-      box-shadow: none;
-      animation: homeFadeUp 0.55s var(--home-ease) both;
-      transition: background 0.25s ease, padding-left 0.28s var(--home-ease), border-color 0.24s ease, transform 0.28s var(--home-ease);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      padding-top: 0.25rem;
     }
 
-    .updates-list li::before {
+    .compact-experience::before {
       content: "";
       position: absolute;
-      left: 0.58rem;
-      top: 1.05rem;
-      bottom: 1.05rem;
-      width: 2px;
-      border-radius: 6px;
+      top: 1.04rem;
+      right: 0;
+      left: 0;
+      height: 1px;
+      background: var(--home-rule);
+    }
+
+    .experience-stop {
+      position: relative;
+      display: grid;
+      gap: 0.18rem;
+      min-width: 0;
+      padding: 2rem 0.85rem 0.85rem;
+      border: 1px solid var(--home-rule);
+      border-top: 0;
+      border-radius: 8px;
+      color: var(--text);
+      background: var(--home-panel);
+      text-decoration: none;
+      transition: transform 0.25s var(--home-ease), border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .experience-stop::before {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 0.54rem;
+      left: 0.85rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      border: 3px solid var(--home-panel);
+      border-radius: 50%;
       background: var(--home-accent);
-      opacity: 0.68;
-      transform: scaleY(0.72);
-      transform-origin: center;
-      transition: opacity 0.25s ease, transform 0.28s var(--home-ease);
+      box-shadow: 0 0 0 1px var(--home-accent);
     }
 
-    .updates-list li:nth-child(2) {
-      animation-delay: 0.05s;
-    }
-
-    .updates-list li:nth-child(3) {
-      animation-delay: 0.1s;
-    }
-
-    .updates-list li:nth-child(4) {
-      animation-delay: 0.15s;
-    }
-
-    .updates-list li:hover {
-      padding-left: 1.18rem;
-      background: var(--home-wash);
+    .experience-stop:hover,
+    .experience-stop:focus-visible {
+      transform: translateY(-3px);
       border-color: var(--home-accent);
-      transform: translateY(-2px);
+      background: var(--home-wash);
     }
 
-    .updates-list li:hover::before {
-      opacity: 0.9;
-      transform: scaleY(1);
-    }
-
-    .updates-list em {
-      display: block;
-      margin: 0.04rem 0 0.18rem;
+    .experience-stop time {
       color: var(--home-secondary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
     }
 
-    .updates-list strong {
-      display: block;
+    .experience-stop strong {
+      font-size: 1rem;
       line-height: 1.25;
+    }
+
+    .experience-stop span {
+      color: var(--home-accent);
+      font-size: 0.86rem;
+      line-height: 1.3;
+    }
+
+    .experience-more {
+      display: inline-flex;
+      margin-top: 0.8rem;
+      color: var(--home-secondary);
+      font-size: 0.84rem;
     }
 
     .visitor-map-panel {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr);
       gap: 1.5rem;
       align-items: center;
       padding: 1.1rem 0;
@@ -977,18 +1049,60 @@
     }
 
     .visitor-map-widget {
-      display: block;
-      width: fit-content;
+      display: grid;
+      gap: 0.7rem;
+      width: 100%;
       max-width: 100%;
       justify-self: end;
       overflow: hidden;
-      border-radius: 4px;
+      border: 1px solid var(--home-rule);
+      border-radius: 8px;
+      background: var(--home-panel);
     }
 
-    .visitor-map-widget img {
-      width: auto;
+    .visitor-map-widget svg {
+      width: 100%;
       height: auto;
-      max-width: 100%;
+      color: color-mix(in srgb, var(--text) 22%, var(--home-panel) 78%);
+      background:
+        linear-gradient(var(--home-rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    .map-land {
+      fill: currentColor;
+      stroke: color-mix(in srgb, var(--text) 30%, transparent 70%);
+      stroke-width: 1;
+    }
+
+    .map-point circle:first-of-type {
+      fill: var(--home-panel);
+      stroke: color-mix(in srgb, var(--text) 66%, var(--home-panel) 34%);
+      stroke-width: 3;
+    }
+
+    .map-point circle:last-of-type {
+      fill: color-mix(in srgb, var(--text) 72%, var(--home-panel) 28%);
+    }
+
+    .location-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin: 0;
+      padding: 0 0.7rem 0.7rem;
+      list-style: none;
+    }
+
+    .location-list li {
+      padding: 0.16rem 0.42rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
+      color: var(--home-secondary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.67rem;
+      line-height: 1.2;
     }
 
     @media (max-width: 760px) {
@@ -1019,12 +1133,19 @@
         min-height: 0;
       }
 
-      .skills-band,
       .engineering-signals,
-      .now-building-grid,
-      .recent-project-grid,
-      .updates-list {
+      .recent-project-grid {
         grid-template-columns: 1fr;
+      }
+
+      .rtl-flow-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .rtl-flow-readout {
+        min-height: 7.5rem;
+        border-top: 2px solid var(--home-accent);
+        border-left: 0;
       }
 
       .visitor-map-panel {
@@ -1083,6 +1204,29 @@
       .hero-actions a {
         flex: 1 1 100%;
       }
+
+      .compact-experience {
+        grid-template-columns: 1fr;
+        padding: 0 0 0 1.2rem;
+      }
+
+      .compact-experience::before {
+        top: 0;
+        bottom: 0;
+        left: 0.35rem;
+        width: 1px;
+        height: auto;
+      }
+
+      .experience-stop {
+        padding: 0.85rem;
+        border-top: 1px solid var(--home-rule);
+      }
+
+      .experience-stop::before {
+        top: 1rem;
+        left: -1.28rem;
+      }
     }
 
     @keyframes homeFadeUp {
@@ -1096,11 +1240,14 @@
       }
     }
 
+    @keyframes signalTravel {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100% + 31.8rem)); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .home-hero,
-      .recent-project-card,
-      .skills-band-card,
-      .updates-list li {
+      .recent-project-card {
         animation: none;
       }
 
@@ -1110,10 +1257,13 @@
       .recent-project-card,
       .project-title-link,
       .project-links a,
-      .skills-band-card,
-      .updates-list li,
-      .updates-list li::before {
+      .rtl-flow-stage,
+      .experience-stop {
         transition: none;
+      }
+
+      .rtl-flow-rail::after {
+        animation: none;
       }
 
       .recent-project-card:hover .project-visual img,
@@ -1142,15 +1292,14 @@
     <section class="home-hero">
       <div class="home-copy">
         <p class="home-kicker">RTL Design Engineer / Digital Hardware</p>
-        <h2>Designing reliable RTL from microarchitecture through verification and implementation.</h2>
+        <h2>I design digital hardware from the cycle up.</h2>
         <p class="home-lede">
-          I'm <strong>Mark Sui</strong>, an Electrical and Computer Engineering master's student at
-          <strong>UC San Diego</strong>. My work centers on SystemVerilog RTL, FPGA design,
-          digital microarchitecture, verification, and the VLSI implementation flow around them.
+          I'm <strong>Mark Sui</strong>, an ECE master's student at <strong>UC San Diego</strong>.
+          I turn microarchitecture into testable SystemVerilog RTL, then follow it through
+          simulation, FPGA implementation, and the VLSI flow.
         </p>
         <p class="home-position">
-          Seeking <strong>RTL design</strong> and <strong>digital design</strong> roles where cycle-level
-          correctness, clear module boundaries, verification, and implementation trade-offs matter.
+          Open to <strong>&nbsp;RTL Design / Digital Design&nbsp;</strong> opportunities.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
           <a href="#featured-rtl-projects">View RTL Projects</a>
@@ -1238,70 +1387,48 @@
       </div>
     </section>
 
-    <section data-reveal>
-      <h2 class="section-heading">RTL Design Focus</h2>
-      <div class="now-building-grid">
-        <article class="build-card">
-          <span>Microarchitecture</span>
-          <h3>Clear datapaths, control logic, and cycle-level behavior.</h3>
-          <p>Breaking complex designs into traceable modules with explicit interfaces, state, and timing relationships.</p>
-        </article>
-        <article class="build-card">
-          <span>Verification + Debug</span>
-          <h3>Designs that can be tested, explained, and repaired.</h3>
-          <p>Using controlled cases, simulation results, and waveform reasoning to isolate behavioral and timing errors.</p>
-        </article>
-        <article class="build-card">
-          <span>Implementation Awareness</span>
-          <h3>RTL decisions informed by the downstream VLSI flow.</h3>
-          <p>Connecting front-end design choices to synthesis, timing, power, area, and physical-design constraints.</p>
-        </article>
-      </div>
-    </section>
-
-    <section data-reveal>
-      <h2 class="section-heading">Technical Map</h2>
-      <div class="skills-band">
-        <article class="skills-band-card">
-          <h3>Digital Design</h3>
-          <p>RTL, FPGA, verification, and physical-design oriented work across architecture and implementation.</p>
-          <div class="skills-band-tags">
-            <span>Verilog</span>
-            <span>SystemVerilog</span>
-            <span>FPGA</span>
-            <span>Timing</span>
+    <section data-reveal aria-labelledby="rtl-flow-title">
+      <h2 class="section-heading" id="rtl-flow-title">RTL Signal Flow</h2>
+      <div class="rtl-flow-shell">
+        <div class="rtl-flow-scroll" aria-label="Interactive RTL implementation flow">
+          <div class="rtl-flow-rail">
+            <button class="rtl-flow-stage" type="button" aria-pressed="true"
+              data-label="01 / SPECIFICATION"
+              data-description="Start with behavior that can be stated cycle by cycle."
+              data-evidence="Interfaces · latency · constraints">
+              <span>01</span><strong>Specification</strong>
+            </button>
+            <button class="rtl-flow-stage" type="button" aria-pressed="false"
+              data-label="02 / RTL"
+              data-description="Turn the architecture into explicit datapath, control, and state."
+              data-evidence="SystemVerilog · modules · FSMs">
+              <span>02</span><strong>RTL</strong>
+            </button>
+            <button class="rtl-flow-stage" type="button" aria-pressed="false"
+              data-label="03 / SIMULATION"
+              data-description="Use controlled cases and waveforms to make failures explainable."
+              data-evidence="Testbench · assertions · debug">
+              <span>03</span><strong>Simulation</strong>
+            </button>
+            <button class="rtl-flow-stage" type="button" aria-pressed="false"
+              data-label="04 / SYNTHESIS"
+              data-description="Check whether the RTL maps cleanly to the intended hardware."
+              data-evidence="FPGA · netlist · area">
+              <span>04</span><strong>Synthesis</strong>
+            </button>
+            <button class="rtl-flow-stage" type="button" aria-pressed="false"
+              data-label="05 / TIMING"
+              data-description="Close the loop with constraints, critical paths, and implementation trade-offs."
+              data-evidence="STA · PPA · physical design">
+              <span>05</span><strong>Timing</strong>
+            </button>
           </div>
-        </article>
-        <article class="skills-band-card">
-          <h3>Architecture</h3>
-          <p>Computer architecture, datapath design, throughput analysis, and performance-aware hardware thinking.</p>
-          <div class="skills-band-tags">
-            <span>ISA</span>
-            <span>Pipelines</span>
-            <span>CDC</span>
-            <span>SRAM</span>
-          </div>
-        </article>
-        <article class="skills-band-card">
-          <h3>AI Systems</h3>
-          <p>Evaluation pipelines, regression analysis, robustness testing, and Python tooling around model behavior.</p>
-          <div class="skills-band-tags">
-            <span>Python</span>
-            <span>PyTorch</span>
-            <span>Tracing</span>
-            <span>QA</span>
-          </div>
-        </article>
-        <article class="skills-band-card">
-          <h3>Math + Embedded</h3>
-          <p>Applied mathematics, algorithms, and embedded system integration from sensing to board-level work.</p>
-          <div class="skills-band-tags">
-            <span>Analysis</span>
-            <span>Algorithms</span>
-            <span>ESP32</span>
-            <span>PCB</span>
-          </div>
-        </article>
+        </div>
+        <div class="rtl-flow-readout" aria-live="polite">
+          <span id="rtl-flow-label">01 / SPECIFICATION</span>
+          <strong id="rtl-flow-description">Start with behavior that can be stated cycle by cycle.</strong>
+          <span id="rtl-flow-evidence">Interfaces · latency · constraints</span>
+        </div>
       </div>
     </section>
 
@@ -1417,57 +1544,61 @@
       </div>
     </section>
 
-    <section data-reveal>
-      <h2 class="section-heading">Selected Highlights</h2>
-      <ul class="updates-list">
-        <li>
-          <strong>Current Education Focus</strong><br>
-          <em>UC San Diego / Electrical and Computer Engineering</em><br>
-          Recent coursework and project focus include Digital IC Design (VLSI), Computer Architecture,
-          FPGA / RTL Design, timing analysis, and hardware verification.
-        </li>
-
-        <li>
-          <strong>Research Fellow - Handshake AI Fellowship</strong><br>
-          <em>Jun 2025 - Jun 2026 / Remote</em><br>
-          Built Python-based evaluation pipelines for agentic LLM systems, designed robustness stress tests,
-          and analyzed 10,000+ execution traces to identify regressions and failure modes.
-        </li>
-
-        <li>
-          <strong>Data Quality Reviewer - AfterQuery</strong><br>
-          <em>Jul 2026 - Aug 2026 / Remote</em><br>
-          Reviewed and verified 8,000+ structured data fields using English- and Chinese-language sources,
-          with field-level checks for exact values, evidence quality, consistency, and traceable review notes.
-        </li>
-
-        <li>
-          <strong>Quarter Project Reports</strong><br>
-          <em>RTL generation, CUDA cryptography, MBFF clustering, and OpenROAD physical design</em><br>
-          Added report-backed case studies from this quarter, including VerilogEval/MAGE work,
-          GPU GGM tree construction, and ECE 260C physical-design optimization projects.
-        </li>
-
-        <li>
-          <strong>Technical Skills</strong><br>
-          <em>Architecture, hardware design, performance, and tools</em><br>
-          Verilog/SystemVerilog, RTL design and verification, FPGA, Quartus, ModelSim, Cadence Virtuoso,
-          Innovus, SRAM-based memory systems, C/C++, Python, JavaScript, Git, Linux, TCL, and MATLAB.
-        </li>
-      </ul>
+    <section data-reveal aria-labelledby="compact-experience-title">
+      <h2 class="section-heading" id="compact-experience-title">Experience</h2>
+      <div class="compact-experience">
+        <a class="experience-stop" href="experience.html">
+          <time datetime="2026-08">Jul — Aug 2026</time>
+          <strong>Data Quality Reviewer</strong>
+          <span>AfterQuery</span>
+        </a>
+        <a class="experience-stop" href="experience.html">
+          <time datetime="2025-06/2026-06">Jun 2025 — Jun 2026</time>
+          <strong>Research Fellow</strong>
+          <span>Handshake</span>
+        </a>
+        <a class="experience-stop" href="experience.html">
+          <time datetime="2024-06/2024-12">Jun — Dec 2024</time>
+          <strong>Embedded Systems Intern</strong>
+          <span>Shandong Haike</span>
+        </a>
+      </div>
+      <a class="experience-more" href="experience.html">View complete experience →</a>
     </section>
 
     <section data-reveal aria-labelledby="visitor-map-title">
-      <h2 class="section-heading" id="visitor-map-title">Visitors</h2>
+      <h2 class="section-heading" id="visitor-map-title">Global Footprint</h2>
       <div class="visitor-map-panel">
         <div class="visitor-map-copy">
-          <h3>Visitor Map</h3>
-          <p>Total page views and the countries visitors are coming from. Locations are approximate; no raw IP addresses are displayed.</p>
+          <h3>Places connected to my work and travel.</h3>
         </div>
         <div class="visitor-map-widget">
-          <a href="https://info.flagcounter.com/APtk" target="_blank" rel="noopener" aria-label="View cumulative visitor statistics by country">
-            <img src="https://s01.flagcounter.com/map/APtk/size_s/txt_000000/border_CCCCCC/pageviews_1/viewers_0/flags_0/" loading="lazy" alt="Cumulative page views and visitor countries">
-          </a>
+          <svg viewBox="0 0 1000 500" role="img" aria-labelledby="location-map-title location-map-desc">
+            <title id="location-map-title">Selected cities across Europe, Asia, and Australia</title>
+            <desc id="location-map-desc">A monochrome world map marking Dublin, Berlin, Hanoi, Da Nang, Hong Kong, Taipei, Hsinchu, Osaka, and Sydney.</desc>
+            <g aria-hidden="true">
+              <path class="map-land" d="M42 88 89 54 155 45 212 65 250 104 236 139 190 149 169 184 136 194 116 162 79 151 56 121Z"/>
+              <path class="map-land" d="M202 201 246 215 273 258 265 311 244 359 222 420 199 394 187 337 172 289 179 241Z"/>
+              <path class="map-land" d="M459 90 520 66 586 74 625 61 700 79 764 71 825 94 894 91 947 123 933 160 885 168 850 194 805 187 773 214 723 201 684 171 636 180 590 154 545 161 514 135 474 137 441 117Z"/>
+              <path class="map-land" d="M492 165 548 172 589 211 579 270 552 332 520 361 491 314 467 256 471 202Z"/>
+              <path class="map-land" d="M847 314 888 299 937 319 952 355 914 382 863 374 831 346Z"/>
+              <path class="map-land" d="M338 54 373 31 414 45 401 78 358 86Z"/>
+              <path class="map-land" d="M900 153 910 143 916 162 907 178Z"/>
+            </g>
+            <g class="map-point"><title>Dublin</title><circle cx="483" cy="102" r="9"/><circle cx="483" cy="102" r="3.5"/></g>
+            <g class="map-point"><title>Berlin</title><circle cx="537" cy="104" r="9"/><circle cx="537" cy="104" r="3.5"/></g>
+            <g class="map-point"><title>Hanoi</title><circle cx="794" cy="192" r="9"/><circle cx="794" cy="192" r="3.5"/></g>
+            <g class="map-point"><title>Da Nang</title><circle cx="801" cy="207" r="9"/><circle cx="801" cy="207" r="3.5"/></g>
+            <g class="map-point"><title>Hong Kong</title><circle cx="817" cy="188" r="9"/><circle cx="817" cy="188" r="3.5"/></g>
+            <g class="map-point"><title>Taipei</title><circle cx="839" cy="176" r="9"/><circle cx="839" cy="176" r="3.5"/></g>
+            <g class="map-point"><title>Hsinchu</title><circle cx="833" cy="186" r="9"/><circle cx="833" cy="186" r="3.5"/></g>
+            <g class="map-point"><title>Osaka</title><circle cx="876" cy="154" r="9"/><circle cx="876" cy="154" r="3.5"/></g>
+            <g class="map-point"><title>Sydney</title><circle cx="920" cy="344" r="9"/><circle cx="920" cy="344" r="3.5"/></g>
+          </svg>
+          <ul class="location-list" aria-label="Selected cities">
+            <li>Osaka</li><li>Sydney</li><li>Hanoi</li><li>Da Nang</li><li>Taipei</li>
+            <li>Hsinchu</li><li>Dublin</li><li>Berlin</li><li>Hong Kong</li>
+          </ul>
         </div>
       </div>
     </section>
@@ -1494,5 +1625,32 @@
       </nav>
     </div>
   </footer>
+  <script>
+    (() => {
+      const stages = Array.from(document.querySelectorAll(".rtl-flow-stage"));
+      const label = document.querySelector("#rtl-flow-label");
+      const description = document.querySelector("#rtl-flow-description");
+      const evidence = document.querySelector("#rtl-flow-evidence");
+
+      const selectStage = (stage) => {
+        stages.forEach((item) => item.setAttribute("aria-pressed", String(item === stage)));
+        label.textContent = stage.dataset.label;
+        description.textContent = stage.dataset.description;
+        evidence.textContent = stage.dataset.evidence;
+      };
+
+      stages.forEach((stage, index) => {
+        stage.addEventListener("click", () => selectStage(stage));
+        stage.addEventListener("keydown", (event) => {
+          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+          event.preventDefault();
+          const direction = event.key === "ArrowRight" ? 1 : -1;
+          const next = stages[(index + direction + stages.length) % stages.length];
+          next.focus();
+          selectStage(next);
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
