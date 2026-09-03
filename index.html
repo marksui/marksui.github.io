@@ -630,53 +630,6 @@
       transform: translate(-50%, -50%);
     }
 
-    .footprint-card-meta {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      margin: 0;
-      padding: 0.58rem 0.18rem 0.08rem;
-      color: var(--home-secondary);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.06em;
-    }
-
-    .footprint-stat-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      border-top: 1px solid var(--home-rule);
-    }
-
-    .footprint-stat {
-      display: grid;
-      gap: 0.18rem;
-      min-width: 0;
-      padding: 0.72rem 0.8rem;
-      border-right: 1px solid var(--home-rule);
-    }
-
-    .footprint-stat:last-child {
-      border-right: 0;
-    }
-
-    .footprint-stat span {
-      color: var(--home-secondary);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.63rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .footprint-stat strong {
-      color: var(--text);
-      font-size: 1rem;
-      line-height: 1.2;
-    }
-
-    .footprint-stat strong[data-state="loading"] {
-      color: var(--home-secondary);
-    }
 
     .home-showcase-link::after {
       content: "";
@@ -1208,18 +1161,6 @@
         grid-template-columns: 1fr;
       }
 
-      .footprint-stat-row {
-        grid-template-columns: 1fr;
-      }
-
-      .footprint-stat {
-        border-right: 0;
-        border-bottom: 1px solid var(--home-rule);
-      }
-
-      .footprint-stat:last-child {
-        border-bottom: 0;
-      }
 
       .rtl-flow-shell {
         grid-template-columns: 1fr;
@@ -1662,12 +1603,6 @@
           <i class="footprint-point" style="left:53.72%;top:20.82%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:81.71%;top:37.6%" aria-hidden="true"></i>
         </div>
-        <p class="footprint-card-meta" aria-hidden="true"><span>GEOSPATIAL / 09 PRESERVED NODES</span><span>TRACKING FROM SEP 2026</span></p>
-        <div class="footprint-stat-row" aria-label="Visitor statistics">
-          <div class="footprint-stat"><span>Preserved footprint</span><strong>09 nodes</strong></div>
-          <div class="footprint-stat"><span>Real page views</span><strong id="real-page-views" data-state="loading">—</strong></div>
-          <div class="footprint-stat"><span>Collection</span><strong>Started Sep 2026</strong></div>
-        </div>
       </div>
     </section>
 
@@ -1739,37 +1674,31 @@
         }, 2800);
       }
 
-      const pageViewCount = document.querySelector("#real-page-views");
-      if (pageViewCount) {
-        const recordVisit = async () => {
-          const tracker = new URL("https://counterapi.com/api/marksui.github.io/view/global-footprint-20260902");
-          try {
-            const locationResponse = await fetch("https://api.country.is/", {
-              credentials: "omit",
-              referrerPolicy: "no-referrer"
-            });
-            if (locationResponse.ok) {
-              const location = await locationResponse.json();
-              if (/^[A-Z]{2}$/.test(location.country || "")) tracker.searchParams.set("country", location.country);
-            }
-          } catch (_) {
-            // The page-view counter still works if approximate country lookup is unavailable.
+      const recordVisit = async () => {
+        const tracker = new URL("https://counterapi.com/api/marksui.github.io/view/global-footprint-20260902");
+        try {
+          const locationResponse = await fetch("https://api.country.is/", {
+            credentials: "omit",
+            referrerPolicy: "no-referrer"
+          });
+          if (locationResponse.ok) {
+            const location = await locationResponse.json();
+            if (/^[A-Z]{2}$/.test(location.country || "")) tracker.searchParams.set("country", location.country);
           }
+        } catch (_) {
+          // The page-view counter still works if approximate country lookup is unavailable.
+        }
 
-          try {
-            const response = await fetch(tracker, { credentials: "omit" });
-            if (!response.ok) throw new Error("Counter unavailable");
-            const result = await response.json();
-            pageViewCount.textContent = Number(result.value).toLocaleString();
-            pageViewCount.dataset.state = "ready";
-          } catch (_) {
-            pageViewCount.textContent = "Recording";
-            pageViewCount.dataset.state = "offline";
-          }
-        };
+        try {
+          const response = await fetch(tracker, { credentials: "omit" });
+          if (!response.ok) throw new Error("Counter unavailable");
+          await response.json();
+        } catch (_) {
+          // Visitor statistics are intentionally non-blocking and not shown in the interface.
+        }
+      };
 
-        recordVisit();
-      }
+      recordVisit();
     })();
   </script>
 </body>
