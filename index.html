@@ -948,6 +948,67 @@
       line-height: 1.25;
     }
 
+    .visitor-map-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1.1rem 0;
+      border-top: 1px solid var(--home-rule);
+      border-bottom: 1px solid var(--home-rule);
+    }
+
+    .visitor-map-copy {
+      max-width: 35rem;
+    }
+
+    .visitor-map-copy h3 {
+      margin: 0 0 0.3rem;
+      color: var(--text);
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .visitor-map-copy p {
+      margin: 0;
+      color: var(--home-secondary);
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .visitor-map-widget {
+      display: grid;
+      width: 250px;
+      min-width: 250px;
+      min-height: 125px;
+      justify-self: end;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--home-rule);
+      border-radius: 6px;
+      background: #102a43;
+    }
+
+    .visitor-map-live {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.55rem;
+      margin-top: 0.65rem;
+      color: var(--home-secondary);
+      font-size: 0.78rem;
+    }
+
+    .visitor-map-live img {
+      width: 81px;
+      height: 29px;
+    }
+
+    .visitor-map-widget a:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: -4px;
+    }
+
     @media (max-width: 760px) {
       .home-hero {
         grid-template-columns: 1fr;
@@ -982,6 +1043,16 @@
       .recent-project-grid,
       .updates-list {
         grid-template-columns: 1fr;
+      }
+
+      .visitor-map-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .visitor-map-widget,
+      .visitor-map-live {
+        justify-self: start;
+        justify-content: flex-start;
       }
 
       .section-heading {
@@ -1404,6 +1475,29 @@
           Innovus, SRAM-based memory systems, C/C++, Python, JavaScript, Git, Linux, TCL, and MATLAB.
         </li>
       </ul>
+    </section>
+
+    <section data-reveal aria-labelledby="visitor-map-title">
+      <h2 class="section-heading" id="visitor-map-title">Visitors</h2>
+      <div class="visitor-map-panel">
+        <div class="visitor-map-copy">
+          <h3>Live Visitor Map</h3>
+          <p>Approximate visitor regions and the number of people currently viewing the site. No raw IP addresses are displayed.</p>
+        </div>
+        <div>
+          <div class="visitor-map-widget">
+            <script id="_waums6">var _wau = window._wau || []; _wau.push(["map", "marksui6rtl", "ms6", "250", "125", "night", "cross-pink"]);</script>
+            <script async src="https://waust.at/m.js"></script>
+            <noscript>Live visitor map requires JavaScript.</noscript>
+          </div>
+          <div class="visitor-map-live">
+            <span>Online now</span>
+            <a href="https://whos.amung.us/stats/marksui6rtl/" target="_blank" rel="noopener" aria-label="View live visitor statistics">
+              <img src="https://whos.amung.us/widget/marksui6rtl.png" width="81" height="29" loading="lazy" alt="Current visitors online">
+            </a>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
