@@ -175,7 +175,6 @@
       letter-spacing: -0.025em;
     }
 
-    .hero-heading-lead,
     .hero-rotator {
       display: block;
     }
@@ -184,8 +183,8 @@
       position: relative;
       width: fit-content;
       min-height: 1.05em;
-      margin-top: 0.12em;
       color: var(--home-accent);
+      white-space: nowrap;
       transition: opacity 0.22s ease, transform 0.22s var(--home-ease), filter 0.22s ease;
     }
 
@@ -1380,8 +1379,7 @@
       <div class="home-copy">
         <p class="home-kicker">ASIC / FPGA / Software Engineering</p>
         <h2 class="hero-heading">
-          <span class="hero-heading-lead">I build across</span>
-          <span class="hero-rotator" id="hero-rotator">ASIC design.</span>
+          <span class="hero-rotator" id="hero-rotator">UCSD · Math · CE · ECE.</span>
         </h2>
         <ul class="hero-identity-rail" aria-label="Academic background">
           <li>UCSD</li>
@@ -1723,10 +1721,10 @@
 
       const rotator = document.querySelector("#hero-rotator");
       const phrases = [
+        "UCSD · Math · CE · ECE.",
         "ASIC design.",
         "FPGA systems.",
-        "software + hardware.",
-        "UCSD Math · CE · ECE."
+        "software + hardware."
       ];
 
       if (rotator && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
