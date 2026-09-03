@@ -276,11 +276,15 @@ header nav a[aria-current="page"] {
   background: color-mix(in srgb, var(--nav-accent) 9%, transparent);
 }
 
-header nav a:hover::after,
-header nav a:focus-visible::after,
-header nav a[aria-current="page"]::after {
+header nav a:not([aria-current="page"]):hover::after,
+header nav a:not([aria-current="page"]):focus-visible::after {
   opacity: 1;
   transform: scaleX(1);
+}
+
+header nav a[aria-current="page"]::after {
+  opacity: 0;
+  transform: scaleX(0);
 }
 
 .travel-local-nav {

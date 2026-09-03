@@ -27,7 +27,7 @@
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="style.css?v=20260901-type">
+  <link rel="stylesheet" href="style.css?v=20260902-nav">
   <script src="theme.js?v=20260622-perf"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -490,7 +490,7 @@
         </p>
       </div>
       <aside class="contact-note" aria-label="Current location">
-        <strong>San Diego, CA</strong>
+        <strong>Yorba Linda, CA</strong>
         <span>UC San Diego ECE / open to engineering conversations</span>
       </aside>
     </section>
@@ -579,7 +579,7 @@
 
     <section data-reveal>
       <h2 class="contact-heading">Location</h2>
-      <p>Based in San Diego, studying at the University of California, San Diego.</p>
+      <p>Based in Yorba Linda, California, studying at the University of California, San Diego.</p>
       <div id="map"></div>
     </section>
   </main>
@@ -589,7 +589,7 @@
       <div class="site-footer-brand">
         <a href="index.html">Mark Sui</a>
         <span>Hardware-minded systems, engineering tools, and personal archives.</span>
-        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+        <span class="site-footer-meta">Yorba Linda, CA / UC San Diego ECE</span>
       </div>
       <nav class="site-footer-links" aria-label="Footer">
         <a href="index.html">About</a>
@@ -615,7 +615,7 @@
 
       var map = L.map("map", {
         scrollWheelZoom: false
-      }).setView([32.8801, -117.2340], 14);
+      }).setView([33.8886, -117.8131], 14);
 
       var tileUrls = {
         light: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
@@ -639,8 +639,8 @@
         };
       }
 
-      var marker = L.circleMarker([32.8801, -117.2340], markerStyle(currentTheme)).addTo(map)
-        .bindPopup("<b>University of California, San Diego</b><br>My current location.")
+      var marker = L.circleMarker([33.8886, -117.8131], markerStyle(currentTheme)).addTo(map)
+        .bindPopup("<b>Yorba Linda, California</b><br>My current location.")
         .openPopup();
 
       function applyMapTheme(theme) {

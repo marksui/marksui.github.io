@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="利群文学出版社图书书架：收录吴利群与陈景棋相关的图书封面和文学资料。">
+  <meta name="description" content="利群文学出版社馆藏目录：成立于 2019 年，收录文学作品、利群大学机构文献与社团历史资料。">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#243629">
   <link rel="canonical" href="https://marksui.github.io/liqunwenxue/">
   <title>利群文学出版社｜图书书架</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260902-history">
 </head>
 <body>
   <a class="skip-link" href="#catalog">跳到书架</a>
   <header class="site-header">
     <div class="masthead">
-      <p class="imprint">LIQUN LITERATURE · EST. 2026</p>
+      <p class="imprint">LIQUN LITERATURE PRESS · EST. 2019</p>
       <a class="wordmark" href="./" aria-label="利群文学出版社首页">利群文学出版社</a>
-      <p class="masthead-note">图书书架与文学资料馆</p>
+      <p class="masthead-note">出版目录与社团文献档案</p>
     </div>
   </header>
 
@@ -26,25 +26,95 @@
         <p class="eyebrow">LIQUN LITERATURE PRESS</p>
         <h1 id="hero-title">一架书，<br>一段抵达世界的路。</h1>
       </div>
-      <p class="hero-copy">这里汇集了利群文学的图书封面与相关资料。沿着书脊浏览，点开任意一本，即可仔细观看。</p>
+      <div class="hero-aside">
+        <p class="hero-copy">自 2019 年成立以来，我们以文学作品、机构文献与社团档案，保存一段认真写作、编辑与出版的共同记忆。</p>
+        <dl class="leadership" aria-label="出版社与社团人员">
+          <div>
+            <dt>会长 / President</dt>
+            <dd>Jeremiah Lim</dd>
+          </div>
+          <div>
+            <dt>副会长 / Vice President</dt>
+            <dd>Mark Sui</dd>
+          </div>
+          <div>
+            <dt>总编辑 / Editor-in-Chief</dt>
+            <dd>Ruxiao Zhang</dd>
+          </div>
+          <div>
+            <dt>作者 / Author</dt>
+            <dd>Tom Chen</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="history" aria-labelledby="history-title">
+      <div class="history-heading">
+        <div>
+          <p class="eyebrow">ARCHIVE CHRONICLE</p>
+          <h2 id="history-title">从出版社到大学档案</h2>
+        </div>
+        <p class="history-intro">这段历史依据现存“利群大学”馆藏整理。它不是一份完整校史，而是一条由出版物、通知书与机构史封面共同留下的时间线。</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <time datetime="2019">2019</time>
+          <div>
+            <h3>出版社成立</h3>
+            <p>利群文学出版社开始整理文学创作与社团材料，并逐步形成独立馆藏。</p>
+          </div>
+        </li>
+        <li>
+          <time datetime="2020-02-20">2020</time>
+          <div>
+            <h3>大学文献进入馆藏</h3>
+            <p>现存录取通知书记录了“利群大学”及经济学院商务管理专业，成为机构档案中最明确的时间标记。</p>
+          </div>
+        </li>
+        <li>
+          <span class="timeline-mark">四卷</span>
+          <div>
+            <h3>《利群大学的九十年》</h3>
+            <p>馆藏四卷机构史依次书写新民主主义、抗战与旧民主主义、社会主义建设，以及改革开放与现代化建设时期。</p>
+          </div>
+        </li>
+      </ol>
+      <p class="history-source">资料来源：馆藏“利群大学”系列，共 5 件。</p>
     </section>
 
     <section class="catalog" id="catalog" aria-labelledby="catalog-title">
       <div class="catalog-heading">
         <div>
           <p class="eyebrow">THE CATALOGUE</p>
-          <h2 id="catalog-title">全部图书</h2>
+          <h2 id="catalog-title">正式馆藏</h2>
         </div>
         <p id="book-count" class="book-count" aria-live="polite"></p>
       </div>
       <nav id="filters" class="filters" aria-label="按收藏分区查看"></nav>
       <div id="shelves" class="shelves"></div>
+
+      <details class="archive-annex" id="archive-annex">
+        <summary>编目附录</summary>
+        <div class="archive-annex-body">
+          <div class="archive-annex-heading">
+            <div>
+              <p class="eyebrow">ARCHIVAL APPENDIX</p>
+              <h2>历史附件</h2>
+            </div>
+            <p id="archive-count" class="book-count" aria-live="polite"></p>
+          </div>
+          <p class="archive-note">早期版本、非正式封面与资料附件仅作内部编目保存。</p>
+          <nav id="archive-filters" class="filters archive-filters" aria-label="按附录分区查看"></nav>
+          <div id="archive-shelves" class="shelves"></div>
+        </div>
+      </details>
     </section>
   </main>
 
   <footer>
     <p>利群文学出版社</p>
-    <p>图书书架 · 独立页面</p>
+    <p>Founded 2019 · Chinese Association Club · 独立馆藏</p>
   </footer>
 
   <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
@@ -53,6 +123,6 @@
     <p id="viewer-title"></p>
   </dialog>
 
-  <script src="catalog.js"></script>
+  <script src="catalog.js?v=20260902-history"></script>
 </body>
 </html>

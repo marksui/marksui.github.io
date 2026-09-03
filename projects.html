@@ -124,7 +124,7 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260901-type">
+  <link rel="stylesheet" href="style.css?v=20260902-nav">
   <script src="theme.js?v=20260622-perf"></script>
   <style>
     .projects-main {
@@ -1607,30 +1607,25 @@
 
     <section data-reveal aria-label="Project focus areas">
       <div class="project-lanes">
-        <a class="project-lane" href="projects.html?filter=hardware#project-filters">
-          <span>Hardware Learning</span>
-          <strong>Logic, CMOS, and interview prep</strong>
+        <a class="project-lane" href="projects.html?filter=hardware-tools#project-filters">
+          <span>Hardware Tools</span>
+          <strong>Logic, CMOS, and interview preparation</strong>
           <p>Tools that turn architecture and circuit concepts into repeatable workflows.</p>
         </a>
-        <a class="project-lane" href="experience.html#vlsi-coursework">
-          <span>VLSI Coursework</span>
-          <strong>EDA, physical design, and RTL experiments</strong>
+        <a class="project-lane" href="projects.html?filter=rtl-vlsi#project-filters">
+          <span>RTL &amp; VLSI</span>
+          <strong>RTL generation, EDA, and physical design</strong>
           <p>Report-backed quarter projects with measurable PPA, CUDA, and Verilog outcomes.</p>
-        </a>
-        <a class="project-lane" href="projects.html?filter=macos#project-filters">
-          <span>Native Utilities</span>
-          <strong>Local-first macOS software</strong>
-          <p>Small focused apps for files, documents, coursework, and everyday productivity.</p>
         </a>
         <a class="project-lane" href="projects.html?filter=embedded#project-filters">
           <span>Embedded Systems</span>
           <strong>Sensing and live status displays</strong>
           <p>ESP32 and C-based monitoring work that connects hardware signals to usable feedback.</p>
         </a>
-        <a class="project-lane" href="projects.html?filter=data#project-filters">
-          <span>Interactive Data</span>
-          <strong>Maps, datasets, and visual tools</strong>
-          <p>Browser experiences for exploring places, landmarks, and model outputs.</p>
+        <a class="project-lane" href="projects.html?filter=software#project-filters">
+          <span>Supporting Software</span>
+          <strong>Native utilities, XR, maps, and data tools</strong>
+          <p>Additional software builds grouped as supporting range rather than the primary hiring signal.</p>
         </a>
       </div>
     </section>
@@ -1648,15 +1643,10 @@
           </div>
           <div class="project-filter-row" role="group" aria-label="Filter projects by category">
             <button class="project-filter-button" type="button" data-project-filter="all" aria-pressed="true">All</button>
-            <button class="project-filter-button" type="button" data-project-filter="hardware" aria-pressed="false">Hardware</button>
-            <button class="project-filter-button" type="button" data-project-filter="macos" aria-pressed="false">macOS</button>
+            <button class="project-filter-button" type="button" data-project-filter="rtl-vlsi" aria-pressed="false">RTL &amp; VLSI</button>
+            <button class="project-filter-button" type="button" data-project-filter="hardware-tools" aria-pressed="false">Hardware Tools</button>
             <button class="project-filter-button" type="button" data-project-filter="embedded" aria-pressed="false">Embedded</button>
-            <button class="project-filter-button" type="button" data-project-filter="xr" aria-pressed="false">XR</button>
-            <button class="project-filter-button" type="button" data-project-filter="maps" aria-pressed="false">Maps</button>
-            <button class="project-filter-button" type="button" data-project-filter="vlsi" aria-pressed="false">VLSI</button>
-            <button class="project-filter-button" type="button" data-project-filter="cuda" aria-pressed="false">CUDA</button>
-            <button class="project-filter-button" type="button" data-project-filter="data" aria-pressed="false">Data</button>
-            <button class="project-filter-button" type="button" data-project-filter="coursework" aria-pressed="false">Coursework</button>
+            <button class="project-filter-button" type="button" data-project-filter="software" aria-pressed="false">Software</button>
           </div>
         </div>
       </div>
@@ -1886,7 +1876,7 @@
     <section data-reveal data-project-section="featured">
       <h2 class="section-heading">Featured Case Studies</h2>
       <div class="featured-grid">
-        <article class="project-card featured-primary" data-project-card data-categories="hardware">
+        <article class="project-card featured-primary" data-project-card data-categories="rtl-vlsi hardware-tools">
           <figure class="project-visual">
             <a href="https://marksui.github.io/logic-cmos-studio/" target="_blank" rel="noopener" aria-label="Open Logic and CMOS Studio">
               <img src="img/projects/previews/logic-cmos-studio.webp?v=20260901" width="1280" height="720" alt="Logic and CMOS Studio interface showing the Boolean formula workspace and gate-level circuit diagram" loading="lazy" decoding="async">
@@ -1940,7 +1930,7 @@
           </div>
         </article>
 
-        <article class="project-card" data-project-card data-categories="hardware data">
+        <article class="project-card" data-project-card data-categories="rtl-vlsi hardware-tools">
           <figure class="project-visual">
             <a href="https://marksui.github.io/Hardware_Interview_Trainer/" target="_blank" rel="noopener" aria-label="Open Hardware Interview Trainer">
               <img src="img/projects/previews/hardware-interview-trainer.webp" width="1365" height="768" alt="Hardware Interview Trainer interface screenshot" loading="lazy" decoding="async">
@@ -1993,7 +1983,7 @@
           </div>
         </article>
 
-        <article class="project-card" data-project-card data-categories="macos">
+        <article class="project-card" data-project-card data-categories="software">
           <figure class="project-visual">
             <a href="https://marksui.github.io/MacZip/" target="_blank" rel="noopener" aria-label="Open MarkMacZip project page">
               <img src="img/projects/previews/markmaczip.webp" width="1365" height="768" alt="MarkMacZip project page screenshot" loading="lazy" decoding="async">
@@ -2053,7 +2043,7 @@
     <section data-reveal data-project-section="quarter">
       <h2 class="section-heading">Quarter Project Reports</h2>
       <div class="featured-grid coursework-grid">
-        <article class="project-card" style="--site-accent: #536878;" data-project-card data-categories="hardware data vlsi coursework">
+        <article class="project-card" style="--site-accent: #536878;" data-project-card data-categories="rtl-vlsi">
           <figure class="project-visual">
             <a href="files/project-reports/mage-rtl-generation-routing-memory.pdf" target="_blank" rel="noopener" aria-label="Open MAGE RTL generation report PDF">
               <img src="img/projects/reports/mage-rtl-generation-routing-memory.webp" width="1365" height="768" alt="MAGE RTL generation report cover" loading="lazy" decoding="async">
@@ -2107,7 +2097,7 @@
           </div>
         </article>
 
-        <article class="project-card" style="--site-accent: #5b6f8f;" data-project-card data-categories="hardware data cuda coursework">
+        <article class="project-card" style="--site-accent: #5b6f8f;" data-project-card data-categories="rtl-vlsi">
           <figure class="project-visual">
             <a href="files/project-reports/ece268-ggm-tree-cuda-report.pdf" target="_blank" rel="noopener" aria-label="Open GPU-accelerated GGM tree report PDF">
               <img src="img/projects/reports/ece268-ggm-tree-cuda-report.webp" width="1365" height="768" alt="GPU-accelerated GGM tree report cover" loading="lazy" decoding="async">
@@ -2168,7 +2158,7 @@
     <section data-reveal data-project-section="sites">
       <h2 class="section-heading">Supporting Builds</h2>
       <div class="site-grid">
-        <article class="site-card" style="--site-accent: #6b5d8f;" data-project-card data-categories="macos">
+        <article class="site-card" style="--site-accent: #6b5d8f;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://marksui.github.io/CourseWatch/" target="_blank" rel="noopener" aria-label="Open CourseWatch">
               <img src="img/projects/previews/coursewatch.webp" width="1365" height="768" alt="CourseWatch project page screenshot" loading="lazy" decoding="async">
@@ -2196,7 +2186,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #8a5d54;" data-project-card data-categories="macos">
+        <article class="site-card" style="--site-accent: #8a5d54;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://marksui.github.io/MarkPDFLock/" target="_blank" rel="noopener" aria-label="Open MarkPDFLock">
               <img src="img/projects/previews/markpdflock.webp" width="1365" height="768" alt="MarkPDFLock project page screenshot" loading="lazy" decoding="async">
@@ -2224,7 +2214,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #4f6f7f;" data-project-card data-categories="macos data">
+        <article class="site-card" style="--site-accent: #4f6f7f;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://marksui.github.io/JobAgent/" target="_blank" rel="noopener" aria-label="Open JobAgentMac">
               <img src="img/projects/previews/jobagent.webp" width="1365" height="768" alt="JobAgentMac project page screenshot" loading="lazy" decoding="async">
@@ -2252,7 +2242,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #5f7d5f;" data-project-card data-categories="embedded hardware">
+        <article class="site-card" style="--site-accent: #5f7d5f;" data-project-card data-categories="embedded">
           <figure class="site-preview">
             <a href="https://marksui.github.io/Indoor_Monitoring/" target="_blank" rel="noopener" aria-label="Open Indoor Monitoring">
               <img src="img/projects/previews/indoor-monitoring.webp" width="1365" height="768" alt="Indoor Monitoring project page screenshot" loading="lazy" decoding="async">
@@ -2280,7 +2270,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #7a5f87;" data-project-card data-categories="xr hardware data">
+        <article class="site-card" style="--site-accent: #7a5f87;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://github.com/marksui/CSE165-CloserXR-Sales-Negotiator" target="_blank" rel="noopener" aria-label="Open CloserXR Sales Negotiator source">
               <img src="img/projects/previews/closerxr-sales-negotiator.jpg" width="1280" height="720" alt="CloserXR Sales Negotiator demo title card" loading="lazy" decoding="async">
@@ -2308,7 +2298,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #8b6b45;" data-project-card data-categories="maps">
+        <article class="site-card" style="--site-accent: #8b6b45;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://marksui.github.io/China-Travel-Map/" target="_blank" rel="noopener" aria-label="Open China Travel Map">
               <img src="img/projects/previews/china-travel-map.webp" width="1365" height="768" alt="China Travel Map interface screenshot" loading="lazy" decoding="async">
@@ -2336,7 +2326,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #546f9f;" data-project-card data-categories="maps data">
+        <article class="site-card" style="--site-accent: #546f9f;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://marksui.github.io/Google-Maps-Landmark/" target="_blank" rel="noopener" aria-label="Open Google Maps Landmark">
               <img src="img/projects/previews/google-maps-landmark.webp" width="1365" height="768" alt="Google Maps Landmark interface screenshot" loading="lazy" decoding="async">
@@ -2364,7 +2354,7 @@
           </div>
         </article>
 
-        <article class="site-card" style="--site-accent: #6b705c;" data-project-card data-categories="data">
+        <article class="site-card" style="--site-accent: #6b705c;" data-project-card data-categories="software">
           <figure class="site-preview">
             <a href="https://github.com/marksui/Kaggle-Climate-Emulation-Model-Competition" target="_blank" rel="noopener" aria-label="Open Climate Emulation Model source">
               <img src="img/projects/previews/climate-emulation.webp" width="1365" height="768" alt="Climate Emulation Model repository screenshot" loading="lazy" decoding="async">
@@ -2401,7 +2391,7 @@
       <div class="site-footer-brand">
         <a href="index.html">Mark Sui</a>
         <span>Hardware-minded systems, engineering tools, and personal archives.</span>
-        <span class="site-footer-meta">San Diego / UC San Diego ECE</span>
+        <span class="site-footer-meta">Yorba Linda, CA / UC San Diego ECE</span>
       </div>
       <nav class="site-footer-links" aria-label="Footer">
         <a href="index.html">About</a>
