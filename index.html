@@ -167,12 +167,66 @@
 
     .home-hero h2 {
       margin: 0;
-      max-width: 9.6em;
+      max-width: 10.8em;
       font-size: clamp(2.45rem, 5vw, 4.35rem);
       font-family: var(--display-serif);
       line-height: 0.98;
       font-weight: 600;
       letter-spacing: -0.025em;
+    }
+
+    .hero-heading-lead,
+    .hero-rotator {
+      display: block;
+    }
+
+    .hero-rotator {
+      position: relative;
+      width: fit-content;
+      min-height: 1.05em;
+      margin-top: 0.12em;
+      color: var(--home-accent);
+      transition: opacity 0.22s ease, transform 0.22s var(--home-ease), filter 0.22s ease;
+    }
+
+    .hero-rotator::after {
+      content: "";
+      position: absolute;
+      right: -0.12em;
+      bottom: -0.1em;
+      left: 0;
+      height: 0.06em;
+      background: linear-gradient(90deg, var(--home-accent), transparent 94%);
+      transform-origin: left;
+      animation: heroSignal 2.8s linear infinite;
+    }
+
+    .hero-rotator.is-changing {
+      opacity: 0;
+      filter: blur(3px);
+      transform: translateY(0.18em);
+    }
+
+    .hero-identity-rail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.38rem;
+      margin: -0.12rem 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .hero-identity-rail li {
+      margin: 0;
+      padding: 0.2rem 0.48rem;
+      border: 1px solid var(--home-rule);
+      border-radius: 999px;
+      color: var(--home-secondary);
+      background: var(--home-panel);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
     }
 
     .home-hero p {
@@ -394,6 +448,8 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.55rem;
       align-items: center;
+      width: 100%;
+      height: 100%;
       min-height: 12.5rem;
       padding: 1rem;
       border-radius: 6px;
@@ -521,6 +577,71 @@
       font-size: 0.92rem;
       font-weight: bold;
       text-decoration: none;
+    }
+
+    .home-footprint-card {
+      align-self: start;
+      min-width: 0;
+      padding: 0.62rem;
+      border: 1px solid var(--home-rule);
+      border-top: 2px solid var(--home-accent);
+      border-radius: 8px;
+      background: var(--home-panel);
+      box-shadow: var(--home-shadow);
+    }
+
+    .home-footprint-map {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      aspect-ratio: 2 / 1;
+      border: 1px solid var(--home-rule);
+      border-radius: 7px;
+      background:
+        linear-gradient(rgba(16, 42, 67, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(16, 42, 67, 0.055) 1px, transparent 1px),
+        var(--soft);
+      background-size: 24px 24px;
+    }
+
+    .home-footprint-map img {
+      position: absolute;
+      z-index: 1;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      opacity: 0.2;
+      filter: grayscale(1) contrast(1.05);
+    }
+
+    html[data-theme="dark"] .home-footprint-map img {
+      opacity: 0.28;
+      filter: grayscale(1) invert(1);
+    }
+
+    .footprint-point {
+      position: absolute;
+      z-index: 2;
+      width: 0.42rem;
+      height: 0.42rem;
+      border: 1px solid var(--home-accent);
+      border-radius: 50%;
+      background: var(--home-secondary);
+      box-shadow: 0 0 0 0.22rem color-mix(in srgb, var(--home-panel) 72%, transparent);
+      transform: translate(-50%, -50%);
+    }
+
+    .footprint-card-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 0;
+      padding: 0.58rem 0.18rem 0.08rem;
+      color: var(--home-secondary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.06em;
     }
 
     .home-showcase-link::after {
@@ -1020,91 +1141,6 @@
       font-size: 0.84rem;
     }
 
-    .visitor-map-panel {
-      display: grid;
-      grid-template-columns: minmax(12rem, 0.42fr) minmax(0, 1fr);
-      gap: 1.5rem;
-      align-items: center;
-      padding: 1.1rem 0;
-      border-top: 1px solid var(--home-rule);
-      border-bottom: 1px solid var(--home-rule);
-    }
-
-    .visitor-map-copy {
-      max-width: 35rem;
-    }
-
-    .visitor-map-copy h3 {
-      margin: 0 0 0.3rem;
-      color: var(--text);
-      font-size: 1.15rem;
-      font-weight: 600;
-    }
-
-    .visitor-map-copy p {
-      margin: 0;
-      color: var(--home-secondary);
-      font-size: 0.88rem;
-      line-height: 1.5;
-    }
-
-    .visitor-map-widget {
-      display: grid;
-      gap: 0.7rem;
-      width: 100%;
-      max-width: 100%;
-      justify-self: end;
-      overflow: hidden;
-      border: 1px solid var(--home-rule);
-      border-radius: 8px;
-      background: var(--home-panel);
-    }
-
-    .visitor-map-widget svg {
-      width: 100%;
-      height: auto;
-      color: color-mix(in srgb, var(--text) 22%, var(--home-panel) 78%);
-      background:
-        linear-gradient(var(--home-rule) 1px, transparent 1px),
-        linear-gradient(90deg, var(--home-rule) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
-
-    .map-land {
-      fill: currentColor;
-      stroke: color-mix(in srgb, var(--text) 30%, transparent 70%);
-      stroke-width: 1;
-    }
-
-    .map-point circle:first-of-type {
-      fill: var(--home-panel);
-      stroke: color-mix(in srgb, var(--text) 66%, var(--home-panel) 34%);
-      stroke-width: 3;
-    }
-
-    .map-point circle:last-of-type {
-      fill: color-mix(in srgb, var(--text) 72%, var(--home-panel) 28%);
-    }
-
-    .location-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      margin: 0;
-      padding: 0 0.7rem 0.7rem;
-      list-style: none;
-    }
-
-    .location-list li {
-      padding: 0.16rem 0.42rem;
-      border: 1px solid var(--home-rule);
-      border-radius: 999px;
-      color: var(--home-secondary);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      font-size: 0.67rem;
-      line-height: 1.2;
-    }
-
     @media (max-width: 760px) {
       .home-hero {
         grid-template-columns: 1fr;
@@ -1146,14 +1182,6 @@
         min-height: 7.5rem;
         border-top: 2px solid var(--home-accent);
         border-left: 0;
-      }
-
-      .visitor-map-panel {
-        grid-template-columns: 1fr;
-      }
-
-      .visitor-map-widget {
-        justify-self: start;
       }
 
       .section-heading {
@@ -1245,6 +1273,13 @@
       to { transform: translateX(calc(100% + 31.8rem)); }
     }
 
+    @keyframes heroSignal {
+      0% { transform: scaleX(0); opacity: 0.35; }
+      12% { transform: scaleX(1); opacity: 1; }
+      82% { transform: scaleX(1); opacity: 0.75; }
+      100% { transform: scaleX(0); opacity: 0.2; transform-origin: right; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .home-hero,
       .recent-project-card {
@@ -1263,6 +1298,10 @@
       }
 
       .rtl-flow-rail::after {
+        animation: none;
+      }
+
+      .hero-rotator::after {
         animation: none;
       }
 
@@ -1291,15 +1330,24 @@
   <main class="home-main">
     <section class="home-hero">
       <div class="home-copy">
-        <p class="home-kicker">RTL Design Engineer / Digital Hardware</p>
-        <h2>I design digital hardware from the cycle up.</h2>
+        <p class="home-kicker">ASIC / FPGA / Software Engineering</p>
+        <h2 class="hero-heading">
+          <span class="hero-heading-lead">I build across</span>
+          <span class="hero-rotator" id="hero-rotator">ASIC design.</span>
+        </h2>
+        <ul class="hero-identity-rail" aria-label="Academic background">
+          <li>UCSD</li>
+          <li>MATH</li>
+          <li>CE</li>
+          <li>ECE</li>
+        </ul>
         <p class="home-lede">
-          I'm <strong>Mark Sui</strong>, an ECE master's student at <strong>UC San Diego</strong>.
-          I turn microarchitecture into testable SystemVerilog RTL, then follow it through
-          simulation, FPGA implementation, and the VLSI flow.
+          I'm <strong>Mark Sui</strong>, an ECE master's student at <strong>UC San Diego</strong>
+          with a mathematics and computer engineering foundation. I work from cycle-level RTL
+          and FPGA implementation to software tools that make complex systems easier to build and verify.
         </p>
         <p class="home-position">
-          Open to <strong>&nbsp;RTL Design / Digital Design&nbsp;</strong> opportunities.
+          Seeking <strong>&nbsp;ASIC / FPGA / Software Engineering&nbsp;</strong> roles.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
           <a href="#featured-rtl-projects">View RTL Projects</a>
@@ -1309,56 +1357,31 @@
           <a href="contact.html">Get in Touch</a>
         </div>
       </div>
-      <aside class="home-showcase-card" aria-label="Representative engineering build">
+      <aside class="home-footprint-card" aria-label="Global footprint">
         <div class="home-showcase-bar">
-          <span>Representative RTL design</span>
+          <span>Global Footprint</span>
           <span class="home-showcase-dots" aria-hidden="true"><span></span><span></span><span></span></span>
         </div>
-        <div class="home-showcase-visual" role="img" aria-label="Viterbi decoder pipeline showing branch metric, add compare select, and traceback modules">
-          <div class="rtl-pipeline" aria-hidden="true">
-            <span>Branch Metric<br>BMC</span>
-            <span>Add Compare Select<br>ACS</span>
-            <span>Traceback<br>TBU</span>
-          </div>
+        <div class="home-footprint-map" role="img" aria-label="Accurate monochrome world map with nine unlabeled location markers">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/BlankMap-World-Equirectangular.svg" alt="" aria-hidden="true">
+          <i class="footprint-point" style="left:87.64%;top:30.73%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:92%;top:68.82%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:79.4%;top:38.32%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:80.06%;top:41.08%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:83.77%;top:36.09%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:83.6%;top:36.21%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:48.26%;top:20.36%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:53.72%;top:20.82%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:81.71%;top:37.6%" aria-hidden="true"></i>
         </div>
-        <div class="home-showcase-body">
-          <div class="home-showcase-title">
-            <strong>FPGA-Based Viterbi Decoder</strong>
-            <span>SystemVerilog RTL</span>
-          </div>
-          <div class="home-showcase-grid" aria-label="Portfolio signal">
-            <div class="home-showcase-metric">
-              <span>Architecture</span>
-              <strong>BMC / ACS / TBU</strong>
-            </div>
-            <div class="home-showcase-metric">
-              <span>Language</span>
-              <strong>SystemVerilog</strong>
-            </div>
-            <div class="home-showcase-metric">
-              <span>Target</span>
-              <strong>FPGA</strong>
-            </div>
-            <div class="home-showcase-metric">
-              <span>Verification</span>
-              <strong>Controlled error cases</strong>
-            </div>
-          </div>
-          <ul class="home-showcase-stack" aria-label="Representative stack">
-            <li>RTL design</li>
-            <li>Datapath</li>
-            <li>Cycle alignment</li>
-            <li>Waveform debug</li>
-          </ul>
-          <a class="home-showcase-link" href="experience.html#vlsi-coursework">Read project summary</a>
-        </div>
+        <p class="footprint-card-meta" aria-hidden="true"><span>09 NODES</span><span>WORK + TRAVEL</span></p>
       </aside>
     </section>
 
     <section class="engineering-signals" data-reveal aria-label="Engineering signals">
       <div class="engineering-signal">
         <span>Target Role</span>
-        <strong>RTL Design</strong>
+        <strong>ASIC / FPGA / SWE</strong>
       </div>
       <div class="engineering-signal">
         <span>HDL</span>
@@ -1370,14 +1393,14 @@
       </div>
       <div class="engineering-signal">
         <span>Implementation</span>
-        <strong>VLSI / Physical Design</strong>
+        <strong>Hardware / Software</strong>
       </div>
     </section>
 
     <section class="home-cta-panel" data-reveal aria-label="Primary calls to action">
       <div class="home-cta-copy">
-        <span>Open to RTL design, digital design, and FPGA engineering opportunities.</span>
-        <strong>Start with the Viterbi decoder for direct RTL evidence, then review the public tools and report-backed work.</strong>
+        <span>Open to ASIC, FPGA, RTL design, and software engineering opportunities.</span>
+        <strong>Start with the Viterbi decoder for hardware depth, then review the public tools for software and systems range.</strong>
       </div>
       <div class="home-cta-actions">
         <a class="primary" href="#featured-rtl-projects">View RTL Projects</a>
@@ -1438,8 +1461,10 @@
         <article class="recent-project-card">
           <figure class="project-visual">
             <a class="project-visual-link rtl-visual" href="experience.html#vlsi-coursework" aria-label="Read the FPGA-Based Viterbi Decoder project summary">
-              <span class="rtl-module-map" aria-hidden="true">
-                <span>BMC</span><span>ACS</span><span>TBU</span>
+              <span class="rtl-pipeline" aria-hidden="true">
+                <span>Branch Metric<br>BMC</span>
+                <span>Add Compare Select<br>ACS</span>
+                <span>Traceback<br>TBU</span>
               </span>
             </a>
           </figure>
@@ -1566,43 +1591,6 @@
       <a class="experience-more" href="experience.html">View complete experience →</a>
     </section>
 
-    <section data-reveal aria-labelledby="visitor-map-title">
-      <h2 class="section-heading" id="visitor-map-title">Global Footprint</h2>
-      <div class="visitor-map-panel">
-        <div class="visitor-map-copy">
-          <h3>Places connected to my work and travel.</h3>
-        </div>
-        <div class="visitor-map-widget">
-          <svg viewBox="0 0 1000 500" role="img" aria-labelledby="location-map-title location-map-desc">
-            <title id="location-map-title">Selected cities across Europe, Asia, and Australia</title>
-            <desc id="location-map-desc">A monochrome world map marking Dublin, Berlin, Hanoi, Da Nang, Hong Kong, Taipei, Hsinchu, Osaka, and Sydney.</desc>
-            <g aria-hidden="true">
-              <path class="map-land" d="M42 88 89 54 155 45 212 65 250 104 236 139 190 149 169 184 136 194 116 162 79 151 56 121Z"/>
-              <path class="map-land" d="M202 201 246 215 273 258 265 311 244 359 222 420 199 394 187 337 172 289 179 241Z"/>
-              <path class="map-land" d="M459 90 520 66 586 74 625 61 700 79 764 71 825 94 894 91 947 123 933 160 885 168 850 194 805 187 773 214 723 201 684 171 636 180 590 154 545 161 514 135 474 137 441 117Z"/>
-              <path class="map-land" d="M492 165 548 172 589 211 579 270 552 332 520 361 491 314 467 256 471 202Z"/>
-              <path class="map-land" d="M847 314 888 299 937 319 952 355 914 382 863 374 831 346Z"/>
-              <path class="map-land" d="M338 54 373 31 414 45 401 78 358 86Z"/>
-              <path class="map-land" d="M900 153 910 143 916 162 907 178Z"/>
-            </g>
-            <g class="map-point"><title>Dublin</title><circle cx="483" cy="102" r="9"/><circle cx="483" cy="102" r="3.5"/></g>
-            <g class="map-point"><title>Berlin</title><circle cx="537" cy="104" r="9"/><circle cx="537" cy="104" r="3.5"/></g>
-            <g class="map-point"><title>Hanoi</title><circle cx="794" cy="192" r="9"/><circle cx="794" cy="192" r="3.5"/></g>
-            <g class="map-point"><title>Da Nang</title><circle cx="801" cy="207" r="9"/><circle cx="801" cy="207" r="3.5"/></g>
-            <g class="map-point"><title>Hong Kong</title><circle cx="817" cy="188" r="9"/><circle cx="817" cy="188" r="3.5"/></g>
-            <g class="map-point"><title>Taipei</title><circle cx="839" cy="176" r="9"/><circle cx="839" cy="176" r="3.5"/></g>
-            <g class="map-point"><title>Hsinchu</title><circle cx="833" cy="186" r="9"/><circle cx="833" cy="186" r="3.5"/></g>
-            <g class="map-point"><title>Osaka</title><circle cx="876" cy="154" r="9"/><circle cx="876" cy="154" r="3.5"/></g>
-            <g class="map-point"><title>Sydney</title><circle cx="920" cy="344" r="9"/><circle cx="920" cy="344" r="3.5"/></g>
-          </svg>
-          <ul class="location-list" aria-label="Selected cities">
-            <li>Osaka</li><li>Sydney</li><li>Hanoi</li><li>Da Nang</li><li>Taipei</li>
-            <li>Hsinchu</li><li>Dublin</li><li>Berlin</li><li>Hong Kong</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
@@ -1650,6 +1638,26 @@
           selectStage(next);
         });
       });
+
+      const rotator = document.querySelector("#hero-rotator");
+      const phrases = [
+        "ASIC design.",
+        "FPGA systems.",
+        "software + hardware.",
+        "UCSD Math · CE · ECE."
+      ];
+
+      if (rotator && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        let phraseIndex = 0;
+        window.setInterval(() => {
+          rotator.classList.add("is-changing");
+          window.setTimeout(() => {
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            rotator.textContent = phrases[phraseIndex];
+            rotator.classList.remove("is-changing");
+          }, 220);
+        }, 2800);
+      }
     })();
   </script>
 </body>
