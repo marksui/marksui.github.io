@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="利群文学出版社图书书架：收录吴利群与陈景棋相关的图书封面和文学资料。">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#243629">
+  <link rel="canonical" href="https://marksui.github.io/liqunwenxue/">
+  <title>利群文学出版社｜图书书架</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#catalog">跳到书架</a>
+  <header class="site-header">
+    <div class="masthead">
+      <p class="imprint">LIQUN LITERATURE · EST. 2026</p>
+      <a class="wordmark" href="./" aria-label="利群文学出版社首页">利群文学出版社</a>
+      <p class="masthead-note">图书书架与文学资料馆</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <p class="eyebrow">LIQUN LITERATURE PRESS</p>
+        <h1 id="hero-title">一架书，<br>一段抵达世界的路。</h1>
+      </div>
+      <p class="hero-copy">这里汇集了利群文学的图书封面与相关资料。沿着书脊浏览，点开任意一本，即可仔细观看。</p>
+    </section>
+
+    <section class="catalog" id="catalog" aria-labelledby="catalog-title">
+      <div class="catalog-heading">
+        <div>
+          <p class="eyebrow">THE CATALOGUE</p>
+          <h2 id="catalog-title">全部图书</h2>
+        </div>
+        <p id="book-count" class="book-count" aria-live="polite"></p>
+      </div>
+      <nav id="filters" class="filters" aria-label="按收藏分区查看"></nav>
+      <div id="shelves" class="shelves"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>利群文学出版社</p>
+    <p>图书书架 · 独立页面</p>
+  </footer>
+
+  <dialog id="viewer" class="viewer" aria-labelledby="viewer-title">
+    <button class="close-viewer" type="button" aria-label="关闭预览">×</button>
+    <img id="viewer-image" alt="">
+    <p id="viewer-title"></p>
+  </dialog>
+
+  <script src="catalog.js"></script>
+</body>
+</html>
