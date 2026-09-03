@@ -977,36 +977,18 @@
     }
 
     .visitor-map-widget {
-      display: grid;
-      width: 250px;
-      min-width: 250px;
-      min-height: 125px;
+      display: block;
+      width: fit-content;
+      max-width: 100%;
       justify-self: end;
-      place-items: center;
       overflow: hidden;
-      border: 1px solid var(--home-rule);
-      border-radius: 6px;
-      background: #102a43;
+      border-radius: 4px;
     }
 
-    .visitor-map-live {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 0.55rem;
-      margin-top: 0.65rem;
-      color: var(--home-secondary);
-      font-size: 0.78rem;
-    }
-
-    .visitor-map-live img {
-      width: 81px;
-      height: 29px;
-    }
-
-    .visitor-map-widget a:focus-visible {
-      outline: 2px solid #fff;
-      outline-offset: -4px;
+    .visitor-map-widget img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
     }
 
     @media (max-width: 760px) {
@@ -1049,10 +1031,8 @@
         grid-template-columns: 1fr;
       }
 
-      .visitor-map-widget,
-      .visitor-map-live {
+      .visitor-map-widget {
         justify-self: start;
-        justify-content: flex-start;
       }
 
       .section-heading {
@@ -1481,21 +1461,13 @@
       <h2 class="section-heading" id="visitor-map-title">Visitors</h2>
       <div class="visitor-map-panel">
         <div class="visitor-map-copy">
-          <h3>Live Visitor Map</h3>
-          <p>Approximate visitor regions and the number of people currently viewing the site. No raw IP addresses are displayed.</p>
+          <h3>Visitor Map</h3>
+          <p>Total page views and the countries visitors are coming from. Locations are approximate; no raw IP addresses are displayed.</p>
         </div>
-        <div>
-          <div class="visitor-map-widget">
-            <script id="_waums6">var _wau = window._wau || []; _wau.push(["map", "marksui6rtl", "ms6", "250", "125", "night", "cross-pink"]);</script>
-            <script async src="https://waust.at/m.js"></script>
-            <noscript>Live visitor map requires JavaScript.</noscript>
-          </div>
-          <div class="visitor-map-live">
-            <span>Online now</span>
-            <a href="https://whos.amung.us/stats/marksui6rtl/" target="_blank" rel="noopener" aria-label="View live visitor statistics">
-              <img src="https://whos.amung.us/widget/marksui6rtl.png" width="81" height="29" loading="lazy" alt="Current visitors online">
-            </a>
-          </div>
+        <div class="visitor-map-widget">
+          <a href="https://info.flagcounter.com/APtk" target="_blank" rel="noopener" aria-label="View cumulative visitor statistics by country">
+            <img src="https://s01.flagcounter.com/map/APtk/size_s/txt_000000/border_CCCCCC/pageviews_1/viewers_0/flags_0/" loading="lazy" alt="Cumulative page views and visitor countries">
+          </a>
         </div>
       </div>
     </section>
