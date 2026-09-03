@@ -630,6 +630,22 @@
       transform: translate(-50%, -50%);
     }
 
+    .footprint-point-live {
+      z-index: 3;
+      background: var(--home-panel);
+      box-shadow: 0 0 0 0.2rem var(--home-wash), 0 0 0 0.32rem color-mix(in srgb, var(--home-accent) 22%, transparent);
+    }
+
+    .footprint-point-live::after {
+      content: "";
+      position: absolute;
+      inset: -0.34rem;
+      border: 1px solid var(--home-accent);
+      border-radius: 50%;
+      opacity: 0;
+      animation: footprintPulse 2.2s ease-out infinite;
+    }
+
 
     .home-showcase-link::after {
       content: "";
@@ -1268,6 +1284,11 @@
       100% { transform: scaleX(0); opacity: 0.2; transform-origin: right; }
     }
 
+    @keyframes footprintPulse {
+      0% { opacity: 0.72; transform: scale(0.55); }
+      75%, 100% { opacity: 0; transform: scale(1.45); }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .home-hero,
       .recent-project-card {
@@ -1290,6 +1311,10 @@
       }
 
       .hero-rotator::after {
+        animation: none;
+      }
+
+      .footprint-point-live::after {
         animation: none;
       }
 
@@ -1591,7 +1616,7 @@
     <section data-reveal aria-labelledby="visitor-map-title">
       <h2 class="section-heading" id="visitor-map-title">Global Footprint</h2>
       <div class="global-footprint-card">
-        <div class="home-footprint-map" role="img" aria-label="Accurate monochrome world map with nine preserved footprint markers">
+        <div class="home-footprint-map" role="img" aria-label="Accurate monochrome world map with preserved travel markers and the current visitor's approximate location">
           <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/BlankMap-World-Equirectangular.svg" alt="" aria-hidden="true">
           <i class="footprint-point" style="left:87.64%;top:30.73%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:92%;top:68.82%" aria-hidden="true"></i>
@@ -1602,6 +1627,18 @@
           <i class="footprint-point" style="left:48.26%;top:20.36%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:53.72%;top:20.82%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:81.71%;top:37.6%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:17.46%;top:31.82%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:17.27%;top:31.27%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:17.25%;top:31.2%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16.18%;top:28.59%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16.25%;top:28.57%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:18.92%;top:27.36%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16.14%;top:29.26%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16%;top:29.01%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:17.15%;top:31.08%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16.75%;top:30.88%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:16.02%;top:23.55%" aria-hidden="true"></i>
+          <i class="footprint-point" style="left:27.95%;top:25.75%" aria-hidden="true"></i>
         </div>
       </div>
     </section>
@@ -1677,13 +1714,25 @@
       const recordVisit = async () => {
         const tracker = new URL("https://counterapi.com/api/marksui.github.io/view/global-footprint-20260902");
         try {
-          const locationResponse = await fetch("https://api.country.is/", {
+          const locationResponse = await fetch("https://api.country.is/?fields=location", {
             credentials: "omit",
             referrerPolicy: "no-referrer"
           });
           if (locationResponse.ok) {
             const location = await locationResponse.json();
             if (/^[A-Z]{2}$/.test(location.country || "")) tracker.searchParams.set("country", location.country);
+
+            const latitude = Number(location.location?.latitude);
+            const longitude = Number(location.location?.longitude);
+            const footprintMap = document.querySelector(".home-footprint-map");
+            if (footprintMap && Number.isFinite(latitude) && Number.isFinite(longitude)) {
+              const visitorPoint = document.createElement("i");
+              visitorPoint.className = "footprint-point footprint-point-live";
+              visitorPoint.setAttribute("aria-hidden", "true");
+              visitorPoint.style.left = `${((longitude + 180) / 360) * 100}%`;
+              visitorPoint.style.top = `${((90 - latitude) / 180) * 100}%`;
+              footprintMap.append(visitorPoint);
+            }
           }
         } catch (_) {
           // The page-view counter still works if approximate country lookup is unavailable.
