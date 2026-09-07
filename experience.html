@@ -768,15 +768,10 @@
 
         <article class="project-card">
           <span class="project-type">Digital Design</span>
-          <h3>FPGA-Based Viterbi Decoder</h3>
-          <p class="project-context">Advanced Digital Design / UC San Diego</p>
-          <p>
-            Designed a convolutional encoder and FPGA-based Viterbi decoder in SystemVerilog, implementing BMC, ACS,
-            and Traceback Unit components for accurate signal reconstruction.
-          </p>
-          <p>
-            <strong>Bottleneck and resolution.</strong> The main bottleneck was architectural complexity: branch-metric, path-cost, and traceback logic all needed to agree cycle by cycle without turning the design into something impossible to verify. I decomposed the decoder into smaller modules, verified them against controlled error cases, and used module boundaries to keep timing and correctness issues traceable.
-          </p>
+          <h3><a href="viterbi.html">SystemVerilog Viterbi Decoder</a></h3>
+          <p class="project-context">ECE 111 Final Project / UC San Diego</p>
+          <p>Implemented an 8-state decoder with branch-metric, add-compare-select, and traceback modules. Evaluated 22 error-injection cases, with zero output errors in periodic cases 2a1–2a5 and documented limits under denser error patterns.</p>
+          <p><a href="viterbi.html">Explore architecture, results, and source code →</a></p>
           <div class="stack-row">
             <span>SystemVerilog</span>
             <span>FPGA</span>

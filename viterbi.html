@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Sui - SystemVerilog Viterbi Decoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
+  <meta name="description" content="An 8-state SystemVerilog Viterbi decoder: architecture, survivor memory, traceback, and 22 documented error-injection experiments from UC San Diego ECE 111.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#102A43">
+  <link rel="canonical" href="https://marksui.github.io/viterbi.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - SystemVerilog Viterbi Decoder">
+  <meta property="og:description" content="Explore an 8-state Viterbi decoder with modular RTL, banked survivor memory, and documented error-injection results.">
+  <meta property="og:url" content="https://marksui.github.io/viterbi.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - SystemVerilog Viterbi Decoder">
+  <meta name="twitter:description" content="Explore an 8-state Viterbi decoder with modular RTL, banked survivor memory, and documented error-injection results.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="stylesheet" href="style.css?v=20260902-nav">
+  <script src="theme.js?v=20260622-perf"></script>
+  <style>
+    .case-main { max-width: 1100px; }
+    .case-main section { margin-bottom: 3rem; content-visibility: visible; }
+    .case-back { display: inline-block; margin-bottom: 1.5rem; color: var(--muted); }
+    .case-kicker { color: var(--muted); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; }
+    .case-main h1 { font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1.08; letter-spacing: -.035em; margin: .7rem 0 1.25rem; color: var(--ink); }
+    .case-lede { font-size: 1.2rem; max-width: 760px; }
+    .case-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.4rem; }
+    .case-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--paper); text-decoration: none; }
+    .case-actions a.primary { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+    .case-actions a:hover { box-shadow: var(--shadow); text-decoration: underline; }
+    .case-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin: 2rem 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .case-facts div { padding: 1.2rem .9rem 1.2rem 0; }
+    .case-facts dt { font-size: .85rem; color: var(--muted); }
+    .case-facts dd { margin: .25rem 0 0; color: var(--ink); font-weight: 700; font-size: 1.15rem; }
+    .case-main h2 { font-size: 1.8rem; color: var(--ink); margin: 0 0 1rem; }
+    .case-main h3 { color: var(--ink); margin: 0 0 .5rem; font-size: 1.15rem; }
+    .case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .case-panel { padding: 1.3rem; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--paper); }
+    .case-panel p:last-child { margin-bottom: 0; }
+    .case-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0; list-style: none; gap: 1rem; }
+    .case-flow li { position: relative; padding: 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); }
+    .case-flow li:not(:last-child)::after { content: '→'; position: absolute; right: -1rem; top: 1rem; color: var(--muted); }
+    .case-flow strong, .case-flow span { display: block; }
+    .case-flow strong { color: var(--ink); }
+    .case-flow span, .case-note { font-size: .92rem; color: var(--muted); }
+    .case-example { padding: 1.2rem 1.4rem; background: var(--soft); border-left: 3px solid var(--ink); margin-top: 1.2rem; }
+    .case-example code { overflow-wrap: anywhere; }
+    .case-table-wrap { overflow-x: auto; }
+    .case-main table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: .96rem; }
+    .case-main caption { text-align: left; color: var(--muted); padding: 0 0 .8rem; }
+    .case-main th, .case-main td { text-align: left; padding: .75rem .6rem; border-bottom: 1px solid var(--line); }
+    .case-main th { color: var(--ink); background: var(--soft); }
+    .case-close { border-top: 1px solid var(--line); padding-top: 2rem; }
+    .case-main a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    @media (max-width: 700px) {
+      .case-grid { grid-template-columns: 1fr; }
+      .case-facts { grid-template-columns: repeat(2, 1fr); }
+      .case-flow { grid-template-columns: 1fr; gap: .85rem; }
+      .case-flow li:not(:last-child)::after { content: '↓'; top: auto; bottom: -1rem; right: 50%; }
+      .case-main th, .case-main td { padding: .65rem .3rem; font-size: .85rem; }
+    }
+
+    header .case-brand { margin: 0; font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="case-brand">Mark Sui</p>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="education.html">Education</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+      <a href="personal.html">Personal</a>
+    </nav>
+  </header>
+
+
+  <main class="case-main" id="main-content">
+    <a class="case-back" href="projects.html">← All projects</a>
+    <section data-no-reveal aria-labelledby="case-title">
+      <p class="case-kicker">UC San Diego · ECE 111 Final Project · Digital Design</p>
+      <h1 id="case-title">SystemVerilog<br>Viterbi Decoder</h1>
+      <p class="case-lede">Recovering a bitstream through a noisy channel, one survivor path at a time. An 8-state decoder built around branch metrics, add-compare-select logic, and banked traceback memory.</p>
+      <p>Implemented a recursive systematic convolutional encoder and modular decoder, then evaluated recovery under periodic, randomized, and burst error injection.</p>
+      <div class="case-actions" aria-label="Project evidence">
+        <a class="primary" href="#results">See measured results</a>
+        <a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/tree/main/Final-part-2" target="_blank" rel="noopener">View final-project RTL</a>
+        <a href="files/project-reports/viterbi-final-part-2.pdf" target="_blank" rel="noopener">Results report (PDF)</a>
+      </div>
+      <dl class="case-facts">
+        <div><dt>Implementation</dt><dd>SystemVerilog RTL</dd></div>
+        <div><dt>Code rate / states</dt><dd>1/2 · 8 states</dd></div>
+        <div><dt>Documented experiments</dt><dd>22 error cases</dd></div>
+        <div><dt>Periodic cases 2a1–2a5</dt><dd>0 output errors</dd></div>
+      </dl>
+    </section>
+    <section data-no-reveal aria-labelledby="architecture">
+      <p class="case-kicker">01 / Architecture</p>
+      <h2 id="architecture">From received symbols to recovered bits</h2>
+      <p>The encoder produces two bits per input bit: the original bit and a parity bit derived from the current input and encoder state. The channel wrapper injects errors before the decoder scores candidate paths.</p>
+      <ol class="case-flow" aria-label="Decoder data flow">
+        <li><strong>Received symbol</strong><span>2 channel bits</span></li>
+        <li><strong>BMC</strong><span>Hamming distance</span></li>
+        <li><strong>ACS</strong><span>8 survivor decisions</span></li>
+        <li><strong>Survivor memory</strong><span>4 × 1024 × 8 bits</span></li>
+        <li><strong>Traceback</strong><span>Recovered bitstream</span></li>
+      </ol>
+      <div class="case-grid">
+        <article class="case-panel"><h3>Score each branch</h3><p>BMC blocks compare the received pair with each expected pair. The resulting 2-bit Hamming distance becomes the local cost for a candidate transition.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/bmc0.sv" target="_blank" rel="noopener">Inspect BMC RTL →</a></p></article>
+        <article class="case-panel"><h3>Keep the survivor</h3><p>Eight ACS instances add branch costs to 8-bit path metrics. Validity flags gate candidates; the lower-cost valid path survives. Equal costs select path 0.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/ACS.sv" target="_blank" rel="noopener">Inspect ACS RTL →</a></p></article>
+        <article class="case-panel"><h3>Reconstruct the sequence</h3><p>Four memory banks retain the eight survivor decisions per step. Two traceback units traverse decisions, with display memories staging decoded output.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/decoder.sv" target="_blank" rel="noopener">Inspect decoder integration →</a></p></article>
+      </div>
+      <div class="case-example"><h3>A concrete ACS decision</h3><p><strong>Input:</strong> both paths valid; prior costs <code>5, 7</code>; branch costs <code>2, 1</code>.<br><strong>Output:</strong> <code>path_cost = 7, selection = 0, valid_o = 1</code>.<br><strong>Why:</strong> candidate costs are <code>5 + 2 = 7</code> and <code>7 + 1 = 8</code>, so path 0 survives. This illustrates the combinational rule in ACS.sv.</p></div>
+    </section>
+    <section data-no-reveal aria-labelledby="design">
+      <p class="case-kicker">02 / Design decisions</p>
+      <h2 id="design">The integration work behind the datapath</h2>
+      <div class="case-grid">
+        <article class="case-panel"><h3>Match encoder and trellis</h3><p>The final project uses a recursive systematic encoder. Its symbol mapping must match the decoder’s branch metrics; substituting the nonrecursive homework encoder changes that mapping.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/encoder2.sv" target="_blank" rel="noopener">Encoder source →</a></p></article>
+        <article class="case-panel"><h3>Bound the path metrics</h3><p>The decoder checks the high bit of all eight stored path costs. When all are set, it masks the next ACS costs to seven bits as part of the metric update.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/decoder.sv" target="_blank" rel="noopener">Metric update and bank control →</a></p></article>
+        <article class="case-panel"><h3>Align memory and traceback</h3><p>Synchronous memory reads and delayed bank-selection signals coordinate writes, reverse reads, and traceback. Output history is captured after the testbench’s startup delay.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/tbu.sv" target="_blank" rel="noopener">Traceback source →</a></p></article>
+      </div>
+    </section>
+    <section data-no-reveal aria-labelledby="results" id="results-section">
+      <p class="case-kicker">03 / Verification &amp; results</p>
+      <h2 id="results">Recovery succeeds—and has a boundary</h2>
+      <p>The end-to-end testbench keeps input and output histories and compares 256 decoded bits after a startup delay. The Part 2 report records 22 experiments spanning periodic errors (2a), randomized errors (2b), and increasingly dense patterns (2c–2e).</p>
+      <div class="case-table-wrap">
+        <table>
+          <caption>Selected results transcribed from the Part 2 report, page 1.</caption>
+          <thead><tr><th scope="col">Case</th><th scope="col">Pattern</th><th scope="col">Injected errors</th><th scope="col">Output errors</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">2a1</th><td><code>01</code></td><td>31</td><td>0</td></tr>
+            <tr><th scope="row">2a6</th><td><code>01010101</code></td><td>32</td><td>30</td></tr>
+            <tr><th scope="row">2b2</th><td><code>10</code></td><td>37</td><td>3</td></tr>
+            <tr><th scope="row">2c3</th><td><code>010101</code></td><td>48</td><td>0</td></tr>
+            <tr><th scope="row">2c</th><td><code>01010101</code></td><td>64</td><td>81</td></tr>
+            <tr><th scope="row">2e</th><td><code>11111111</code></td><td>64</td><td>44</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Engineering takeaway:</strong> error placement matters alongside error count. These experiments include both complete recovery and patterns that drive the decoder onto an incorrect path. Injected channel-bit errors and decoded output-bit errors are separate measurements.</p>
+      <p class="case-note">These are recorded coursework simulation results, not a new benchmark run or a general error-rate guarantee. The published evidence covers RTL and simulation; FPGA utilization, timing closure, and board measurements are not reported here.</p>
+      <div class="case-actions">
+        <a href="files/project-reports/viterbi-final-part-2.pdf" target="_blank" rel="noopener">All 22 results + simulation captures (PDF)</a>
+        <a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/blob/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2/viterbi_tx_rx_tb.sv" target="_blank" rel="noopener">Testbench &amp; scoreboard</a>
+      </div>
+    </section>
+    <section data-no-reveal aria-labelledby="evidence">
+      <p class="case-kicker">04 / Project evidence</p>
+      <h2 id="evidence">Go directly to the implementation</h2>
+      <div class="case-grid">
+        <article class="case-panel"><h3>Part 1 · Build</h3><p>Encoder, BMC, ACS, memories, decoder integration, and simulation captures.</p><p><a href="files/project-reports/viterbi-final-part-1.pdf" target="_blank" rel="noopener">Implementation report (PDF) →</a></p></article>
+        <article class="case-panel"><h3>Part 2 · Evaluate</h3><p>Error-injection variants and recorded outcomes, including failure cases.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project/tree/e19abc7e521f2b46bc2b9c8eff474bd3b4491ea1/Final-part-2" target="_blank" rel="noopener">Browse experiment source →</a></p></article>
+        <article class="case-panel"><h3>Course repository</h3><p>Final-part-1 and Final-part-2 contain this project. The homework folders are separate exercises.</p><p><a href="https://github.com/marksui/ECE111-Advanced-Digital-Design-Project" target="_blank" rel="noopener">Open GitHub repository →</a></p></article>
+      </div>
+    </section>
+    <section data-no-reveal class="case-close" aria-labelledby="next-step">
+      <h2 id="next-step">Put the project in context.</h2>
+      <p>Explore my background or get in touch about RTL, ASIC, FPGA, and software engineering opportunities.</p>
+      <div class="case-actions" aria-label="Continue to resume or contact">
+        <a class="primary" href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Read resume (PDF)</a>
+        <a href="contact.html">Contact Mark</a>
+        <a href="projects.html">More projects</a>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">Yorba Linda, CA / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>
