@@ -1,0 +1,98 @@
+/* Shared linework for Education and Experience; original page typography is retained. */
+:is(.education-hero, .experience-hero) { position: relative; isolation: isolate; }
+.career-circuit {
+  grid-column: 1 / -1;
+  height: 76px;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--ink);
+  background-image: radial-gradient(var(--line) .8px, transparent .8px);
+  background-size: 16px 16px;
+  border-radius: 6px;
+  margin-top: .2rem;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.career-circuit svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.2; }
+.circuit-tracks { opacity: .32; }
+.circuit-nodes { fill: var(--paper); opacity: .75; }
+.circuit-signal { opacity: 0; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 6 94; }
+.career-icon { width: 30px; height: 30px; fill: none; stroke: var(--ink); stroke-width: 1.25; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.education-main .study-card summary { padding-top: 1.1rem; gap: .65rem; }
+.education-main .study-card .career-icon { width: 28px; height: 28px; }
+.education-main .study-card { position: relative; }
+.education-main .study-card::before {
+  content: ''; position: absolute; inset: 0 auto auto 0; height: 2px; width: 100%;
+  background: var(--ink); transform: scaleX(0); transform-origin: left; z-index: 1;
+}
+.education-main .study-card:hover::before,
+.education-main .study-card:focus-within::before { transform: scaleX(1); }
+main.experience-main > section { content-visibility: visible; }
+.experience-main .project-card { content-visibility: visible; }
+.experience-main .role-card { position: relative; animation: none; box-shadow: none; padding: 1.3rem; gap: 1.6rem; }
+.experience-main .role-card:hover { transform: none; }
+.experience-main .role-meta { border-right: 1px solid var(--line); padding-right: 1rem; gap: .55rem; }
+.experience-main .role-meta .career-icon { margin-bottom: .3rem; }
+.experience-main .role-date { font: .8rem/1.5 ui-monospace, SFMono-Regular, monospace; color: var(--ink); }
+.experience-main .role-brief { margin: .6rem 0 .75rem; max-width: 44rem; font-size: 1rem; line-height: 1.55; }
+.experience-main .project-grid { align-items: start; }
+.experience-main .project-card { animation: none; }
+.experience-main .capability-card { box-shadow: none; }
+.career-details { border-top: 1px solid var(--line); margin-top: .85rem; }
+.career-details > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  cursor: pointer; list-style: none; min-height: 44px; padding: .55rem 0;
+  color: var(--ink); font-size: .9rem;
+}
+.career-details > summary::-webkit-details-marker { display: none; }
+.career-details > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 3px; }
+.disclosure-mark { position: relative; width: 20px; height: 20px; flex: 0 0 20px; border: 1px solid var(--line); border-radius: 50%; }
+.disclosure-mark::before, .disclosure-mark::after { content: ''; position: absolute; background: currentColor; inset: 8px 4px auto; height: 1px; }
+.disclosure-mark::after { transform: rotate(90deg); }
+.career-details[open] .disclosure-mark::after { transform: rotate(0deg); }
+.career-details[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: .8rem; }
+.career-details-body { padding: .2rem 0 .5rem; }
+.experience-main .career-details-body .role-summary { font-size: .98rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .is-visible .circuit-signal { animation: careerSignal 4.6s ease-in-out both; }
+  .is-visible .circuit-signal:last-child { animation-delay: .25s; }
+  :is(.education-main, .experience-main) .is-visible .section-heading::after,
+  .experience-main .section-heading.is-visible::after {
+    transform-origin: left; animation: careerRule .9s var(--ease-out) both;
+  }
+  .education-entry.is-visible::before { animation: careerNode 1.2s ease-out; }
+  .education-main .study-card::before { transition: transform .4s var(--ease-out); }
+  .disclosure-mark::after { transition: transform .2s ease; }
+  .career-details[open] .career-details-body { animation: careerDetailIn .25s ease-out; }
+  .career-icon { transition: stroke .25s, transform .3s; }
+  .study-card:hover .career-icon, .role-card:hover .career-icon { transform: translateY(-2px); }
+}
+@keyframes careerSignal {
+  0% { stroke-dashoffset: 8; opacity: 0; }
+  12%, 78% { opacity: .85; }
+  100% { stroke-dashoffset: -100; opacity: 0; }
+}
+@keyframes careerRule { from { transform: scaleX(.08); opacity: .2; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes careerNode { 0% { outline: 1px solid transparent; outline-offset: 0; } 30% { outline-color: var(--ink); } 100% { outline: 1px solid transparent; outline-offset: 8px; } }
+@keyframes careerDetailIn { from { opacity: .4; translate: 0 5px; } to { opacity: 1; translate: 0 0; } }
+@media (max-width: 920px) {
+  .experience-main .role-meta { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 .85rem; grid-template-columns: 30px 1fr; align-items: center; column-gap: .7rem; }
+  .experience-main .role-meta .career-icon { grid-row: 1 / 4; margin: 0; }
+  .experience-main .role-meta > :not(.career-icon) { grid-column: 2; }
+  .experience-main .role-card { gap: .9rem; }
+}
+@media (max-width: 600px) {
+  .career-circuit { height: 56px; }
+  .career-circuit svg { width: 520px; max-width: none; position: relative; left: 50%; transform: translateX(-50%); }
+  .experience-main .role-card { padding: 1rem; }
+  .experience-main .capability-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .experience-main .capability-card { padding: .8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.education-main, .experience-main) *,
+  :is(.education-main, .experience-main) *::before,
+  :is(.education-main, .experience-main) *::after { animation: none !important; transition: none !important; }
+}
+@media print {
+  .career-circuit, .career-icon { display: none; }
+  .career-details::details-content { display: block; }
+}
