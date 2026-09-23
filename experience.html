@@ -26,7 +26,7 @@
   <meta name="twitter:description" content="Technical experience across data quality, bilingual source verification, AI evaluation, embedded sensing, and RTL design.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="stylesheet" href="style.css?v=20260902-nav">
-  <script src="theme.js?v=20260622-perf"></script>
+  <script src="theme.js?v=20260923-projects"></script>
   <style>
     .experience-main {
       max-width: 1100px;
@@ -490,11 +490,10 @@
     <section class="experience-hero">
       <div class="experience-copy">
         <p class="experience-kicker">Professional Work</p>
-        <h2>Research, engineering, and technical work with measurable range.</h2>
+        <h2>Engineering work, from RTL to systems.</h2>
         <p>
-          My experience spans data quality, bilingual source verification, AI evaluation, embedded sensing systems, and digital design.
-          Across internships, fellowships, and academic builds, the common thread is structured technical work:
-          turning ambiguous problems into systems, experiments, and results that can actually be inspected.
+          My work spans RTL and physical-design projects, embedded systems, AI evaluation, and data quality.
+          Explore the roles, project contributions, and evidence below.
         </p>
       </div>
 
@@ -662,20 +661,20 @@
     </section>
 
     <section id="vlsi-coursework">
-      <h2 class="section-heading">Selected Technical Work</h2>
+      <h2 class="section-heading" id="physical-design">Selected Technical Work</h2>
       <p class="section-note">
-        These projects matter less as course titles and more as evidence of how I work: identify the limiting factor, choose the right level of abstraction, and then build or test until the system becomes explainable.
+        Selected project contributions, with team results identified where applicable.
       </p>
       <div class="project-grid">
         <article class="project-card">
           <span class="project-type">VLSI Physical Design Automation</span>
           <h3>Post-Placement MBFF Clustering</h3>
-          <p class="project-context">ECE 260C / Spring 2026 / OpenROAD + OpenDB</p>
+          <p class="project-context">Physical Design / Spring 2026 / OpenROAD + OpenDB</p>
           <p>
-            Built a Python/OpenDB post-placement flow that clusters compatible single-bit flip-flops into 2-bit and 4-bit MBFF cells.
+            Developed the Python experiment flow, analyzed TNS, and collected reports for a team post-placement MBFF clustering project.
           </p>
           <p>
-            <strong>Result.</strong> 7/7 benchmarks OK, about 83.3% MBFF conversion, strong sink-count reduction, and about 75.3% average power reduction.
+            <strong>Scope.</strong> Evaluated seven benchmark designs using the team's clustering implementation. Results describe evaluator outputs; formal equivalence and separate full STA / detailed-routing validation were not established.
           </p>
           <div class="stack-row">
             <span>Python</span>
@@ -691,12 +690,12 @@
         <article class="project-card">
           <span class="project-type">OpenROAD SoC Optimization</span>
           <h3>Croc Chip Physical Design Optimization</h3>
-          <p class="project-context">ECE 260C / Spring 2026 / Tcl + Shell</p>
+          <p class="project-context">Physical Design / Spring 2026 / Tcl + Shell</p>
           <p>
-            Tuned a Croc SoC OpenROAD flow across floorplan shape, utilization, SRAM macro placement, CTS buffers, hold margins, and routing repair.
+            Focused on CTS optimization experiments and contributed to hierarchical macro integration in a team OpenROAD project.
           </p>
           <p>
-            <strong>Result.</strong> Timing clean at final CTS, clock power down 19.1%, total power down 2.8%, and area down about 0.60%.
+            <strong>Selected CTS run.</strong> Reported clock power decreased 19.1%, total power 2.8%, and area about 0.60%, with zero setup/hold violations in that run. The hierarchical top-level implementation retained congestion and DRC issues.
           </p>
           <div class="stack-row">
             <span>OpenROAD</span>
@@ -730,7 +729,7 @@
 
         <article class="project-card">
           <span class="project-type">Machine Learning</span>
-          <h3>Deep Learning for Climate Emulation</h3>
+          <h3>Climate Emulation Model</h3>
           <p class="project-context">UC San Diego / Spring 2025 / Kaggle Competition</p>
           <p>
             Built CNN, Vision Transformer, and MLP models for climate-field emulation on CMIP6 SSP data and finished
@@ -778,7 +777,7 @@
         <article class="project-card">
           <span class="project-type">Digital Design</span>
           <h3><a href="viterbi.html">SystemVerilog Viterbi Decoder</a></h3>
-          <p class="project-context">ECE 111 Final Project / UC San Diego</p>
+          <p class="project-context">Digital Design / UC San Diego</p>
           <p>Implemented an 8-state decoder with branch-metric, add-compare-select, and traceback modules. Evaluated 22 error-injection cases, with zero output errors in periodic cases 2a1–2a5 and documented limits under denser error patterns.</p>
           <p><a href="viterbi.html">Explore architecture, results, and source code →</a></p>
           <div class="stack-row">

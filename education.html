@@ -26,523 +26,90 @@
   <meta name="twitter:description" content="Academic background for Mark Sui, including UC San Diego ECE graduate study, computer engineering, mathematics, and international coursework.">
   <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
   <link rel="stylesheet" href="style.css?v=20260902-nav">
-  <script src="theme.js?v=20260622-perf"></script>
+  <script src="theme.js?v=20260923-projects"></script>
   <style>
-    .education-main {
-      max-width: 1040px;
-      --edu-accent: #536878;
-      --edu-secondary: #7a7268;
-      --edu-rule: #d8d4cc;
-      --edu-wash: rgba(83, 104, 120, 0.068);
-      --edu-panel: rgba(255, 255, 255, 0.8);
-      --edu-shadow: 0 10px 28px rgba(16, 42, 67, 0.055);
-      --edu-ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --edu-display-serif: var(--formal-serif);
-      font-feature-settings: "liga", "kern";
-      font-family: var(--formal-serif);
+
+    .education-main { max-width: 1120px; --edu-accent: var(--ink); --edu-rule: var(--line); --edu-wash: var(--wash); }
+    main.education-main > section { margin-bottom: 3.5rem; content-visibility: visible; }
+    .education-hero { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr); gap: 3rem; align-items: center; padding: 1rem 0 2rem; border-bottom: 1px solid var(--line); }
+    .education-kicker, .section-number, .study-label { font: .73rem ui-monospace, SFMono-Regular, monospace; color: var(--muted); letter-spacing: .07em; text-transform: uppercase; }
+    .education-copy h2 { font-size: clamp(2.25rem,4.7vw,3.4rem); line-height: 1.08; letter-spacing: -.035em; color: var(--ink); margin: .7rem 0 1rem; max-width: 14em; }
+    .education-copy p:not(.education-kicker) { font-size: 1.12rem; max-width: 38rem; margin: 0; }
+    .education-summary { display: grid; }
+    .summary-card { padding: .95rem 0 .95rem 1.2rem; border-left: 2px solid var(--line); }
+    .summary-card + .summary-card { margin-top: .25rem; }
+    .summary-card strong { display: block; font-size: 1.08rem; color: var(--ink); }
+    .summary-card span { display: block; color: var(--muted); font-size: .9rem; margin-top: .2rem; }
+    .education-actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .education-actions a { border: 1px solid var(--line); padding: .55rem .9rem; border-radius: 6px; color: var(--ink); text-decoration: none; min-height: 44px; }
+    .section-heading { display: flex; align-items: baseline; gap: 1rem; margin: 0 0 1.2rem; font-size: 1.8rem; line-height: 1.2; font-style: normal; color: var(--ink); }
+    .section-heading::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+    .section-number { font-size: .78rem; }
+    .section-intro { color: var(--muted); margin: -.5rem 0 1.2rem; max-width: 48rem; }
+    .study-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; align-items: start; }
+    .study-card { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); min-width: 0; overflow: hidden; }
+    .study-card summary { display: grid; position: relative; gap: .65rem; padding: 1.3rem 2.5rem 1.3rem 1.3rem; min-height: 9rem; cursor: pointer; list-style: none; }
+    .study-card summary::-webkit-details-marker { display: none; }
+    .study-card summary::after { content: '+'; position: absolute; right: 1rem; top: 1rem; color: var(--ink); font-size: 1.25rem; }
+    .study-card[open] summary::after { content: '−'; }
+    .study-title { color: var(--ink); font-size: 1.3rem; line-height: 1.18; font-weight: 600; }
+    .study-card[open] summary { border-bottom: 1px solid var(--line); background: var(--soft); }
+    .study-card-body { padding: 1rem 1.3rem; }
+    .study-card-body p { margin: 0; font-size: .97rem; }
+    .study-card-body a { display: inline-block; margin-top: .75rem; color: var(--ink); }
+    .coursework-grid .study-card { border-top: 3px solid var(--ink); }
+    .coursework-grid .study-title { font-size: 1.2rem; }
+    .education-timeline { position: relative; display: grid; gap: 1.5rem; padding: 0; }
+    .education-timeline::before { content: ''; position: absolute; left: 12.5rem; top: 1.65rem; bottom: 1.65rem; width: 2px; background: var(--line); }
+    .education-entry { position: relative; display: grid; grid-template-columns: 11rem minmax(0,1fr); gap: 3rem; align-items: start; }
+    .education-entry::before { content: ''; position: absolute; left: 12.13rem; top: 1.5rem; width: .85rem; height: .85rem; border: 2px solid var(--ink); background: var(--bg); border-radius: 50%; box-shadow: 0 0 0 5px var(--bg); }
+    .education-entry:first-child::before { background: var(--ink); }
+    .education-date { padding: 1.25rem .4rem 0 0; font: 600 .84rem/1.65 ui-monospace, SFMono-Regular, monospace; color: var(--ink); text-align: right; }
+    .education-card { padding: 1.5rem; border: 1px solid var(--line); border-left: 3px solid var(--ink); border-radius: 8px; background: var(--paper); min-width: 0; }
+    .education-entry:first-child .education-card { background: linear-gradient(120deg,var(--wash),transparent),var(--paper); }
+    .entry-type { display: inline-block; color: var(--muted); font: .7rem/1.4 ui-monospace,monospace; letter-spacing: .05em; text-transform: uppercase; }
+    .education-card h3 { color: var(--ink); font-size: 1.45rem; line-height: 1.2; margin: .6rem 0 .35rem; }
+    .institution-meta { color: var(--muted); font-size: .9rem; margin: 0 0 1.1rem; }
+    .degree-lines p { margin: .35rem 0; }
+    .education-note { padding: .9rem 1rem; background: var(--soft); border-radius: 5px; margin-top: 1rem; font-size: .95rem; }
+    .course-group { margin-top: 1.15rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .course-label { display: block; color: var(--muted); font-size: .85rem; margin-bottom: .6rem; }
+    .course-pills { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .course-pills span { padding: .3rem .6rem; border: 1px solid var(--line); border-radius: 5px; background: var(--soft); font-size: .82rem; line-height: 1.4; overflow-wrap: anywhere; }
+    .education-easter-egg { margin: 1rem 0 0; text-align: right; font-size: .75rem; }
+    .education-easter-egg a { color: var(--muted); }
+    .education-main a:focus-visible, .study-card summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    @media(prefers-reduced-motion:no-preference) {
+      .study-card, .education-card { transition: border-color .25s, box-shadow .25s, translate .3s; }
+      .study-card:hover, .study-card:focus-within, .education-card:hover { translate: 0 -3px; border-color: var(--ink); box-shadow: var(--shadow); }
+      .study-card[open] .study-card-body { animation: educationDetailsIn .25s ease-out; }
+      .education-entry[data-reveal].is-visible .education-date { animation: educationDetailsIn .5s ease-out; }
     }
-
-    html[data-theme="dark"] .education-main {
-      --edu-accent: #b5c2ce;
-      --edu-secondary: #c2b8ab;
-      --edu-rule: #343E4A;
-      --edu-wash: rgba(181, 194, 206, 0.082);
-      --edu-panel: rgba(24, 24, 24, 0.76);
-      --edu-shadow: 0 12px 30px rgba(0, 0, 0, 0.26);
+    @keyframes educationDetailsIn { from { opacity: 0; translate: 0 7px; } to { opacity: 1; translate: 0 0; } }
+    @media(max-width:850px) {
+      .education-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+      .education-summary { grid-template-columns: repeat(3,minmax(0,1fr)); gap: .75rem; }
+      .summary-card { padding: .25rem 0 .25rem .75rem; }
+      .summary-card + .summary-card { margin-top: 0; }
+      .study-card summary { padding: 1rem 2rem 1rem 1rem; }
+      .study-title { font-size: 1.15rem; }
+      .education-entry { grid-template-columns: 9rem minmax(0,1fr); gap: 2rem; }
+      .education-timeline::before { left: 10rem; }
+      .education-entry::before { left: 9.63rem; }
+      .education-card { padding: 1.2rem; }
     }
-
-    .education-main section {
-      margin-bottom: 0;
-    }
-
-    .education-hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(270px, 0.88fr);
-      gap: 1.5rem;
-      align-items: end;
-      padding-bottom: 1.55rem;
-      border-bottom: 1px solid var(--edu-rule);
-      animation: educationFadeUp 0.66s var(--edu-ease) both;
-    }
-
-    .education-kicker {
-      margin: 0 0 0.45rem;
-      color: var(--edu-accent);
-      font-size: 0.92rem;
-      font-weight: bold;
-      line-height: 1.2;
-      letter-spacing: 0.01em;
-    }
-
-    .education-copy h2 {
-      margin: 0 0 0.6rem;
-      max-width: 11em;
-      font-size: 2.72rem;
-      line-height: 1.02;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    .education-copy p {
-      margin: 0;
-      max-width: 690px;
-      opacity: 0.86;
-      font-size: 1.05rem;
-    }
-
-    .education-summary {
-      display: grid;
-      gap: 0.72rem;
-    }
-
-    .summary-card {
-      padding: 0.92rem 0.98rem;
-      border: 1px solid var(--edu-rule);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, var(--edu-wash), transparent 74%),
-        var(--edu-panel);
-      box-shadow: var(--edu-shadow);
-      transition: transform 0.28s var(--edu-ease), border-color 0.24s ease;
-    }
-
-    .summary-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--edu-accent);
-    }
-
-    .summary-card strong {
-      display: block;
-      color: var(--edu-accent);
-      font-size: 1.18rem;
-      line-height: 1.1;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    .summary-card span {
-      display: block;
-      margin-top: 0.24rem;
-      color: var(--edu-secondary);
-      font-size: 0.9rem;
-      line-height: 1.22;
-    }
-
-    .section-heading {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      margin: 2.2rem 0 0.85rem;
-      color: var(--edu-accent);
-      font-size: 1.12rem;
-      font-style: italic;
-      font-weight: 500;
-    }
-
-    .section-heading::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, var(--edu-rule), transparent);
-    }
-
-    .study-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.95rem;
-    }
-
-    .study-card {
-      border: 1px solid var(--edu-rule);
-      border-radius: 8px;
-      background: var(--edu-panel);
-      box-shadow: var(--edu-shadow);
-      overflow: hidden;
-      transition: transform 0.3s var(--edu-ease), border-color 0.24s ease, background 0.24s ease;
-      animation: educationFadeUp 0.66s var(--edu-ease) both;
-    }
-
-    .study-card:nth-child(2) {
-      animation-delay: 0.06s;
-    }
-
-    .study-card:nth-child(3) {
-      animation-delay: 0.12s;
-    }
-
-    .study-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--edu-accent);
-      background: linear-gradient(180deg, var(--edu-wash), transparent 86%), var(--edu-panel);
-    }
-
-    .study-card summary {
-      position: relative;
-      display: grid;
-      gap: 0.3rem;
-      min-height: 7rem;
-      padding: 1rem 3.1rem 1.05rem 1rem;
-      cursor: pointer;
-      list-style: none;
-      outline: none;
-    }
-
-    .study-card summary::-webkit-details-marker {
-      display: none;
-    }
-
-    .study-card summary::after {
-      content: "+";
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-      display: inline-grid;
-      place-items: center;
-      width: 1.35rem;
-      height: 1.35rem;
-      border: 1px solid color-mix(in srgb, var(--edu-accent) 36%, var(--edu-rule));
-      border-radius: 999px;
-      color: var(--edu-accent);
-      font-size: 0.9rem;
-      line-height: 1;
-      transition: transform 0.22s var(--edu-ease), background 0.22s ease, border-color 0.22s ease;
-    }
-
-    .study-card summary:hover::after,
-    .study-card summary:focus-visible::after {
-      transform: translateY(-1px);
-      border-color: var(--edu-accent);
-      background: var(--edu-wash);
-    }
-
-    .study-card[open] summary {
-      border-bottom: 1px solid var(--edu-rule);
-    }
-
-    .study-card[open] summary::after {
-      content: "-";
-    }
-
-    .study-card span {
-      display: block;
-      color: var(--edu-accent);
-      font-size: 0.85rem;
-      font-style: italic;
-      line-height: 1.2;
-    }
-
-    .study-card h3,
-    .study-title {
-      display: block;
-      margin: 0;
-      color: var(--text);
-      font-size: 1.16rem;
-      line-height: 1.15;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    .study-card-body {
-      padding: 0.9rem 1rem 1.05rem;
-      animation: studyDetailsIn 0.22s var(--edu-ease) both;
-    }
-
-    .study-card:not([open]) .study-card-body {
-      display: none;
-    }
-
-    .study-card p {
-      margin: 0;
-      color: var(--text);
-      opacity: 0.84;
-      font-size: 1.02rem;
-    }
-
-    .education-timeline {
-      position: relative;
-      margin-top: 1rem;
-      padding-left: 1.1rem;
-    }
-
-    .education-timeline::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 10.1rem;
-      width: 1px;
-      background: linear-gradient(180deg, transparent, var(--edu-rule) 6%, var(--edu-rule) 94%, transparent);
-    }
-
-    .education-entry {
-      position: relative;
-      display: grid;
-      grid-template-columns: 8.5rem minmax(0, 1fr);
-      gap: 1.6rem;
-      padding: 0 0 1.2rem;
-      animation: educationFadeUp 0.64s var(--edu-ease) both;
-    }
-
-    .education-entry:nth-child(2) {
-      animation-delay: 0.04s;
-    }
-
-    .education-entry:nth-child(3) {
-      animation-delay: 0.08s;
-    }
-
-    .education-entry:nth-child(4) {
-      animation-delay: 0.12s;
-    }
-
-    .education-entry:nth-child(5) {
-      animation-delay: 0.16s;
-    }
-
-    .education-entry:nth-child(6) {
-      animation-delay: 0.2s;
-    }
-
-    .education-entry::before {
-      content: "";
-      position: absolute;
-      left: 9.72rem;
-      top: 1.1rem;
-      width: 0.72rem;
-      height: 0.72rem;
-      border: 1px solid var(--edu-accent);
-      border-radius: 999px;
-      background: var(--bg);
-      box-shadow: 0 0 0 5px var(--bg);
-    }
-
-    .education-date {
-      padding-top: 0.82rem;
-      color: var(--edu-accent);
-      font-weight: bold;
-      font-size: 0.94rem;
-      line-height: 1.24;
-      text-align: right;
-      letter-spacing: 0.01em;
-    }
-
-    .education-card {
-      padding: 1rem 1.05rem 1.08rem;
-      border: 1px solid var(--edu-rule);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, var(--edu-wash), transparent 68%),
-        var(--edu-panel);
-      box-shadow: var(--edu-shadow);
-      transition: transform 0.3s var(--edu-ease), border-color 0.24s ease, background 0.24s ease;
-    }
-
-    .education-card:hover {
-      transform: translateY(-3px);
-      border-color: var(--edu-accent);
-      background: linear-gradient(180deg, var(--edu-wash), transparent 82%), var(--edu-panel);
-    }
-
-    .entry-type {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.18rem 0.5rem;
-      border: 1px solid var(--edu-rule);
-      border-radius: 999px;
-      color: var(--edu-accent);
-      font-size: 0.82rem;
-      line-height: 1.2;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-    }
-
-    .education-card h3 {
-      margin: 0.55rem 0 0.18rem;
-      font-size: 1.28rem;
-      line-height: 1.14;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    .institution-meta {
-      margin: 0;
-      color: var(--edu-secondary);
-      font-size: 0.94rem;
-      line-height: 1.28;
-    }
-
-    .degree-lines {
-      margin-top: 0.7rem;
-      display: grid;
-      gap: 0.28rem;
-    }
-
-    .degree-lines p {
-      margin: 0;
-      font-size: 1.03rem;
-      line-height: 1.54;
-    }
-
-    .education-note {
-      margin-top: 0.82rem;
-      padding: 0.72rem 0.8rem;
-      border-left: 2px solid var(--edu-accent);
-      border-radius: 0 8px 8px 0;
-      background: var(--edu-wash);
-      color: var(--text);
-      font-size: 1.02rem;
-    }
-
-    .education-easter-egg {
-      margin: 0.42rem 0 0;
-      font-size: 0.76rem;
-      line-height: 1.2;
-      opacity: 0.48;
-    }
-
-    .education-easter-egg a {
-      color: inherit;
-      text-decoration: none;
-      border-bottom: 1px dotted currentColor;
-    }
-
-    .education-easter-egg a:hover,
-    .education-easter-egg a:focus-visible {
-      opacity: 0.82;
-    }
-
-    .course-group {
-      margin-top: 0.78rem;
-    }
-
-    .course-label {
-      display: block;
-      margin-bottom: 0.42rem;
-      color: var(--edu-accent);
-      font-size: 0.84rem;
-      font-style: italic;
-      line-height: 1.2;
-    }
-
-    .course-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.42rem;
-    }
-
-    .course-pills span {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.18rem 0.48rem;
-      border: 1px solid var(--edu-rule);
-      border-radius: 999px;
-      font-size: 0.86rem;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    .education-main :is(
-      h2,
-      h3,
-      p,
-      span,
-      strong,
-      div,
-      li,
-      .education-kicker,
-      .section-heading
-    ) {
-      font-family: var(--formal-serif);
-    }
-
-    .education-copy h2,
-    .summary-card strong,
-    .study-card h3,
-    .education-card h3,
-    .section-heading {
-      font-family: var(--edu-display-serif);
-    }
-
-    @keyframes educationFadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes studyDetailsIn {
-      from {
-        opacity: 0;
-        transform: translateY(-4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 900px) {
-      .education-hero,
-      .study-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .education-timeline {
-        padding-left: 0;
-      }
-
-      .education-timeline::before {
-        display: none;
-      }
-
-      .education-entry {
-        grid-template-columns: 1fr;
-        gap: 0.55rem;
-        min-width: 0;
-      }
-
-      .education-entry::before {
-        display: none;
-      }
-
-      .education-date {
-        padding-top: 0;
-        min-width: 0;
-        text-align: left;
-      }
-
-      .education-card {
-        width: 100%;
-        min-width: 0;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .education-copy h2 {
-        font-size: 2.28rem;
-      }
-
-      .study-card summary {
-        min-height: 6.2rem;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .education-hero,
-      .study-card,
-      .education-entry,
-      .study-card-body {
-        animation: none;
-      }
-
-      .study-card,
-      .study-card summary::after {
-        transition: none;
-      }
+    @media(max-width:600px) {
+      main.education-main > section { margin-bottom: 2.5rem; }
+      .education-summary, .study-grid { grid-template-columns: 1fr; }
+      .summary-card { padding: .55rem .9rem; }
+      .study-card summary { min-height: 6.5rem; }
+      .education-entry { grid-template-columns: minmax(0,1fr); gap: .55rem; padding-left: 1.65rem; }
+      .education-timeline::before { left: .38rem; top: .65rem; bottom: 1rem; }
+      .education-entry::before { left: 0; top: .4rem; }
+      .education-date { padding: 0; text-align: left; font-size: .82rem; }
+      .education-card h3 { font-size: 1.22rem; }
+      .education-card { padding: 1rem; }
+      .section-heading { font-size: 1.5rem; gap: .6rem; }
     }
   </style>
 </head>
@@ -563,114 +130,26 @@
   <main class="education-main">
     <section class="education-hero">
       <div class="education-copy">
-        <p class="education-kicker">Academic Arc</p>
-        <h2>Engineering depth, mathematical range, and international study.</h2>
-        <p>
-          My education sits at the intersection of Electrical and Computer Engineering, Computer Engineering,
-          and Mathematics. At UC San Diego, my master's work centers on Very Large Scale Integration (VLSI),
-          while the broader path includes rigorous systems coursework, applied math training, study abroad,
-          and report-backed quarter projects in physical design, CUDA acceleration, and RTL generation.
-        </p>
+        <p class="education-kicker">Education / UC San Diego</p>
+        <h2>Engineering, grounded<br>in mathematics.</h2>
+        <p>VLSI-focused graduate study, a foundation in computer engineering and applied mathematics, and international study at NUS.</p>
+        <div class="education-actions"><a href="#education-timeline">Explore the timeline</a><a href="projects.html">View engineering projects</a></div>
       </div>
-
       <div class="education-summary" aria-label="Education highlights">
-        <article class="summary-card">
-          <strong>M.S. in Electrical and Computer Engineering</strong>
-          <span>Graduate focus in VLSI, digital IC design, OpenROAD physical design, and architecture.</span>
-        </article>
-        <article class="summary-card">
-          <strong>Dual Bachelor of Science Degrees</strong>
-          <span>Computer Engineering and Mathematics, built as an interdisciplinary technical base.</span>
-        </article>
-        <article class="summary-card">
-          <strong>International + Leadership Range</strong>
-          <span>NUS study abroad, multi-campus summer coursework, and early student leadership.</span>
-        </article>
+        <article class="summary-card"><strong>M.S. · Electrical &amp; Computer Engineering</strong><span>VLSI and digital IC design</span></article>
+        <article class="summary-card"><strong>B.S. · Computer Engineering + Mathematics</strong><span>Two degrees, one technical foundation</span></article>
+        <article class="summary-card"><strong>International Study</strong><span>NUS exchange and UC summer coursework</span></article>
       </div>
     </section>
-
-    <section>
-      <h2 class="section-heading">Study Themes</h2>
-      <div class="study-grid">
-        <details class="study-card">
-          <summary>
-            <span>Graduate Direction</span>
-            <strong class="study-title">Very Large Scale Integration</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Current graduate study emphasizes VLSI, digital IC design, RTL and FPGA design, computer architecture,
-              and physical-design workflows.
-            </p>
-          </div>
-        </details>
-        <details class="study-card">
-          <summary>
-            <span>Interdisciplinary Base</span>
-            <strong class="study-title">Engineering + Mathematics</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Dual undergraduate preparation across circuits, systems, algorithms, numerical methods, cryptography,
-              and performance-oriented implementation.
-            </p>
-          </div>
-        </details>
-        <details class="study-card">
-          <summary>
-            <span>Academic Breadth</span>
-            <strong class="study-title">Global Study and Leadership</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Broadened perspective through UC study abroad at NUS, summer coursework across multiple campuses, and student leadership.
-            </p>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-heading">Quarter Coursework Signals</h2>
-      <div class="study-grid">
-        <details class="study-card">
-          <summary>
-            <span>ECE 260C / Spring 2026</span>
-            <strong class="study-title">OpenROAD Physical Design</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Built report-backed work around MBFF clustering, CTS tuning, floorplanning, and timing / power / area tradeoffs.
-            </p>
-          </div>
-        </details>
-        <details class="study-card">
-          <summary>
-            <span>ECE 268 / Spring 2026</span>
-            <strong class="study-title">CUDA Cryptography</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Implemented GPU-accelerated GGM tree construction with Keccak and Spongent backends for protocol-scale throughput.
-            </p>
-          </div>
-        </details>
-        <details class="study-card">
-          <summary>
-            <span>RTL Generation Research</span>
-            <strong class="study-title">VerilogEval + MAGE</strong>
-          </summary>
-          <div class="study-card-body">
-            <p>
-              Studied LLM-generated RTL failure modes through routing, repair prompts, edit guards, and task-local memory.
-            </p>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <section>
-      <h2 class="section-heading">Timeline</h2>
+    <section aria-labelledby="study-themes"><h2 class="section-heading" id="study-themes"><span class="section-number">01</span>Study Themes</h2><div class="study-grid"><details class="study-card"><summary><span class="study-label">Graduate focus</span><strong class="study-title">VLSI &amp; Digital Design</strong></summary><div class="study-card-body"><p>Digital IC design, RTL, computer architecture, and physical implementation.</p></div></details>
+<details class="study-card"><summary><span class="study-label">Technical foundation</span><strong class="study-title">Engineering + Mathematics</strong></summary><div class="study-card-body"><p>Computer engineering supported by applied mathematics, algorithms, and numerical methods.</p></div></details>
+<details class="study-card"><summary><span class="study-label">Broader perspective</span><strong class="study-title">International Study</strong></summary><div class="study-card-body"><p>NUS study abroad, UC summer coursework, and student leadership.</p></div></details>
+</div></section>
+    <section aria-labelledby="coursework"><h2 class="section-heading" id="coursework"><span class="section-number">02</span>Selected Coursework</h2><p class="section-intro">Three areas connecting academic study to project evidence.</p><div class="study-grid coursework-grid"><details class="study-card"><summary><span class="study-label">Physical design / Spring 2026</span><strong class="study-title">OpenROAD Physical Design</strong></summary><div class="study-card-body"><p>Team coursework in MBFF evaluation, CTS experiments, and timing, power, and area analysis.</p><a href="experience.html#physical-design">Explore physical-design work →</a></div></details>
+<details class="study-card"><summary><span class="study-label">C / CUDA / Spring 2026</span><strong class="study-title">GPU-Accelerated GGM Tree Construction</strong></summary><div class="study-card-body"><p>Integrated Spongent and Keccak backends into a team CUDA cryptography project.</p><a href="projects.html#ggm">Project and report →</a></div></details>
+<details class="study-card"><summary><span class="study-label">Python / Verilog</span><strong class="study-title">MAGE RTL Generation</strong></summary><div class="study-card-body"><p>Failure routing, repair prompts, and task-local debugging memory evaluated with VerilogEval-V2.</p><a href="projects.html#mage">Project and report →</a></div></details>
+</div></section>
+    <section aria-labelledby="education-timeline" data-no-reveal><h2 class="section-heading" id="education-timeline"><span class="section-number">03</span>Timeline</h2>
       <div class="education-timeline">
         <article class="education-entry">
           <div class="education-date">Sep 2025 - Jun 2026</div>
@@ -798,7 +277,6 @@
       </div>
     </section>
   </main>
-
   <footer class="site-footer" aria-label="Site footer">
     <div class="site-footer-inner">
       <div class="site-footer-brand">
@@ -819,5 +297,10 @@
       </nav>
     </div>
   </footer>
+  <script>
+    document.querySelectorAll('.education-entry').forEach(function(entry) {
+      entry.setAttribute('data-reveal', '');
+    });
+  </script>
 </body>
 </html>
