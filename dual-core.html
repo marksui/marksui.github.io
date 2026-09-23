@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Sui - Dual-Core ML Accelerator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
+  <link rel="manifest" href="site.webmanifest?v=20260613-ms">
+  <meta name="description" content="A dual-core INT8 attention accelerator: RTL architecture, asynchronous FIFOs, normalization, and reported timing, power, and area tradeoffs.">
+  <meta name="author" content="Mark Sui">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#102A43">
+  <link rel="canonical" href="https://marksui.github.io/dual-core.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Mark Sui">
+  <meta property="og:title" content="Mark Sui - Dual-Core ML Accelerator">
+  <meta property="og:description" content="Explore dual-core attention hardware from RTL to physical implementation, with source-linked design decisions and measured PPA tradeoffs.">
+  <meta property="og:url" content="https://marksui.github.io/dual-core.html">
+  <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
+  <meta property="og:image:alt" content="Mark Sui portfolio social preview card">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mark Sui - Dual-Core ML Accelerator">
+  <meta name="twitter:description" content="Explore dual-core attention hardware from RTL to physical implementation, with source-linked design decisions and measured PPA tradeoffs.">
+  <meta name="twitter:image" content="https://marksui.github.io/img/site-card.png">
+  <link rel="stylesheet" href="style.css?v=20260902-nav">
+  <script src="theme.js?v=20260622-perf"></script>
+  <style>
+    .case-main { max-width: 1100px; }
+    .case-main > section[data-no-reveal] { margin-bottom: 3rem; content-visibility: visible; }
+    .case-back { display: inline-block; margin-bottom: 1.5rem; color: var(--muted); }
+    .case-kicker { color: var(--muted); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; }
+    .case-main h1 { font-size: clamp(2.25rem, 5vw, 4rem); line-height: 1.08; letter-spacing: -.035em; margin: .7rem 0 1.25rem; color: var(--ink); }
+    .case-lede { font-size: 1.2rem; max-width: 760px; }
+    .case-actions { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.4rem; }
+    .case-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: .55rem 1rem; border: 1px solid var(--line); border-radius: 6px; color: var(--ink); background: var(--paper); text-decoration: none; }
+    .case-actions a.primary { color: var(--paper); background: var(--ink); border-color: var(--ink); }
+    .case-actions a:hover { box-shadow: var(--shadow); text-decoration: underline; }
+    .case-facts { display: grid; grid-template-columns: repeat(4, 1fr); margin: 2rem 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .case-facts div { padding: 1.2rem .9rem 1.2rem 0; }
+    .case-facts dt { font-size: .85rem; color: var(--muted); }
+    .case-facts dd { margin: .25rem 0 0; color: var(--ink); font-weight: 700; font-size: 1.15rem; }
+    .case-main h2 { font-size: 1.8rem; color: var(--ink); margin: 0 0 1rem; }
+    .case-main h3 { color: var(--ink); margin: 0 0 .5rem; font-size: 1.15rem; }
+    .case-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .case-panel { padding: 1.3rem; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--paper); }
+    .case-panel p:last-child { margin-bottom: 0; }
+    .case-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 0; list-style: none; gap: 1rem; }
+    .case-flow li { position: relative; padding: 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--soft); }
+    .case-flow li:not(:last-child)::after { content: '→'; position: absolute; right: -1rem; top: 1rem; color: var(--muted); }
+    .case-flow strong, .case-flow span { display: block; }
+    .case-flow strong { color: var(--ink); }
+    .case-flow span, .case-note { font-size: .92rem; color: var(--muted); }
+    .case-example { padding: 1.2rem 1.4rem; background: var(--soft); border-left: 3px solid var(--ink); margin-top: 1.2rem; }
+    .case-example code { overflow-wrap: anywhere; }
+    .case-table-wrap { overflow-x: auto; }
+    .case-main table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: .96rem; }
+    .case-main caption { text-align: left; color: var(--muted); padding: 0 0 .8rem; }
+    .case-main th, .case-main td { text-align: left; padding: .75rem .6rem; border-bottom: 1px solid var(--line); }
+    .case-main th { color: var(--ink); background: var(--soft); }
+    .case-close { border-top: 1px solid var(--line); padding-top: 2rem; }
+    .case-main a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+    @media (max-width: 700px) {
+      .case-grid { grid-template-columns: 1fr; }
+      .case-facts { grid-template-columns: repeat(2, 1fr); }
+      .case-flow { grid-template-columns: 1fr; gap: .85rem; }
+      .case-flow li:not(:last-child)::after { content: '↓'; top: auto; bottom: -1rem; right: 50%; }
+      .case-main th, .case-main td { padding: .65rem .3rem; font-size: .85rem; }
+    }
+
+    header .case-brand { margin: 0; font-size: 1.6rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+
+    .case-hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 2rem; align-items: center; }
+    .case-main h1 { font-size: clamp(2.4rem, 4.7vw, 3.8rem); }
+    .case-layout-image { margin: 0; padding: .75rem; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; }
+    .case-layout-image img { width: 100%; height: auto; display: block; border-radius: 4px; }
+    .case-layout-image figcaption { padding: .6rem .2rem 0; color: var(--muted); font-size: .85rem; }
+    .case-local-nav { display: flex; gap: 1.25rem; flex-wrap: wrap; padding: 1rem 0; border-bottom: 1px solid var(--line); margin-bottom: 2.5rem; }
+    .case-local-nav a { color: var(--ink); min-height: 44px; display: inline-flex; align-items: center; }
+    .dual-architecture { display: grid; grid-template-columns: 1fr .65fr 1fr; gap: 1rem; align-items: center; padding: 1.5rem; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); }
+    .core-domain { display: grid; gap: .7rem; padding: 1.2rem; border: 1px solid var(--line); border-top: 3px solid var(--ink); background: var(--paper); border-radius: 6px; }
+    .core-domain strong { font-size: 1.25rem; color: var(--ink); }
+    .core-domain span { border: 1px solid var(--line); padding: .55rem; text-align: center; border-radius: 4px; }
+    .core-domain small, .cdc-bridge { color: var(--muted); }
+    .cdc-bridge { text-align: center; font-size: .9rem; }
+    .cdc-bridge b { display: block; font-size: 1.7rem; color: var(--ink); }
+    .ppa-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1rem; margin: 1.5rem 0; }
+    .ppa-chart { margin: 0; padding: 1.2rem; background: var(--soft); border: 1px solid var(--line); border-radius: 8px; }
+    .ppa-chart figcaption { font-weight: 700; color: var(--ink); }
+    .ppa-chart small { display: block; color: var(--muted); min-height: 3em; margin: .3rem 0 1rem; }
+    .ppa-row { margin: .8rem 0; }
+    .ppa-row div { display: flex; justify-content: space-between; gap: .4rem; font-size: .88rem; margin-bottom: .3rem; }
+    .ppa-track { background: var(--line); height: 8px; border-radius: 4px; overflow: hidden; }
+    .ppa-track i { display: block; height: 100%; background: var(--ink); border-radius: 4px; }
+    .ppa-row:nth-of-type(2) i { opacity: .72; }
+    .ppa-row:nth-of-type(3) i { opacity: .48; }
+    .waveform-figure { margin: 1.5rem 0; padding: 1rem; border: 1px solid var(--line); border-radius: 8px; }
+    .waveform-figure img { width: 100%; height: auto; display: block; }
+    .waveform-figure > a { display: block; margin: 1rem 0; }
+    .waveform-figure figcaption { color: var(--muted); font-size: .95rem; }
+    .waveform-key { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1rem; }
+    .waveform-key p { margin: 0; }
+    @media(max-width:760px) {
+      .case-hero-grid { grid-template-columns: 1fr; }
+      .case-layout-image { max-width: 440px; }
+      .dual-architecture, .ppa-grid, .waveform-key { grid-template-columns: 1fr; }
+      .cdc-bridge b { transform: rotate(90deg); }
+      .ppa-chart small { min-height: 0; }
+      .dual-architecture { padding: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <p class="case-brand">Mark Sui</p>
+    <nav>
+      <a href="index.html">About</a>
+      <a href="education.html">Education</a>
+      <a href="experience.html">Experience</a>
+      <a href="projects.html">Projects</a>
+      <a href="resume.html">Resume</a>
+      <a href="contact.html">Contact</a>
+      <a href="personal.html">Personal</a>
+    </nav>
+  </header>
+
+
+
+  <main class="case-main" id="main-content">
+    <a class="case-back" href="projects.html">← All projects</a>
+    <section data-no-reveal aria-labelledby="case-title">
+      <div class="case-hero-grid">
+        <div>
+          <p class="case-kicker">RTL / Physical Implementation / Team Project</p>
+          <h1 id="case-title">Dual-Core<br>ML Accelerator</h1>
+          <p class="case-lede">Two clock domains. Shared normalization. A measurable timing–power tradeoff.</p>
+          <p>A Verilog attention accelerator for INT8 query–key dot products and output normalization, developed from a single-core baseline through dual-core integration and sparsity-aware execution.</p>
+          <p class="case-note">I participated in this six-person UC San Diego team project. Architecture and implementation results below describe the team’s reported system.</p>
+          <div class="case-actions">
+            <a class="primary" href="#results">Explore the results</a>
+            <a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator" target="_blank" rel="noopener">Source code</a>
+            <a href="files/project-reports/dual-core-ml-accelerator.pdf" target="_blank" rel="noopener">Project report (PDF)</a>
+          </div>
+        </div>
+        <figure class="case-layout-image">
+          <img src="img/projects/dual-core/implementation.webp" width="993" height="945" alt="Step 5 physical implementation view with SRAM blocks and routed logic from the team report">
+          <figcaption>Step 5 implementation view · Original report, p. 12</figcaption>
+        </figure>
+      </div>
+      <dl class="case-facts">
+        <div><dt>Compute</dt><dd>INT8 MAC arrays</dd></div>
+        <div><dt>Integration</dt><dd>2 clock domains</dd></div>
+        <div><dt>Step 4 → 5 setup WNS</dt><dd>−4.219 → −0.866 ns</dd></div>
+        <div><dt>Validation</dt><dd>RTL + reported PPA</dd></div>
+      </dl>
+    </section>
+    <nav class="case-local-nav" aria-label="Case study sections">
+      <a href="#architecture">Architecture</a><a href="#optimization">Optimization</a><a href="#results">PPA results</a><a href="#verification">Waveform evidence</a>
+    </nav>
+    <section data-no-reveal aria-labelledby="architecture">
+      <p class="case-kicker">01 / Architecture</p>
+      <h2 id="architecture">Independent compute, coordinated output</h2>
+      <p>Each core combines query/key SRAMs, a MAC array, partial-sum storage, an output FIFO, and a normalization block. Local absolute-value sums cross to the partner clock domain through asynchronous FIFOs, then contribute to a shared normalization denominator.</p>
+      <div class="dual-architecture" role="img" aria-label="Core 0 on clk0 and Core 1 on clk1 each contain query and key SRAM, an INT8 MAC array, partial-sum SRAM, and an SFP normalization block. Asynchronous FIFOs exchange local sums across clock domains.">
+        <div class="core-domain" aria-hidden="true"><small>CLOCK DOMAIN 0 / clk0</small><strong>Core 0</strong><span>Query + key SRAM</span><span>INT8 MAC array</span><span>Partial-sum SRAM</span><span>SFP normalization</span></div>
+        <div class="cdc-bridge" aria-hidden="true"><b>⇄</b><strong>Async FIFOs</strong><br>Local sum exchange<br>Gray-coded pointers</div>
+        <div class="core-domain" aria-hidden="true"><small>CLOCK DOMAIN 1 / clk1</small><strong>Core 1</strong><span>Query + key SRAM</span><span>INT8 MAC array</span><span>Partial-sum SRAM</span><span>SFP normalization</span></div>
+      </div>
+      <p class="case-note">Conceptual data flow, based on the optimized RTL. SFP denotes the project’s normalization block; this implementation uses absolute-value sums and integer division.</p>
+      <div class="case-actions"><a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator/blob/02d7189902e1ead1402e9c73cfd66543f2e1cc64/Step5Optimization/rtl/Verilog/fullchip.v" target="_blank" rel="noopener">Dual-core integration</a><a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator/blob/02d7189902e1ead1402e9c73cfd66543f2e1cc64/Step5Optimization/rtl/Verilog/fifo_async_depth16.v" target="_blank" rel="noopener">Async FIFO RTL</a></div>
+    </section>
+    <section data-no-reveal aria-labelledby="optimization">
+      <p class="case-kicker">02 / Optimization</p>
+      <h2 id="optimization">Shorter paths, explicit clock boundaries</h2>
+      <div class="case-grid">
+        <article class="case-panel"><h3>Cross-domain sum exchange</h3><p>A dedicated asynchronous FIFO and separate read clock decouple the two cores. Per-domain reset synchronizers provide asynchronous assertion and synchronous release.</p></article>
+        <article class="case-panel"><h3>Balanced reduction + registered division</h3><p>A balanced adder tree replaces serial absolute-value accumulation. Registering numerator and denominator inputs breaks up the normalization path; a zero-denominator check returns zero.</p></article>
+        <article class="case-panel"><h3>Sparsity-aware execution</h3><p>Step 6 adds a row-skip flag driven by a Python-derived threshold. Skipped rows bypass writeback and gate divider activity, trading some timing improvement for lower reported power than Step 5.</p></article>
+      </div>
+      <div class="case-example"><h3>A concrete normalization example</h3><p><strong>Input:</strong> local sum <code>256</code>, partner sum <code>128</code>, lane magnitude <code>96</code>.<br><strong>Output:</strong> integer result <code>32</code>.<br><strong>Why:</strong> the optimized RTL scales each sum by shifting right 7 bits: <code>(256 &gt;&gt; 7) + (128 &gt;&gt; 7) = 3</code>. The registered division then computes <code>96 / 3 = 32</code>. If the scaled denominator is zero, the result is zero.</p><p class="case-note">Illustrative arithmetic from <a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator/blob/02d7189902e1ead1402e9c73cfd66543f2e1cc64/Step5Optimization/rtl/Verilog/sfp_row.v" target="_blank" rel="noopener">sfp_row.v</a>; not an additional simulation result.</p></div>
+    </section>
+    <section data-no-reveal aria-labelledby="results">
+      <p class="case-kicker">03 / Reported implementation results</p>
+      <h2 id="results">Timing improved. Power exposed the tradeoff.</h2>
+      <p>Step 5 improves setup WNS by <strong>3.353 ns</strong> relative to the dual-core baseline, while increasing reported power. Step 6 reduces power by <strong>24.5%</strong> relative to Step 5, with a small area reduction and more negative WNS.</p>
+      <div class="ppa-grid"><figure class="ppa-chart"><figcaption>Setup WNS</figcaption><small>0 ns is the target; shorter bars mean less negative slack.</small><div class="ppa-row"><div><span>04 / Baseline</span><strong>-4.219 ns</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:100.00%"></i></div></div><div class="ppa-row"><div><span>05 / Optimized</span><strong>-0.866 ns</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:20.53%"></i></div></div><div class="ppa-row"><div><span>06 / Sparsity</span><strong>-1.06 ns</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:25.12%"></i></div></div></figure><figure class="ppa-chart"><figcaption>Total power</figcaption><small>Reported power; lower is better.</small><div class="ppa-row"><div><span>04 / Baseline</span><strong>260.98 mW</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:58.86%"></i></div></div><div class="ppa-row"><div><span>05 / Optimized</span><strong>443.4 mW</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:100.00%"></i></div></div><div class="ppa-row"><div><span>06 / Sparsity</span><strong>334.86 mW</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:75.52%"></i></div></div></figure><figure class="ppa-chart"><figcaption>Area</figcaption><small>Reported implementation area; lower is better.</small><div class="ppa-row"><div><span>04 / Baseline</span><strong>7.16 mm²</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:100.00%"></i></div></div><div class="ppa-row"><div><span>05 / Optimized</span><strong>6.925 mm²</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:96.72%"></i></div></div><div class="ppa-row"><div><span>06 / Sparsity</span><strong>6.85 mm²</strong></div><div class="ppa-track" aria-hidden="true"><i style="width:95.67%"></i></div></div></figure></div>
+      <div class="case-table-wrap"><table>
+        <caption>Team report, p. 5. All three implementations retain negative setup slack.</caption>
+        <thead><tr><th scope="col">Implementation</th><th scope="col">Setup WNS (ns)</th><th scope="col">Power (mW)</th><th scope="col">Area (mm²)</th></tr></thead>
+        <tbody><tr><th scope="row">Step 4 · Dual core</th><td>−4.219</td><td>260.98</td><td>7.16</td></tr><tr><th scope="row">Step 5 · Optimized</th><td>−0.866</td><td>443.4</td><td>6.925</td></tr><tr><th scope="row">Step 6 · Sparsity</th><td>−1.06</td><td>334.86</td><td>6.85</td></tr></tbody>
+      </table></div>
+      <p class="case-note">These are the project report’s implementation results, not new benchmark runs. Negative WNS means setup timing violations remain; the project is not presented as timing-closed silicon.</p>
+    </section>
+    <section data-no-reveal aria-labelledby="verification">
+      <p class="case-kicker">04 / Verification evidence</p>
+      <h2 id="verification">Connect the reference output to the waveform</h2>
+      <p>The report records passing dot-product and normalization functional simulations after the Step 5 testbench writeback was delayed by one cycle to match the added pipeline stage.</p>
+      <figure class="waveform-figure">
+        <h3>Step 5 · Normalization output comparison</h3>
+        <a href="img/projects/dual-core/normalization-waveform.webp" target="_blank" rel="noopener" aria-label="Open full-resolution normalization waveform"><img src="img/projects/dual-core/normalization-waveform.webp" width="1527" height="169" loading="lazy" alt="Report waveform showing clk0, sw_out0, out0 and clk1, sw_out1, out1 in two signal groups"></a>
+        <figcaption>Original capture from report p. 4. Select the image for full resolution.</figcaption>
+        <div class="waveform-key"><p><strong>Top group</strong><br><code>clk0</code>, reference <code>sw_out0</code>, and hardware <code>out0</code>.</p><p><strong>Bottom group</strong><br><code>clk1</code>, reference <code>sw_out1</code>, and hardware <code>out1</code>.</p><p><strong>Read it for alignment</strong><br>Compare output values after the pipeline delay in each clock domain.</p></div>
+      </figure>
+      <figure class="waveform-figure">
+        <h3>Step 6 · Partial-sum memory readback</h3>
+        <a href="img/projects/dual-core/sparsity-readback.webp" target="_blank" rel="noopener" aria-label="Open full-resolution sparsity readback waveform"><img src="img/projects/dual-core/sparsity-readback.webp" width="1495" height="240" loading="lazy" alt="Report waveform comparing output and expected memory readback values for both cores in the sparsity-aware design"></a>
+        <figcaption>Original capture from report p. 5. The Python-driven flow compares dense-row outputs and skips checking bypassed memory locations for skipped rows.</figcaption>
+      </figure>
+      <div class="case-actions"><a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator/blob/02d7189902e1ead1402e9c73cfd66543f2e1cc64/Step5Optimization/rtl/Verilog/fullchip_tb.v" target="_blank" rel="noopener">Step 5 testbench</a><a href="https://github.com/marksui/Dual-Core-Machine-Learning-Accelerator/tree/02d7189902e1ead1402e9c73cfd66543f2e1cc64/Step6Sparsity" target="_blank" rel="noopener">Sparsity implementation</a><a href="files/project-reports/dual-core-ml-accelerator.pdf" target="_blank" rel="noopener">Full report (PDF)</a></div>
+    </section>
+    <section data-no-reveal class="case-close" aria-labelledby="next-step">
+      <h2 id="next-step">More hardware work. One clear next step.</h2>
+      <p>Explore my Viterbi decoder, review my background, or get in touch about engineering opportunities.</p>
+      <div class="case-actions"><a class="primary" href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Resume PDF</a><a href="contact.html">Contact Mark</a><a href="viterbi.html">Viterbi case study</a></div>
+      <p class="case-note">Team: Anjana Manoj, Ashwin Manoj, Devansh Gupta, Lingzhan Xu, Mark Sui, and Riyansh Chaturvedi. Source: final project report and linked RTL.</p>
+    </section>
+  </main>
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="site-footer-inner">
+      <div class="site-footer-brand">
+        <a href="index.html">Mark Sui</a>
+        <span>Hardware-minded systems, engineering tools, and personal archives.</span>
+        <span class="site-footer-meta">Yorba Linda, CA / UC San Diego ECE</span>
+      </div>
+      <nav class="site-footer-links" aria-label="Footer">
+        <a href="index.html">About</a>
+        <a href="education.html">Education</a>
+        <a href="experience.html">Experience</a>
+        <a href="projects.html">Projects</a>
+        <a href="personal.html">Archive</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://github.com/marksui" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/marksui6" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

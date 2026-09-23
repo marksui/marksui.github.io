@@ -7,7 +7,7 @@
   <link rel="icon" href="img/icons/favicon.svg?v=20260613-ms" type="image/svg+xml">
   <link rel="apple-touch-icon" href="img/icons/app-icon-180.png?v=20260613-ms">
   <link rel="manifest" href="site.webmanifest?v=20260613-ms">
-  <meta name="description" content="Mark Sui's RTL design portfolio, featuring SystemVerilog, FPGA, digital microarchitecture, verification, VLSI, and hardware implementation projects.">
+  <meta name="description" content="Mark Sui's hardware portfolio: a dual-core INT8 ML accelerator, Viterbi decoder, RTL verification, and physical implementation tradeoffs.">
   <meta name="author" content="Mark Sui">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#102A43">
@@ -16,7 +16,7 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:site_name" content="Mark Sui">
   <meta property="og:title" content="Mark Sui - RTL Design Engineer Portfolio">
-  <meta property="og:description" content="RTL design portfolio focused on SystemVerilog, FPGA, digital microarchitecture, verification, and VLSI implementation.">
+  <meta property="og:description" content="Dual-core ML acceleration, SystemVerilog, clock-domain crossing, verification, and VLSI implementation projects.">
   <meta property="og:url" content="https://marksui.github.io/">
   <meta property="og:image" content="https://marksui.github.io/img/site-card.png">
   <meta property="og:image:secure_url" content="https://marksui.github.io/img/site-card.png">
@@ -69,7 +69,7 @@
           "@id": "https://marksui.github.io/#profile",
           "name": "Mark Sui - RTL Design Engineer Portfolio",
           "url": "https://marksui.github.io/",
-          "description": "Mark Sui's RTL design portfolio, featuring SystemVerilog, FPGA, digital microarchitecture, verification, VLSI, and hardware implementation projects.",
+          "description": "Mark Sui's hardware portfolio: a dual-core INT8 ML accelerator, Viterbi decoder, RTL verification, and physical implementation tradeoffs.",
           "isPartOf": {
             "@id": "https://marksui.github.io/#website"
           },
@@ -1323,6 +1323,72 @@
         transform: none;
       }
     }
+
+    /* Focus the homepage on the featured build, then skills and supporting context. */
+    .home-main { max-width: 1160px; }
+    .home-hero { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1.5rem,4vw,3.5rem); align-items: center; padding-bottom: 2.5rem; }
+    .home-copy { gap: 1.2rem; }
+    .home-hero h2 { font-size: clamp(1.75rem,3vw,2.5rem); }
+    .home-lede { font-size: 1.08rem; line-height: 1.7; }
+    .home-position { padding: 0; border: 0; border-radius: 0; background: none; }
+    .flagship-card { box-shadow: none; }
+    .flagship-image { display: block; position: relative; height: 205px; overflow: hidden; background: #080b10; }
+    .flagship-image img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .flagship-image > span { position: absolute; left: .75rem; bottom: .6rem; padding: .15rem .5rem; color: #fff; background: #080b10; font-size: .72rem; }
+    .flagship-card h3 { font-size: 1.5rem; line-height: 1.2; margin: .3rem 0 .6rem; }
+    .flagship-card h3 a { color: var(--home-accent); text-decoration: none; }
+    .home-hero .flagship-eyebrow { color: var(--home-secondary); font: .72rem ui-monospace, monospace; }
+    .flagship-result { display: grid; gap: .25rem; padding: .8rem 0; margin-top: .8rem; border-top: 1px solid var(--home-rule); }
+    .flagship-result span, .flagship-result small { font-size: .8rem; color: var(--home-secondary); }
+    .flagship-result strong { font-size: 1.35rem; color: var(--home-accent); }
+    .recent-project-grid { gap: 1.25rem; }
+    .project-visual { aspect-ratio: 16 / 7; }
+    .recent-project-card, .recent-project-body, .project-visual, .project-visual-link { min-width: 0; grid-template-columns: minmax(0, 1fr); }
+    .recent-project-card { grid-template-rows: 170px 1fr; }
+    .project-visual { height: 100%; aspect-ratio: auto; overflow: hidden; }
+    .recent-project-body { padding: 1.1rem; overflow-wrap: anywhere; }
+    .project-visual .rtl-pipeline { min-height: 0; padding: .4rem; gap: .4rem; }
+    .project-visual .rtl-pipeline span { padding: .35rem .1rem; min-height: 4rem; font-size: .66rem; }
+    .project-visual-link.rtl-visual { padding: .55rem; }
+    .home-skills-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 1.5rem; }
+    .home-skills-grid article { padding: 1.2rem 0; border-top: 2px solid var(--home-rule); }
+    .skill-number { font: .7rem ui-monospace, monospace; letter-spacing: .08em; color: var(--home-secondary); }
+    .home-skills-grid h3 { color: var(--home-accent); font-size: 1.12rem; margin: .6rem 0; }
+    .home-skills-grid p { margin: 0 0 .75rem; font-size: .96rem; }
+    .home-skills-grid a { font-size: .9rem; }
+    .home-bottom-grid { display: grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1fr); gap: 2.5rem; align-items: start; }
+    .home-bottom-grid .compact-experience { grid-template-columns: 1fr; gap: 1rem; padding: 0; border: 0; }
+    .home-bottom-grid .compact-experience::before, .home-bottom-grid .experience-stop::before { display: none; }
+    .home-bottom-grid .experience-stop { display: grid; grid-template-columns: 9.5rem 1fr; gap: .2rem 1rem; padding: .75rem 0; border-bottom: 1px solid var(--home-rule); }
+    .home-bottom-grid .experience-stop time { grid-row: span 2; padding: 0; }
+    .home-bottom-grid .experience-stop strong, .home-bottom-grid .experience-stop span { margin: 0; }
+    .footprint-section { max-width: 420px; width: 100%; justify-self: end; }
+    .footprint-section .section-heading { font-size: 1.15rem; }
+    .global-footprint-card { padding: .35rem; border-top: 1px solid var(--home-rule); box-shadow: none; }
+    .footprint-point { width: .3rem; height: .3rem; }
+    @media(min-width:601px) and (max-width:960px) {
+      .recent-project-grid { grid-template-columns: 1fr; }
+      .recent-project-card { grid-template-columns: minmax(0,.8fr) minmax(0,1.2fr); grid-template-rows: auto; }
+      .project-visual { border-bottom: 0; border-right: 1px solid var(--home-rule); }
+      .project-visual img.project-preview { object-fit: contain; }
+    }
+    @media(max-width:600px) {
+      .recent-project-grid { grid-template-columns: 1fr; }
+      .recent-project-card { grid-template-rows: 180px 1fr; }
+    }
+    @media(max-width:800px) {
+      .home-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+      .home-skills-grid { grid-template-columns: 1fr; gap: .25rem; }
+      .home-bottom-grid { grid-template-columns: 1fr; gap: .5rem; }
+      .footprint-section { justify-self: start; }
+      .hero-actions a { flex: 0 1 auto; }
+      .flagship-image { height: 190px; }
+      .home-hero h2 { font-size: clamp(1.35rem,5.5vw,2.25rem); }
+    }
+    @media(max-width:400px) {
+      .hero-actions a:first-child { flex-basis: 100%; }
+      .home-bottom-grid .experience-stop { grid-template-columns: 1fr; }
+    }
   </style>
 
 </head>
@@ -1347,12 +1413,6 @@
         <h2 class="hero-heading">
           <span class="hero-rotator" id="hero-rotator">UCSD · Math · CE · ECE.</span>
         </h2>
-        <ul class="hero-identity-rail" aria-label="Academic background">
-          <li>UCSD</li>
-          <li>MATH</li>
-          <li>CE</li>
-          <li>ECE</li>
-        </ul>
         <p class="home-lede">
           I'm <strong>Mark Sui</strong>, an ECE master's student at <strong>UC San Diego</strong>
           with a mathematics and computer engineering foundation. I work from cycle-level RTL
@@ -1362,109 +1422,29 @@
           Seeking <strong>&nbsp;ASIC / FPGA / Software Engineering&nbsp;</strong> roles.
         </p>
         <div class="hero-actions" aria-label="Primary paths">
-          <a href="viterbi.html">Explore Viterbi Decoder</a>
+          <a href="dual-core.html">Explore Dual-Core Accelerator</a>
           <a href="files/mark-sui-resume.pdf" target="_blank" rel="noopener">Resume PDF</a>
           <a href="contact.html">Contact</a>
         </div>
       </div>
-      <aside class="home-showcase-card" aria-label="Representative engineering build">
-        <div class="home-showcase-bar">
-          <span>Representative RTL design</span>
-          <span class="home-showcase-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-        </div>
-        <div class="home-showcase-visual" role="img" aria-label="Viterbi decoder pipeline showing branch metric, add compare select, and traceback modules">
-          <div class="rtl-pipeline" aria-hidden="true">
-            <span>Branch Metric<br>BMC</span>
-            <span>Add Compare Select<br>ACS</span>
-            <span>Traceback<br>TBU</span>
-          </div>
-        </div>
+      <aside class="home-showcase-card flagship-card" aria-labelledby="flagship-title">
+        <div class="home-showcase-bar"><span>Featured project / RTL → Physical Implementation</span></div>
+        <a class="flagship-image" href="dual-core.html" aria-label="Explore the dual-core ML accelerator">
+          <img src="img/projects/dual-core/implementation.webp" width="993" height="945" alt="Routed dual-core accelerator with SRAM blocks and compute logic">
+          <span>Step 5 · Implementation view</span>
+        </a>
         <div class="home-showcase-body">
-          <div class="home-showcase-title">
-            <strong>SystemVerilog Viterbi Decoder</strong>
-            <span>SystemVerilog RTL</span>
-          </div>
-          <div class="home-showcase-grid" aria-label="Portfolio signal">
-            <div class="home-showcase-metric"><span>Architecture</span><strong>BMC / ACS / TBU</strong></div>
-            <div class="home-showcase-metric"><span>Language</span><strong>SystemVerilog</strong></div>
-            <div class="home-showcase-metric"><span>Target</span><strong>FPGA</strong></div>
-            <div class="home-showcase-metric"><span>Verification</span><strong>22 reported error cases</strong></div>
-          </div>
-          <ul class="home-showcase-stack" aria-label="Representative stack">
-            <li>RTL design</li><li>Datapath</li><li>Cycle alignment</li><li>Waveform debug</li>
-          </ul>
-          <a class="home-showcase-link" href="viterbi.html">Explore architecture &amp; results</a>
+          <p class="flagship-eyebrow">INT8 · Dual clock · SRAM · CDC</p>
+          <h3 id="flagship-title"><a href="dual-core.html">Dual-Core ML Accelerator</a></h3>
+          <p>Attention hardware from MAC arrays to shared normalization, with reported timing, power, and area tradeoffs.</p>
+          <div class="flagship-result"><span>Team result / Setup WNS, Step 4 → 5</span><strong>−4.219 → −0.866 ns</strong><small>Improved slack; setup violations remain.</small></div>
+          <a class="home-showcase-link" href="dual-core.html">Architecture, waveforms &amp; results</a>
         </div>
       </aside>
     </section>
 
-    <section class="engineering-signals" data-reveal aria-label="Engineering signals">
-      <div class="engineering-signal">
-        <span>Target Role</span>
-        <strong>ASIC / FPGA / SWE</strong>
-      </div>
-      <div class="engineering-signal">
-        <span>HDL</span>
-        <strong>SystemVerilog / Verilog</strong>
-      </div>
-      <div class="engineering-signal">
-        <span>Design Flow</span>
-        <strong>Simulation / FPGA</strong>
-      </div>
-      <div class="engineering-signal">
-        <span>Implementation</span>
-        <strong>Hardware / Software</strong>
-      </div>
-    </section>
-
-
-    <section data-reveal aria-labelledby="rtl-flow-title">
-      <h2 class="section-heading" id="rtl-flow-title">RTL Signal Flow</h2>
-      <div class="rtl-flow-shell">
-        <div class="rtl-flow-scroll" aria-label="Interactive RTL implementation flow">
-          <div class="rtl-flow-rail">
-            <button class="rtl-flow-stage" type="button" aria-pressed="true"
-              data-label="01 / SPECIFICATION"
-              data-description="Start with behavior that can be stated cycle by cycle."
-              data-evidence="Interfaces · latency · constraints">
-              <span>01</span><strong>Specification</strong>
-            </button>
-            <button class="rtl-flow-stage" type="button" aria-pressed="false"
-              data-label="02 / RTL"
-              data-description="Turn the architecture into explicit datapath, control, and state."
-              data-evidence="SystemVerilog · modules · FSMs">
-              <span>02</span><strong>RTL</strong>
-            </button>
-            <button class="rtl-flow-stage" type="button" aria-pressed="false"
-              data-label="03 / SIMULATION"
-              data-description="Use controlled cases and waveforms to make failures explainable."
-              data-evidence="Testbench · assertions · debug">
-              <span>03</span><strong>Simulation</strong>
-            </button>
-            <button class="rtl-flow-stage" type="button" aria-pressed="false"
-              data-label="04 / SYNTHESIS"
-              data-description="Check whether the RTL maps cleanly to the intended hardware."
-              data-evidence="FPGA · netlist · area">
-              <span>04</span><strong>Synthesis</strong>
-            </button>
-            <button class="rtl-flow-stage" type="button" aria-pressed="false"
-              data-label="05 / TIMING"
-              data-description="Close the loop with constraints, critical paths, and implementation trade-offs."
-              data-evidence="STA · PPA · physical design">
-              <span>05</span><strong>Timing</strong>
-            </button>
-          </div>
-        </div>
-        <div class="rtl-flow-readout" aria-live="polite">
-          <span id="rtl-flow-label">01 / SPECIFICATION</span>
-          <strong id="rtl-flow-description">Start with behavior that can be stated cycle by cycle.</strong>
-          <span id="rtl-flow-evidence">Interfaces · latency · constraints</span>
-        </div>
-      </div>
-    </section>
-
     <section data-reveal id="featured-rtl-projects">
-      <h2 class="section-heading">Selected RTL Projects</h2>
+      <h2 class="section-heading">More Engineering Work</h2>
       <div class="recent-project-grid">
         <article class="recent-project-card">
           <figure class="project-visual">
@@ -1577,6 +1557,16 @@
       </div>
     </section>
 
+    <section data-reveal aria-labelledby="skills-title" id="skills">
+      <h2 class="section-heading" id="skills-title">Skills</h2>
+      <div class="home-skills-grid">
+        <article><span class="skill-number">01 / DESIGN</span><h3>RTL &amp; Digital Hardware</h3><p>Verilog · SystemVerilog · MAC datapaths · SRAM interfaces · asynchronous FIFOs</p><a href="dual-core.html#architecture">Dual-core architecture →</a></article>
+        <article><span class="skill-number">02 / VERIFY</span><h3>Simulation &amp; Debugging</h3><p>Testbenches · waveform analysis · reference comparisons · error injection</p><a href="viterbi.html#results">Viterbi verification →</a></article>
+        <article><span class="skill-number">03 / IMPLEMENT</span><h3>Implementation &amp; Tools</h3><p>Synthesis · place &amp; route · timing / power / area analysis · Python experiment tooling</p><a href="dual-core.html#results">Implementation tradeoffs →</a></article>
+      </div>
+    </section>
+
+    <div class="home-bottom-grid" data-no-reveal>
     <section data-reveal aria-labelledby="compact-experience-title">
       <h2 class="section-heading" id="compact-experience-title">Experience</h2>
       <div class="compact-experience">
@@ -1599,7 +1589,7 @@
       <a class="experience-more" href="experience.html">View complete experience →</a>
     </section>
 
-    <section data-reveal aria-labelledby="visitor-map-title">
+    <section class="footprint-section" aria-labelledby="visitor-map-title">
       <h2 class="section-heading" id="visitor-map-title">Global Footprint</h2>
       <div class="global-footprint-card">
         <div class="home-footprint-map" role="img" aria-label="Accurate monochrome world map with preserved travel markers and the current visitor's approximate location">
@@ -1629,6 +1619,7 @@
       </div>
     </section>
 
+    </div>
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
@@ -1653,30 +1644,6 @@
   </footer>
   <script>
     (() => {
-      const stages = Array.from(document.querySelectorAll(".rtl-flow-stage"));
-      const label = document.querySelector("#rtl-flow-label");
-      const description = document.querySelector("#rtl-flow-description");
-      const evidence = document.querySelector("#rtl-flow-evidence");
-
-      const selectStage = (stage) => {
-        stages.forEach((item) => item.setAttribute("aria-pressed", String(item === stage)));
-        label.textContent = stage.dataset.label;
-        description.textContent = stage.dataset.description;
-        evidence.textContent = stage.dataset.evidence;
-      };
-
-      stages.forEach((stage, index) => {
-        stage.addEventListener("click", () => selectStage(stage));
-        stage.addEventListener("keydown", (event) => {
-          if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
-          event.preventDefault();
-          const direction = event.key === "ArrowRight" ? 1 : -1;
-          const next = stages[(index + direction + stages.length) % stages.length];
-          next.focus();
-          selectStage(next);
-        });
-      });
-
       const rotator = document.querySelector("#hero-rotator");
       const phrases = [
         "UCSD · Math · CE · ECE.",
