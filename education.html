@@ -110,6 +110,29 @@
       .education-card { padding: 1rem; }
       .section-heading { font-size: 1.5rem; gap: .6rem; }
     }
+
+    .course-record { margin-top: 2rem; }
+    .course-record h3 { font-size: 1.35rem; color: var(--ink); margin: 0 0 1rem; }
+    .course-highlights { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin: 1.2rem 0; }
+    .course-highlight { padding: 1.3rem; background: var(--soft); border: 1px solid var(--line); border-top: 3px solid var(--ink); border-radius: 8px; }
+    .course-highlight h4 { margin: .6rem 0; color: var(--ink); font-size: 1.22rem; line-height: 1.25; }
+    .course-highlight p { margin: 0 0 .8rem; font-size: .95rem; }
+    .course-highlight a { color: var(--muted); font-size: .85rem; }
+    .course-groups { border-top: 1px solid var(--line); }
+    .course-group-list { border-bottom: 1px solid var(--line); }
+    .course-group-list summary { display: flex; align-items: center; gap: .75rem; min-height: 58px; padding: .8rem .25rem; list-style: none; cursor: pointer; color: var(--ink); }
+    .course-group-list summary::-webkit-details-marker { display: none; }
+    .course-group-list summary::after { content: '+'; font-size: 1.2rem; width: 1rem; text-align: center; }
+    .course-group-list[open] summary::after { content: '−'; }
+    .course-count { margin-left: auto; white-space: nowrap; font-size: .8rem; color: var(--muted); }
+    .course-group-list ul { list-style: none; padding: 0 0 1rem; margin: 0; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .7rem 1.5rem; }
+    .course-group-list li { display: grid; grid-template-columns: 6.5rem minmax(0,1fr); gap: .5rem; font-size: .88rem; line-height: 1.5; }
+    .course-code { color: var(--muted); font: .78rem/1.7 ui-monospace, SFMono-Regular, monospace; }
+    .course-group-list summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    @media(max-width:600px) {
+      .course-highlights, .course-group-list ul { grid-template-columns: 1fr; }
+      .course-group-list summary { font-size: .95rem; }
+    }
   </style>
   <link rel="stylesheet" href="career-motion.css?v=20260923-refined-icons">
 </head>
@@ -145,10 +168,68 @@
 <details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><path class="icon-detail" d="M16 12v24m8-24v24m8-24v24M12 16h24M12 24h24M12 32h24"/><path d="M11 11v26h26"/><path class="icon-tint" d="M13 32c5 0 5-13 11-13s6 9 12-6v23H13z" stroke="none"/><path d="M13 32c5 0 5-13 11-13s6 9 12-6"/><circle class="icon-node" cx="24" cy="19" r="2.2"/><path d="m33 13 3-1 1 3"/></svg><span class="study-label">Technical foundation</span><strong class="study-title">Engineering + Mathematics</strong></summary><div class="study-card-body"><p>Computer engineering supported by applied mathematics, algorithms, and numerical methods.</p></div></details>
 <details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><circle class="icon-tint" cx="24" cy="24" r="12"/><ellipse cx="24" cy="24" rx="5.5" ry="12"/><path class="icon-detail" d="M12 24h24M14 17.5c6 3 14 3 20 0M14 30.5c6-3 14-3 20 0"/><path d="M9 31c-3 8 7 10 19 3s17-17 10-18"/><path class="icon-node" d="m35 11 6 3-5 4 1-4z"/></svg><span class="study-label">Broader perspective</span><strong class="study-title">International Study</strong></summary><div class="study-card-body"><p>NUS study abroad, UC summer coursework, and student leadership.</p></div></details>
 </div></section>
-    <section data-no-reveal aria-labelledby="coursework"><h2 class="section-heading" id="coursework"><span class="section-number">02</span>Selected Coursework</h2><p class="section-intro">Three areas connecting academic study to project evidence.</p><div class="study-grid coursework-grid"><details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><path class="icon-detail" d="m9 34 15 7 15-7M9 29l15 7 15-7"/><path class="icon-tint" d="m9 16 15-7 15 7v14l-15 7-15-7z"/><path d="m9 16 15 7 15-7M24 23v14"/><path d="m15 13 15 7v7l9-4M15 19v8l9 4M15 27l9-4"/><path class="icon-detail" d="m20 11 14 7M11 29l6 3"/></svg><span class="study-label">Physical design / Spring 2026</span><strong class="study-title">OpenROAD Physical Design</strong></summary><div class="study-card-body"><p>Team coursework in MBFF evaluation, CTS experiments, and timing, power, and area analysis.</p><a href="experience.html#physical-design">Explore physical-design work →</a></div></details>
+    <section data-no-reveal aria-labelledby="coursework"><h2 class="section-heading" id="coursework"><span class="section-number">02</span>Selected Coursework</h2><p class="section-intro">Selected project work, followed by courses across my academic path.</p><div class="study-grid coursework-grid"><details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><path class="icon-detail" d="m9 34 15 7 15-7M9 29l15 7 15-7"/><path class="icon-tint" d="m9 16 15-7 15 7v14l-15 7-15-7z"/><path d="m9 16 15 7 15-7M24 23v14"/><path d="m15 13 15 7v7l9-4M15 19v8l9 4M15 27l9-4"/><path class="icon-detail" d="m20 11 14 7M11 29l6 3"/></svg><span class="study-label">Physical design / Spring 2026</span><strong class="study-title">OpenROAD Physical Design</strong></summary><div class="study-card-body"><p>Team coursework in MBFF evaluation, CTS experiments, and timing, power, and area analysis.</p><a href="experience.html#physical-design">Explore physical-design work →</a></div></details>
 <details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><rect class="icon-tint" x="10" y="13" width="28" height="22" rx="3"/><path d="M15 9v4m6-4v4m6-4v4m6-4v4M15 35v4m6-4v4m6-4v4m6-4v4M6 19h4m-4 10h4m28-10h4m-4 10h4"/><g class="icon-node"><rect x="15" y="18" width="6" height="5" rx="1"/><rect x="27" y="18" width="6" height="5" rx="1"/><rect x="15" y="26" width="6" height="5" rx="1"/><rect x="27" y="26" width="6" height="5" rx="1"/></g><path class="icon-detail" d="M21 20.5h6M21 28.5h6M24 20.5v8"/></svg><span class="study-label">C / CUDA / Spring 2026</span><strong class="study-title">GPU-Accelerated GGM Tree Construction</strong></summary><div class="study-card-body"><p>Integrated Spongent and Keccak backends into a team CUDA cryptography project.</p><a href="projects.html#ggm">Project and report →</a></div></details>
 <details class="study-card"><summary><svg class="career-icon" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><rect class="icon-frame" x=".75" y=".75" width="46.5" height="46.5" rx="12"/><rect class="icon-tint" x="9" y="11" width="30" height="25" rx="3"/><path d="M9 18h30"/><path class="icon-detail" d="M13 14.5h1m3 0h1m3 0h1"/><path d="m19 23-4 4 4 4m10-8 4 4-4 4m-4-9-2 10"/><path d="M18 40h12m-6-4v4"/><path class="icon-node" d="m37 7 1.5 3.5L42 12l-3.5 1.5L37 17l-1.5-3.5L32 12l3.5-1.5z"/></svg><span class="study-label">Python / Verilog</span><strong class="study-title">MAGE RTL Generation</strong></summary><div class="study-card-body"><p>Failure routing, repair prompts, and task-local debugging memory evaluated with VerilogEval-V2.</p><a href="projects.html#mage">Project and report →</a></div></details>
-</div></section>
+</div>
+      <div class="course-record" aria-labelledby="courses-taken">
+        <h3 id="courses-taken">Courses Taken</h3>
+        <p class="section-intro">Coursework across engineering, mathematics, computing, and the life sciences.</p>
+        <div class="course-highlights">
+          <article class="course-highlight" id="medical-imaging">
+            <span class="study-label">UC San Diego · BENG 280A / ECE 207A</span>
+            <h4>Principles of Medical Imaging</h4>
+            <p>Fourier methods, linear systems, sampling, filtering, and image reconstruction for biomedical imaging.</p>
+            <a href="https://catalog.ucsd.edu/courses/ECE.html" target="_blank" rel="noopener">UCSD course description ↗</a>
+          </article>
+          <article class="course-highlight" id="biophysics">
+            <span class="study-label">UC San Diego · ECE 201</span>
+            <h4>Introduction to Biophysics</h4>
+            <p>Biochemical bonds, molecular interactions, biological thermodynamics, transport, and fluid mechanics.</p>
+            <a href="https://catalog.ucsd.edu/courses/ECE.html" target="_blank" rel="noopener">UCSD course description ↗</a>
+          </article>
+        </div>
+        <div class="course-groups">
+          <details class="course-group-list"><summary><span>Hardware &amp; Architecture</span><span class="course-count">11 courses</span></summary><ul>
+            <li><span class="course-code">ECE 101</span><span>Linear Systems Fundamentals</span></li>
+            <li><span class="course-code">ECE 108</span><span>Digital Circuits</span></li>
+            <li><span class="course-code">ECE 111</span><span>Advanced Digital Design Project</span></li>
+            <li><span class="course-code">ECE 260A</span><span>VLSI Digital System Algorithms and Architectures</span></li>
+            <li><span class="course-code">ECE 260B</span><span>VLSI Integrated Circuits and Systems Design</span></li>
+            <li><span class="course-code">ECE 260C</span><span>VLSI Advanced Topics</span></li>
+            <li><span class="course-code">ECE 268</span><span>Security of Hardware Embedded Systems</span></li>
+            <li><span class="course-code">CSE 140</span><span>Components and Design Techniques for Digital Systems</span></li>
+            <li><span class="course-code">CSE 140L</span><span>Digital Systems Laboratory</span></li>
+            <li><span class="course-code">CSE 141</span><span>Computer Architecture</span></li>
+            <li><span class="course-code">CSE 240A</span><span>Principles of Computer Architecture</span></li>
+          </ul></details>
+          <details class="course-group-list"><summary><span>AI &amp; Data Science</span><span class="course-count">7 courses</span></summary><ul>
+            <li><span class="course-code">COGS 118B</span><span>Machine Learning</span></li>
+            <li><span class="course-code">CSE 150B</span><span>Artificial Intelligence - Search and Reasoning</span></li>
+            <li><span class="course-code">CSE 151A</span><span>Machine Learning - Learning Algorithms</span></li>
+            <li><span class="course-code">CSE 151B</span><span>Deep Learning</span></li>
+            <li><span class="course-code">CSE 253</span><span>Machine Learning for Music</span></li>
+            <li><span class="course-code">ECE 143</span><span>Programming for Data Analysis</span></li>
+            <li><span class="course-code">ECE 228</span><span>Machine Learning for Physical Applications</span></li>
+          </ul></details>
+          <details class="course-group-list"><summary><span>Mathematics &amp; Cryptography</span><span class="course-count">7 courses</span></summary><ul>
+            <li><span class="course-code">CSE 21</span><span>Mathematics for Algorithms and Systems</span></li>
+            <li><span class="course-code">MATH 142A</span><span>Analysis I</span></li>
+            <li><span class="course-code">MATH 142B</span><span>Analysis II</span></li>
+            <li><span class="course-code">MATH 170A</span><span>Numerical Analysis - Linear Algebra</span></li>
+            <li><span class="course-code">MATH 187A</span><span>Cryptography</span></li>
+            <li><span class="course-code">MATH 187B</span><span>Mathematics of Modern Cryptography</span></li>
+            <li><span class="course-code">MATH 189</span><span>Exploratory Data Analysis and Inference</span></li>
+          </ul></details>
+          <details class="course-group-list"><summary><span>Software, Graphics &amp; IoT</span><span class="course-count">4 courses</span></summary><ul>
+            <li><span class="course-code">CSE 15L</span><span>Software Tools and Techniques Laboratory</span></li>
+            <li><span class="course-code">CSE 165</span><span>3-D User Interaction</span></li>
+            <li><span class="course-code">CSE 167</span><span>Computer Graphics</span></li>
+            <li><span class="course-code">CS 3237</span><span>Internet of Things · NUS</span></li>
+          </ul></details>
+        </div>
+      </div>
+</section>
     <section aria-labelledby="education-timeline" data-no-reveal><h2 class="section-heading" id="education-timeline"><span class="section-number">03</span>Timeline</h2>
       <div class="education-timeline">
         <article class="education-entry">
