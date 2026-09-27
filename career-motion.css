@@ -57,3 +57,59 @@ body.education-page.site-ready .site-footer { animation: none; }
   :is(.education-main, .experience-main) *::after { animation: none !important; transition: none !important; }
 }
 @media print { .career-circuit, .career-icon { display: none; } }
+
+/* Restrained color accents and native disclosure controls. */
+:is(.education-main, .experience-main) {
+  --career-teal: #397469;
+  --career-blue: #476d98;
+  --career-ochre: #96723e;
+}
+html[data-theme="dark"] :is(.education-main, .experience-main) {
+  --career-teal: #91c4b8;
+  --career-blue: #a4bfdf;
+  --career-ochre: #d1b285;
+}
+.course-featured-fold { border: 1px solid var(--line); border-left: 3px solid var(--career-teal); border-radius: 7px; margin-bottom: .75rem; background: color-mix(in srgb, var(--career-teal) 5%, var(--paper)); }
+.course-featured-fold > summary { display: flex; align-items: center; gap: .75rem; min-height: 48px; padding: .7rem .85rem; cursor: pointer; list-style: none; color: var(--ink); }
+.course-featured-fold > summary::-webkit-details-marker,
+.experience-details > summary::-webkit-details-marker { display: none; }
+.course-featured-fold > summary::after,
+.experience-details > summary::after { content: '+'; font-size: 1.1rem; color: var(--muted); }
+.course-featured-fold[open] > summary::after,
+.experience-details[open] > summary::after { content: '−'; }
+.fold-count { margin-left: auto; color: var(--muted); font-size: .8rem; }
+.course-featured-fold .fold-body { padding: .25rem .75rem .75rem; }
+.course-featured-fold .course-highlights { margin-bottom: 0; }
+.course-featured-fold .course-highlight { border-top-color: var(--career-teal); }
+.course-featured-fold .course-highlight:nth-child(3n) { border-top-color: var(--career-blue); }
+.course-featured-fold .course-highlight:nth-child(3n + 2) { border-top-color: var(--career-ochre); }
+main.experience-main > section, .experience-main .project-card { content-visibility: visible; }
+.experience-main .role-card { --role-color: var(--career-teal); border-left: 3px solid var(--role-color); background: linear-gradient(110deg, color-mix(in srgb, var(--role-color) 6%, transparent), transparent 72%), var(--paper); box-shadow: none; animation: none; }
+.experience-main .role-card:nth-child(2) { --role-color: var(--career-blue); }
+.experience-main .role-card:nth-child(3) { --role-color: var(--career-ochre); }
+.experience-main .role-card:nth-child(4) { --role-color: var(--career-blue); }
+.experience-main .role-card:hover { transform: none; background: linear-gradient(110deg, color-mix(in srgb, var(--role-color) 8%, transparent), transparent 72%), var(--paper); }
+.experience-main .role-kind { color: var(--role-color); border-color: color-mix(in srgb, var(--role-color) 28%, var(--line)); }
+.experience-main .role-brief { margin: .65rem 0 .8rem; font-size: 1rem; line-height: 1.55; }
+.experience-main .project-grid { align-items: start; }
+.experience-main .project-card { animation: none; border-top: 2px solid var(--career-blue); }
+.experience-main .project-card:hover { transform: none; }
+.experience-main .capability-card { box-shadow: none; border-top: 2px solid var(--career-teal); }
+.experience-main .capability-card:nth-child(even) { border-top-color: var(--career-blue); }
+.experience-details { margin-top: .75rem; border-top: 1px solid var(--line); }
+.experience-details > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 44px; padding: .5rem 0; color: var(--ink); font-size: .9rem; cursor: pointer; list-style: none; }
+.experience-details[open] > summary { margin-bottom: .6rem; border-bottom: 1px solid var(--line); }
+.experience-detail-body { padding: .2rem 0 .4rem; }
+.course-featured-fold > summary:focus-visible,
+.experience-details > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 3px; }
+@media(min-width:641px) {
+  body.experience-page > header { padding-top: .82rem; padding-bottom: .62rem; }
+  body.experience-page.has-scrolled header h1 { transform: none; }
+}
+@media(max-width:640px) {
+  .experience-main .capability-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .experience-main .role-meta { grid-template-columns: 1fr auto; align-items: baseline; }
+  .experience-main .role-kind { grid-column: 1 / -1; }
+  .experience-main .role-date { font-size: .85rem; }
+  .experience-main .role-location { font-size: .85rem; }
+}
