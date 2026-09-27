@@ -1450,14 +1450,6 @@
     .footprint-section .footprint-point { width: 3px; height: 3px; border: 0; background: var(--home-accent); opacity: .85; box-shadow: 0 0 0 2px color-mix(in srgb,var(--soft) 75%,transparent); }
     .footprint-section .footprint-point-live { width: 5px; height: 5px; opacity: 1; background: #ad8250; border: 1px solid var(--paper); box-shadow: 0 0 0 3px color-mix(in srgb,#ad8250 15%,transparent); }
     .footprint-section .footprint-point-live::after { border-color: #ad8250; }
-    .footprint-landmarks { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; fill: none; stroke: var(--home-accent); stroke-linecap: round; stroke-linejoin: round; pointer-events: none; }
-    .landmark { opacity: .65; stroke-width: 1.6; }
-    .landmark-wash { fill: var(--paper); fill-opacity: .85; stroke: none; }
-    .landmark-fine { stroke-width: 1; opacity: .65; }
-    .landmark-guides { opacity: .3; stroke-width: 1.25; stroke-dasharray: 3 6; }
-    .global-footprint-card:hover .landmark { opacity: .9; }
-    html[data-theme="dark"] .landmark { opacity: .75; }
-    @media(prefers-reduced-motion:no-preference) { .landmark { transition: opacity .3s ease; } }
   </style>
 
 </head>
@@ -1663,41 +1655,6 @@
       <div class="global-footprint-card">
         <div class="home-footprint-map" role="img" aria-label="Accurate monochrome world map with preserved travel markers and the current visitor's approximate location">
           <img src="https://upload.wikimedia.org/wikipedia/commons/9/9f/BlankMap-World-Equirectangular.svg" alt="" aria-hidden="true">
-          <svg class="footprint-landmarks" viewBox="0 0 1000 500" aria-hidden="true" focusable="false">
-            <g class="landmark-guides">
-              <path d="M109 115Q129 137 160 145M272 90Q279 105 279.5 128.75M542 72L537.2 104.1M816 165L837.7 180.45M936 114Q908 121 876.4 153.65M910 341L920 344.1"/>
-            </g>
-            <g class="landmark" transform="translate(73 63) scale(1.25)">
-              <path class="landmark-wash" d="M5 33h38v6H5z"/>
-              <path d="M3 33h42M12 13v29m24-29v29M9 18h6m-6 5h6m18-5h6m-6 5h6M3 26q5-3 9-13 12 25 24 0 4 10 9 13"/>
-              <path class="landmark-fine" d="M6 25v8m12-12v12m6-9v9m6-12v12m12-8v8M3 43q5-3 10 0t10 0t10 0t10 0"/>
-            </g>
-            <g class="landmark" transform="translate(248 48)">
-              <path class="landmark-wash" d="m22 24-5 17h14l-5-17z"/>
-              <path d="M24 3v12m-2 0V9m4 6V9M19 16h10l3 4-3 4H19l-3-4zM21 24l-4 17m10-17 4 17M24 24v17M13 42h22"/>
-              <path class="landmark-fine" d="M18 20h12M21 17v6m6-6v6"/>
-            </g>
-            <g class="landmark" transform="translate(513 21) scale(1.2)">
-              <path class="landmark-wash" d="M7 18h34v7H7z"/>
-              <path d="M5 18h38M8 15h32v3M7 23h34M9 23v16m6-16v16m6-16v16m6-16v16m6-16v16m6-16v16M5 39h38M3 42h42M19 15V9h10v6M24 9V5m-5 4-3-3m13 3 3-3"/>
-              <path class="landmark-fine" d="M7 20h34M11 25v12m12-12v12m12-12v12"/>
-            </g>
-            <g class="landmark" transform="translate(788 116) scale(1.15)">
-              <path class="landmark-wash" d="M18 40V15h12v25z"/>
-              <path d="M24 3v7M21 10h6v5h-6zM17 16h14l-2 6H19zM17 23h14l-2 6H19zM17 30h14l-2 6H19zM19 36h10v6H19zM14 42h20"/>
-              <path class="landmark-fine" d="M21 18h6m-6 7h6m-6 7h6M24 16v26"/>
-            </g>
-            <g class="landmark" transform="translate(910 68) scale(1.1)">
-              <path class="landmark-wash" d="M11 31h26v9H11zM15 23h18v8H15zM19 15h10v8H19z"/>
-              <path d="M7 41h34M11 39v-8m26 8v-8M7 31q10-2 17-9 7 7 17 9H7M12 23q7-2 12-8 5 6 12 8H12M17 15l7-7 7 7H17M24 5v3"/>
-              <path class="landmark-fine" d="M15 34v4m6-4v4m6-4v4m6-4v4M18 26v3m12-3v3M22 18v2m4-2v2"/>
-            </g>
-            <g class="landmark" transform="translate(879 291) scale(1.3)">
-              <path class="landmark-wash" d="M5 37Q9 19 16 12q-1 14 7 25Q22 17 32 6q-3 16 3 31 4-12 10-17l-3 17z"/>
-              <path d="M3 38h42M5 35Q9 19 16 12q-1 14 7 23M23 35Q22 17 32 6q-3 16 3 29m0 0q4-10 10-15l-3 15M2 42q5-2 10 0t10 0t10 0t10 0"/>
-              <path class="landmark-fine" d="m16 12-5 23M32 6l-3 29"/>
-            </g>
-          </svg>
           <i class="footprint-point" style="left:87.64%;top:30.73%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:92%;top:68.82%" aria-hidden="true"></i>
           <i class="footprint-point" style="left:79.4%;top:38.32%" aria-hidden="true"></i>
